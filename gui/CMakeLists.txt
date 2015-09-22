@@ -25,3 +25,7 @@ add_executable(${PROJECT_NAME}-gui ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUND
 # Use the Widgets module from Qt 5.
 target_link_libraries(${PROJECT_NAME}-gui Qt5::Widgets)
 target_link_libraries(${PROJECT_NAME}-gui lib${PROJECT_NAME})
+
+if (APPLE)
+	set_target_properties(${PROJECT_NAME}-gui PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/Resources/MacOSXBundleInfo.plist.in)
+endif ()
