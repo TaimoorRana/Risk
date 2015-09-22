@@ -4,6 +4,9 @@
 
 cmake_minimum_required(VERSION 3.0)
 
+# This is a silly hack but it works for getting it in the QT Creator
+set(CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
+
 # Disable in-source builds (users must do a 'cd build/<your_platform>' first)
 if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
 	message(FATAL_ERROR "In-source builds are not permitted. Change directory first and build in there:\ncd build/your_platform\nCMAKE_PREFIX_PATH=/path/to/qt5 cmake ../../\nBe sure to remove the 'CMakeCache.txt' and 'CMakeFiles' that were just created in the source tree first.")
@@ -20,7 +23,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Enable all compilation warnings
-add_definitions( -Wall )
+add_definitions( -Weverything )
 
 # Basic info about project
 project(risk VERSION 0.0.1)
