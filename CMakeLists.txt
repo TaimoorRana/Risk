@@ -19,11 +19,14 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 # Uncomment the next two lines for debugging
 #include(debug)
 
+
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-# Enable all compilation warnings
-add_definitions( -Weverything )
+IF (APPLE)
+	# Enable all compilation warnings
+	add_definitions( -Weverything )
+ENDIF (APPLE)
 
 # Basic info about project
 project(risk VERSION 0.0.1)
