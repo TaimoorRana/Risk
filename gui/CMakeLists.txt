@@ -6,7 +6,10 @@ fix_project_version()
 
 set(GUI_SOURCE_FILES
 	main.cpp
-	risk.cpp risk.h
+	risk.cpp 
+	risk.h
+	myplayer.cpp
+	myplayer.h
 )
 
 set(GUI_RESOURCE_FILES
