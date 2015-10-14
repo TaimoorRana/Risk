@@ -14,18 +14,46 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>160</y>
-      <width>201</width>
-      <height>16</height>
+      <x>50</x>
+      <y>50</y>
+      <width>681</width>
+      <height>431</height>
      </rect>
     </property>
-    <property name="text">
-     <string>This a GUI</string>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <family>Avenir Next</family>
+         <pointsize>36</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>RISK</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="1">
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Create Map</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -37,6 +65,12 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuRisk_v_0_0_1">
+    <property name="title">
+     <string>Risk v.0.0.1</string>
+    </property>
+   </widget>
+   <addaction name="menuRisk_v_0_0_1"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

@@ -21,7 +21,8 @@ set(ICON_FILE ${RESOURCE_FOLDER}/${ICON_NAME}.ico)
 endif()
 
 if (WIN32)
-configure_file("${PROJECT_SOURCE_DIR}/cmake/windows_metafile.rc.in"
+set(CMAKE_VERBOSE_MAKEFILE on)
+configure_file("${CMAKE_SOURCE_DIR}/cmake/windows_metafile.rc.in"
   "windows_metafile.rc"
 )
 set(RES_FILES "windows_metafile.rc")
@@ -59,9 +60,9 @@ set(OS_BUNDLE WIN32)
 endif()
 endmacro()
 
-macro(fix_win_compiler)
+macro(fix_win_compiler TARGET_NAME)
 if (MSVC)
-    set_target_properties(${PROJECT_NAME} PROPERTIES
+    set_target_properties(${TARGET_NAME} PROPERTIES
         WIN32_EXECUTABLE YES
         LINK_FLAGS "/ENTRY:mainCRTStartup"
     )
@@ -77,4 +78,3 @@ endmacro()
 
 init_os_bundle()
 init_qt()
-fix_win_compiler()
