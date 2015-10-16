@@ -10,6 +10,14 @@ set(GUI_SOURCE_FILES
 	risk.h
 	myplayer.cpp
 	myplayer.h
+        player.h
+        player.cpp
+        soldier.h
+        soldier.cpp
+        country.h
+        country.cpp
+        card.h
+        card.cpp
 )
 
 set(GUI_RESOURCE_FILES
