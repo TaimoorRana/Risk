@@ -1,10 +1,11 @@
+#ifndef GRAPHADT_H
+#define GRAPHADT_H
+
 #include <string>
 #include <unordered_map>
 #include <set>
 #include <iostream>
 
-#ifndef GRAPHADT_H
-#define GRAPHADT_H
 
 struct Edge{
     std::string edgename;
