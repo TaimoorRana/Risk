@@ -21,7 +21,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 IF (APPLE)
 	# Enable all compilation warnings
-	add_definitions( -Weverything )
+	add_definitions( -Wall )
 ENDIF (APPLE)
 
 # Basic info about project
