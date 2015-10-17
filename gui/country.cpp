@@ -1,6 +1,6 @@
 
 #include <string>
-//#include "country.h"
+#include "country.h"
 #include "player.h"
 Country::Country(std::string name)
 {
@@ -17,12 +17,12 @@ std::string Country::getName()
     return name;
 }
 
-std::string Country::getOwner()
+Player * Country::getOwner()
 {
     return this->owner;
 }
 
-void Country::setOwner(std::string owner)
+void Country::setOwner(Player *owner)
 {
     this->owner = owner;
 }
