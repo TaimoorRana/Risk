@@ -1,10 +1,10 @@
 set(LIBRARY_SOURCE_FILES
-	debug.cpp
-	GraphADT.cpp
-	continent.cpp
-	country.cpp
-	map.cpp
-	librisk.cpp
+	debug.cpp debug.h
+	GraphADT.cpp GraphADT.h
+	continent.cpp continent.h
+	country.cpp country.h
+	map.cpp map.h
+	librisk.cpp librisk.h
 )
 
 add_library(lib${PROJECT_NAME} STATIC ${LIBRARY_SOURCE_FILES})
