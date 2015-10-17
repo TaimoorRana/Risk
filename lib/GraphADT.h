@@ -1,11 +1,10 @@
-#ifndef GRAPHADT_H
-#define GRAPHADT_H
-
 #include <string>
 #include <unordered_map>
 #include <set>
 #include <iostream>
 
+#ifndef GRAPHADT_H
+#define GRAPHADT_H
 
 struct Edge{
     std::string edgename;
@@ -67,6 +66,4 @@ public:
     bool areAdjacent(std::string v, std::string w) const;
 };
 
-
-
-#endif
+#endif // GRAPHADT_H

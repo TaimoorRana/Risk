@@ -1,6 +1,6 @@
-#ifndef UI_LIBRISK_H
-#define UI_LIBRISK_H
+#ifndef LIBRISK_H
+#define LIBRISK_H
 
 void librisk_print_todo();
 
-#endif // UI_LIBRISK_H
+#endif // LIBRISK_H
