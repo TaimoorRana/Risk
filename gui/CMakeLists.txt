@@ -6,7 +6,18 @@ fix_project_version()
 
 set(GUI_SOURCE_FILES
 	main.cpp
-	risk.cpp risk.h
+	risk.cpp 
+	risk.h
+	myplayer.cpp
+	myplayer.h
+        player.h
+        player.cpp
+        soldier.h
+        soldier.cpp
+        country.h
+        country.cpp
+        card.h
+        card.cpp
 )
 
 set(GUI_RESOURCE_FILES
@@ -32,4 +43,4 @@ target_link_libraries(${PROJECT_NAME}-gui lib${PROJECT_NAME})
 
 if (APPLE)
 	set_target_properties(${PROJECT_NAME}-gui PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/resources/MacOSXBundleInfo.plist.in)
-endif ()
+endif (APPLE)

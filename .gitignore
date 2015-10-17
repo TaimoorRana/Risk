@@ -1,1 +1,9 @@
+# CMake cache
+CMakeLists.txt.user
+
+# OS thumbnail files
 .DS_Store
+Thumbs.db
+
+# IDEs
+*.sublime-*
