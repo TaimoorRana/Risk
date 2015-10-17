@@ -107,7 +107,8 @@ Map* Map::load(const std::string& path) {
 			debug_str.append(values[0]);
 			debug(debug_str);
 
-			Country* country = new Country(values[0], values[3], atoi(values[2].c_str()), atoi(values[3].c_str()));
+			Continent continent = map->get_continent(values[3]);
+			Country* country = new Country(values[0], continent, atoi(values[2].c_str()), atoi(values[3].c_str()));
 			map->add_country(country);
 		}
 		else {

@@ -23,12 +23,12 @@ int main(int argc, char *argv[]) {
 
 	Continent continent = map->get_continent("Northern Islands");
 	std::cout << "Continent: " << continent.getName();
-	std::cout << " (" << continent.getScore() << ")";
+	std::cout << " (" << continent.getReinforcementBonus() << ")";
 	std::cout << std::endl;
 
 	Country country = map->get_country("1");
 	std::cout << "Country: " << country.getName();
-	std::cout << " (" << country.getPositionX() << "," << country.getPositionY() << ") in continent " << country.getContinent();
+	std::cout << " (" << country.getPositionX() << "," << country.getPositionY() << ") in continent " << country.getContinent().getName();
 	std::cout << std::endl;
 
 	delete map;
