@@ -1,7 +1,8 @@
-
 #include <string>
 #include "country.h"
 #include "player.h"
+
+
 Country::Country(std::string name)
 {
     this->name = name;

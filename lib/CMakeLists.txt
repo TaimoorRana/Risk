@@ -1,6 +1,7 @@
 set(LIBRARY_SOURCE_FILES
 	librisk.cpp
 	GraphADT.cpp
+        risk_map.cpp
 )
 
 add_library(lib${PROJECT_NAME} STATIC ${LIBRARY_SOURCE_FILES})
