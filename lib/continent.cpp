@@ -1,14 +1,14 @@
 #include "continent.h"
 #include "debug.h"
 
-Continent::Continent(const std::string& name, int score) {
+Continent::Continent(const std::string& name, int reinforcement_bonus) {
 	this->setName(name);
-	this->setScore(score);
+	this->setReinforcementBonus(reinforcement_bonus);
 }
 
 Continent::Continent(const Continent& continent) {
 	name = continent.name;
-	score = continent.score;
+	reinforcement_bonus = continent.reinforcement_bonus;
 	std::vector<Country> countries = continent.countries;
 }
 
@@ -19,11 +19,11 @@ void Continent::setName(const std::string& name) {
 	this->name = name;
 }
 
-int Continent::getScore() const {
-	return this->score;
+int Continent::getReinforcementBonus() const {
+	return this->reinforcement_bonus;
 }
-void Continent::setScore(int score) {
-	this->score = score;
+void Continent::setReinforcementBonus(int reinforcement_bonus) {
+	this->reinforcement_bonus = reinforcement_bonus;
 }
 
 const std::vector<Country> Continent::getCountries() const {

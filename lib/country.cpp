@@ -1,18 +1,18 @@
 #include "country.h"
 #include "debug.h"
 
-Country::Country(std::string name, std::string continent_name, int x, int y) {
+Country::Country(std::string name, Continent continent, int x, int y) {
 	this->setName(name);
 	this->setPositionX(x);
 	this->setPositionY(y);
-	this->setContinent(continent_name);
+	this->setContinent(continent);
 }
 
 Country::Country(const Country& country) {
 	name = country.name;
 	x = country.x;
 	y = country.y;
-	continent_name = country.continent_name;
+	continent = country.continent;
 }
 
 std::string Country::getName() const {
@@ -22,11 +22,20 @@ void Country::setName(const std::string name) {
 	this->name = name;
 }
 
-std::string Country::getContinent() const {
-	return this->continent_name;
+Continent Country::getContinent() const {
+	Continent* continent = this->continent;
+	return *continent;
 }
-void Country::setContinent(const std::string& continent) {
-	this->continent_name = continent_name;
+void Country::setContinent(Continent continent) {
+	this->continent = &continent;
+}
+
+Player Country::getOwner() const {
+	Player* owner = this->owner;
+	return *owner;
+}
+void Country::setOwner(Player owner) {
+	this->owner = &owner;
 }
 
 int Country::getPositionX() const {
@@ -41,6 +50,13 @@ int Country::getPositionY() const {
 }
 void Country::setPositionY(int y) {
 	this->y = y;
+}
+
+int Country::getSoldiers() const {
+	return this->soldiers;
+}
+void Country::setSoldiers(int soldiers) {
+	this->soldiers = soldiers;
 }
 
 std::vector<Country> Country::getNeighbours() const {

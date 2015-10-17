@@ -1,6 +1,6 @@
-#ifndef LIB_DEBUG_H
-#define LIB_DEBUG_H
+#ifndef DEBUG_H
+#define DEBUG_H
 
 void debug(const std::string& string);
 
-#endif // LIB_DEBUG_H
+#endif // DEBUG_H

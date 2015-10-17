@@ -1,25 +1,25 @@
-#ifndef LIB_CONTINENT_H
-#define LIB_CONTINENT_H
+#ifndef CONTINENT_H
+#define CONTINENT_H
 
 #include <string>
 #include <vector>
 #include "country.h"
 
-class Country; //forward declaration
+class Country; // forward declaration
 
 class Continent {
 private:
 	std::string name;
-	int score;
+	int reinforcement_bonus;
 	std::vector<Country> countries;
 public:
-	Continent(const std::string& name, int score);
+	Continent(const std::string& name, int reinforcement_bonus);
 	Continent(const Continent& continent);
 	std::string getName() const;
 	void setName(const std::string& name);
-	int getScore() const;
-	void setScore(int score);
+	int getReinforcementBonus() const;
+	void setReinforcementBonus(int reinforcement_bonus);
 	const std::vector<Country> getCountries() const;
 	void addCountry(Country country);
 };
-#endif // LIB_CONTINENT_H
+#endif // CONTINENT_H
