@@ -1,14 +1,16 @@
+#include "country.h"
+#include "card.h"
+#include <string>
 #ifndef PLAYER
 #define PLAYER
-
 class Player{
 private:
-    String name;
-    Country countriesOwned[];
-    Card cards[];
+    std::string name;
+    Country countriesOwned[5];
+    Card cards[10];
     int newSoldiers;
 public:
-    Player(String name, Country countriesOwned[]);
+    Player(std::string name, Country *countriesOwned);
     void rollDices();
 
     void addCountry(Country country);
