@@ -66,6 +66,4 @@ public:
     bool areAdjacent(std::string v, std::string w) const;
 };
 
-
-
-#endif
+#endif // GRAPHADT_H
