@@ -31,11 +31,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.30723698"
-     inkscape:cx="1891.1702"
-     inkscape:cy="1206.3413"
+     inkscape:zoom="0.31218206"
+     inkscape:cx="1867.5"
+     inkscape:cy="1162"
      inkscape:document-units="px"
-     inkscape:current-layer="layer6"
+     inkscape:current-layer="layer3"
      showgrid="false"
      inkscape:window-width="1680"
      inkscape:window-height="1001"
@@ -111,15 +111,15 @@
      style="display:none"
      transform="translate(1362.0998,713.40844)">
     <image
-       sodipodi:absref="/Users/adriannediaz/Documents/Academic/COMP345/ProjectRisk/RISKBoard31.JPG"
-       xlink:href="RISKBoard31.JPG"
-       y="-799.99493"
-       x="-1356.0714"
-       id="image4249"
-       style="image-rendering:optimizeSpeed"
-       preserveAspectRatio="none"
+       sodipodi:absref="/Users/adriannediaz/QTprojects/Risk/assets/../../../Documents/Academic/COMP345/ProjectRisk/RISKBoard31.JPG"
+       xlink:href="../../../Documents/Academic/COMP345/ProjectRisk/RISKBoard31.JPG"
+       width="3735"
        height="2579"
-       width="3735" />
+       preserveAspectRatio="none"
+       style="image-rendering:optimizeSpeed"
+       id="image4249"
+       x="-1356.0714"
+       y="-799.99493" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -1117,7 +1117,7 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="graph_layer"
-     style="display:inline"
+     style="display:none"
      transform="translate(-2.207032e-5,1.4135022)"
      sodipodi:insensitive="true">
     <g

@@ -7,6 +7,7 @@ set(LIBRARY_SOURCE_FILES
         gameBoard.cpp gameBoard.h
 	GraphADT.cpp GraphADT.h
 	librisk.cpp librisk.h
+	map.cpp map.h
 	player.cpp player.h
 )
 
