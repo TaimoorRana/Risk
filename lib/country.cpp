@@ -12,7 +12,8 @@ Country::Country(const Country& country) {
 	name = country.name;
 	x = country.x;
 	y = country.y;
-	continent = country.continent;
+	continent = new Continent(*country.continent);
+	// TODO: copy vector of adjacent countries (country.neighbours)
 }
 
 std::string Country::getName() const {
@@ -27,7 +28,7 @@ Continent Country::getContinent() const {
 	return *continent;
 }
 void Country::setContinent(Continent continent) {
-	this->continent = &continent;
+	this->continent = new Continent(continent);
 }
 
 Player Country::getOwner() const {
