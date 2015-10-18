@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	//map_print_continents(map->continents);
+	map_print_continents(map->continents);
 	map_print_countries(map->countries);
 
 	delete map;
