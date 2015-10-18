@@ -7,7 +7,6 @@
 #include <QDebug>
 
 #include "risk.h"
-#include "player.h"
 #include "country.h"
 
 int main(int argc, char *argv[])
@@ -30,6 +29,6 @@ int main(int argc, char *argv[])
 	// taimoor->addCountry(us);
 	// taimoor->removeCountry(us);
 	// taimoor->printCountries();
-
+    std::cout<<"Taimoor";
 	return application.exec();
 }

@@ -9,7 +9,7 @@ int main() {
 	cout << "This is a call to the library function: \n";
 	librisk_print_todo();
 
-    std::cout<<"Starting GraphADT code:"<<std::endl;
+    /*std::cout<<"Starting GraphADT code:"<<std::endl;
     MyGraph g1;
     printSet(g1.vertices());
 
@@ -56,7 +56,7 @@ int main() {
     g1.removeVertex("Spain");
 
     g1.printGraph();
-
+    */
 
 	return 0;
 }

@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include "continent.h"
-#include "player.h"
 
 class Continent; //forward declaration
 class Player; //forward declaration
@@ -26,15 +25,7 @@ public:
 	void setName(std::string name);
 	Continent getContinent() const;
 	void setContinent(Continent continent);
-	Player getOwner() const;
-	void setOwner(Player player);
-	int getPositionX() const;
-	void setPositionX(int x);
-	int getPositionY() const;
-	void setPositionY(int y);
-	int getSoldiers() const;
-	void setSoldiers(int soldiers);
+
 	std::vector<Country> getNeighbours() const;
-	void addNeighbour(Country country);
 };
 #endif // COUNTRY_H
