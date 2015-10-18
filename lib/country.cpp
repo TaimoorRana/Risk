@@ -31,7 +31,7 @@ void Country::setContinent(Continent continent) {
 }
 
 Player Country::getOwner() const {
-	Player* owner = this->owner;
+    Player *owner = this->owner;
 	return *owner;
 }
 void Country::setOwner(Player owner) {

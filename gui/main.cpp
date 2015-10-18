@@ -9,6 +9,7 @@
 #include "risk.h"
 #include "player.h"
 #include "country.h"
+#include "dice.h"
 
 int main(int argc, char *argv[])
 {
@@ -30,6 +31,7 @@ int main(int argc, char *argv[])
 	// taimoor->addCountry(us);
 	// taimoor->removeCountry(us);
 	// taimoor->printCountries();
-
+    Dice *dice = new Dice();
+    std::cout << dice->roll();
 	return application.exec();
 }

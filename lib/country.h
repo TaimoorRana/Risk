@@ -36,5 +36,6 @@ public:
 	void setSoldiers(int soldiers);
 	std::vector<Country> getNeighbours() const;
 	void addNeighbour(Country country);
+
 };
 #endif // COUNTRY_H
