@@ -9,9 +9,9 @@ class Country; // forward declaration
 
 class Continent {
 private:
-	std::string name;
-	int reinforcement_bonus;
-	std::vector<Country> countries;
+	std::string name = "";
+	int reinforcement_bonus = 0;
+	std::vector<Country> countries = std::vector<Country>();
 public:
 	Continent(const std::string& name, int reinforcement_bonus);
 	Continent(const Continent& continent);

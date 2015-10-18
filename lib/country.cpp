@@ -1,19 +1,30 @@
 #include "country.h"
 #include "debug.h"
 
-Country::Country(std::string name, Continent continent, int x, int y) {
+Country::Country(std::string name, Continent& continent, int x, int y) {
 	this->setName(name);
 	this->setPositionX(x);
 	this->setPositionY(y);
 	this->setContinent(continent);
+	this->setSoldiers(0);
+	this->owner = NULL;
+	std::vector<Country> neighbours = std::vector<Country>();
 }
 
 Country::Country(const Country& country) {
-	name = country.name;
-	x = country.x;
-	y = country.y;
-	continent = new Continent(*country.continent);
+	this->setName(country.getName());
+	this->setPositionX(country.getPositionX());
+	this->setPositionY(country.getPositionY());
+	Continent continent = country.getContinent();
+	this->setContinent(continent);
+	this->setSoldiers(country.getSoldiers());
+	this->setOwner(country.getOwner());
 	// TODO: copy vector of adjacent countries (country.neighbours)
+}
+
+Country::~Country() {
+	delete this->continent;
+	delete this->owner;
 }
 
 std::string Country::getName() const {
@@ -27,16 +38,17 @@ Continent Country::getContinent() const {
 	Continent* continent = this->continent;
 	return *continent;
 }
-void Country::setContinent(Continent continent) {
+void Country::setContinent(Continent& continent) {
+	delete this->continent;
 	this->continent = new Continent(continent);
 }
 
-Player Country::getOwner() const {
-	Player* owner = this->owner;
-	return *owner;
+Player* Country::getOwner() const {
+	return this->owner;
 }
-void Country::setOwner(Player owner) {
-	this->owner = &owner;
+void Country::setOwner(Player* owner) {
+	delete this->owner;
+	this->owner = owner == NULL ? owner : new Player(*owner);
 }
 
 int Country::getPositionX() const {
