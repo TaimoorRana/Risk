@@ -3,6 +3,7 @@
 # * https://github.com/euler0/mini-cmake-qt
 
 cmake_minimum_required(VERSION 3.0)
+set(CMAKE_CXX_STANDARD 11)
 
 # Disable in-source builds (users must do a 'cd build/<your_platform>' first)
 if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
@@ -25,14 +26,13 @@ IF (APPLE)
 ENDIF (APPLE)
 
 # Basic info about project
-project(risk VERSION 0.0.1)
+project(risk-a1 VERSION 0.0.1)
 
 # Set additional project information
 set(COMPANY "COMP345")
 set(COPYRIGHT "Copyright (c) 2015 COMP345 Team 1. All rights reserved.")
-set(IDENTIFIER "github.taimoorrana1.risk")
+set(IDENTIFIER "github.taimoorrana1.risk-a1")
 
 # Process subdirectories
 add_subdirectory(lib)
 add_subdirectory(cli)
-add_subdirectory(gui)
