@@ -8,9 +8,10 @@
 
 class Map {
 private:
-  std::map<const std::string, Continent> continents;
-  std::map<const std::string, Country> countries;
+
 public:
+	std::map<const std::string, Continent> continents;
+  std::map<const std::string, Country> countries;
 	Map() {}
 	~Map() {} // TODO
 	static Map* load(const std::string& file);

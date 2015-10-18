@@ -9,7 +9,6 @@ Continent::Continent(const std::string& name, int reinforcement_bonus) {
 Continent::Continent(const Continent& continent) {
 	name = continent.name;
 	reinforcement_bonus = continent.reinforcement_bonus;
-	std::vector<Country> countries = continent.countries;
 }
 
 std::string Continent::getName() const {

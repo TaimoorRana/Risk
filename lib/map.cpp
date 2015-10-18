@@ -103,11 +103,14 @@ Map* Map::load(const std::string& path) {
 			while (std::getline(line_stream, item, ',')) {
 				values.push_back(item);
 			}
+			Continent continent = map->get_continent(values[3]);
+
 			debug_str = "  Adding country: ";
 			debug_str.append(values[0]);
+			debug_str.append(" in continent ");
+			debug_str.append(continent.getName());
 			debug(debug_str);
 
-			Continent continent = map->get_continent(values[3]);
 			Country* country = new Country(values[0], continent, atoi(values[2].c_str()), atoi(values[3].c_str()));
 			map->add_country(country);
 		}
