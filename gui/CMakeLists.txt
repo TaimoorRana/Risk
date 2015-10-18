@@ -6,12 +6,16 @@ fix_project_version()
 
 set(GUI_SOURCE_FILES
 	main.cpp
-	risk.cpp risk.h
+        risk.cpp risk.h
+        new.h
+        rect.h rect.cpp
+
 )
 
 set(GUI_RESOURCE_FILES
-	#risk.qrc
+        #risk.qrc
 )
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/styleSheet.qss DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 IF (APPLE)
 	add_project_meta(GUI_META_FILES)
