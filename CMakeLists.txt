@@ -3,6 +3,7 @@
 # * https://github.com/euler0/mini-cmake-qt
 
 cmake_minimum_required(VERSION 3.0)
+set(CMAKE_CXX_STANDARD 11)
 
 # Disable in-source builds (users must do a 'cd build/<your_platform>' first)
 if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
