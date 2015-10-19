@@ -1,0 +1,5 @@
+#ifndef COUNTRYLOST
+#define COUNTRYLOST
+
+#endif // COUNTRYLOST
+

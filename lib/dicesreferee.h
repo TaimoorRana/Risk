@@ -1,0 +1,5 @@
+#ifndef DICESREFEREE
+#define DICESREFEREE
+
+#endif // DICESREFEREE
+
