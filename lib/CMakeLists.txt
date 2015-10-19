@@ -2,8 +2,8 @@ set(LIBRARY_SOURCE_FILES
 	card.cpp card.h
 	continent.cpp continent.h
 	country.cpp country.h
-	debug.cpp debug.h
-        dice.cpp dice.h
+        debug.cpp debug.h
+        dices.cpp dices.h
         gameBoard.cpp gameBoard.h
 	GraphADT.cpp GraphADT.h
 	librisk.cpp librisk.h

@@ -9,29 +9,17 @@
 #include "risk.h"
 #include "player.h"
 #include "country.h"
-#include "dice.h"
+#include "dices.h"
 
 int main(int argc, char *argv[])
 {
 	QApplication application(argc, argv);
-	// QGraphicsScene *scene = new QGraphicsScene();
-	// MyPlayer *player =  new MyPlayer;
-	// player->setRect(0,0,100,100);
-	// player->setFlag(QGraphicsItem::ItemIsFocusable);
-	// player->setFocus();
-	// scene->addItem(player);
-	// QGraphicsView *view = new QGraphicsView(scene);
-	// view->show();
-	// Player *taimoor = new Player("Taimoor");
-	// Country *canada = new Country("Canada");
-	// canada->setOwner(taimoor);
-	// Country *us = new Country("us");
-	// us->setOwner(taimoor);
-	// taimoor->addCountry(canada);
-	// taimoor->addCountry(us);
-	// taimoor->removeCountry(us);
-	// taimoor->printCountries();
-    Dice *dice = new Dice();
-    std::cout << dice->roll();
+    Dices *dices = new Dices(3);
+    std::vector<int> *re = dices->roll();
+
+    for(int x = 0; x < re->size(); x++){
+        std::cout << re->at(x) << std::endl;
+    }
+
 	return application.exec();
 }
