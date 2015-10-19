@@ -57,7 +57,12 @@ int Country::getSoldiers() const {
 	return this->soldiers;
 }
 void Country::setSoldiers(int soldiers) {
-	this->soldiers = soldiers;
+    this->soldiers = soldiers;
+}
+
+void Country::adjustSoldiers(int soldiers)
+{
+    this->soldiers += soldiers;
 }
 
 std::vector<Country> Country::getNeighbours() const {

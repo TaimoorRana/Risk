@@ -10,7 +10,7 @@ class Player{
 private:
 	std::string name;
 	int reinforcements;
-	std::vector<Country> countriesOwned;
+    std::vector<Country*> countriesOwned;
 	std::vector<Card> cards;
 public:
 	Player(std::string name);

@@ -9,6 +9,7 @@ Dices::Dices(int quantity)
 
 std::vector<int> *Dices::roll()
 {
+    results.clear();
     // reset seed
     srand(time(NULL));
 

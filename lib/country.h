@@ -16,7 +16,7 @@ private:
 	Player* owner;
 	int x;
 	int y;
-	int soldiers;
+    int soldiers = 20;
 	std::vector<Country> neighbours;
 
 public:
@@ -34,6 +34,7 @@ public:
 	void setPositionY(int y);
 	int getSoldiers() const;
 	void setSoldiers(int soldiers);
+    void adjustSoldiers(int soldiers);
 	std::vector<Country> getNeighbours() const;
 	void addNeighbour(Country country);
 
