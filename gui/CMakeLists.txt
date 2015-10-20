@@ -13,6 +13,7 @@ set(GUI_SOURCE_FILES
 )
 
 set(GUI_RESOURCE_FILES
+        Stylesheet.qss
         #risk.qrc
 )
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/styleSheet.qss DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     comboBox->addItem(("4"));
     comboBox->setAutoCompletion(true);
     comboBox->setEnabled(true);
-    playersHeader->setMargin(1);
+   // playersHeader->setMargin(1);
     playersHeader->setBuddy(comboBox);
     //stylesheet
     QFile stylesheet("styleSheet.qss");
@@ -49,17 +49,19 @@ int main(int argc, char *argv[])
     QGraphicsView * view = new QGraphicsView(scene);
     //menu bar
     QMenuBar *menuBar = new QMenuBar(0);
-    menuBar->addAction("Hello");
+    menuBar->addAction("Save");
     menuBar->addSeparator();
-    menuBar->addAction("two");
+    menuBar->addAction("Load");
     menuBar->setVisible(true);
-    menuBar->setFixedHeight(100);
-    menuBar->isTopLevel();
+
+    //menuBar->isTopLevel();
     // menuBar->setCornerWidget();
+    menuBar->setStyleSheet(setSheet);
     scene->addWidget(menuBar);
     view->scale(2,2);   //zoom in
     view->scale(.5,.5); //zoom out
     mw.setCentralWidget(view);
+
     qDebug() << "App path : " << QDir::currentPath();
 
     mw.show();
