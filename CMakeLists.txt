@@ -26,13 +26,14 @@ IF (APPLE)
 ENDIF (APPLE)
 
 # Basic info about project
-project(risk-a1 VERSION 0.0.1)
+project(risk VERSION 0.0.1)
 
 # Set additional project information
 set(COMPANY "COMP345")
 set(COPYRIGHT "Copyright (c) 2015 COMP345 Team 1. All rights reserved.")
-set(IDENTIFIER "github.taimoorrana1.risk-a1")
+set(IDENTIFIER "github.taimoorrana1.risk")
 
 # Process subdirectories
 add_subdirectory(lib)
 add_subdirectory(cli)
+add_subdirectory(gui)
