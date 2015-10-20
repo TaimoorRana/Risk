@@ -21,6 +21,7 @@ void Continent::setName(const std::string& name) {
 const std::map<std::string,Country> Continent::getCountries() const {
 	return this->countries;
 }
+
 void Continent::addCountry(Country country) {
-	this->countries.push_back(country);
+	this->countries.insert()
 }

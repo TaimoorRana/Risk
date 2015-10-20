@@ -12,11 +12,6 @@ class Country {
 private:
 	std::string name;
 	Continent* continent;
-	Player* owner;
-	int x;
-	int y;
-	int soldiers;
-	std::vector<Country> neighbours;
 
 public:
 	Country(std::string name, Continent continent, int x, int y);
@@ -26,6 +21,5 @@ public:
 	Continent getContinent() const;
 	void setContinent(Continent continent);
 
-	std::vector<Country> getNeighbours() const;
 };
 #endif // COUNTRY_H

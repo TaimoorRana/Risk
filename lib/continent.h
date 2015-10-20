@@ -2,7 +2,8 @@
 #define CONTINENT_H
 
 #include <string>
-#include <vector>
+#include <set>
+#include <map>
 #include "country.h"
 
 class Country; // forward declaration
@@ -10,16 +11,13 @@ class Country; // forward declaration
 class Continent {
 private:
 	std::string name;
-	int reinforcement_bonus;
-	std::vector<Country> countries;
+    std::map<std::string,Country> countries;
 public:
-	Continent(const std::string& name, int reinforcement_bonus);
+    Continent(const std::string& name);
 	Continent(const Continent& continent);
 	std::string getName() const;
 	void setName(const std::string& name);
-	int getReinforcementBonus() const;
-	void setReinforcementBonus(int reinforcement_bonus);
-	const std::vector<Country> getCountries() const;
+    const std::map<std::string,Country> getCountries() const;
 	void addCountry(Country country);
 };
 #endif // CONTINENT_H

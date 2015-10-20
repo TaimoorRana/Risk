@@ -353,3 +353,7 @@ void MyGraph::printGraph() const {
 bool DirectedMyGraph::areAdjacent(std::string v, std::string w) const{
   return false;
 }
+
+void MySubGraph::insertVertex(std::string name_of_country, std::string name_of_continent){
+
+}

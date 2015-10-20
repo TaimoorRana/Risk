@@ -66,4 +66,11 @@ public:
     bool areAdjacent(std::string v, std::string w) const;
 };
 
+
+class MySubGraph : public MyGraph{
+    my_set subgraphs;
+public :
+    void insertVertex(std::string, std::string);
+};
+
 #endif // GRAPHADT_H

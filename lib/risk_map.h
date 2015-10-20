@@ -3,17 +3,18 @@
 
 #include "country.h"
 #include "GraphADT.h"
+#include <map>
 
 class RiskMap
 {
+    std::map<std::string, Continent> continents;
 public:
     RiskMap() {}
     bool adjacentCountries(const Country&, const Country&);
-    void insertCountry(const Country& country);
+    void addCountry(const std::string country, const std::string continent);
 
 private:
-    MyGraph mapGraph;
-//    std::vector<Continent> continents;
+    MySubGraph mapGraph;
 };
 
 #endif
