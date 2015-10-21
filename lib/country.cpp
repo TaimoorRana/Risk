@@ -1,31 +1,27 @@
 #include "country.h"
 #include "debug.h"
 
-Country::Country(std::string name, Continent& continent, int x, int y) {
+Country::Country(std::string name, Continent* continent, int x, int y) {
 	this->setName(name);
 	this->setPositionX(x);
 	this->setPositionY(y);
 	this->setContinent(continent);
 	this->setSoldiers(0);
 	this->owner = NULL;
-	std::vector<Country> neighbours = std::vector<Country>();
+	std::vector<Country*> neighbours = std::vector<Country*>();
 }
 
 Country::Country(const Country& country) {
 	this->setName(country.getName());
 	this->setPositionX(country.getPositionX());
 	this->setPositionY(country.getPositionY());
-	Continent continent = country.getContinent();
-	this->setContinent(continent);
+	this->setContinent(country.getContinent());
 	this->setSoldiers(country.getSoldiers());
 	this->setOwner(country.getOwner());
-	// TODO: copy vector of adjacent countries (country.neighbours)
+	this->neighbours = std::vector<Country*>(country.neighbours);
 }
 
-Country::~Country() {
-	delete this->continent;
-	delete this->owner;
-}
+Country::~Country() {}
 
 std::string Country::getName() const {
 	return this->name;
@@ -34,21 +30,18 @@ void Country::setName(const std::string name) {
 	this->name = name;
 }
 
-Continent Country::getContinent() const {
-	Continent* continent = this->continent;
-	return *continent;
+Continent* Country::getContinent() const {
+	return this->continent;
 }
-void Country::setContinent(Continent& continent) {
-	delete this->continent;
-	this->continent = new Continent(continent);
+void Country::setContinent(Continent* continent) {
+	this->continent = continent;
 }
 
 Player* Country::getOwner() const {
 	return this->owner;
 }
 void Country::setOwner(Player* owner) {
-	delete this->owner;
-	this->owner = owner == NULL ? owner : new Player(*owner);
+	this->owner = owner;
 }
 
 int Country::getPositionX() const {
@@ -72,9 +65,9 @@ void Country::setSoldiers(int soldiers) {
 	this->soldiers = soldiers;
 }
 
-std::vector<Country> Country::getNeighbours() const {
+std::vector<Country*> Country::getNeighbours() const {
 	return this->neighbours;
 }
-void Country::addNeighbour(Country country) {
+void Country::addNeighbour(Country* country) {
 	this->neighbours.push_back(country);
 }

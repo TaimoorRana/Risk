@@ -4,12 +4,13 @@
 Continent::Continent(const std::string& name, int reinforcement_bonus) {
 	this->setName(name);
 	this->setReinforcementBonus(reinforcement_bonus);
+	this->countries = std::vector<Country*>();
 }
 
 Continent::Continent(const Continent& continent) {
-	name = continent.name;
-	reinforcement_bonus = continent.reinforcement_bonus;
-	// TODO: copy vector of member countries (country.countries)
+	this->setName(continent.getName());
+	this->setReinforcementBonus(continent.getReinforcementBonus());
+	this->countries = std::vector<Country*>(continent.countries);
 }
 
 std::string Continent::getName() const {
@@ -26,9 +27,9 @@ void Continent::setReinforcementBonus(int reinforcement_bonus) {
 	this->reinforcement_bonus = reinforcement_bonus;
 }
 
-const std::vector<Country> Continent::getCountries() const {
+std::vector<Country*>& Continent::getCountries() {
 	return this->countries;
 }
-void Continent::addCountry(Country country) {
+void Continent::addCountry(Country* country) {
 	this->countries.push_back(country);
 }

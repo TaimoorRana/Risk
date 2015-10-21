@@ -8,13 +8,15 @@ void print_help(char *argv[]) {
 }
 
 int main(int argc, char *argv[]) {
+	int retval = 0;
 	if (argc == 1) {
 		std::cout << "Error: missing map filename." << std::endl << std::endl;
 		print_help(argv);
 		return 1;
 	}
 
-	Map* map = Map::load(argv[1]);
+	std::string path(argv[1]);
+	Map* map = Map::load(path);
 	if (map == NULL) {
 		std::cout << "Error: map file '" << argv[1] << "' not found or is invalid." << std::endl << std::endl;
 		print_help(argv);
@@ -24,7 +26,12 @@ int main(int argc, char *argv[]) {
 	map_print_continents(map->continents);
 	map_print_countries(map->countries);
 
-	delete map;
+	retval = map_print_validation(map);
+	if (retval) {
+		path.append(".new");
+		Map::save(path, *map);
+	}
 
-	return 0;
+	delete map;
+	return retval;
 }
