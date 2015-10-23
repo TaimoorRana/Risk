@@ -1,20 +1,22 @@
 #include "country.h"
 #include "debug.h"
 
-Country::Country(std::string name, Continent continent, int x, int y) {
+
+Country::Country(std::string name, Continent *continent, int x, int y) {
 	this->setName(name);
 	this->setPositionX(x);
 	this->setPositionY(y);
 	this->setContinent(continent);
 }
 
-Country::Country(const Country& country) {
-	name = country.name;
-	x = country.x;
-	y = country.y;
-	continent = new Continent(*country.continent);
-	// TODO: copy vector of adjacent countries (country.neighbours)
-}
+
+//Country::Country(const Country& country) {
+//	name = country.name;
+//	x = country.x;
+//	y = country.y;
+//	continent = new Continent(*country.continent);
+//	// TODO: copy vector of adjacent countries (country.neighbours)
+//}
 
 std::string Country::getName() const {
 	return this->name;
@@ -27,8 +29,8 @@ Continent Country::getContinent() const {
 	Continent* continent = this->continent;
 	return *continent;
 }
-void Country::setContinent(Continent continent) {
-	this->continent = new Continent(continent);
+void Country::setContinent(Continent *continent) {
+    this->continent = continent;
 }
 
 Player Country::getOwner() const {

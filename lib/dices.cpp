@@ -5,13 +5,14 @@
 Dices::Dices(int quantity)
 {
     this->quantity = quantity;
+    
+    srand(time(NULL));
 }
 
-std::vector<int> *Dices::roll()
+std::vector<int> Dices::roll()
 {
     results.clear();
     // reset seed
-    srand(time(NULL));
 
     // generate random numbers depending on "quantity" of dices
     for(unsigned int x = 0; x < quantity; x++){
@@ -23,7 +24,7 @@ std::vector<int> *Dices::roll()
     // sort the results
     sort(&results);
 
-    return &results;
+    return results;
 }
 
 // bubblesort

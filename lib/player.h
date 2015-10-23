@@ -18,6 +18,7 @@ public:
 
 	void addCountry(Country *country);
 	void removeCountry(Country *country);
+    Country* findCountry(std::string countryName);
 
 	void addCard(Card card);
 	void removeCard(Card card);

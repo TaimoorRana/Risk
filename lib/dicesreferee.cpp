@@ -1,19 +1,15 @@
 #include "dicesreferee.h"
-DicesReferee::DicesReferee(){}
+#include "dices.h"
+
+DicesReferee::DicesReferee()
+{
+    dices = new Dices(MAX_DICES);
+}
 
 std::vector<CountryLost*> DicesReferee::calculateLosses(Country *attacker, int attackerDices, Country *defender, int defenderDices)
 {
-    std::vector<int> *ptrDices = dices->roll();
-    std::vector<int> attackerResults;
-    for(int x = 0; x < attackerDices; x++){
-        attackerResults.push_back(ptrDices->at(x));
-    }
-
-    ptrDices = dices->roll();
-    std::vector<int> defenderResults;
-    for(int x = 0; x < attackerDices; x++){
-        defenderResults.push_back(ptrDices->at(x));
-    }
+    std::vector<int> attackerResults = dices->roll();
+    std::vector<int> defenderResults = dices->roll();
 
     int attackerLosses = 0;
     int defenderLosses = 0;
@@ -33,6 +29,12 @@ std::vector<CountryLost*> DicesReferee::calculateLosses(Country *attacker, int a
     return casualtyResults;
 }
 
+
+
+
+
+
+
 void DicesReferee::adjustSoldiers(std::vector<CountryLost*> countriesCasualties)
 {
     for(int x = 0; x < countriesCasualties.size(); x++){
@@ -48,11 +50,4 @@ void DicesReferee::startWar(Country *attacker, int attackerDices, Country *defen
     adjustSoldiers(casualtyResults);
 }
 
-DicesReferee* DicesReferee::getInstance()
-{
-    if(instance == NULL){
-        instance = new DicesReferee();
-        dices = new Dices(MAX_DICES);
-    }
-    return instance;
-}
+

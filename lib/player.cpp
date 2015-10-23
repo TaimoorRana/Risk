@@ -10,29 +10,27 @@ Player::Player(std::string name)
 
 void Player::addCountry(Country *country)
 {
-	// TODO implement with vector
-	/*
-	if(indexOfLastElementInCardsOwned < AMOUNT_OF_COUNTRIES){
-		countriesOwned[indexOfLastElementInCountriesOwned] = country;
-		indexOfLastElementInCountriesOwned++;
-	}
-	*/
+    // TODO implement with vector
+    countriesOwned.push_back(country);
 }
 
 void Player::removeCountry(Country *country)
 {
 	// TODO implement with vector
-	/*
-	int indexFoundAt = -1;
-	for(int x = 0; x < indexOfLastElementInCountriesOwned; x++){
-		if (countriesOwned[x]->getName() == country->getName()){
-			indexFoundAt = x;
-			break;
-		}
-	}
-
-	if(indexFoundAt != -1){
-	}
-	*/
+    countriesOwned.erase(std::remove(countriesOwned.begin(),countriesOwned.end(),country));
 }
+
+Country * Player::findCountry(std::string countryName)
+{
+    for(int x = 0; x < countriesOwned.size(); x++){
+        if(countriesOwned[x]->getName() == countryName){
+            return countriesOwned[x];
+        }
+    }
+
+    // if Country is not found
+    return NULL;
+}
+
+
 

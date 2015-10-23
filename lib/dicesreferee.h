@@ -7,15 +7,15 @@ class DicesReferee{
 
 //use singleton pattern
 private:
-    DicesReferee *instance = NULL;
-    DicesReferee();
-    const int MAX_DICES = 3;
+    static const int MAX_DICES = 3;
     Dices *dices;
 public:
+    DicesReferee();
     std::vector<CountryLost*> calculateLosses(Country *attacker, int attackerDices,Country *defender, int defenderDices);
     void adjustSoldiers(std::vector<CountryLost *> countriesCasualties);
     void startWar(Country *attacker, int attackerDices,Country *defender, int defenderDices);
-    DicesReferee *getInstance();
+    std::vector<int> rollAndSaveDices(int amountOfDices);
+    //static DicesReferee *getInstance();
 
 };
 
