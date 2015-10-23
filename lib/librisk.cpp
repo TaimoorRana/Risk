@@ -8,4 +8,3 @@ void librisk_print_todo() {
     *p = 45;
     cout << p << "test";
 }
-
