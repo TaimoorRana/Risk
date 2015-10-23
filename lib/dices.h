@@ -9,7 +9,7 @@ private:
     std::vector<int> results;
 public:
     Dices(int quantity);
-    std::vector<int> roll();
+    std::vector<int> roll(int amountOfDices);
     void sort(std::vector<int>* toSort);
 };
 

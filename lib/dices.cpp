@@ -9,13 +9,13 @@ Dices::Dices(int quantity)
     srand(time(NULL));
 }
 
-std::vector<int> Dices::roll()
+std::vector<int> Dices::roll(int amountOfDices)
 {
     results.clear();
     // reset seed
 
     // generate random numbers depending on "quantity" of dices
-    for(unsigned int x = 0; x < quantity; x++){
+    for(unsigned int x = 0; x < amountOfDices; x++){
         int randNumber = rand();
         randNumber = (randNumber % 6) + 1;
         results.push_back(randNumber);

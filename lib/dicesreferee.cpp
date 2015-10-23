@@ -6,14 +6,68 @@ DicesReferee::DicesReferee()
     dices = new Dices(MAX_DICES);
 }
 
+
+
+
+
+/**
+ * Calculates the loses each country occurs after the dice roll- if dices are specified
+ */
 std::vector<CountryLost*> DicesReferee::calculateLosses(Country *attacker, int attackerDices, Country *defender, int defenderDices)
 {
-    std::vector<int> attackerResults = dices->roll();
-    std::vector<int> defenderResults = dices->roll();
+    std::vector<CountryLost*> casualtyResults = calculateLossesHelper(attacker, attackerDices, defender, defenderDices);
+    
+    return casualtyResults;
+}
 
+
+
+
+
+/**
+ * Calculates the loses each country occurs after the dice roll - if dices are not specified
+ */
+std::vector<CountryLost*> DicesReferee::calculateLosses(Country *attacker, Country *defender){
+    // Determine amount of dices for the attacker depending on the army size
+    int attackerDices;
+    if (attacker->getSoldiers() >= 4) {
+        attackerDices = 3;
+    }else if (attacker->getSoldiers() >= 3){
+        attackerDices = 2;
+    }else{
+        attackerDices = 1;
+    }
+    
+    // Determine amount of dices for the defender depending on the army size
+    int defenderDices;
+    if (defender->getSoldiers() >= 2) {
+        defenderDices = 2;
+    }else{
+        defenderDices = 1;
+    }
+    
+    std::vector<CountryLost*> casualtyResults = calculateLossesHelper(attacker, attackerDices, defender, defenderDices);
+    
+    return casualtyResults;
+    
+}
+
+
+
+
+
+
+
+std::vector<CountryLost*> DicesReferee::calculateLossesHelper(Country *attacker, int attackerDices, Country *defender, int defenderDices){
+    // dices rolled by both players
+    std::vector<int> attackerResults = dices->roll(attackerDices);
+    std::vector<int> defenderResults = dices->roll(defenderDices);
+    
     int attackerLosses = 0;
     int defenderLosses = 0;
-
+    
+    //Compare roll results
+    //Attacker's highest dice is compared to Defender's highest dice
     for(int x = 0; x < defenderDices; x++){
         if(attackerResults[x] > defenderResults[x]){
             defenderLosses++;
@@ -21,11 +75,17 @@ std::vector<CountryLost*> DicesReferee::calculateLosses(Country *attacker, int a
             attackerLosses++;
         }
     }
+    
+    std::vector<CountryLost*> casualtyResults;
+    
+    // This objects contains the country object with the number of casualties
+    // objects deleted in DicesReferee::removeSoldiers
     CountryLost *attackerLostResult = new CountryLost(attacker,attackerLosses);
     CountryLost *defenderLostResult = new CountryLost(defender,defenderLosses);
-    std::vector<CountryLost*> casualtyResults;
+    
     casualtyResults.push_back(attackerLostResult);
     casualtyResults.push_back(defenderLostResult);
+    
     return casualtyResults;
 }
 
@@ -35,19 +95,26 @@ std::vector<CountryLost*> DicesReferee::calculateLosses(Country *attacker, int a
 
 
 
-void DicesReferee::adjustSoldiers(std::vector<CountryLost*> countriesCasualties)
+/*
+ * Remove soldiers lost from the battle
+ */
+void DicesReferee::removeSoldiers(std::vector<CountryLost*> countriesCasualties)
 {
     for(int x = 0; x < countriesCasualties.size(); x++){
         Country *ptrCountry = countriesCasualties[x]->getCountry();
         ptrCountry->adjustSoldiers(countriesCasualties.at(x)->getLosses());
+        
+        // delete CountryLost Object because the are no longer needed
+        delete countriesCasualties[x];
     }
+
 }
 
 void DicesReferee::startWar(Country *attacker, int attackerDices, Country *defender, int defenderDices)
 {
     std::vector<CountryLost*> casualtyResults;
     casualtyResults = calculateLosses(attacker,attackerDices,defender,defenderDices);
-    adjustSoldiers(casualtyResults);
+    removeSoldiers(casualtyResults);
 }
 
 
