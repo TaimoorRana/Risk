@@ -24,13 +24,6 @@ std::unordered_map< std::string,Country > RiskMap::listCountriesInsideContinent(
 void RiskMap::console_print_list_of_countries(const std::string& name_continent){
     std::cout<<"Countries in: "<<name_continent<<std::endl;
 
-//    std::unordered_map< std::string, Country> list1 = listCountriesInsideContinent(name_continent);
-//    std::unordered_map< std::string, Country>::const_iterator c_iter = list1.begin();
-//    while ( c_iter != list1.end() ){
-//        std::cout<<"\t\t"<< c_iter->first<<std::endl;
-//        c_iter++;
-//    }
-
     my_set countriesInside(mapGraph.subgraphContents(name_continent));
     my_set::const_iterator c_iter = countriesInside.begin();
     while (c_iter != countriesInside.end() ){
