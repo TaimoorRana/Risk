@@ -14,6 +14,7 @@ private:
 	std::vector<Card> cards;
 public:
 	Player(std::string name);
+    Player(const Player& other);
 	void rollDices();
 
 	void addCountry(Country *country);
@@ -22,7 +23,9 @@ public:
 
 	void addCard(Card card);
 	void removeCard(Card card);
-
+    
+    std::string getName();
+    
 	void addNewSoldiers();
 	void removeNewSoldiers();
 
