@@ -18,7 +18,7 @@ public:
     void removeSoldiers(std::vector<CountryLost *> countriesCasualties);
     void startWar(Country *attacker, int attackerDices,Country *defender, int defenderDices);
     std::vector<CountryLost*> compareDices(std::vector<int> attackerResult, std::vector<int> defenderResult);
-    //static DicesReferee *getInstance();
+    void allInMode(Country* attacker, Country* defender);
 
 };
 

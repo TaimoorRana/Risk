@@ -1,5 +1,6 @@
 #include "dicesreferee.h"
 #include "dices.h"
+#include <iostream>
 
 DicesReferee::DicesReferee()
 {
@@ -57,7 +58,9 @@ std::vector<CountryLost*> DicesReferee::calculateLosses(Country *attacker, Count
 
 
 
-
+/**
+ * Calculates the loses each country occurs after the dice roll - HELPER
+ */
 std::vector<CountryLost*> DicesReferee::calculateLossesHelper(Country *attacker, int attackerDices, Country *defender, int defenderDices){
     // dices rolled by both players
     std::vector<int> attackerResults = dices->roll(attackerDices);
@@ -90,7 +93,21 @@ std::vector<CountryLost*> DicesReferee::calculateLossesHelper(Country *attacker,
 }
 
 
-
+void DicesReferee::allInMode(Country* attacker, Country* defender){
+    while (attacker->getSoldiers() > 1 && defender->getOwner().getName() != attacker->getOwner().getName()) {
+        std::vector<CountryLost*> casualtyResults = calculateLosses(attacker,defender);
+        removeSoldiers(casualtyResults);
+        if (defender->getSoldiers() <= 0) {
+            defender->setOwner(attacker->getOwner());
+        }
+    }
+    
+    if (attacker->getSoldiers() <= 1 ) {
+        std::cout << "Attacker cannot attack anymore";
+    }else{
+        std::cout << "Attacker won and conquered";
+    }
+}
 
 
 
@@ -112,9 +129,7 @@ void DicesReferee::removeSoldiers(std::vector<CountryLost*> countriesCasualties)
 
 void DicesReferee::startWar(Country *attacker, int attackerDices, Country *defender, int defenderDices)
 {
-    std::vector<CountryLost*> casualtyResults;
-    casualtyResults = calculateLosses(attacker,attackerDices,defender,defenderDices);
-    removeSoldiers(casualtyResults);
+    allInMode(attacker, defender);
 }
 
 
