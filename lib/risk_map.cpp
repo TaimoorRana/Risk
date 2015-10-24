@@ -29,6 +29,7 @@ void RiskMap::console_print_list_of_countries(const std::string& name_continent)
 //        std::cout<<"\t\t"<< c_iter->first<<std::endl;
 //        c_iter++;
 //    }
+
     my_set countriesInside(mapGraph.subgraphContents(name_continent));
     my_set::const_iterator c_iter = countriesInside.begin();
     while (c_iter != countriesInside.end() ){
