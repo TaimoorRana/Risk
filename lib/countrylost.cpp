@@ -1,14 +1,15 @@
 #include "country.h"
 #include "countrylost.h"
-CountryLost::CountryLost(Country *country, int lost)
+CountryLost::CountryLost(Country& country, int lost)
 {
-    this->country = country;
+    this->country = &country;
     this->lost = -lost;
 }
 
-Country *CountryLost::getCountry()
+Country& CountryLost::getCountry()
 {
-    return this->country;
+    Country* ptrCountry = this->country;
+    return *ptrCountry;
 }
 
 int CountryLost::getLosses()

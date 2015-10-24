@@ -20,14 +20,15 @@ private:
 	std::vector<Country> neighbours;
 
 public:
-    Country(std::string name, Continent* continent, int x, int y);
+    Country();
+    Country(std::string name, Continent& continent, int x, int y);
     //Country(const Country& country);
 	std::string getName() const;
 	void setName(std::string name);
 	Continent getContinent() const;
-    void setContinent(Continent* continent);
+    void setContinent(Continent& continent);
 	Player getOwner() const;
-	void setOwner(Player player);
+	void setOwner(Player& player);
 	int getPositionX() const;
 	void setPositionX(int x);
 	int getPositionY() const;

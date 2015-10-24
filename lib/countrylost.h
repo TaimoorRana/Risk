@@ -3,11 +3,11 @@
 #include "country.h"
 class CountryLost{
 private:
-    Country *country;
+    Country* country;
     int lost;
 public:
-    CountryLost(Country *country,int lost);
-    Country* getCountry();
+    CountryLost(Country& country,int lost);
+    Country& getCountry();
     int getLosses();
 };
 

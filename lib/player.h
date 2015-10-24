@@ -14,11 +14,11 @@ private:
 	std::vector<Card> cards;
 public:
 	Player(std::string name);
-    Player(const Player& other);
+    //Player(const Player& other);
 	void rollDices();
 
-	void addCountry(Country *country);
-	void removeCountry(Country *country);
+	void addCountry(Country& country);
+	void removeCountry(Country& country);
     Country* findCountry(std::string countryName);
 
 	void addCard(Card card);

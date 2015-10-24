@@ -2,7 +2,11 @@
 #include "debug.h"
 
 
-Country::Country(std::string name, Continent *continent, int x, int y) {
+Country::Country(){
+    name = "";
+}
+
+Country::Country(std::string name, Continent& continent, int x, int y) {
 	this->setName(name);
 	this->setPositionX(x);
 	this->setPositionY(y);
@@ -26,18 +30,18 @@ void Country::setName(const std::string name) {
 }
 
 Continent Country::getContinent() const {
-	Continent* continent = this->continent;
-	return *continent;
+	Continent& continent = *this->continent;
+	return continent;
 }
-void Country::setContinent(Continent *continent) {
-    this->continent = continent;
+void Country::setContinent(Continent &continent) {
+    this->continent = &continent;
 }
 
 Player Country::getOwner() const {
-    Player *owner = this->owner;
-	return *owner;
+    Player* owner1 = this->owner;
+	return *owner1;
 }
-void Country::setOwner(Player owner) {
+void Country::setOwner(Player& owner) {
 	this->owner = &owner;
 }
 

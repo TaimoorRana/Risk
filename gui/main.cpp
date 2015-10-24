@@ -21,17 +21,17 @@ int main(int argc, char *argv[])
     Player *taimoor = new Player("taimoor");
     Player *rana = new Player("Rana");
     Continent *america = new Continent("America",5);
-    Country *canada = new Country("Canada",america,3,3);
-    Country *us = new Country("Us",america,3,3);
+    Country *canada = new Country("Canada",*america,3,3);
+    Country *us = new Country("Us",*america,3,3);
 
-    taimoor->addCountry(canada);
-    rana->addCountry(us);
+    taimoor->addCountry(*canada);
+    rana->addCountry(*us);
     
     std::cout << "current army in " << canada->getName()<<": " << canada->getSoldiers() << std::endl;
     std::cout << "current army in " << us->getName()<<": " << us->getSoldiers() << std::endl;
     
     DicesReferee *dicesreferee = new DicesReferee();
-    dicesreferee->startWar(canada,3,us,2);
+    dicesreferee->startWar(*canada,3,*us,2);
     
     std::cout << "Canada is attaking US" << std::endl;
     std::cout << "current army in " << canada->getName()<<" after war: " << canada->getSoldiers() << std::endl;

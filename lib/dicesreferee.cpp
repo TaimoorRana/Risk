@@ -14,7 +14,7 @@ DicesReferee::DicesReferee()
 /**
  * Calculates the loses each country occurs after the dice roll- if dices are specified
  */
-std::vector<CountryLost*> DicesReferee::calculateLosses(Country *attacker, int attackerDices, Country *defender, int defenderDices)
+std::vector<CountryLost*> DicesReferee::calculateLosses(Country& attacker, int attackerDices, Country& defender, int defenderDices)
 {
     std::vector<CountryLost*> casualtyResults = calculateLossesHelper(attacker, attackerDices, defender, defenderDices);
     
@@ -28,12 +28,12 @@ std::vector<CountryLost*> DicesReferee::calculateLosses(Country *attacker, int a
 /**
  * Calculates the loses each country occurs after the dice roll - if dices are not specified
  */
-std::vector<CountryLost*> DicesReferee::calculateLosses(Country *attacker, Country *defender){
+std::vector<CountryLost*> DicesReferee::calculateLosses(Country& attacker, Country& defender){
     // Determine amount of dices for the attacker depending on the army size
     int attackerDices;
-    if (attacker->getSoldiers() >= 4) {
+    if (attacker.getSoldiers() >= 4) {
         attackerDices = 3;
-    }else if (attacker->getSoldiers() >= 3){
+    }else if (attacker.getSoldiers() >= 3){
         attackerDices = 2;
     }else{
         attackerDices = 1;
@@ -41,7 +41,7 @@ std::vector<CountryLost*> DicesReferee::calculateLosses(Country *attacker, Count
     
     // Determine amount of dices for the defender depending on the army size
     int defenderDices;
-    if (defender->getSoldiers() >= 2) {
+    if (defender.getSoldiers() >= 2) {
         defenderDices = 2;
     }else{
         defenderDices = 1;
@@ -61,7 +61,7 @@ std::vector<CountryLost*> DicesReferee::calculateLosses(Country *attacker, Count
 /**
  * Calculates the loses each country occurs after the dice roll - HELPER
  */
-std::vector<CountryLost*> DicesReferee::calculateLossesHelper(Country *attacker, int attackerDices, Country *defender, int defenderDices){
+std::vector<CountryLost*> DicesReferee::calculateLossesHelper(Country &attacker, int attackerDices, Country &defender, int defenderDices){
     // dices rolled by both players
     std::vector<int> attackerResults = dices->roll(attackerDices);
     std::vector<int> defenderResults = dices->roll(defenderDices);
@@ -93,16 +93,17 @@ std::vector<CountryLost*> DicesReferee::calculateLossesHelper(Country *attacker,
 }
 
 
-void DicesReferee::allInMode(Country* attacker, Country* defender){
-    while (attacker->getSoldiers() > 1 && defender->getOwner().getName() != attacker->getOwner().getName()) {
+void DicesReferee::allInMode(Country& attacker, Country& defender){
+    while (attacker.getSoldiers() > 1 && defender.getOwner().getName() != attacker.getOwner().getName()) {
         std::vector<CountryLost*> casualtyResults = calculateLosses(attacker,defender);
         removeSoldiers(casualtyResults);
-        if (defender->getSoldiers() <= 0) {
-            defender->setOwner(attacker->getOwner());
+        if (defender.getSoldiers() <= 0) {
+            Player player = attacker.getOwner();
+            defender.setOwner(player);
         }
     }
     
-    if (attacker->getSoldiers() <= 1 ) {
+    if (attacker.getSoldiers() <= 1 ) {
         std::cout << "Attacker cannot attack anymore";
     }else{
         std::cout << "Attacker won and conquered";
@@ -118,8 +119,8 @@ void DicesReferee::allInMode(Country* attacker, Country* defender){
 void DicesReferee::removeSoldiers(std::vector<CountryLost*> countriesCasualties)
 {
     for(int x = 0; x < countriesCasualties.size(); x++){
-        Country *ptrCountry = countriesCasualties[x]->getCountry();
-        ptrCountry->adjustSoldiers(countriesCasualties.at(x)->getLosses());
+        Country& ptrCountry = countriesCasualties[x]->getCountry();
+        ptrCountry.adjustSoldiers(countriesCasualties.at(x)->getLosses());
         
         // delete CountryLost Object because the are no longer needed
         delete countriesCasualties[x];
@@ -127,7 +128,7 @@ void DicesReferee::removeSoldiers(std::vector<CountryLost*> countriesCasualties)
 
 }
 
-void DicesReferee::startWar(Country *attacker, int attackerDices, Country *defender, int defenderDices)
+void DicesReferee::startWar(Country& attacker, int attackerDices, Country& defender, int defenderDices)
 {
     allInMode(attacker, defender);
 }
