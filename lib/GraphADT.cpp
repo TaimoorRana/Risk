@@ -355,5 +355,14 @@ bool DirectedMyGraph::areAdjacent(std::string v, std::string w) const{
 }
 
 void MySubGraph::insertVertex(std::string name_of_country, std::string name_of_continent){
-
+    MyGraph::insertVertex(name_of_country);
+    if(allSubgraphs.find(name_of_continent) == allSubgraphs.end())
+        allSubgraphs[name_of_continent]= std::set<std::string>();
+    allSubgraphs.at(name_of_continent).insert(name_of_country);
 }
+
+my_set MySubGraph::subgraphContents(const std::string& continent_name){
+    my_set setOfCountries(allSubgraphs.at(continent_name));
+    return setOfCountries;
+}
+

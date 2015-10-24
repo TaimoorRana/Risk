@@ -3,16 +3,18 @@
 
 #include "country.h"
 #include "GraphADT.h"
-#include <map>
+#include <unordered_map>
 
 class RiskMap
 {
-    std::map<std::string, Continent> continents;
+    std::unordered_map<std::string, Continent> continents;
 public:
     RiskMap() {}
     bool adjacentCountries(const Country&, const Country&);
-    void addCountry(const std::string country, const std::string continent);
-
+    void addCountry(const std::string&, const std::string&);
+    void makeCountriesAdjacent(const std::string&, const std::string&);
+    std::unordered_map< std::string, Country > listCountriesInsideContinent(const std::string&);
+    void console_print_list_of_countries(const std::string&);
 private:
     MySubGraph mapGraph;
 };

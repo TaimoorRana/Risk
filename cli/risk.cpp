@@ -13,8 +13,18 @@ int main() {
     RiskMap map;
 
     Continent asia = Continent("Asia");
+    map.addCountry("Persia",asia.getName());
+    map.addCountry("Arabia","Asia");
+    map.addCountry("China","Asia");
+    map.addCountry("India","Asia");
+    map.addCountry("Russia","Europe");
 
-    map.addCountry("Ural",asia.getName());
+    map.console_print_list_of_countries("Asia");
+    map.console_print_list_of_countries("Europe");
+
+
+    map.makeCountriesAdjacent("Arabia","Russia");
+
 
 	return 0;
 }

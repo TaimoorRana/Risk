@@ -1,14 +1,15 @@
 #include "continent.h"
 #include "debug.h"
+#include <iostream>
 
 Continent::Continent(const std::string& name) {
 	this->setName(name);
-    std::map<std::string,Country> countries;
+    std::unordered_map<std::string,Country> countries;
 }
 
 Continent::Continent(const Continent& continent) {
 	name = continent.name;
-    std::map<std::string,Country> countries(continent.countries);
+    std::unordered_map<std::string,Country> countries(continent.countries);
 }
 
 std::string Continent::getName() const {
@@ -18,9 +19,11 @@ void Continent::setName(const std::string& name) {
 	this->name = name;
 }
 
-const std::map<std::string,Country> Continent::getCountries() const {
-	return this->countries;
+std::unordered_map<std::string,Country> Continent::getCountries() const {
+    std::unordered_map<std::string, Country> countries_returned(countries);
+    return countries_returned;
 }
-void Continent::addCountry(Country country) {
-	this->countries.push_back(country);
+
+void Continent::addCountry(const std::string& country_name){
+    this->countries[country_name]=Country(country_name);
 }
