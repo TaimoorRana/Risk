@@ -9,6 +9,8 @@ class DicesReferee{
 private:
     static const int MAX_DICES = 3;
     Dices *dices;
+    int defenderDices;
+    int attackerDices;
 public:
     DicesReferee();
     
@@ -17,7 +19,6 @@ public:
     std::vector<CountryLost*> calculateLosses(Country& attacker, int attackerDices,Country& defender, int defenderDices);
     void removeSoldiers(std::vector<CountryLost *> countriesCasualties);
     void startWar(Country& attacker, int attackerDices,Country& defender, int defenderDices);
-    std::vector<CountryLost*> compareDices(std::vector<int> attackerResult, std::vector<int> defenderResult);
     void allInMode(Country& attacker, Country& defender);
 
 };

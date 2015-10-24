@@ -29,7 +29,7 @@ public:
 	void addNewSoldiers();
 	void removeNewSoldiers();
 
-	void transferSoldiers(Country countryFrom, Country countryTo, int Soldiers);
+	void transferSoldiers(Country& countryFrom, Country& countryTo, int Soldiers);
 
 	void attackCountry(Country country);
 };

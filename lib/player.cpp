@@ -39,5 +39,12 @@ std::string Player::getName(){
     return name;
 }
 
+void Player::transferSoldiers(Country& countryFrom, Country& countryTo, int soldiers){
+    if (soldiers < countryFrom.getSoldiers() && countryFrom.getOwner().name == countryTo.getOwner().name) {
+        countryFrom.adjustSoldiers(-soldiers);
+        countryTo.adjustSoldiers(soldiers);
+    }
+}
+
 
 

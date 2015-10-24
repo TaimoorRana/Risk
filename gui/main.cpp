@@ -37,5 +37,9 @@ int main(int argc, char *argv[])
     std::cout << "current army in " << canada->getName()<<" after war: " << canada->getSoldiers() << std::endl;
     std::cout << "current army in " << us->getName()<<" after war: "<< us->getSoldiers() << std::endl;
     
+//    for (int x = 0; x < taimoor->; <#increment#>) {
+//        <#statements#>
+//    }
+    
 	return application.exec();
 }

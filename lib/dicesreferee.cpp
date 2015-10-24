@@ -16,6 +16,8 @@ DicesReferee::DicesReferee()
  */
 std::vector<CountryLost*> DicesReferee::calculateLosses(Country& attacker, int attackerDices, Country& defender, int defenderDices)
 {
+    this->attackerDices = attackerDices;
+    this->defenderDices = defenderDices;
     std::vector<CountryLost*> casualtyResults = calculateLossesHelper(attacker, attackerDices, defender, defenderDices);
     
     return casualtyResults;
@@ -30,7 +32,7 @@ std::vector<CountryLost*> DicesReferee::calculateLosses(Country& attacker, int a
  */
 std::vector<CountryLost*> DicesReferee::calculateLosses(Country& attacker, Country& defender){
     // Determine amount of dices for the attacker depending on the army size
-    int attackerDices;
+    
     if (attacker.getSoldiers() >= 4) {
         attackerDices = 3;
     }else if (attacker.getSoldiers() >= 3){
@@ -40,12 +42,14 @@ std::vector<CountryLost*> DicesReferee::calculateLosses(Country& attacker, Count
     }
     
     // Determine amount of dices for the defender depending on the army size
-    int defenderDices;
+
     if (defender.getSoldiers() >= 2) {
         defenderDices = 2;
     }else{
         defenderDices = 1;
     }
+    
+    
     
     std::vector<CountryLost*> casualtyResults = calculateLossesHelper(attacker, attackerDices, defender, defenderDices);
     
@@ -94,19 +98,21 @@ std::vector<CountryLost*> DicesReferee::calculateLossesHelper(Country &attacker,
 
 
 void DicesReferee::allInMode(Country& attacker, Country& defender){
+    Player attakerPlayer = attacker.getOwner();
     while (attacker.getSoldiers() > 1 && defender.getOwner().getName() != attacker.getOwner().getName()) {
         std::vector<CountryLost*> casualtyResults = calculateLosses(attacker,defender);
         removeSoldiers(casualtyResults);
         if (defender.getSoldiers() <= 0) {
-            Player player = attacker.getOwner();
-            defender.setOwner(player);
+            defender.setOwner(attakerPlayer);
         }
     }
+    std::cout << attacker.getSoldiers();
     
     if (attacker.getSoldiers() <= 1 ) {
-        std::cout << "Attacker cannot attack anymore";
+        std::cout << "Attacker cannot attack anymore\n";
     }else{
-        std::cout << "Attacker won and conquered";
+        std::cout << "Attacker won and conquered\n";
+        attakerPlayer.transferSoldiers(attacker, defender, attackerDices);
     }
 }
 
