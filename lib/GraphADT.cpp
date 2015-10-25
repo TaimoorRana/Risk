@@ -1,9 +1,9 @@
 #include "GraphADT.h"
 
 //02 ;; Return the set of all the vertices of the graph.
-std::set<std::string> MyGraph::vertices() const{
-    std::set<std::string> export_vertices(set_of_vertices);
-    return export_vertices;
+std::set<std::string> MyGraph::nodes() const{
+    std::set<std::string> export_nodes(set_of_vertices);
+    return export_nodes;
     }
 
 //03 ;; Return the set of all the edges of the graph.
@@ -13,7 +13,7 @@ std::set<std::string> MyGraph::edges() const{
     }
 
 //04 ;; Return the number of vertices currently present in the graph.
-int MyGraph::countAllVertices() const {return number_of_nodes; }
+int MyGraph::countAllNodes() const {return number_of_nodes; }
 
 //05 ;; Return the number of edges currently present in the graph.
 int MyGraph::countAllEdges() const {return number_of_edges; }
@@ -52,23 +52,23 @@ std::string MyGraph::opposite(std::string u, std::string e) const {
     }
 
 //09 ;; Return the set of the end vertices of edge e.
-std::set<std::string> MyGraph::endVertices(std::string edge) const{
-    std::set<std::string> eVertices;
+std::set<std::string> MyGraph::endNodes(std::string edge) const{
+    std::set<std::string> setOfEndNodes;
     graph_hashmap::const_iterator graphiter= thegraph.begin();
     while(graphiter != thegraph.end()){
         node_hashmap::const_iterator nodeiter = thegraph.at(graphiter->first).begin();
         while(nodeiter != thegraph.at(graphiter->first).end()){
             if( std::strcmp(thegraph.at(graphiter->first).at(nodeiter->first).edgename.c_str(), edge.c_str()) == 0){
                 //std::cout<<"< "<<graphiter->first<<", "<<nodeiter->first<<" >";
-                eVertices.insert(graphiter->first);
-                eVertices.insert(nodeiter->first);
-                return eVertices;
+                setOfEndNodes.insert(graphiter->first);
+                setOfEndNodes.insert(nodeiter->first);
+                return setOfEndNodes;
                 }
             *nodeiter++;
             }
         *graphiter++;
         }
-    return eVertices;
+    return setOfEndNodes;
     }
 
 //10 ;; Test whether vertices v and w are adjacent.
@@ -83,7 +83,7 @@ bool MyGraph::areAdjacent(std::string v, std::string w) const{
     }
 
 //11 ;; Insert a new vertex and
-void MyGraph::insertVertex(std::string nodename) {
+void MyGraph::insertNode(std::string nodename) {
     if (thegraph.find(nodename) == thegraph.end()){
         //  node_hashmap x;
         thegraph[nodename]= node_hashmap(); //x
@@ -95,7 +95,7 @@ void MyGraph::insertVertex(std::string nodename) {
     }
 
 //12 ;; Remove vertex v and all its incident edges
-void MyGraph::removeVertex(std::string vertexname){
+void MyGraph::removeNode(std::string vertexname){
     if ( set_of_vertices.find(vertexname) != set_of_vertices.end()){
         graph_hashmap::const_iterator graphiter = thegraph.begin();
         while (graphiter != thegraph.end()){
@@ -274,7 +274,7 @@ MyGraph MyGraph::graph_union(const MyGraph& g2) const {
     graph_hashmap::const_iterator g2_it = g2.thegraph.begin();
     while(g2_it != this->thegraph.end()){
         if ( output.thegraph.find(g2_it->first) == output.thegraph.end())
-            output.insertVertex(g2_it->first);
+            output.insertNode(g2_it->first);
         //cycle through all the edges contained in the node hashmap
         node_hashmap::const_iterator node_iter = g2_it->second.begin();
         while (node_iter != g2_it->second.end() ){
@@ -305,7 +305,7 @@ MyGraph MyGraph::graph_difference(MyGraph const& g2) const{
     graph_hashmap::const_iterator g_iter = g2.thegraph.begin();
     while( g_iter != g2.thegraph.end()){
         if(output.set_of_vertices.find(g_iter->first) != output.set_of_vertices.end())
-            output.removeVertex(g_iter->first);
+            output.removeNode(g_iter->first);
         *g_iter++;
         }
     return output;
@@ -354,8 +354,8 @@ bool DirectedMyGraph::areAdjacent(std::string v, std::string w) const{
   return false;
 }
 
-void MySubGraph::insertVertex(std::string name_of_country, std::string name_of_continent){
-    MyGraph::insertVertex(name_of_country);
+void MySubGraph::insertNode(std::string name_of_country, std::string name_of_continent){
+    MyGraph::insertNode(name_of_country);
     if(allSubgraphs.find(name_of_continent) == allSubgraphs.end())
         allSubgraphs[name_of_continent]= std::set<std::string>();
     allSubgraphs.at(name_of_continent).insert(name_of_country);

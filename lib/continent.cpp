@@ -25,5 +25,5 @@ std::unordered_map<std::string,Country> Continent::getCountries() const {
 }
 
 void Continent::addCountry(const std::string& country_name){
-    this->countries[country_name]=Country(country_name);
+    this->countries[country_name] = Country(country_name);
 }

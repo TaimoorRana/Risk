@@ -34,17 +34,17 @@ public:
     MyGraph(): number_of_nodes(0), number_of_edges(0) {} //using initialization list
     MyGraph(MyGraph const&);
     MyGraph copyUtil(const MyGraph&);
-    my_set vertices() const;
+    my_set nodes() const;
     my_set edges() const;
-    int countAllVertices() const;
+    int countAllNodes() const;
     int countAllEdges() const;
     Edge getEdge(std::string, std::string) const;
     my_set incidentEdges(std::string v) const;
     std::string opposite(std::string, std::string) const;
-    my_set endVertices(std::string) const;
+    my_set endNodes(std::string) const;
     bool areAdjacent(std::string, std::string) const;
-    void insertVertex(std::string);
-    void removeVertex(std::string);
+    void insertNode(std::string);
+    void removeNode(std::string);
     void insertEdge(std::string, std::string, std::string);
     void removeEdge(std::string, std::string);
     std::string getEdgeElem (std::string) const;
@@ -70,7 +70,7 @@ public:
 class MySubGraph : public MyGraph{
     subgraph allSubgraphs;
 public :
-    void insertVertex(std::string, std::string);
+    void insertNode(std::string, std::string);
     my_set subgraphContents(const std::string&);
 };
 
