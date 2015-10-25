@@ -365,4 +365,3 @@ my_set MySubGraph::subgraphContents(const std::string& continent_name){
     my_set setOfCountries(allSubgraphs.at(continent_name));
     return setOfCountries;
 }
-

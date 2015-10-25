@@ -7,22 +7,17 @@
 using namespace std;
 
 int main() {
-	cout << "This is a call to the library function: \n";
-	librisk_print_todo();
-
     RiskMap map;
 
     //Continent asia = Continent("Asia");
     Continent asia("Asia");
 
-    map.addCountry("Persia",asia.getName());
+    map.addCountry("Persia",asia.getNameContinent(),1);
 
-    //asia.setName("Adrianna");
-
-    map.addCountry("Arabia","Asia");
-    map.addCountry("China","Asia");
-    map.addCountry("India","Asia");
-    map.addCountry("Russia","Europe");
+    map.addCountry("Arabia","Asia",2);
+    map.addCountry("China","Asia",2);
+    map.addCountry("India","Asia",1);
+    map.addCountry("Russia","Europe",2);
 
     map.console_print_list_of_countries("Asia");
     map.console_print_list_of_countries("Europe");
@@ -40,7 +35,21 @@ int main() {
     else
         std::cout<<"Countries are NOT adjacent."<<std::endl;
 
+    if(map.adjacentCountries("China", "Persia"))
+        std::cout<<"Countries are adjacent"<<std::endl;
+    else
+        std::cout<<"Countries are NOT adjacent."<<std::endl;
+
     map.console_print_list_of_neighbours("India");
     
+    std::cout<<"Owner of Arabia: "<<map.getPlayerOwner("Arabia")<<std::endl;
+    map.setPlayerOwner("Arabia","Adrianna");
+    std::cout<<"Owner of Arabia: "<<map.getPlayerOwner("Arabia")<<std::endl;
+
+    std::cout<<"Armies in Arabia: "<<map.getArmies("Arabia")<<std::endl;
+    map.setArmies("Arabia", 10);
+    std::cout<<"Armies in Arabia: "<<map.getArmies("Arabia")<<std::endl;
+
+
 	return 0;
 }

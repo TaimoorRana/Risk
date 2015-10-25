@@ -1,29 +1,45 @@
 #include "risk_map.h"
 
-bool RiskMap::adjacentCountries(const std::string& thisCountry, const std::string& thatCountry){
-    return mapGraph.areAdjacent(thisCountry, thatCountry);
+bool RiskMap::adjacentCountries(const std::string& country_a, const std::string& country_b){
+    return mapGraph.areAdjacent(country_a, country_b);
 }
 
-void RiskMap::addCountry( const std::string& country_name, const std::string& continent_name ){
-    if(continents.find( continent_name) == continents.end() ){
-        continents[continent_name] = Continent(continent_name);
+void RiskMap::addCountry( const std::string& name_country, const std::string& name_continent, int number_armies ){
+    if(continents.find( name_continent) == continents.end() ){
+        continents[name_continent] = Continent(name_continent);
         }
-    continents.at(continent_name).addCountry(country_name);
-    mapGraph.insertNode(country_name, continent_name);
+    if(countries.find( name_country) == countries.end() ){
+        countries[name_country] = Country(name_continent, number_armies);
+    }
+    mapGraph.insertNode(name_country, name_continent);
 }
 
 void RiskMap::makeCountriesAdjacent(const std::string& country_a, const std::string& country_b){
-    mapGraph.insertEdge(country_a,country_b);
+    mapGraph.insertEdge(country_a, country_b);
 }
 
-
-
-std::unordered_map< std::string,Country > RiskMap::listCountriesInsideContinent(const std::string& name_continent){
-    return continents.at(name_continent).getCountries();
+void RiskMap::setPlayerOwner(const std::string& name_country, const std::string& name_player){
+    countries.at(name_country).setPlayer(name_player);
 }
 
-my_set RiskMap::listOfNeighbours(const std::string& country_name){
-    return mapGraph.incidentEdges(country_name);
+std::string RiskMap::getPlayerOwner(const std::string& name_country){
+    return countries.at(name_country).getPlayer();
+}
+
+void RiskMap::setArmies(const std::string& name_country, int armies){
+    countries.at(name_country).setArmies(armies);
+}
+
+int RiskMap::getArmies(const std::string& name_country){
+    return countries.at(name_country).getArmies();
+}
+
+my_set RiskMap::listCountriesInsideContinent(const std::string& name_continent){
+    return mapGraph.subgraphContents(name_continent);
+}
+
+my_set RiskMap::listOfNeighbours(const std::string& name_country){
+    return mapGraph.incidentEdges(name_country);
 }
 
 void RiskMap::console_print_list_of_neighbours(const std::string& name_country){

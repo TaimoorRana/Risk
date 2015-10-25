@@ -2,11 +2,6 @@
 #define COUNTRY_H
 
 #include <string>
-#include <vector>
-#include "continent.h"
-
-class Continent; //forward declaration
-class Player; //forward declaration
 
 class Country {
 private:
@@ -15,11 +10,12 @@ private:
     int armies;
 public:
     Country():name_of_country(""){}
-    Country(const std::string& name_of_country);
-    Country(const Country& country);
-	std::string getName() const;
-    void setName(std::string );
-    std::string getName();
+    Country(const std::string&);
+    Country(const std::string&, int);
+    Country(const Country&);
+	std::string getNameCountry() const;
+    void setNameCountry(std::string );
+    std::string getNameCountry();
     void setPlayer(const std::string&);
     std::string getPlayer();
     void setArmies(const int&);
