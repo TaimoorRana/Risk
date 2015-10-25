@@ -2,7 +2,6 @@
 #define DICESREFEREE
 #include "dices.h"
 #include "country.h"
-#include "countrylost.h"
 #include "player.h"
 class WarReferee{
 
@@ -31,7 +30,6 @@ public:
     void calculateLosses(Country& attacker, int attackerDices,Country& defender, int defenderDices);
     void startWar(Player &attacker, Country &attackerCountry, Player &defender, Country &defenderCountry);
     void allInMode(Country& attacker, Country& defenderCountry);
-    
 };
 
 

@@ -1,8 +1,7 @@
 set(LIBRARY_SOURCE_FILES
 	card.cpp card.h
 	continent.cpp continent.h
-	country.cpp country.h
-        countrylost.cpp countrylost.h
+        country.cpp country.h
         debug.cpp debug.h
         dices.cpp dices.h
         gameBoard.cpp gameBoard.h
