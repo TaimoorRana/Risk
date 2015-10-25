@@ -5,12 +5,12 @@ set(LIBRARY_SOURCE_FILES
         countrylost.cpp countrylost.h
         debug.cpp debug.h
         dices.cpp dices.h
-        dicesreferee.cpp dicesreferee.h
         gameBoard.cpp gameBoard.h
 	GraphADT.cpp GraphADT.h
 	librisk.cpp librisk.h
 	map.cpp map.h
 	player.cpp player.h
+        warreferee.cpp warreferee.h
 )
 
 add_library(lib${PROJECT_NAME} STATIC ${LIBRARY_SOURCE_FILES})
