@@ -1,6 +1,10 @@
 #include "country.h"
 #include "debug.h"
 
+Country::Country(){
+    name = "";
+}
+
 Country::Country(std::string name, Continent& continent, int x, int y) {
 	this->setName(name);
 	this->setPositionX(x);
@@ -35,8 +39,8 @@ void Country::setName(const std::string name) {
 }
 
 Continent Country::getContinent() const {
-	Continent* continent = this->continent;
-	return *continent;
+	Continent& continent = *this->continent;
+	return continent;
 }
 void Country::setContinent(Continent& continent) {
 	delete this->continent;
@@ -69,7 +73,12 @@ int Country::getSoldiers() const {
 	return this->soldiers;
 }
 void Country::setSoldiers(int soldiers) {
-	this->soldiers = soldiers;
+    this->soldiers = soldiers;
+}
+
+void Country::adjustSoldiers(int soldiers)
+{
+    this->soldiers += soldiers;
 }
 
 std::vector<Country> Country::getNeighbours() const {

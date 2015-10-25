@@ -8,31 +8,51 @@ Player::Player(std::string name)
 	this->name = name;
 }
 
-void Player::addCountry(Country *country)
+//Player::Player(const Player& other): name(other.name),reinforcements(other.reinforcements),countriesOwned(other.countriesOwned),cards(other.cards){}
+
+void Player::addCountry(Country& country)
 {
-	// TODO implement with vector
-	/*
-	if(indexOfLastElementInCardsOwned < AMOUNT_OF_COUNTRIES){
-		countriesOwned[indexOfLastElementInCountriesOwned] = country;
-		indexOfLastElementInCountriesOwned++;
-	}
-	*/
+    // TODO implement with vector
+    countriesOwned.push_back(&country);
+    country.setOwner(this);
 }
 
-void Player::removeCountry(Country *country)
-{
-	// TODO implement with vector
-	/*
-	int indexFoundAt = -1;
-	for(int x = 0; x < indexOfLastElementInCountriesOwned; x++){
-		if (countriesOwned[x]->getName() == country->getName()){
-			indexFoundAt = x;
-			break;
-		}
-	}
+//void Player::removeCountry(Country& country)
+//{
+//	// TODO implement with vector
+//    countriesOwned.erase(std::remove(countriesOwned.begin(),countriesOwned.end(),country));
+//}
 
-	if(indexFoundAt != -1){
-	}
-	*/
+Country* Player::findCountry(std::string countryName)
+{
+    for(int x = 0; x < countriesOwned.size(); x++){
+        if(countriesOwned[x]->getName() == countryName){
+            return countriesOwned[x];
+        }
+    }
+
+    // if Country is not found
+    return NULL;
 }
+
+std::string Player::getName(){
+    return name;
+}
+
+void Player::transferSoldiers(Country& countryFrom, Country& countryTo, int soldiers){
+    if (soldiers < countryFrom.getSoldiers() && countryFrom.getOwner()->getName() == countryTo.getOwner()->getName()) {
+        countryFrom.adjustSoldiers(-soldiers);
+        countryTo.adjustSoldiers(soldiers);
+    }
+}
+
+std::vector<Country> Player::getCountryOwned(){
+    std::vector<Country> listCopy;
+    for (int x = 0; x < countriesOwned.size(); x++) {
+        listCopy.push_back(*countriesOwned[x]);
+    }
+    return listCopy;
+}
+
+
 

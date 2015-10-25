@@ -20,6 +20,7 @@ private:
 	std::vector<Country> neighbours = std::vector<Country>();
 
 public:
+    Country();
 	Country(std::string name, Continent& continent, int x, int y);
 	Country(const Country& country);
 	~Country();
@@ -35,7 +36,9 @@ public:
 	void setPositionY(int y);
 	int getSoldiers() const;
 	void setSoldiers(int soldiers);
+    void adjustSoldiers(int soldiers);
 	std::vector<Country> getNeighbours() const;
 	void addNeighbour(Country country);
+
 };
 #endif // COUNTRY_H
