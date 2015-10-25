@@ -28,20 +28,26 @@ void WarReferee::calculateLosses(Country& attackerCountry, int attackerDices, Co
  */
 void WarReferee::calculateLosses(Country& attackerCountry, Country& defenderCountry){
     // Determine amount of dices for the attacker depending on the army size
+    int attackerSoldiers = attackerCountry.getSoldiers();
+    int defenderSoldiers = defenderCountry.getSoldiers();
     
-    if (attackerCountry.getSoldiers() >= 4) {
+    if (attackerSoldiers > 3 && defenderSoldiers >= 2) {
         attackerDices = 3;
-    }else if (attackerCountry.getSoldiers() == 3){
+        defenderDices = 2;
+    }else if (attackerSoldiers == 3 && defenderSoldiers >= 2){
         attackerDices = 2;
-    }else if(attackerCountry.getSoldiers() == 2 ){
+        defenderDices = 2;
+    }else if (attackerSoldiers == 2 && defenderSoldiers >= 2){
         attackerDices = 1;
-    }
-    
-    // Determine amount of dices for the defender depending on the army size
-    if (attackerDices == 1 && defenderCountry.getSoldiers() >= 1) {
         defenderDices = 1;
-    }else{
-        defenderDices = attackerDices - 1;
+    }else if (attackerSoldiers >= 3  && defenderSoldiers == 1){
+        attackerDices = 2;
+        defenderDices = 1;
+    }else if (attackerSoldiers == 2 && defenderSoldiers == 1){
+        attackerDices = 1;
+        defenderDices = 1;
+    }else {
+        std::cout << "error in calculateLosses Method\n";
     }
     
     calculateLossesHelper(attackerCountry, attackerDices, defenderCountry, defenderDices);
@@ -75,9 +81,13 @@ void WarReferee::calculateLossesHelper(Country& attackerCountry, int attackerDic
     // Remove soldiers lost from the battle
     if (attackerCountry.getSoldiers() > attackerLosses) {
         attackerCountry.adjustSoldiers(-attackerLosses);
+    }else{
+        std::cout << "Error: Could not remove soldiers from attackerCountry\n";
     }
     if (defenderCountry.getSoldiers() >= defenderLosses) {
         defenderCountry.adjustSoldiers(-defenderLosses);
+    }else{
+        std::cout << "Error: Could not remove soldiers from defenderCountry\n";
     }
 }
 
@@ -86,6 +96,7 @@ void WarReferee::calculateLossesHelper(Country& attackerCountry, int attackerDic
 
 
 void WarReferee::allInMode(Country& attackerCountry, Country& defenderCountry){
+    
     while (attackerCountry.getSoldiers() > 1 && attackerCountry.getOwner()->getName() != defenderCountry.getOwner()->getName()) {
         calculateLosses(attackerCountry,defenderCountry);
         if (defenderCountry.getSoldiers() <= 0) {
