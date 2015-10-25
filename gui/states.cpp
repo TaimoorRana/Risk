@@ -1,13 +1,9 @@
 #include "states.h"
 
-States::States()
+
+void States:: setState(playPhase newState)
 {
-Enum playPhase{ REINFORCE,ATTACK,MOVE};
-public:
-Enum getPhase();
-void setPhase(Enum currentPhase);
-
-
-
+    emit stateChanged(newState);
+    emit testSignal();
 }
 

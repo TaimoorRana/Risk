@@ -9,6 +9,8 @@ set(GUI_SOURCE_FILES
         risk.cpp risk.h
         new.h
         rect.h rect.cpp
+        States.h States.cpp
+        gameboardview.h gameboardview.cpp
 
 )
 
