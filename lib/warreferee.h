@@ -23,10 +23,11 @@ private:
     
 public:
     WarReferee();
+    ~WarReferee();
     void setPlayers(Player &attacker, Player &defender);
-    std::vector<CountryLost*> calculateLossesHelper(Country& attacker, int attackerDices, Country& defender, int defenderDices);
-    std::vector<CountryLost*> calculateLosses(Country& attacker, Country& defender);
-    std::vector<CountryLost*> calculateLosses(Country& attacker, int attackerDices,Country& defender, int defenderDices);
+    void calculateLossesHelper(Country& attacker, int attackerDices, Country& defender, int defenderDices);
+    void calculateLosses(Country& attacker, Country& defender);
+    void calculateLosses(Country& attacker, int attackerDices,Country& defender, int defenderDices);
     void removeSoldiers(std::vector<CountryLost *> countriesCasualties);
     void startWar(Player &attacker, Country &attackerCountry, Player &defender, Country &defenderCountry);
     void allInMode(Country& attacker, Country& defenderCountry);
