@@ -36,10 +36,18 @@ int main(int argc, char *argv[])
     std::cout << "Canada is attaking US" << std::endl;
     std::cout << "current army in " << canada->getName()<<" after war: " << canada->getSoldiers() << std::endl;
     std::cout << "current army in " << us->getName()<<" after war: "<< us->getSoldiers() << std::endl;
+    std::vector<Country> list = taimoor->getCountryOwned();
     
-//    for (int x = 0; x < taimoor->; <#increment#>) {
-//        <#statements#>
-//    }
+    for (int x = 0; x < list.size(); x++) {
+        std::cout << list[x].getName() << std::endl;
+    }
+    
+    delete taimoor;
+    delete rana;
+    delete america;
+    delete canada;
+    delete us;
+    delete dicesreferee;
     
 	return application.exec();
 }

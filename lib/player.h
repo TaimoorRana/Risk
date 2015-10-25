@@ -28,6 +28,7 @@ public:
     
 	void addNewSoldiers();
 	void removeNewSoldiers();
+    std::vector<Country> getCountryOwned();
 
 	void transferSoldiers(Country& countryFrom, Country& countryTo, int Soldiers);
 

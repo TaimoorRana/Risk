@@ -98,21 +98,23 @@ std::vector<CountryLost*> DicesReferee::calculateLossesHelper(Country &attacker,
 
 
 void DicesReferee::allInMode(Country& attacker, Country& defender){
-    Player attakerPlayer = attacker.getOwner();
-    while (attacker.getSoldiers() > 1 && defender.getOwner().getName() != attacker.getOwner().getName()) {
+    Player* attakerPlayer = attacker.getOwner();
+    Player* defenderPlayer = defender.getOwner();
+    while (attacker.getSoldiers() > 1 && defender.getOwner()->getName() != attacker.getOwner()->getName()) {
         std::vector<CountryLost*> casualtyResults = calculateLosses(attacker,defender);
         removeSoldiers(casualtyResults);
         if (defender.getSoldiers() <= 0) {
-            defender.setOwner(attakerPlayer);
+            attakerPlayer->addCountry(defender);
+            //defenderPlayer->removeCountry(defender);
         }
     }
-    std::cout << attacker.getSoldiers();
+    std::cout << attacker.getSoldiers() << std::endl;
     
     if (attacker.getSoldiers() <= 1 ) {
         std::cout << "Attacker cannot attack anymore\n";
     }else{
         std::cout << "Attacker won and conquered\n";
-        attakerPlayer.transferSoldiers(attacker, defender, attackerDices);
+        attakerPlayer->transferSoldiers(attacker, defender, attackerDices);
     }
 }
 

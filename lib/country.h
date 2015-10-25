@@ -27,7 +27,7 @@ public:
 	void setName(std::string name);
 	Continent getContinent() const;
     void setContinent(Continent& continent);
-	Player getOwner() const;
+	Player* getOwner() const;
 	void setOwner(Player& player);
 	int getPositionX() const;
 	void setPositionX(int x);

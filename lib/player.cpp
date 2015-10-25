@@ -40,10 +40,18 @@ std::string Player::getName(){
 }
 
 void Player::transferSoldiers(Country& countryFrom, Country& countryTo, int soldiers){
-    if (soldiers < countryFrom.getSoldiers() && countryFrom.getOwner().name == countryTo.getOwner().name) {
+    if (soldiers < countryFrom.getSoldiers() && countryFrom.getOwner()->getName() == countryTo.getOwner()->getName()) {
         countryFrom.adjustSoldiers(-soldiers);
         countryTo.adjustSoldiers(soldiers);
     }
+}
+
+std::vector<Country> Player::getCountryOwned(){
+    std::vector<Country> listCopy;
+    for (int x = 0; x < countriesOwned.size(); x++) {
+        listCopy.push_back(*countriesOwned[x]);
+    }
+    return listCopy;
 }
 
 
