@@ -12,7 +12,6 @@ void WarReferee::setPlayers(Player& attacker1, Player& defender1){
     this->attacker = &attacker1;
 }
 
-
 /**
  * Calculates the loses each country occurs after the dice roll- if dices are specified
  */
@@ -40,13 +39,16 @@ std::vector<CountryLost*> WarReferee::calculateLosses(Country& attacker, Country
         attackerDices = 1;
     }
     
-    // Determine amount of dices for the defender depending on the army size
-
-    if (defender.getSoldiers() >= 2) {
-        defenderDices = 2;
-    }else{
-        defenderDices = 1;
+    if(attackerDices == 1){
+        std::cout << attackerDices << "\n";
     }
+    // Determine amount of dices for the defender depending on the army size
+    if (attackerDices == 1 && defender.getSoldiers() >= 1) {
+        defenderDices = 1;
+    }else{
+        defenderDices = attackerDices - 1;
+    }
+    
     
     
     std::vector<CountryLost*> casualtyResults = calculateLossesHelper(attacker, attackerDices, defender, defenderDices);
@@ -54,9 +56,6 @@ std::vector<CountryLost*> WarReferee::calculateLosses(Country& attacker, Country
     return casualtyResults;
     
 }
-
-
-
 
 
 
@@ -81,10 +80,9 @@ std::vector<CountryLost*> WarReferee::calculateLossesHelper(Country& attackerCou
         }
     }
     
-    if ((defenderCountry.getSoldiers() <= 0 )) {
-        std::cout <<"attacker soldiers: "<< attackerCountry.getSoldiers() << "\n";
-        std::cout <<"defender soldiers: "<< defenderCountry.getSoldiers() << "\n";
-    }
+//    if ((attackerCountry.getSoldiers() <= 2 )) {
+//        std::cout <<"attacker soldiers: "<< attackerCountry.getSoldiers() << "\n";
+//    }
     
     std::vector<CountryLost*> casualtyResults;
     
@@ -101,8 +99,6 @@ std::vector<CountryLost*> WarReferee::calculateLossesHelper(Country& attackerCou
 
 
 void WarReferee::allInMode(Country& attackerCountry, Country& defenderCountry){
-//    Player* attakerPlayer = attacker.getOwner();
-//    Player* defenderPlayer = defender.getOwner();
     while (attackerCountry.getSoldiers() > 1 && attackerCountry.getOwner()->getName() != defenderCountry.getOwner()->getName()) {
         std::vector<CountryLost*> casualtyResults = calculateLosses(attackerCountry,defenderCountry);
         removeSoldiers(casualtyResults);
