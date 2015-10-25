@@ -12,10 +12,11 @@ class RiskMap
 
 public:
     RiskMap() {}
-    bool adjacentCountries(const Country&, const Country&);
+    bool adjacentCountries(const std::string&, const std::string&);
     void addCountry(const std::string&, const std::string&);
     void makeCountriesAdjacent(const std::string&, const std::string&);
     std::unordered_map< std::string, Country > listCountriesInsideContinent(const std::string&);
+    void console_print_list_of_neighbours(const std::string& name_country);
     void console_print_list_of_countries(const std::string&);
     my_set listOfNeighbours(const std::string&);
 

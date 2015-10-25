@@ -1,7 +1,7 @@
 #include "risk_map.h"
 
-bool RiskMap::adjacentCountries(const Country& thisCountry, const Country& thatCountry){
-    return mapGraph.areAdjacent(thisCountry.getName(), thatCountry.getName());
+bool RiskMap::adjacentCountries(const std::string& thisCountry, const std::string& thatCountry){
+    return mapGraph.areAdjacent(thisCountry, thatCountry);
 }
 
 void RiskMap::addCountry( const std::string& country_name, const std::string& continent_name ){
@@ -17,13 +17,23 @@ void RiskMap::makeCountriesAdjacent(const std::string& country_a, const std::str
 }
 
 
+
 std::unordered_map< std::string,Country > RiskMap::listCountriesInsideContinent(const std::string& name_continent){
     return continents.at(name_continent).getCountries();
 }
 
-std::set<std::string> RiskMap::listOfNeighbours(const std::string& country_name){
-    std::set<std::string> listNeighbours(mapGraph.endNodes(country_name));
-    return listNeighbours;
+my_set RiskMap::listOfNeighbours(const std::string& country_name){
+    return mapGraph.incidentEdges(country_name);
+}
+
+void RiskMap::console_print_list_of_neighbours(const std::string& name_country){
+    std::cout<<"Neighbours of: "<<name_country<<std::endl;
+    my_set neighbours(listOfNeighbours(name_country));
+    my_set::const_iterator c_iter = neighbours.begin();
+    while (c_iter != neighbours.end()) {
+        std::cout<<"\t\t\t"<<*c_iter<<std::endl;
+        c_iter++;
+    }
 }
 
 void RiskMap::console_print_list_of_countries(const std::string& name_continent){
@@ -35,6 +45,7 @@ void RiskMap::console_print_list_of_countries(const std::string& name_continent)
         c_iter++;
     }
 }
+
 
 
 

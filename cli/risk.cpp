@@ -34,7 +34,13 @@ int main() {
     map.makeCountriesAdjacent("Persia","Russia");
     map.makeCountriesAdjacent("China","Persia");
     map.makeCountriesAdjacent("India","China");
+    
+    if(map.adjacentCountries("India", "Russia"))
+        std::cout<<"Countries are adjacent"<<std::endl;
+    else
+        std::cout<<"Countries are NOT adjacent."<<std::endl;
 
-
+    map.console_print_list_of_neighbours("India");
+    
 	return 0;
 }

@@ -39,7 +39,7 @@ std::set<std::string> MyGraph::incidentEdges(std::string v) const{
     return set_of_incidents;
     }
 
-//08 ;; Return the end-vertex of edge e distinct from vertex v
+//08 ;; Return the end-node of edge e distinct from node v
 // an error occurs if e is not incident on v.
 std::string MyGraph::opposite(std::string u, std::string e) const {
     node_hashmap::const_iterator node_iterator = thegraph.at(u).begin();
@@ -51,7 +51,7 @@ std::string MyGraph::opposite(std::string u, std::string e) const {
     return std::string();
     }
 
-//09 ;; Return the set of the end vertices of edge e.
+//09 ;; Return the set of the end nodes of edge e.
 std::set<std::string> MyGraph::endNodes(std::string edge) const{
     std::set<std::string> setOfEndNodes;
     graph_hashmap::const_iterator graphiter= thegraph.begin();
@@ -71,7 +71,7 @@ std::set<std::string> MyGraph::endNodes(std::string edge) const{
     return setOfEndNodes;
     }
 
-//10 ;; Test whether vertices v and w are adjacent.
+//10 ;; Test whether nodes v and w are adjacent.
 bool MyGraph::areAdjacent(std::string v, std::string w) const{
     if (set_of_vertices.find(v) != set_of_vertices.end() &&
         set_of_vertices.find(w) != set_of_vertices.end()){
@@ -82,7 +82,7 @@ bool MyGraph::areAdjacent(std::string v, std::string w) const{
     return false;
     }
 
-//11 ;; Insert a new vertex and
+//11 ;; Insert a new node
 void MyGraph::insertNode(std::string nodename) {
     if (thegraph.find(nodename) == thegraph.end()){
         //  node_hashmap x;
@@ -94,7 +94,7 @@ void MyGraph::insertNode(std::string nodename) {
         std::cout<<"Error: Could not add vertex."<<std::endl;
     }
 
-//12 ;; Remove vertex v and all its incident edges
+//12 ;; Remove node v and all its incident edges
 void MyGraph::removeNode(std::string vertexname){
     if ( set_of_vertices.find(vertexname) != set_of_vertices.end()){
         graph_hashmap::const_iterator graphiter = thegraph.begin();
@@ -117,7 +117,7 @@ void MyGraph::insertEdge(std::string v, std::string w) {
     }
 
 //;13 ;; Create and insert a new undirected edge with
-//end vertices v and w and storing element x and
+//end vertices v and w and storing element x
 void MyGraph::insertEdge(std::string v, std::string w, std::string x) {
     if( thegraph.find(v) != thegraph.end() && thegraph.find(w) != thegraph.end()){
         if(thegraph[v].find(w) == thegraph[v].end() && thegraph[w].find(v) == thegraph[w].end()){
@@ -136,7 +136,7 @@ void MyGraph::insertEdge(std::string v, std::string w, std::string x) {
         std::cout<<"ERROR: Cannot proceed, one or more vertices don't exist."<<std::endl;
     }
 
-//14 ;; Remove edge (v, w) and
+//14 ;; Remove edge (v, w) 
 void MyGraph::removeEdge(std::string v, std::string w) {
     if( thegraph.find(v) != thegraph.end() && thegraph.find(w) != thegraph.end()){
         std::string edge = thegraph[v][w].edgename;
