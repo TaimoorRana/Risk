@@ -10,20 +10,20 @@ class WarReferee{
 private:
     
     static const int MAX_DICES = 3;
-    // used for singleton pattern
-    static bool instanceFlag;
-    static WarReferee* instance;
-    WarReferee();
     
-    Dices *dices;
+    // Players
+    Player& attacker;
+    Player& defender;
+    
     
     // dices used by the players
+    Dices *dices;
     int defenderDices;
     int attackerDices;
     
 public:
-    static void setPlayers(Player attacker, Player defender);
-    static WarReferee* getInstance();
+    WarReferee();
+    void setPlayers(Player attacker, Player defender);
     std::vector<CountryLost*> calculateLossesHelper(Country& attacker, int attackerDices, Country& defender, int defenderDices);
     std::vector<CountryLost*> calculateLosses(Country& attacker, Country& defender);
     std::vector<CountryLost*> calculateLosses(Country& attacker, int attackerDices,Country& defender, int defenderDices);

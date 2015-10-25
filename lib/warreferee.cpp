@@ -5,11 +5,10 @@
 WarReferee::WarReferee()
 {
     dices = new Dices(MAX_DICES);
-    
 }
 
 void WarReferee::setPlayers(Player attacker1, Player defender1){
-    defender = defender1;
+    this->defender = defender1;
     attacker = attacker1;
 }
 
@@ -143,17 +142,5 @@ void WarReferee::removeSoldiers(std::vector<CountryLost*> countriesCasualties)
 void WarReferee::startWar(Country& attacker, int attackerDices, Country& defender, int defenderDices)
 {
     allInMode(attacker, defender);
-}
-bool WarReferee::instanceFlag = false;
-WarReferee* WarReferee::instance = NULL;
-
-WarReferee* WarReferee::getInstance(){
-    
-    if (!instanceFlag) {
-        instance = new WarReferee();
-        instanceFlag = true;
-        return instance;
-    }
-    return instance;
 }
 
