@@ -25,8 +25,8 @@ int main(int argc, char *argv[])
     taimoor.addCountry(canada);
     rana.addCountry(us);
     WarReferee warreferee;
-    canada.adjustSoldiers(20);
-    us.adjustSoldiers(20);
+    canada.addSoldiers(20);
+    us.addSoldiers(20);
     std::cout << canada.getSoldiers() << "\n";
     std::cout << us.getSoldiers() << "\n";
     warreferee.startWar(taimoor,canada,rana,us);

@@ -3,6 +3,11 @@
 
 Country::Country(){
     name = "";
+    owner = nullptr;
+    x = 0;
+    y = 0;
+    soldiers = 0;
+    continent = nullptr;
 }
 
 Country::Country(std::string name, Continent& continent, int x, int y) {
@@ -76,9 +81,18 @@ void Country::setSoldiers(int soldiers) {
     this->soldiers = soldiers;
 }
 
-void Country::adjustSoldiers(int soldiers)
+void Country::addSoldiers(int soldiers)
 {
+    
     this->soldiers += soldiers;
+    
+}
+
+void Country::removeSoldiers(int soldiers)
+{
+    
+    this->soldiers -= soldiers;
+    
 }
 
 std::vector<Country> Country::getNeighbours() const {

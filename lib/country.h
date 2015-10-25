@@ -11,12 +11,10 @@ class Player; //forward declaration
 
 class Country {
 private:
-	std::string name = "";
-	Continent* continent = NULL;
-	Player* owner = NULL;
-	int x = 0;
-	int y = 0;
-	int soldiers = 0;
+	std::string name;
+	Continent* continent;
+	Player* owner;
+	int x, y, soldiers;
 	std::vector<Country> neighbours = std::vector<Country>();
 
 public:
@@ -36,7 +34,8 @@ public:
 	void setPositionY(int y);
 	int getSoldiers() const;
 	void setSoldiers(int soldiers);
-    void adjustSoldiers(int soldiers);
+    void removeSoldiers(int soldiers);
+    void addSoldiers(int soldiers);
 	std::vector<Country> getNeighbours() const;
 	void addNeighbour(Country country);
 

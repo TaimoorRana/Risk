@@ -80,12 +80,12 @@ void WarReferee::calculateLossesHelper(Country& attackerCountry, int attackerDic
     
     // Remove soldiers lost from the battle
     if (attackerCountry.getSoldiers() > attackerLosses) {
-        attackerCountry.adjustSoldiers(-attackerLosses);
+        attackerCountry.removeSoldiers(attackerLosses);
     }else{
         std::cout << "Error: Could not remove soldiers from attackerCountry\n";
     }
     if (defenderCountry.getSoldiers() >= defenderLosses) {
-        defenderCountry.adjustSoldiers(-defenderLosses);
+        defenderCountry.removeSoldiers(defenderLosses);
     }else{
         std::cout << "Error: Could not remove soldiers from defenderCountry\n";
     }
