@@ -3,6 +3,9 @@
 #include <QLabel>
 #include <QDebug>
 #include <QVariant>
+#include <QMenuBar>
+#include <QAction>
+#include <string>
 
 GameBoardView::GameBoardView() :
     QWidget()
@@ -37,10 +40,14 @@ void GameBoardView::beginGame(){
         qDebug() << "Button Clicked ";
     }
     else{
+        turnNumber =1;
         gameBegun = true;
         qDebug() << "Button Clicked ";
         //check if widget exists
         numberOfPlayers = comboBox->currentText().toInt();
+        //char *intstr = itoa(numberOfPlayers);
+       // numberOfPlayersString = string(intstr);
+        arrayOfPlayers = new int[numberOfPlayers];
         qDebug() << "Button Clicked "<<numberOfPlayers;
         mainLayout->removeWidget(comboBoxLabel);
         delete comboBoxLabel;
@@ -53,7 +60,23 @@ void GameBoardView::beginGame(){
         delete beginGameButton;
         delete comboBoxLabel;*/
         //how to get int to string
-        gameBeganLabel = new QLabel("Your Game has begin");
+
+        gameBeganLabel = new QLabel("Your Game has begun");
+        gameMenu = new QMenuBar(0);
+        //reinforce attack, move
+        reinforceAction = new QAction("reinforce",this);
+        connect (reinforceAction,SIGNAL(triggered()),this,SLOT(reinforcePhase()));
+        attackAction = new QAction("attack",this);\
+        connect (attackAction,SIGNAL(triggered()),this,SLOT(attackPhase()));
+        moveAction = new QAction("move",this);
+        connect (moveAction,SIGNAL(triggered()),this,SLOT(movePhase()));
+        endTurnAction = new QAction ("endTurn", this);
+        connect(endTurnAction,SIGNAL(triggered()),this,SLOT(endTurn()));
+        gameMenu->addAction(reinforceAction);
+        gameMenu->addAction(attackAction);
+        gameMenu->addAction(moveAction);
+        gameMenu->addAction(endTurnAction);
+        mainLayout->addWidget(gameMenu);
 
         mainLayout->addWidget(gameBeganLabel);
     }
@@ -68,3 +91,27 @@ void GameBoardView::endOfGame(){
 GameBoardView::~GameBoardView(){
 
 }
+void GameBoardView:: movePhase(){
+    moveLabel = new QLabel ("Moving");
+    mainLayout->addWidget(moveLabel);
+}
+void GameBoardView::reinforcePhase(){
+    reinforceLabel = new QLabel ("Reinforce");
+    mainLayout->addWidget(reinforceLabel);
+}
+void GameBoardView::attackPhase(){
+    attackLabel = new QLabel("Attack");
+    mainLayout->addWidget(attackLabel);
+}
+void GameBoardView::endTurn(){
+    mainLayout->removeWidget(reinforceLabel);
+    delete reinforceLabel;
+    mainLayout->removeWidget(attackLabel);
+    delete attackLabel;
+    mainLayout->removeWidget(moveLabel);
+    delete moveLabel;
+    turnNumber++;
+    //turnNumber = turnNumber % numberOfPlayers;
+
+}
+
