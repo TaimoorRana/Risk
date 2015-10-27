@@ -1,4 +1,4 @@
-#include "gameboardview.h"
+
 #include <QComboBox>
 #include <QLabel>
 #include <QDebug>
@@ -6,6 +6,7 @@
 #include <QMenuBar>
 #include <QAction>
 #include <string>
+#include "gameboardview.h"
 
 GameBoardView::GameBoardView() :
     QWidget()
@@ -25,7 +26,7 @@ GameBoardView::GameBoardView() :
     comboBoxLabel = new QLabel("Number of Players");
     mainLayout->addWidget(comboBoxLabel);
     mainLayout->addWidget(comboBox);
-
+    currentMode = reinforceMode;
     beginGameButton = new QPushButton(this);
     beginGameButton->setText("submit");
     mainLayout->addWidget(beginGameButton);
@@ -92,26 +93,41 @@ GameBoardView::~GameBoardView(){
 
 }
 void GameBoardView:: movePhase(){
-    moveLabel = new QLabel ("Moving");
-    mainLayout->addWidget(moveLabel);
+    if(currentMode == moveMode){
+        moveLabel = new QLabel ("Moving turn ended select endOfTurn");
+        mainLayout->addWidget(moveLabel);
+        currentMode = endOfTurnMode;
+    }
+
 }
 void GameBoardView::reinforcePhase(){
-    reinforceLabel = new QLabel ("Reinforce");
-    mainLayout->addWidget(reinforceLabel);
+    if(currentMode==reinforceMode){
+        reinforceLabel = new QLabel ("Reinforce has been processed now please go to  attackPhase");
+        mainLayout->addWidget(reinforceLabel);
+        currentMode = attackMode;
+    }
+
 }
 void GameBoardView::attackPhase(){
-    attackLabel = new QLabel("Attack");
-    mainLayout->addWidget(attackLabel);
+    if(currentMode==attackMode){
+        attackLabel = new QLabel("Attack phase has been processed now please go to movePhase ");
+        mainLayout->addWidget(attackLabel);
+        currentMode = moveMode;
+    }
+
 }
 void GameBoardView::endTurn(){
-    mainLayout->removeWidget(reinforceLabel);
-    delete reinforceLabel;
-    mainLayout->removeWidget(attackLabel);
-    delete attackLabel;
-    mainLayout->removeWidget(moveLabel);
-    delete moveLabel;
-    turnNumber++;
-    //turnNumber = turnNumber % numberOfPlayers;
+    if(currentMode ==endOfTurnMode){
+        mainLayout->removeWidget(reinforceLabel);
+        delete reinforceLabel;
+        mainLayout->removeWidget(attackLabel);
+        delete attackLabel;
+        mainLayout->removeWidget(moveLabel);
+        delete moveLabel;
+        turnNumber++;
+        currentMode = reinforceMode;
+    }
+
 
 }
 

@@ -25,6 +25,8 @@ public:
     //may need outside qLabel and combobox later
     void turns();
     void endOfTurn();
+    enum Mode{reinforceMode,attackMode,moveMode, endOfTurnMode};
+    Mode currentMode= reinforceMode;
 private:
     // main layout
     QVBoxLayout *mainLayout;
@@ -52,6 +54,7 @@ private:
     QAction *attackAction;
     QAction *endTurnAction;
     int turnNumber;
+
     //slot for each possibili
 
 
