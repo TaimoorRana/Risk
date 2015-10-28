@@ -1,4 +1,3 @@
-
 #include <QComboBox>
 #include <QLabel>
 #include <QDebug>
@@ -6,7 +5,9 @@
 #include <QMenuBar>
 #include <QAction>
 #include <string>
+#include <QString>
 #include "gameboardview.h"
+using namespace std;
 
 GameBoardView::GameBoardView() :
     QWidget()
@@ -48,6 +49,8 @@ void GameBoardView::beginGame(){
         numberOfPlayers = comboBox->currentText().toInt();
         //char *intstr = itoa(numberOfPlayers);
        // numberOfPlayersString = string(intstr);
+        //string playersString=std::string(itoa(numberOfPlayers));
+        string playersString=std::to_string(numberOfPlayers);
         arrayOfPlayers = new int[numberOfPlayers];
         qDebug() << "Button Clicked "<<numberOfPlayers;
         mainLayout->removeWidget(comboBoxLabel);
@@ -62,7 +65,9 @@ void GameBoardView::beginGame(){
         delete comboBoxLabel;*/
         //how to get int to string
 
-        gameBeganLabel = new QLabel("Your Game has begun");
+        //QString *gameBegun= new QString("Your Game has begun");
+        //gameBegun->append(playersString);
+        gameBeganLabel = new QLabel((QString("Your Game has begun Players:%1").arg(1)));
         gameMenu = new QMenuBar(0);
         //reinforce attack, move
         reinforceAction = new QAction("reinforce",this);
@@ -116,6 +121,8 @@ void GameBoardView::attackPhase(){
     }
 
 }
+/* something
+ */
 void GameBoardView::endTurn(){
     if(currentMode ==endOfTurnMode){
         mainLayout->removeWidget(reinforceLabel);
@@ -125,7 +132,14 @@ void GameBoardView::endTurn(){
         mainLayout->removeWidget(moveLabel);
         delete moveLabel;
         turnNumber++;
+        if (turnNumber>numberOfPlayers){
+            turnNumber =1;
+        }
         currentMode = reinforceMode;
+        mainLayout->removeWidget(gameBeganLabel);
+        delete gameBeganLabel;
+        gameBeganLabel = new QLabel((QString("Your Game has begun Players:%1").arg(turnNumber)));
+        mainLayout->addWidget(gameBeganLabel);
     }
 
 
