@@ -13,7 +13,7 @@
 #include "continent.h"
 #include "warreferee.h"
 #include "score.h"
-
+#include "button.h"
 int main(int argc, char *argv[])
 {
 
@@ -40,14 +40,14 @@ int main(int argc, char *argv[])
     scene->addItem(ranaScore);
 
 
-    QPushButton* button = new QPushButton("Roll Dices");
+    Button* button = new Button("Roll Dices");
     button->move(0,40);
-    scene->addWidget(button);
-    //QObject::connect(button,SIGNAL(clicked()),,SLOT())
 
-    warreferee.startWar(taimoor,canada,rana,us);
-    std::cout << canada.getSoldiers() << "\n";
-    std::cout << us.getSoldiers() << "\n";
+    QObject::connect(button,SIGNAL(clicked()),button,SLOT(pressed(taimoor,canada,rana,us)));
+    scene->addWidget(button);
+    //warreferee.startWar(taimoor,canada,rana,us);
+//    std::cout << canada.getSoldiers() << "\n";
+//    std::cout << us.getSoldiers() << "\n";
 
     view->show();
 

@@ -19,3 +19,7 @@ int Score::getScore()
 {
     return score;
 }
+
+void Score::update(int score){
+    setPlainText(QString("Score: ") + QString::number(score));
+}

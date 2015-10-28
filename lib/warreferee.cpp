@@ -30,23 +30,22 @@ void WarReferee::calculateLosses(Country& attackerCountry, Country& defenderCoun
     // Determine amount of dices for the attacker depending on the army size
     int attackerSoldiers = attackerCountry.getSoldiers();
     int defenderSoldiers = defenderCountry.getSoldiers();
-    
-    if (attackerSoldiers > 3 && defenderSoldiers >= 2) {
+
+    if (attackerSoldiers > 3){
         attackerDices = 3;
-        defenderDices = 2;
-    }else if (attackerSoldiers == 3 && defenderSoldiers >= 2){
+    }else if(attackerSoldiers == 3){
         attackerDices = 2;
+    }else if(attackerSoldiers == 2){
+        attackerDices = 1;
+    }else{
+        std::cout << "error in calculateLosses Method\n";
+    }
+
+    if(defenderSoldiers >= 2){
         defenderDices = 2;
-    }else if (attackerSoldiers == 2 && defenderSoldiers >= 2){
-        attackerDices = 1;
+    }else if(defenderSoldiers == 1){
         defenderDices = 1;
-    }else if (attackerSoldiers >= 3  && defenderSoldiers == 1){
-        attackerDices = 2;
-        defenderDices = 1;
-    }else if (attackerSoldiers == 2 && defenderSoldiers == 1){
-        attackerDices = 1;
-        defenderDices = 1;
-    }else {
+    }else{
         std::cout << "error in calculateLosses Method\n";
     }
     
