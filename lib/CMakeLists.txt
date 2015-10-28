@@ -1,4 +1,5 @@
 set(LIBRARY_SOURCE_FILES
+<<<<<<< HEAD
 	card.cpp card.h
 	continent.cpp continent.h
 	country.cpp country.h
@@ -11,6 +12,15 @@ set(LIBRARY_SOURCE_FILES
 	librisk.cpp librisk.h
 	map.cpp map.h
 	player.cpp player.h
+=======
+	librisk.cpp
+	GraphADT.cpp
+        risk_map.cpp
+	continent.cpp continent.h
+	country.cpp country.h
+	GraphADT.cpp GraphADT.h
+	librisk.cpp librisk.h
+>>>>>>> adrianna
 )
 
 add_library(lib${PROJECT_NAME} STATIC ${LIBRARY_SOURCE_FILES})

@@ -2,61 +2,54 @@
 
 #include "librisk.h"
 #include "GraphADT.h"
+#include "risk_map.h"
 
 using namespace std;
 
 int main() {
-	cout << "This is a call to the library function: \n";
-	librisk_print_todo();
+    RiskMap map;
 
-    std::cout<<"Starting GraphADT code:"<<std::endl;
-    MyGraph g1;
-    printSet(g1.vertices());
+    //Continent asia = Continent("Asia");
+    Continent asia("Asia");
 
-    g1.insertVertex("France");
-    std::cout<<"Vertices: "<<g1.countAllVertices()<<std::endl;
-    printSet(g1.vertices());
+    map.addCountry("Persia",asia.getNameContinent(),1);
 
-    g1.insertVertex("Spain");
-    std::cout<<"Vertices: "<<g1.countAllVertices()<<std::endl;
+    map.addCountry("Arabia","Asia",2);
+    map.addCountry("China","Asia",2);
+    map.addCountry("India","Asia",1);
+    map.addCountry("Russia","Europe",2);
 
-    printSet(g1.vertices());
+    map.console_print_list_of_countries("Asia");
+    map.console_print_list_of_countries("Europe");
 
-    std::cout<<"Edges: "<<g1.countAllEdges()<<std::endl;
+    map.makeCountriesAdjacent("Arabia","Russia");
+    map.makeCountriesAdjacent("Arabia","India");
+    map.makeCountriesAdjacent("India","Persia");
+    map.makeCountriesAdjacent("Persia","Arabia");
+    map.makeCountriesAdjacent("Persia","Russia");
+    map.makeCountriesAdjacent("China","Persia");
+    map.makeCountriesAdjacent("India","China");
+    
+    if(map.adjacentCountries("India", "Russia"))
+        std::cout<<"Countries are adjacent"<<std::endl;
+    else
+        std::cout<<"Countries are NOT adjacent."<<std::endl;
 
-    g1.insertEdge("Spain","France","E1");
-    std::cout<<"Edges: "<<g1.countAllEdges()<<std::endl;
+    if(map.adjacentCountries("China", "Persia"))
+        std::cout<<"Countries are adjacent"<<std::endl;
+    else
+        std::cout<<"Countries are NOT adjacent."<<std::endl;
 
-    printSet(g1.edges());
+    map.console_print_list_of_neighbours("India");
+    
+    std::cout<<"Owner of Arabia: "<<map.getPlayerOwner("Arabia")<<std::endl;
+    map.setPlayerOwner("Arabia","Adrianna");
+    std::cout<<"Owner of Arabia: "<<map.getPlayerOwner("Arabia")<<std::endl;
 
-    g1.removeEdge("Spain","France");
-    std::cout<<"Edges: "<<g1.countAllEdges()<<std::endl;
+    std::cout<<"Armies in Arabia: "<<map.getArmies("Arabia")<<std::endl;
+    map.setArmies("Arabia", 10);
+    std::cout<<"Armies in Arabia: "<<map.getArmies("Arabia")<<std::endl;
 
-    printSet(g1.edges());
-
-    g1.insertEdge("France","Spain","E2");
-    std::cout<<"Edges: "<<g1.countAllEdges()<<std::endl;
-
-    g1.printGraph();
-    printSet(g1.edges());
-
-    std::cout<<g1.getEdgeElem("E1")<<std::endl;
-    std::cout<<g1.getEdgeElem("E2")<<std::endl;
-    g1.replaceEdgeElem("E2","Ex2");
-    std::cout<<g1.getEdgeElem("E2")<<std::endl;
-
-
-    printSet(g1.edges());
-    printSet(g1.vertices());
-    g1.removeVertex("France");
-
-    printSet(g1.edges());
-    printSet(g1.vertices());
-
-    g1.removeVertex("Spain");
-
-    g1.printGraph();
-
-
+    std::cout<<"Country India belongs to: "<<map.getContinentName("India")<<std::endl;
 	return 0;
 }

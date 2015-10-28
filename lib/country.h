@@ -2,43 +2,23 @@
 #define COUNTRY_H
 
 #include <string>
-#include <vector>
-#include "continent.h"
-#include "player.h"
-
-class Continent; //forward declaration
-class Player; //forward declaration
 
 class Country {
 private:
-	std::string name = "";
-	Continent* continent = NULL;
-	Player* owner = NULL;
-	int x = 0;
-	int y = 0;
-	int soldiers = 0;
-	std::vector<Country> neighbours = std::vector<Country>();
-
+    std::string name_of_country;
+    std::string name_of_player;
+    int armies;
 public:
-    Country();
-	Country(std::string name, Continent& continent, int x, int y);
-	Country(const Country& country);
-	~Country();
-	std::string getName() const;
-	void setName(std::string name);
-	Continent getContinent() const;
-	void setContinent(Continent& continent);
-	Player* getOwner() const;
-	void setOwner(Player* player);
-	int getPositionX() const;
-	void setPositionX(int x);
-	int getPositionY() const;
-	void setPositionY(int y);
-	int getSoldiers() const;
-	void setSoldiers(int soldiers);
-    void adjustSoldiers(int soldiers);
-	std::vector<Country> getNeighbours() const;
-	void addNeighbour(Country country);
-
+    Country():name_of_country(""){}
+    Country(const std::string&);
+    Country(const std::string&, int);
+    Country(const Country&);
+	std::string getNameCountry() const;
+    void setNameCountry(std::string );
+    std::string getNameCountry();
+    void setPlayer(const std::string&);
+    std::string getPlayer();
+    void setArmies(const int&);
+    int getArmies();
 };
 #endif // COUNTRY_H
