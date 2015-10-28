@@ -50,6 +50,6 @@ int main() {
     map.setArmies("Arabia", 10);
     std::cout<<"Armies in Arabia: "<<map.getArmies("Arabia")<<std::endl;
 
-
+    std::cout<<"Country India belongs to: "<<map.getContinentName("India")<<std::endl;
 	return 0;
 }

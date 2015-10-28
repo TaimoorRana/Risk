@@ -34,6 +34,10 @@ int RiskMap::getArmies(const std::string& name_country){
     return countries.at(name_country).getArmies();
 }
 
+std::string RiskMap::getContinentName(const std::string& name_country){
+    return mapGraph.getSubgraphName(name_country);
+}
+
 my_set RiskMap::listCountriesInsideContinent(const std::string& name_continent){
     return mapGraph.subgraphContents(name_continent);
 }

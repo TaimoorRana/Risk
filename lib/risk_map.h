@@ -7,7 +7,6 @@
 #include "continent.h"
 #include "GraphADT.h"
 
-
 class RiskMap
 {
     std::unordered_map<std::string, Continent> continents;
@@ -24,12 +23,11 @@ public:
     std::string getPlayerOwner(const std::string&);
     void setArmies(const std::string&, int);
     int getArmies(const std::string&);
+    std::string getContinentName(const std::string&);
 
     my_set listCountriesInsideContinent(const std::string&);
-    void console_print_list_of_neighbours(const std::string& name_country);
+    void console_print_list_of_neighbours(const std::string&);
     void console_print_list_of_countries(const std::string&);
     my_set listOfNeighbours(const std::string&);
-
 };
-
 #endif

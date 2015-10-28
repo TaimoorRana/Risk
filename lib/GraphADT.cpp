@@ -359,9 +359,15 @@ void MySubGraph::insertNode(std::string name_of_country, std::string name_of_con
     if(allSubgraphs.find(name_of_continent) == allSubgraphs.end())
         allSubgraphs[name_of_continent]= std::set<std::string>();
     allSubgraphs.at(name_of_continent).insert(name_of_country);
+    countries_continents[name_of_country]=name_of_continent;
 }
 
-my_set MySubGraph::subgraphContents(const std::string& continent_name){
-    my_set setOfCountries(allSubgraphs.at(continent_name));
+my_set MySubGraph::subgraphContents(const std::string& name_continent){
+    my_set setOfCountries(allSubgraphs.at(name_continent));
     return setOfCountries;
 }
+
+std::string MySubGraph::getSubgraphName(const std::string& name_country){
+    return countries_continents.at(name_country);
+}
+

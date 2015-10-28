@@ -69,9 +69,12 @@ public:
 
 class MySubGraph : public MyGraph{
     subgraph allSubgraphs;
+    std::unordered_map <std::string, std::string> countries_continents;
+
 public :
     void insertNode(std::string, std::string);
     my_set subgraphContents(const std::string&);
+    std::string getSubgraphName(const std::string&);
 };
 
 #endif // GRAPHADT_H

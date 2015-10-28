@@ -10,7 +10,6 @@ public:
     Continent():name(""){}
     Continent(const std::string&);
     Continent(const Continent&);
-	std::string getNameContinent() const;
-	void setNameContinent(const std::string& name);
+    std::string getNameContinent() const;
 };
 #endif // CONTINENT_H
