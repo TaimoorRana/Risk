@@ -6,8 +6,7 @@ fix_project_version()
 
 set(GUI_SOURCE_FILES
 	main.cpp
-	risk.cpp risk.h
-        score.cpp score.h
+        risk.cpp risk.h
 )
 
 set(GUI_RESOURCE_FILES
