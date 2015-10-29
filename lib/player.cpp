@@ -16,7 +16,7 @@ void Player::addCountry(Country& country)
 
 Country* Player::findCountry(std::string countryName)
 {
-
+    return nullptr;
 }
 
 std::string Player::getName(){
@@ -28,7 +28,8 @@ void Player::transferSoldiers(Country& countryFrom, Country& countryTo, int sold
 }
 
 std::vector<Country> Player::getCountryOwned(){
-
+    std::vector<Country> v;
+    return v;
 }
 
 

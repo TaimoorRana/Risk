@@ -5,7 +5,6 @@ set(LIBRARY_SOURCE_FILES
         dices.cpp dices.h
 	GraphADT.cpp GraphADT.h
 	librisk.cpp librisk.h
-	map.cpp map.h
 	player.cpp player.h
         risk_map.cpp risk_map.h
         warreferee.cpp warreferee.h
