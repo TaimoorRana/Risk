@@ -5,7 +5,6 @@ include(QtCommon)
 fix_project_version()
 
 set(GUI_SOURCE_FILES
-        button.cpp button.h
 	main.cpp
 	risk.cpp risk.h
         score.cpp score.h
