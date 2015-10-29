@@ -14,6 +14,7 @@ public:
     Country(const std::string&);
     Country(const std::string&, int);
     Country(const Country&);
+    Country& operator = (const Country&);
 	std::string getNameCountry() const;
     void setNameCountry(std::string );
     std::string getNameCountry();

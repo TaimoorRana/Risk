@@ -9,6 +9,12 @@ Country::Country(const std::string& name_country, int n_armies) {
 
 Country::Country(const std::string& name): name_of_country(name){}
 Country::Country(Country const& country) { name_of_country = country.name_of_country;}
+Country& Country::operator = (const Country& other){
+    name_of_country = other.name_of_country;
+    armies = other.armies;
+    name_of_player = other.name_of_player;
+    return *this;
+}
 std::string Country::getNameCountry() const {return this->name_of_country;}
 void Country::setPlayer(const std::string& nameOfPlayer){this->name_of_player = nameOfPlayer;}
 std::string Country::getPlayer(){
