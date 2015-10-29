@@ -11,8 +11,6 @@
 #include "dices.h"
 #include "continent.h"
 #include "warreferee.h"
-#include "score.h"
-#include "button.h"
 int main(int argc, char *argv[])
 {
     QApplication application(argc, argv);
