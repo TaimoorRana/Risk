@@ -20,11 +20,12 @@ private:
     int defenderDices;
     int attackerDices;
     
-    void setPlayers(Player &attacker, Player &defender);
+
     
 public:
     WarReferee();
     ~WarReferee();
+    void setPlayers(Player &attacker, Player &defender);
     void calculateLossesHelper(Country& attacker, int attackerDices, Country& defender, int defenderDices);
     void calculateLosses(Country& attacker, Country& defender);
     void calculateLosses(Country& attacker, int attackerDices,Country& defender, int defenderDices);

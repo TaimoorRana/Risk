@@ -41,7 +41,7 @@ std::string Player::getName(){
 
 void Player::transferSoldiers(Country& countryFrom, Country& countryTo, int soldiers){
     if (soldiers < countryFrom.getSoldiers() && countryFrom.getOwner()->getName() == countryTo.getOwner()->getName()) {
-        countryFrom.removeSoldiers(-soldiers);
+        countryFrom.removeSoldiers(soldiers);
         countryTo.addSoldiers(soldiers);
     }
 }
