@@ -2,24 +2,14 @@
 #define CONTINENT_H
 
 #include <string>
-#include <vector>
-#include "country.h"
-
-class Country; // forward declaration
 
 class Continent {
 private:
-	std::string name = "";
-	int reinforcement_bonus = 0;
-	std::vector<Country> countries = std::vector<Country>();
+	std::string name;
 public:
-	Continent(const std::string& name, int reinforcement_bonus);
-	Continent(const Continent& continent);
-	std::string getName() const;
-	void setName(const std::string& name);
-	int getReinforcementBonus() const;
-	void setReinforcementBonus(int reinforcement_bonus);
-	const std::vector<Country> getCountries() const;
-	void addCountry(Country country);
+    Continent():name(""){}
+    Continent(const std::string&);
+    Continent(const Continent&);
+    std::string getNameContinent() const;
 };
 #endif // CONTINENT_H

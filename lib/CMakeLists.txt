@@ -1,5 +1,4 @@
 set(LIBRARY_SOURCE_FILES
-	card.cpp card.h
 	continent.cpp continent.h
         country.cpp country.h
         debug.cpp debug.h
@@ -9,6 +8,7 @@ set(LIBRARY_SOURCE_FILES
 	librisk.cpp librisk.h
 	map.cpp map.h
 	player.cpp player.h
+        risk_map.cpp risk_map.h
         warreferee.cpp warreferee.h
 )
 
