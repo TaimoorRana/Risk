@@ -17,17 +17,17 @@ private:
 	int x = 0;
 	int y = 0;
 	int soldiers = 0;
-	std::vector<Country> neighbours = std::vector<Country>();
+	std::vector<Country*> neighbours = std::vector<Country*>();
 
 public:
-    Country();
-	Country(std::string name, Continent& continent, int x, int y);
+  Country();
+	Country(std::string name, Continent* continent, int x, int y);
 	Country(const Country& country);
 	~Country();
 	std::string getName() const;
 	void setName(std::string name);
-	Continent getContinent() const;
-	void setContinent(Continent& continent);
+	Continent* getContinent() const;
+	void setContinent(Continent* continent);
 	Player* getOwner() const;
 	void setOwner(Player* player);
 	int getPositionX() const;
@@ -36,9 +36,8 @@ public:
 	void setPositionY(int y);
 	int getSoldiers() const;
 	void setSoldiers(int soldiers);
-    void adjustSoldiers(int soldiers);
-	std::vector<Country> getNeighbours() const;
-	void addNeighbour(Country country);
-
+  void adjustSoldiers(int soldiers);
+	std::vector<Country*> getNeighbours() const;
+	void addNeighbour(Country* country);
 };
 #endif // COUNTRY_H

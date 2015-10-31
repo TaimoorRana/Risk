@@ -6,7 +6,10 @@ fix_project_version()
 
 set(GUI_SOURCE_FILES
 	main.cpp
+
 	risk.cpp risk.h
+       GameDriver.cpp 
+	GameDriver.h
 )
 
 set(GUI_RESOURCE_FILES

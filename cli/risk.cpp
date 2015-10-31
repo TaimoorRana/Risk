@@ -1,62 +1,37 @@
-#include <utility> // declares std, but not std::cout
-
+#include <iostream>
 #include "librisk.h"
-#include "GraphADT.h"
+#include "map.h"
+#include "debug.h"
 
-using namespace std;
+void print_help(char *argv[]) {
+	std::cout << "Usage: risk-a1-cli filename.map" << std::endl;
+}
 
-int main() {
-	cout << "This is a call to the library function: \n";
-	librisk_print_todo();
+int main(int argc, char *argv[]) {
+	int retval = 0;
+	if (argc == 1) {
+		std::cout << "Error: missing map filename." << std::endl << std::endl;
+		print_help(argv);
+		return 1;
+	}
 
-    std::cout<<"Starting GraphADT code:"<<std::endl;
-    MyGraph g1;
-    printSet(g1.vertices());
+	std::string path(argv[1]);
+	Map* map = Map::load(path);
+	if (map == NULL) {
+		std::cout << "Error: map file '" << argv[1] << "' not found or is invalid." << std::endl << std::endl;
+		print_help(argv);
+		return 1;
+	}
 
-    g1.insertVertex("France");
-    std::cout<<"Vertices: "<<g1.countAllVertices()<<std::endl;
-    printSet(g1.vertices());
+	map_print_continents(map->continents);
+	map_print_countries(map->countries);
 
-    g1.insertVertex("Spain");
-    std::cout<<"Vertices: "<<g1.countAllVertices()<<std::endl;
+	retval = map_print_validation(map);
+	if (retval) {
+		path.append(".new");
+		Map::save(path, *map);
+	}
 
-    printSet(g1.vertices());
-
-    std::cout<<"Edges: "<<g1.countAllEdges()<<std::endl;
-
-    g1.insertEdge("Spain","France","E1");
-    std::cout<<"Edges: "<<g1.countAllEdges()<<std::endl;
-
-    printSet(g1.edges());
-
-    g1.removeEdge("Spain","France");
-    std::cout<<"Edges: "<<g1.countAllEdges()<<std::endl;
-
-    printSet(g1.edges());
-
-    g1.insertEdge("France","Spain","E2");
-    std::cout<<"Edges: "<<g1.countAllEdges()<<std::endl;
-
-    g1.printGraph();
-    printSet(g1.edges());
-
-    std::cout<<g1.getEdgeElem("E1")<<std::endl;
-    std::cout<<g1.getEdgeElem("E2")<<std::endl;
-    g1.replaceEdgeElem("E2","Ex2");
-    std::cout<<g1.getEdgeElem("E2")<<std::endl;
-
-
-    printSet(g1.edges());
-    printSet(g1.vertices());
-    g1.removeVertex("France");
-
-    printSet(g1.edges());
-    printSet(g1.vertices());
-
-    g1.removeVertex("Spain");
-
-    g1.printGraph();
-
-
-	return 0;
+	delete map;
+	return retval;
 }
