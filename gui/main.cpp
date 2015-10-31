@@ -14,11 +14,13 @@
 #include "dices.h"
 #include "continent.h"
 #include "warreferee.h"
+#include "player.h"
 using namespace std;
 
 int main(int argc, char *argv[])
 {
     QApplication application(argc, argv);
+
 
     return application.exec();
 }

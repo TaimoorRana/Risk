@@ -10,22 +10,23 @@ class Player{
 private:
 	std::string name;
 	int reinforcements;
-    std::vector<Country*> countriesOwned;
+    std::vector<std::string> namesOfCountriesOwned;
+    std::vector<std::string>::iterator countryOwnedIterator;
 public:
 	Player(std::string name);
-    //Player(const Player& other);
+    Player(const Player& other);
 	void rollDices();
 
-	void addCountry(Country& country);
-	void removeCountry(Country& country);
-    Country* findCountry(std::string countryName);
+    void addCountry(std::string);
+    void removeCountry(std::string);
+    bool hasCountry(std::string);
 
     
     std::string getName();
     
 	void addNewSoldiers();
 	void removeNewSoldiers();
-    std::vector<Country> getCountryOwned();
+    std::vector<string> getCountryOwned();
 
 	void transferSoldiers(Country& countryFrom, Country& countryTo, int Soldiers);
 

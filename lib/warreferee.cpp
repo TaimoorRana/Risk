@@ -99,7 +99,7 @@ void WarReferee::allInMode(Country& attackerCountry, Country& defenderCountry){
     while (attackerCountry.getArmies() > 1 && attackerCountry.getPlayer() != defenderCountry.getPlayer()) {
         calculateLosses(attackerCountry,defenderCountry);
         if (defenderCountry.getArmies() <= 0) {
-            attacker->addCountry(defenderCountry);
+            attacker->addCountry(defenderCountry.getNameCountry());
             defenderCountry.setPlayer(attacker->getName());
             //defenderPlayer->removeCountry(defender);
         }
