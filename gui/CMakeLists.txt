@@ -5,10 +5,9 @@ include(QtCommon)
 fix_project_version()
 
 set(GUI_SOURCE_FILES
-	main.cpp
-
+        main.cpp
 	risk.cpp risk.h
-       GameDriver.cpp 
+        GameDriver.cpp
 	GameDriver.h
 )
 

@@ -14,18 +14,11 @@
 #include "dices.h"
 #include "continent.h"
 #include "warreferee.h"
+using namespace std;
 
 int main(int argc, char *argv[])
 {
-//    QApplication application(argc, argv);
-//    return application.exec();
+    QApplication application(argc, argv);
 
-    using namespace std;
-    QDate d1(2007, 10,2), d2(QDate::currentDate());
-    int days;
-    cout<<"I came to Canada on "<<d1.toString("MMMM d yyyy").toStdString()<<"\nToday's date is "<<d2.toString("MMMM d yyyy").toStdString()<<endl;
-    days = d1.daysTo(d2);
-    cout<<"There are "<<days<<" days between "<<d1.toString("dd MMM yyyy").toStdString()<<" and "<<d2.toString(Qt::ISODate).toStdString()<<endl;
-    cout<<"Hellow"<<endl;
-    return 0;
+    return application.exec();
 }
