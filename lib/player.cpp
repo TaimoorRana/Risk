@@ -28,7 +28,7 @@ void Player::removeCountry(std::string countryName)
 
 bool Player::hasCountry(std::string countryName)
 {
-    for(countryOwnedIterator = namesOfCountriesOwned.begin(); countryOwnedIterator != namesOfCountriesOwned.end();countryOwnedIterator++){
+     for(countryOwnedIterator = namesOfCountriesOwned.begin(); countryOwnedIterator != namesOfCountriesOwned.end();countryOwnedIterator++){
         if(*countryOwnedIterator == countryName){
             return true;
         }
@@ -44,8 +44,8 @@ void Player::transferSoldiers(Country& countryFrom, Country& countryTo, int sold
 
 }
 
-std::vector<string> Player::getCountryOwned(){
-    std::vector<string> copy(namesOfCountriesOwned);
+std::vector<std::string> Player::getCountryOwned(){
+    std::vector<std::string> copy(namesOfCountriesOwned);
     return copy;
 }
 
