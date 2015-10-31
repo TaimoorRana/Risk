@@ -58,36 +58,36 @@ void WarReferee::calculateLosses(std::string attackerCountry, std::string defend
  * Calculates the loses each country occurs after the dice roll - HELPER
  */
 void WarReferee::calculateLossesHelper(Country& attackerCountry, int attackerDices, Country& defenderCountry, int defenderDices){
-    // dices rolled by both players
-//    std::vector<int> attackerResults = dices->roll(attackerDices);
-//    std::vector<int> defenderResults = dices->roll(defenderDices);
+//     dices rolled by both players
+    std::vector<int> attackerResults = dices->roll(attackerDices);
+    std::vector<int> defenderResults = dices->roll(defenderDices);
     
-//    int attackerLosses = 0;
-//    int defenderLosses = 0;
+    int attackerLosses = 0;
+    int defenderLosses = 0;
     
 //    //Compare roll results
 //    //Attacker's highest dice is compared to Defender's highest dice
-//    for(int x = 0; x < defenderDices; x++){
-//        if(attackerResults[x] > defenderResults[x]){
-//            defenderLosses++;
-//        }else{
-//            attackerLosses++;
-//        }
-//    }
+    for(int x = 0; x < defenderDices; x++){
+        if(attackerResults[x] > defenderResults[x]){
+            defenderLosses++;
+        }else{
+            attackerLosses++;
+        }
+    }
     
-    
+
     
 //    // Remove soldiers lost from the battle
-//    if (attackerCountry.getSoldiers() > attackerLosses) {
-//        attackerCountry.removeSoldiers(attackerLosses);
-//    }else{
-//        std::cout << "Error: Could not remove soldiers from attackerCountry\n";
-//    }
-//    if (defenderCountry.getSoldiers() >= defenderLosses) {
-//        defenderCountry.removeSoldiers(defenderLosses);
-//    }else{
-//        std::cout << "Error: Could not remove soldiers from defenderCountry\n";
-//    }
+    if (attackerCountry.getArmies() > attackerLosses) {
+        attackerCountry.setArmies(attackerCountry.getArmies()-attackerLosses);
+    }else{
+        std::cout << "Error: Could not remove soldiers from attackerCountry\n";
+    }
+    if (defenderCountry.getArmies() >= defenderLosses) {
+        defenderCountry.setArmies(defenderCountry.getArmies()-defenderLosses);
+    }else{
+        std::cout << "Error: Could not remove soldiers from defenderCountry\n";
+    }
 }
 
 
