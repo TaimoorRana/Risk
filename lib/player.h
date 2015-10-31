@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <string>
+#include <vector>
 #include "card.h"
 
 class Country; // forward declaration
@@ -23,9 +24,9 @@ public:
 
 	void addCard(Card card);
 	void removeCard(Card card);
-    
+
     std::string getName();
-    
+
 	void addNewSoldiers();
 	void removeNewSoldiers();
     std::vector<Country> getCountryOwned();

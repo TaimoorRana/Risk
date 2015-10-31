@@ -13,7 +13,6 @@
 #include "country.h"
 #include "dices.h"
 #include "continent.h"
-#include "warreferee.h"
 
 int main(int argc, char *argv[])
 {
