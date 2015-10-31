@@ -1,6 +1,5 @@
 #include "player.h"
 #include "country.h"
-#include "map.h"
 
 #include <iostream>
 #include <stdlib.h> 
@@ -23,11 +22,10 @@ public:
 	~GameDriver();
 
 private:
-	int numPlayers;
-	Player* players = new Player[4];
-	Country* countries[16];
-	Continent* continents[2];
-	Map map;
+//	int numPlayers;
+//	Player* players = new Player[4];
+//	Country* countries[16];
+//	Continent* continents[2];
 	static GameDriver driver;
 
 	/**
