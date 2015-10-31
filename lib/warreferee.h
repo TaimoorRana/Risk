@@ -27,7 +27,7 @@ public:
     ~WarReferee();
     void setPlayers(Player &attacker, Player &defender);
     void calculateLossesHelper(Country& attacker, int attackerDices, Country& defender, int defenderDices);
-    void calculateLosses(std::string attacker, std::string defender);
+    void calculateLosses(Country& attacker, Country& defender);
     void calculateLosses(Country& attacker, int attackerDices,Country& defender, int defenderDices);
     void startWar(Player &attacker, Country &attackerCountry, Player &defender, Country &defenderCountry);
     void allInMode(Country& attacker, Country& defenderCountry);

@@ -26,30 +26,30 @@ void WarReferee::calculateLosses(Country& attackerCountry, int attackerDices, Co
 /**
  * Calculates the loses each country occurs after the dice roll - if dices are not specified
  */
-void WarReferee::calculateLosses(std::string attackerCountry, std::string defenderCountry){
-//    // Determine amount of dices for the attacker depending on the army size
-//    int attackerSoldiers = attackerCountry.getSoldiers();
-//    int defenderSoldiers = defenderCountry.getSoldiers();
+void WarReferee::calculateLosses(Country& attackerCountry, Country& defenderCountry){
+    // Determine amount of dices for the attacker depending on the army size
+    int attackerSoldiers = attackerCountry.getArmies();
+    int defenderSoldiers = defenderCountry.getArmies();
 
-//    if (attackerSoldiers > 3){
-//        attackerDices = 3;
-//    }else if(attackerSoldiers == 3){
-//        attackerDices = 2;
-//    }else if(attackerSoldiers == 2){
-//        attackerDices = 1;
-//    }else{
-//        std::cout << "error in calculateLosses Method\n";
-//    }
+    if (attackerSoldiers > 3){
+        attackerDices = 3;
+    }else if(attackerSoldiers == 3){
+        attackerDices = 2;
+    }else if(attackerSoldiers == 2){
+        attackerDices = 1;
+    }else{
+        std::cout << "error in calculateLosses Method\n";
+    }
 
-//    if(defenderSoldiers >= 2){
-//        defenderDices = 2;
-//    }else if(defenderSoldiers == 1){
-//        defenderDices = 1;
-//    }else{
-//        std::cout << "error in calculateLosses Method\n";
-//    }
+    if(defenderSoldiers >= 2){
+        defenderDices = 2;
+    }else if(defenderSoldiers == 1){
+        defenderDices = 1;
+    }else{
+        std::cout << "error in calculateLosses Method\n";
+    }
     
-//    calculateLossesHelper(attackerCountry, attackerDices, defenderCountry, defenderDices);
+    calculateLossesHelper(attackerCountry, attackerDices, defenderCountry, defenderDices);
 }
 
 
@@ -96,22 +96,22 @@ void WarReferee::calculateLossesHelper(Country& attackerCountry, int attackerDic
 
 void WarReferee::allInMode(Country& attackerCountry, Country& defenderCountry){
     
-//    while (attackerCountry.getSoldiers() > 1 && attackerCountry.getOwner()->getName() != defenderCountry.getOwner()->getName()) {
-//        calculateLosses(attackerCountry,defenderCountry);
-//        if (defenderCountry.getSoldiers() <= 0) {
-//            attacker->addCountry(defenderCountry);
-//            defenderCountry.setOwner(attacker);
-//            //defenderPlayer->removeCountry(defender);
-//        }
-//    }
-//    std::cout << attackerCountry.getSoldiers() << std::endl;
+    while (attackerCountry.getArmies() > 1 && attackerCountry.getPlayer() != defenderCountry.getPlayer()) {
+        calculateLosses(attackerCountry,defenderCountry);
+        if (defenderCountry.getArmies() <= 0) {
+            attacker->addCountry(defenderCountry);
+            defenderCountry.setPlayer(attacker->getName());
+            //defenderPlayer->removeCountry(defender);
+        }
+    }
+    std::cout << attackerCountry.getArmies() << std::endl;
     
-//    if (attackerCountry.getSoldiers() <= 1 ) {
-//        std::cout << "Attacker cannot attack anymore\n";
-//    }else{
-//        std::cout << "Attacker won and conquered\n";
-//        attacker->transferSoldiers(attackerCountry, defenderCountry, attackerDices);
-//    }
+    if (attackerCountry.getArmies() <= 1 ) {
+        std::cout << "Attacker cannot attack anymore\n";
+    }else{
+        std::cout << "Attacker won and conquered\n";
+        attacker->transferSoldiers(attackerCountry, defenderCountry, attackerDices);
+    }
 }
 
 
