@@ -17,7 +17,6 @@ public:
     Country& operator = (const Country&);
 	std::string getNameCountry() const;
     void setNameCountry(std::string );
-    std::string getNameCountry();
     void setPlayer(const std::string&);
     std::string getPlayer();
     void setArmies(const int&);
