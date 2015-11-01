@@ -25,7 +25,6 @@ public:
     int getArmies(const std::string&);
     std::string getContinentName(const std::string&);
     Country* getCountryObj(std::string);
-
     my_set listCountriesInsideContinent(const std::string&);
     void console_print_list_of_neighbours(const std::string&);
     void console_print_list_of_countries(const std::string&);
