@@ -112,13 +112,12 @@ void WarReferee::allInMode(Country& attackerCountry, Country& defenderCountry){
         std::cout << "Attacker cannot attack anymore\n";
     }else{
         std::cout << "Attacker won and conquered\n";
-        attacker->transferSoldiers(attackerCountry, defenderCountry, attackerDices);
+        const int soldiers = attackerDices;
+        std::string countryFromName = attackerCountry.getNameCountry();
+        std::string countryToName = defenderCountry.getNameCountry();
+        attacker->transferSoldiers(countryFromName, countryToName,soldiers);
     }
 }
-
-
-
-
 
 
 void WarReferee::startWar(Player& attacker,Country& attackerCountry, Player& defender, Country& defenderCountry)

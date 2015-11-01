@@ -14,7 +14,7 @@ private:
 	int reinforcements;
     std::set<std::string> namesOfCountriesOwned;
     std::set<std::string> namesOfContinentsOwned;
-    RiskMap map = RiskMap::getInstance();
+    RiskMap& map = RiskMap::getInstance();
     int battleWon;
 
 public:
@@ -42,7 +42,6 @@ public:
     bool hasContinent(std::string);
 
     // need to request map to do the transfer
-	void transferSoldiers(Country& countryFrom, Country& countryTo, int Soldiers);
+	void transferSoldiers(std::string&, std::string& ,const int&);
 };
-
 #endif // PLAYER_H

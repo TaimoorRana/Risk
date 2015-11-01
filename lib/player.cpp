@@ -4,6 +4,7 @@
 Player::Player(std::string name)
 {
     this->name = name;
+    map = RiskMap::getInstance();
 }
 
 
@@ -83,8 +84,14 @@ void Player::setReinforcements(int amount)
     reinforcements = amount;
 }
 
-void Player::transferSoldiers(Country& countryFrom, Country& countryTo, int soldiers){
+void Player::transferSoldiers(std::string& countryFromName, std::string& countryToName,const int& soldiers){
+    Country* countryfrom = map.getCountryObj(countryFromName);
+    Country* countryTo = map.getCountryObj(countryToName);
     
+    if (countryfrom->getPlayer() == this->name && countryTo->getPlayer() == this->name) {
+        countryfrom->removeArmies(soldiers);
+        countryTo->addArmies(soldiers);
+    }
 }
 
 std::set<std::string> Player::getCountryOwned(){

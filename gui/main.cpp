@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
         Player player1("player1");
         Player player2("player2");
     
-        RiskMap map = RiskMap::getInstance();
+        RiskMap& map = RiskMap::getInstance();
         map.addCountry("Canada", "America", 20);
         map.addCountry("Us", "America", 20);
         map.setPlayerOwner("Canada", "player1");
@@ -34,7 +34,8 @@ int main(int argc, char *argv[])
     
         Country* canada = map.getCountryObj("Canada");
         Country* us = map.getCountryObj("Us");
-        
+    
+    
         // add country to players
         player1.addCountry(canada->getNameCountry());
         player2.addCountry(us->getNameCountry());
@@ -54,7 +55,7 @@ int main(int argc, char *argv[])
         canada->setArmies(20);
         us->setArmies(20);
         us->setPlayer(player2.getName());
-//
+    
 //        warReferee = WarReferee::getInstance();
 //        // start manual war
 //        std::cout <<"\n\n\n\nAutomatic dices rolls" << std::endl;
