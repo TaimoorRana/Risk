@@ -1,5 +1,7 @@
 #include "risk_map.h"
 
+RiskMap::RiskMap(){}
+
 bool RiskMap::adjacentCountries(const std::string& country_a, const std::string& country_b){
     return mapGraph.areAdjacent(country_a, country_b);
 }
