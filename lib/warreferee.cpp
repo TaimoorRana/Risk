@@ -8,8 +8,8 @@ WarReferee::WarReferee()
 }
 
 void WarReferee::setPlayers(Player& attacker1, Player& defender1){
-//    this->defender = &defender1;
-//    this->attacker = &attacker1;
+    this->defender = &defender1;
+    this->attacker = &attacker1;
 }
 
 /**
@@ -17,9 +17,9 @@ void WarReferee::setPlayers(Player& attacker1, Player& defender1){
  */
 void WarReferee::calculateLosses(Country& attackerCountry, int attackerDices, Country& defenderCountry, int defenderDices)
 {
-//    this->attackerDices = attackerDices;
-//    this->defenderDices = defenderDices;
-//    calculateLossesHelper(attackerCountry, attackerDices, defenderCountry, defenderDices);
+    this->attackerDices = attackerDices;
+    this->defenderDices = defenderDices;
+    calculateLossesHelper(attackerCountry, attackerDices, defenderCountry, defenderDices);
 }
 
 
@@ -67,7 +67,9 @@ void WarReferee::calculateLossesHelper(Country& attackerCountry, int attackerDic
     
 //    //Compare roll results
 //    //Attacker's highest dice is compared to Defender's highest dice
-    for(int x = 0; x < defenderDices; x++){
+    int dicesToCompare = (defenderDices <= attackerDices)? defenderDices : attackerDices;
+    
+    for(int x = 0; x < dicesToCompare; x++){
         if(attackerResults[x] > defenderResults[x]){
             defenderLosses++;
         }else{
@@ -96,7 +98,7 @@ void WarReferee::calculateLossesHelper(Country& attackerCountry, int attackerDic
 
 void WarReferee::allInMode(Country& attackerCountry, Country& defenderCountry){
     
-    while (attackerCountry.getArmies() > 1 && attackerCountry.getPlayer() != defenderCountry.getPlayer()) {
+    while (attackerCountry.getArmies() > 1 && attackerCountry.getPlayer()!= defenderCountry.getPlayer()) {
         calculateLosses(attackerCountry,defenderCountry);
         if (defenderCountry.getArmies() <= 0) {
             attacker->addCountry(defenderCountry.getNameCountry());

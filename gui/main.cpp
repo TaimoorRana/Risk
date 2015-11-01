@@ -32,7 +32,8 @@ int main(int argc, char *argv[])
         // add country to players
         player1.addCountry(canada.getNameCountry());
         player2.addCountry(us.getNameCountry());
-
+        canada.setPlayer(player1.getName());
+        us.setPlayer(player2.getName());
         WarReferee warReferee = WarReferee::getInstance();
 
         // start automated war
