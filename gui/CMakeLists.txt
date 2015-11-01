@@ -5,15 +5,21 @@ include(QtCommon)
 fix_project_version()
 
 set(GUI_SOURCE_FILES
-        main.cpp
+
+	main.cpp
 	risk.cpp risk.h
         GameDriver.cpp
-	GameDriver.h
+	GameDriver.h        
+        States.h States.cpp
+        mainEGimple.cpp
+        gameboardview.h gameboardview.cpp
 )
 
 set(GUI_RESOURCE_FILES
-	#risk.qrc
+        Stylesheet.qss
+        #risk.qrc
 )
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/styleSheet.qss DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 IF (APPLE)
 	add_project_meta(GUI_META_FILES)
@@ -34,4 +40,6 @@ target_link_libraries(${PROJECT_NAME}-gui lib${PROJECT_NAME})
 
 if (APPLE)
 	set_target_properties(${PROJECT_NAME}-gui PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/resources/MacOSXBundleInfo.plist.in)
+
 endif (APPLE)
+
