@@ -8,7 +8,6 @@
 #include <QComboBox>
 #include <QFile>
 #include <QLabel>
-#include "new.h"
 #include <QWidget>
 #include <QStyle>
 #include <QDebug>
