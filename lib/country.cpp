@@ -16,6 +16,7 @@ Country& Country::operator = (const Country& other){
     return *this;
 }
 std::string Country::getNameCountry() const {return this->name_of_country;}
+
 void Country::setPlayer(const std::string& nameOfPlayer){this->name_of_player = nameOfPlayer;}
 std::string Country::getPlayer(){
     std::string player(name_of_player);
@@ -24,3 +25,13 @@ std::string Country::getPlayer(){
 
 void Country::setArmies(const int& armies){this->armies=armies;}
 int Country::getArmies(){return armies;}
+
+void Country::removeArmies(const int& amount){
+    if (armies - amount >= 0) {
+        armies -= amount;
+    }
+}
+
+void Country::addArmies(const int& amount){
+    armies += amount;
+}

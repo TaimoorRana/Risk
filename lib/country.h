@@ -20,6 +20,8 @@ public:
     void setPlayer(const std::string&);
     std::string getPlayer();
     void setArmies(const int&);
+    void removeArmies(const int&);
+    void addArmies(const int&);
     int getArmies();
 };
 #endif // COUNTRY_H
