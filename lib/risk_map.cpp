@@ -11,7 +11,7 @@ void RiskMap::addCountry( const std::string& name_country, const std::string& na
         continents[name_continent] = Continent(name_continent);
         }
     if(countries.find( name_country) == countries.end() ){
-        countries[name_country] = Country(name_continent, number_armies);
+        countries[name_country] = Country(name_country, number_armies);
     }
     mapGraph.insertNode(name_country, name_continent);
 }
