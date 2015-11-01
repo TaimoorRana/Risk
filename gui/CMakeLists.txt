@@ -9,7 +9,7 @@ set(GUI_SOURCE_FILES
         States.h States.cpp
         mainEGimple.cpp
         gameboardview.h gameboardview.cpp
-        risk.cpp risk.h
+
 
 )
 
