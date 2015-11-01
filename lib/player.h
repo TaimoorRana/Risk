@@ -10,7 +10,7 @@ class Country; // forward declaration
 class Player{
 private:
 
-	std::string name;
+    std::string name;
 	int reinforcements;
     std::set<std::string> namesOfCountriesOwned;
     std::set<std::string> namesOfContinentsOwned;
@@ -22,26 +22,43 @@ public:
 	Player(std::string name);
     Player(const Player& other);
     std::string getName();
-
+    
+    
 	void rollDices();
+    
+    // increase battleWon int by 1
+    void increaseBattleWon();
 
-    // Reinforcements related methods
-    void addReinforcements(int);
-    void removeReinforcements(int);
-    void setReinforcements(int);
+    /*
+     Reinforcements related methods
+     @params int: number of soldiers
+     */
+    void addReinforcements(const int&);
+    void removeReinforcements(const int&);
+    void setReinforcements(const int&);
 
-    // country related methods
-    void addCountry(std::string);
-    void removeCountry(std::string);
-    bool hasCountry(std::string);
+    /*
+     Country related methods
+     @params string: countries name
+     */
+    void addCountry(const std::string&);
+    void removeCountry(const std::string&);
+    bool hasCountry(const std::string&);
     std::set<std::string> getCountryOwned();
 
-    // continent related methods
-    void addContinent(std::string);
-    void removeContinent(std::string);
-    bool hasContinent(std::string);
+    /*
+     continent related methods
+     @params string: continents name
+    */
+    void addContinent(const std::string&);
+    void removeContinent(const std::string&);
+    bool hasContinent(const std::string&);
 
-    // need to request map to do the transfer
+    /*
+     @params string: Country Name - Transfer from
+     @params string: Country Name - Transfer to
+     @params int: soldiers to transfer
+     */
 	void transferSoldiers(std::string&, std::string& ,const int&);
 };
 #endif // PLAYER_H

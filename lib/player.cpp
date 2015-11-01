@@ -4,18 +4,17 @@
 Player::Player(std::string name)
 {
     this->name = name;
-    map = RiskMap::getInstance();
 }
 
 
-void Player::addCountry(std::string countryName)
+void Player::addCountry(const std::string& countryName)
 {
     namesOfCountriesOwned.insert(countryName);
     map.getCountryObj(countryName)->setPlayer(name);
 }
 
 
-void Player::removeCountry(std::string countryName)
+void Player::removeCountry(const std::string& countryName)
 {
     std::set<std::string>::iterator countryOwnedIterator;
     int index = 0;
@@ -29,7 +28,7 @@ void Player::removeCountry(std::string countryName)
     map.getCountryObj(countryName)->setPlayer("");
 }
 
-bool Player::hasCountry(std::string countryName)
+bool Player::hasCountry(const std::string& countryName)
 {
      std::set<std::string>::iterator countryOwnedIterator;
      for(countryOwnedIterator = namesOfCountriesOwned.begin(); countryOwnedIterator != namesOfCountriesOwned.end();countryOwnedIterator++){
@@ -40,7 +39,7 @@ bool Player::hasCountry(std::string countryName)
     return false;
 }
 
-bool Player::hasContinent(std::string continentName)
+bool Player::hasContinent(const std::string& continentName)
 {
     std::set<std::string> countryList = map.listCountriesInsideContinent(continentName);
     std::set<std::string>::iterator countryListIterator;
@@ -67,19 +66,19 @@ std::string Player::getName(){
     return name;
 }
 
-void Player::addReinforcements(int amount)
+void Player::addReinforcements(const int& amount)
 {
     reinforcements += amount;
 }
 
-void Player::removeReinforcements(int amount)
+void Player::removeReinforcements(const int& amount)
 {
     if(reinforcements - amount >= 0 ){
         reinforcements -= amount;
     }
 }
 
-void Player::setReinforcements(int amount)
+void Player::setReinforcements(const int& amount)
 {
     reinforcements = amount;
 }
@@ -97,6 +96,10 @@ void Player::transferSoldiers(std::string& countryFromName, std::string& country
 std::set<std::string> Player::getCountryOwned(){
     std::set<std::string> copy(namesOfCountriesOwned);
     return copy;
+}
+
+void Player::increaseBattleWon(){
+    battleWon++;
 }
 
 
