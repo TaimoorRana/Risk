@@ -2,7 +2,8 @@
 #define PLAYER_H
 
 #include <string>
-#include <vector>
+#include <set>
+#include "risk_map.h"
 
 class Country; // forward declaration
 
@@ -11,8 +12,9 @@ private:
 
 	std::string name;
 	int reinforcements;
-    std::vector<std::string> namesOfCountriesOwned;
-    std::vector<std::string> namesOfContinentsOwned;
+    std::set<std::string> namesOfCountriesOwned;
+    std::set<std::string> namesOfContinentsOwned;
+    RiskMap map = RiskMap::getInstance();
     int battleWon;
 
 public:
@@ -24,15 +26,15 @@ public:
 	void rollDices();
 
     // Reinforcements related methods
-    void addReinforcements(int amount);
-    void removeReinforcements(int amount);
-    void setReinforcements(int amount);
+    void addReinforcements(int);
+    void removeReinforcements(int);
+    void setReinforcements(int);
 
     // country related methods
     void addCountry(std::string);
     void removeCountry(std::string);
     bool hasCountry(std::string);
-    std::vector<std::string> getCountryOwned();
+    std::set<std::string> getCountryOwned();
 
     // continent related methods
     void addContinent(std::string);

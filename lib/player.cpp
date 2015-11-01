@@ -9,18 +9,14 @@ Player::Player(std::string name)
 
 void Player::addCountry(std::string countryName)
 {
-    namesOfCountriesOwned.push_back(countryName);
-}
-
-void Player::addContinent(std::string continentName)
-{
-    namesOfContinentsOwned.push_back(continentName);
+    namesOfCountriesOwned.insert(countryName);
+    map.getCountryObj(countryName)->setPlayer(name);
 }
 
 
 void Player::removeCountry(std::string countryName)
 {
-    std::vector<std::string>::iterator countryOwnedIterator;
+    std::set<std::string>::iterator countryOwnedIterator;
     int index = 0;
     for(countryOwnedIterator = namesOfCountriesOwned.begin(); countryOwnedIterator != namesOfCountriesOwned.end();countryOwnedIterator++){
         index++;
@@ -29,26 +25,12 @@ void Player::removeCountry(std::string countryName)
             break;
         }
     }
-
-}
-
-void Player::removeContinent(std::string continentName)
-{
-    std::vector<std::string>::iterator continentsOwnedIterator;
-    int index = 0;
-    for(continentsOwnedIterator = namesOfContinentsOwned.begin(); continentsOwnedIterator != namesOfContinentsOwned.end(); continentsOwnedIterator++){
-        index++;
-        if(*continentsOwnedIterator == continentName){
-            namesOfContinentsOwned.erase(continentsOwnedIterator);
-            break;
-        }
-    }
-
+    map.getCountryObj(countryName)->setPlayer("");
 }
 
 bool Player::hasCountry(std::string countryName)
 {
-     std::vector<std::string>::iterator countryOwnedIterator;
+     std::set<std::string>::iterator countryOwnedIterator;
      for(countryOwnedIterator = namesOfCountriesOwned.begin(); countryOwnedIterator != namesOfCountriesOwned.end();countryOwnedIterator++){
         if(*countryOwnedIterator == countryName){
             return true;
@@ -59,12 +41,24 @@ bool Player::hasCountry(std::string countryName)
 
 bool Player::hasContinent(std::string continentName)
 {
-     std::vector<std::string>::iterator continentsOwnedIterator;
-     for(continentsOwnedIterator = namesOfContinentsOwned.begin(); continentsOwnedIterator != namesOfContinentsOwned.end();continentsOwnedIterator++){
-        if(*continentsOwnedIterator == continentName){
-            return true;
+    std::set<std::string> countryList = map.listCountriesInsideContinent(continentName);
+    std::set<std::string>::iterator countryListIterator;
+    
+    std::set<std::string>::iterator countriesOwnedIterator;
+    int matchFound=0;
+    
+    for (countryListIterator = countryList.begin(); countryListIterator != countryList.end(); countryListIterator++) {
+        for (countriesOwnedIterator = namesOfCountriesOwned.begin(); countriesOwnedIterator != namesOfCountriesOwned.end(); countriesOwnedIterator++) {
+            if (countryListIterator == countriesOwnedIterator ) {
+                matchFound++;
+            }
         }
     }
+    
+    if (matchFound == countryList.size()) {
+        return true;
+    }
+    
     return false;
 }
 
@@ -90,11 +84,11 @@ void Player::setReinforcements(int amount)
 }
 
 void Player::transferSoldiers(Country& countryFrom, Country& countryTo, int soldiers){
-
+    
 }
 
-std::vector<std::string> Player::getCountryOwned(){
-    std::vector<std::string> copy(namesOfCountriesOwned);
+std::set<std::string> Player::getCountryOwned(){
+    std::set<std::string> copy(namesOfCountriesOwned);
     return copy;
 }
 
