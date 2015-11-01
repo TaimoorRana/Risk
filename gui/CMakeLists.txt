@@ -5,12 +5,11 @@ include(QtCommon)
 fix_project_version()
 
 set(GUI_SOURCE_FILES
-	main.cpp
         risk.cpp risk.h
-        new.h
-        rect.h rect.cpp
         States.h States.cpp
+        mainEGimple.cpp
         gameboardview.h gameboardview.cpp
+        risk.cpp risk.h
 
 )
 

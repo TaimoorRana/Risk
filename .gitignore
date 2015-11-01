@@ -1,9 +1,14 @@
 # CMake cache
 CMakeLists.txt.user
-
+CMakeLists.txt.user.*
 # OS thumbnail files
 .DS_Store
 Thumbs.db
+#Doxygen
+gui/html/*
+gui/latex/*
+gui/doxygenfile
+.gitignore.swp
 
 # IDEs
 *.sublime-*

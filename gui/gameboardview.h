@@ -12,36 +12,44 @@
 #include <QMenuBar>
 #include <string>
 
+/**
+ * @brief The GameBoardView class
+ *  The gameboard view class which creates the GameBoardWidget and adds all the
+ * widgets needed and deletes them accordingly when needed. Also implement all the stub functions for the GameBoard.
+ *Reinforce Attack, move,endTurn
+ */
+
 class GameBoardView:public QWidget
 {
     Q_OBJECT
 public:
-    //note explict GameBoardView(*dd)
+
     GameBoardView();
-    //does it need to be virtual
+
     virtual ~GameBoardView();
-    //GameBoardView();
+
     QLabel *currentPlayerTurn;
-    //may need outside qLabel and combobox later
+
     void turns();
     void endOfTurn();
     enum Mode{reinforceMode,attackMode,moveMode, endOfTurnMode};
     Mode currentMode= reinforceMode;
 private:
-    // main layout
-    QVBoxLayout *mainLayout;
+
+    QVBoxLayout *mainLayout;/**< MainLayout for the game */
     // grid layout of board
-    QGridLayout *boardLayout;
-    QPushButton *beginGameButton;
-    QPushButton *reinforce;
-    QPushButton *attack;
-    QPushButton *move;
-    QLabel *selectPlayers;
+    QGridLayout *boardLayout;/**<SubLayout */
+    //buttons added
+    QPushButton *beginGameButton;/**<beginGameButton */
+    QPushButton *reinforce;/**<reinforce */
+    QPushButton *attack;/**<attackButton */
+    QPushButton *move; /**<move Button */
+    QLabel *selectPlayers; /**<Highliting which player to select Label */
     QComboBox *comboBox;
     QLabel *comboBoxLabel;
     QLabel *gameBeganLabel;
     QMenuBar *gameMenu;
-    //string *numberOfPlayersString;
+    //check if the game has begun
     bool gameBegun=false;
     int numberOfPlayers;
     //will for future turn into players
@@ -56,7 +64,6 @@ private:
     int turnNumber;
 
     //slot for each possibili
-
 
 public  slots:
     void beginGame();

@@ -17,6 +17,13 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include "gameboardview.h"
+/**
+ * @brief main
+ * @param argc
+ * @param argv
+ * @return
+ * The main method creates The window of a gameboard view and displays it.
+ */
 
 int main(int argc, char *argv[])
 {
@@ -96,4 +103,5 @@ int main(int argc, char *argv[])
 
     return application.exec();
 }
+
 

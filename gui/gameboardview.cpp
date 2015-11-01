@@ -8,6 +8,10 @@
 #include <QString>
 #include "gameboardview.h"
 using namespace std;
+/**
+ * @brief GameBoardView::GameBoardView
+ * Creates the GameBoard using stub functions to select number of players.
+ */
 
 GameBoardView::GameBoardView() :
     QWidget()
@@ -37,6 +41,11 @@ GameBoardView::GameBoardView() :
 
 
 }
+/**
+ * @brief GameBoardView::beginGame
+ * begins The game inits the number of players and new gui view and the
+ * game ordering.
+ */
 void GameBoardView::beginGame(){
     if(gameBegun){
         qDebug() << "Button Clicked ";
@@ -90,13 +99,24 @@ void GameBoardView::beginGame(){
 
 
 }
+/**
+ * @brief GameBoardView::endOfGame
+ * at end of game
+ */
 void GameBoardView::endOfGame(){
 
 }
-//destructor
+/**
+ * @brief GameBoardView::~GameBoardView
+ * default destructor
+ */
 GameBoardView::~GameBoardView(){
 
 }
+/**
+ * @brief GameBoardView::movePhase
+ * implements the move phase described in the game using enums.
+ */
 void GameBoardView:: movePhase(){
     if(currentMode == moveMode){
         moveLabel = new QLabel ("Moving turn ended select endOfTurn");
@@ -105,6 +125,10 @@ void GameBoardView:: movePhase(){
     }
 
 }
+/**
+ * @brief GameBoardView::reinforcePhase
+ * implements the reinforcePhase described in the game using enums.
+ */
 void GameBoardView::reinforcePhase(){
     if(currentMode==reinforceMode){
         reinforceLabel = new QLabel ("Reinforce has been processed now please go to  attackPhase");
@@ -113,6 +137,10 @@ void GameBoardView::reinforcePhase(){
     }
 
 }
+/**
+ * @brief GameBoardView::attackPhase
+ * implements the attackPhase.
+ */
 void GameBoardView::attackPhase(){
     if(currentMode==attackMode){
         attackLabel = new QLabel("Attack phase has been processed now please go to movePhase ");
@@ -121,7 +149,10 @@ void GameBoardView::attackPhase(){
     }
 
 }
-/* something
+/**
+ * @brief GameBoardView::endTurn
+ *  End of turn removes all the information about the previous turn and now allows current playersTurn.
+ * Indicates the current players turn.
  */
 void GameBoardView::endTurn(){
     if(currentMode ==endOfTurnMode){
