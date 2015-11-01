@@ -129,3 +129,12 @@ WarReferee::~WarReferee(){
     delete dices;
 }
 
+WarReferee& WarReferee::getInstance()
+{
+    static WarReferee* instance = nullptr;
+    if(instance == nullptr){
+        instance = new WarReferee();
+    }
+    return *instance;
+}
+

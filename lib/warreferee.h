@@ -19,18 +19,16 @@ private:
     Dices *dices;
     int defenderDices;
     int attackerDices;
-    
-
-    
-public:
     WarReferee();
-    ~WarReferee();
+public:
+    static WarReferee& getInstance();
     void setPlayers(Player &attacker, Player &defender);
     void calculateLossesHelper(Country& attacker, int attackerDices, Country& defender, int defenderDices);
     void calculateLosses(Country& attacker, Country& defender);
     void calculateLosses(Country& attacker, int attackerDices,Country& defender, int defenderDices);
     void startWar(Player &attacker, Country &attackerCountry, Player &defender, Country &defenderCountry);
     void allInMode(Country& attacker, Country& defenderCountry);
+    ~WarReferee();
 };
 
 
