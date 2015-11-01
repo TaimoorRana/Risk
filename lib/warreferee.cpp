@@ -111,6 +111,7 @@ void WarReferee::allInMode(Country& attackerCountry, Country& defenderCountry){
     if (attackerCountry.getArmies() <= 1 ) {
         std::cout << "Attacker cannot attack anymore\n";
     }else{
+        
         std::cout << "Attacker won and conquered\n";
         const int soldiers = attackerDices;
         std::string countryFromName = attackerCountry.getNameCountry();

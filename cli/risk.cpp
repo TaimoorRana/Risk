@@ -8,7 +8,7 @@ using namespace std;
 
 int main() {
 
-    RiskMap map;
+    RiskMap& map = RiskMap::getInstance();
 
     //Continent asia = Continent("Asia");
     Continent asia("Asia");
