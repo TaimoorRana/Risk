@@ -70,6 +70,13 @@ void RiskMap::console_print_list_of_countries(const std::string& name_continent)
     }
 }
 
+RiskMap& RiskMap::getInstance(){
+    static RiskMap* instance = nullptr;
+    if (instance == nullptr) {
+        instance = new RiskMap();
+    }
+    return *instance;
+}
 
 
 

@@ -9,13 +9,14 @@
 
 class RiskMap
 {
+private:
     std::unordered_map<std::string, Continent> continents;
     std::unordered_map<std::string, Country> countries;
-
+    RiskMap();
     MySubGraph mapGraph;
 
 public:
-    RiskMap() {}
+    static RiskMap& getInstance();
     bool adjacentCountries(const std::string&, const std::string&);
     void addCountry(const std::string&, const std::string&, int);
     void makeCountriesAdjacent(const std::string&, const std::string&);

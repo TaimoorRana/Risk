@@ -38,27 +38,26 @@ int main(int argc, char *argv[])
 
         // start automated war
         std::cout <<"Automatic dices rolls" << std::endl;
-        std::cout <<"Current army in " << us.getNameCountry()<< ": " <<us.getArmies() << std::endl;
         std::cout <<"Current army in " << canada.getNameCountry()<< ": " <<canada.getArmies() << std::endl;
         std::cout <<"Current army in " << us.getNameCountry()<< ": " <<us.getArmies() << std::endl;
         warReferee.startWar(player1,canada,player2,us);
         std::cout <<"Current army in " << canada.getNameCountry() << " after the war : " <<canada.getArmies() << std::endl;
         std::cout <<"Current army in " << us.getNameCountry() << " after the war : " <<us.getArmies() << std::endl;
 
-//        // reset soldiers in both countries
-//        canada.setSoldiers(20);
-//        us.setSoldiers(20);
+        // reset soldiers in both countries
+        canada.setArmies(20);
+        us.setArmies(20);
+        us.setPlayer(player2.getName());
 
-//        warReferee.setPlayers(player1,player2);
+        warReferee = WarReferee::getInstance();
+        // start manual war
+        std::cout <<"\n\n\n\nAutomatic dices rolls" << std::endl;
+        std::cout <<"Current army in " << canada.getNameCountry()<< ": " <<canada.getArmies() << std::endl;
+        std::cout <<"Current army in " << us.getNameCountry()<< ": " <<us.getArmies() << std::endl;
+        warReferee.startWar(player1,canada,player2,us);
+        std::cout <<"Current army in " << canada.getNameCountry() << " after the war : " <<canada.getArmies() << std::endl;
+        std::cout <<"Current army in " << us.getNameCountry() << " after the war : " <<us.getArmies() << std::endl;
 
-
-//        // start manual war
-//        std::cout <<"\n\n\nOnly 1 dice roll" << std::endl;
-//        std::cout <<"Current army in " << canada.getName()<< ": " <<canada.getSoldiers() << std::endl;
-//        std::cout <<"Current army in " << us.getName()<< ": " <<us.getSoldiers() << std::endl;
-//        warReferee.calculateLosses(canada,us);
-//        std::cout <<"Current army in " << canada.getName() << " after the war : "<<canada.getSoldiers() << std::endl;
-//        std::cout <<"Current army in " << us.getName() << " after the war : "<<us.getSoldiers() << std::endl;
 
 
     return application.exec();
