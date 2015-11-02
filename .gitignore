@@ -1,7 +1,5 @@
 # CMake cache
-CMakeLists.txt.user
-CMakeLists.txt.user.*
-
+CMakeLists.txt.user*
 
 # OS thumbnail files
 .DS_Store
@@ -9,12 +7,13 @@ Thumbs.db
 
 # IDEs
 *.sublime-*
-#Doxygen
-gui/html/*
-gui/latex/*
-gui/doxygenfile
+# Qt Creator
+/*.creator
+/*.creator.user*
+/*.files
+/*.config
+/*.includes
 
-.gitignore.swp
-
-
-
+# Doxygen
+html/*
+latex/*
