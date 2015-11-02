@@ -8,7 +8,7 @@
 #include <QString>
 #include <QTextStream>
 
-#include "risk.h"
+#include "main_window.h"
 #include "country.h"
 #include "dices.h"
 #include "continent.h"
