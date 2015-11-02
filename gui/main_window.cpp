@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
 MainWindow::~MainWindow() {
 	delete ui;
-	scene.clear();
+    scene->clear();
 	delete scene;
 }
 
