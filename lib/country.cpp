@@ -15,7 +15,14 @@ Country& Country::operator = (const Country& other){
     name_of_player = other.name_of_player;
     return *this;
 }
-std::string Country::getNameCountry() const {return this->name_of_country;}
+
+std::string Country::getName() const {
+    return this->name_of_country;
+}
+
+void Country::setName(const std::string& name) {
+    this->name_of_country = name;
+}
 
 void Country::setPlayer(const std::string& nameOfPlayer){this->name_of_player = nameOfPlayer;}
 std::string Country::getPlayer(){

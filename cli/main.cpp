@@ -13,7 +13,7 @@ int main() {
     //Continent asia = Continent("Asia");
     Continent asia("Asia");
 
-    map.addCountry("Persia",asia.getNameContinent(),1);
+    map.addCountry("Persia", asia.getName(), 1);
 
     map.addCountry("Arabia","Asia",2);
     map.addCountry("China","Asia",2);
@@ -43,15 +43,15 @@ int main() {
 
     map.console_print_list_of_neighbours("India");
 
-    std::cout<<"Owner of Arabia: "<<map.getPlayerOwner("Arabia")<<std::endl;
-    map.setPlayerOwner("Arabia","Adrianna");
-    std::cout<<"Owner of Arabia: "<<map.getPlayerOwner("Arabia")<<std::endl;
+    std::cout<<"Owner of Arabia: " << map.getCountry("Arabia")->getPlayer() << std::endl;
+    map.getCountry("Arabia")->setPlayer("Adrianna");
+    std::cout<<"Owner of Arabia: " << map.getCountry("Arabia")->getPlayer() << std::endl;
 
-    std::cout<<"Armies in Arabia: "<<map.getArmies("Arabia")<<std::endl;
-    map.setArmies("Arabia", 10);
-    std::cout<<"Armies in Arabia: "<<map.getArmies("Arabia")<<std::endl;
+    std::cout << "Armies in Arabia: " << map.getCountry("Arabia")->getArmies() << std::endl;
+    map.getCountry("Arabia")->setArmies(10);
+    std::cout << "Armies in Arabia: " << map.getCountry("Arabia")->getArmies() << std::endl;
 
-    std::cout<<"Country India belongs to: "<<map.getContinentName("India")<<std::endl;
+    std::cout << "Country India belongs to: " << map.getContinentOfCountry("India")->getName() << std::endl;
 
     return 0;
 }

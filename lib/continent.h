@@ -11,6 +11,6 @@ public:
     Continent(const std::string&);
     Continent(const Continent&);
     Continent& operator = (const Continent&);
-    std::string getNameContinent() const;
+    std::string getName() const;
 };
 #endif // CONTINENT_H

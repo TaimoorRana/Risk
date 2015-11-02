@@ -48,7 +48,7 @@ void WarReferee::calculateLosses(Country& attackerCountry, Country& defenderCoun
     }else{
         std::cout << "error in calculateLosses Method\n";
     }
-    
+
     calculateLossesHelper(attackerCountry, attackerDices, defenderCountry, defenderDices);
 }
 
@@ -61,14 +61,14 @@ void WarReferee::calculateLossesHelper(Country& attackerCountry, int attackerDic
 //     dices rolled by both players
     std::vector<int> attackerResults = dices->roll(attackerDices);
     std::vector<int> defenderResults = dices->roll(defenderDices);
-    
+
     int attackerLosses = 0;
     int defenderLosses = 0;
-    
+
 //    //Compare roll results
 //    //Attacker's highest dice is compared to Defender's highest dice
     int dicesToCompare = (defenderDices <= attackerDices)? defenderDices : attackerDices;
-    
+
     for(int x = 0; x < dicesToCompare; x++){
         if(attackerResults[x] > defenderResults[x]){
             defenderLosses++;
@@ -76,9 +76,9 @@ void WarReferee::calculateLossesHelper(Country& attackerCountry, int attackerDic
             attackerLosses++;
         }
     }
-    
 
-    
+
+
 //    // Remove soldiers lost from the battle
     if (attackerCountry.getArmies() > attackerLosses) {
         attackerCountry.setArmies(attackerCountry.getArmies()-attackerLosses);
@@ -97,25 +97,25 @@ void WarReferee::calculateLossesHelper(Country& attackerCountry, int attackerDic
 
 
 void WarReferee::allInMode(Country& attackerCountry, Country& defenderCountry){
-    
+
     while (attackerCountry.getArmies() > 1 && attackerCountry.getPlayer()!= defenderCountry.getPlayer()) {
         calculateLosses(attackerCountry,defenderCountry);
         if (defenderCountry.getArmies() <= 0) {
-            attacker->addCountry(defenderCountry.getNameCountry());
+            attacker->addCountry(defenderCountry.getName());
             defenderCountry.setPlayer(attacker->getName());
             //defenderPlayer->removeCountry(defender);
         }
     }
     std::cout << attackerCountry.getArmies() << std::endl;
-    
+
     if (attackerCountry.getArmies() <= 1 ) {
         std::cout << "Attacker cannot attack anymore\n";
     }else{
-        
+
         std::cout << "Attacker won and conquered\n";
         const int soldiers = attackerDices;
-        std::string countryFromName = attackerCountry.getNameCountry();
-        std::string countryToName = defenderCountry.getNameCountry();
+        std::string countryFromName = attackerCountry.getName();
+        std::string countryToName = defenderCountry.getName();
         attacker->transferSoldiers(countryFromName, countryToName,soldiers);
     }
 }

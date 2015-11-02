@@ -20,27 +20,16 @@ void RiskMap::makeCountriesAdjacent(const std::string& country_a, const std::str
     mapGraph.insertEdge(country_a, country_b);
 }
 
-void RiskMap::setPlayerOwner(const std::string& name_country, const std::string& name_player){
-    countries.at(name_country).setPlayer(name_player);
+Continent* RiskMap::getContinentOfCountry(const std::string& name_country){
+    std::string name_continent(mapGraph.getSubgraphName(name_country));
+    return &continents[name_continent];
 }
 
-std::string RiskMap::getPlayerOwner(const std::string& name_country){
-    return countries.at(name_country).getPlayer();
+Continent* RiskMap::getContinent(const std::string& name_continent){
+    return &continents[name_continent];
 }
 
-void RiskMap::setArmies(const std::string& name_country, int armies){
-    countries.at(name_country).setArmies(armies);
-}
-
-int RiskMap::getArmies(const std::string& name_country){
-    return countries.at(name_country).getArmies();
-}
-
-std::string RiskMap::getContinentName(const std::string& name_country){
-    return mapGraph.getSubgraphName(name_country);
-}
-
-Country* RiskMap::getCountryObj(std::string name_country){
+Country* RiskMap::getCountry(std::string name_country){
     return &countries[name_country];
 }
 

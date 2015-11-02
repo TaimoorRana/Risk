@@ -9,4 +9,4 @@ Continent& Continent::operator = (const Continent& other){
     this->name = other.name;
     return *this;
 }
-std::string Continent::getNameContinent() const { return this->name;}
+std::string Continent::getName() const { return this->name;}
