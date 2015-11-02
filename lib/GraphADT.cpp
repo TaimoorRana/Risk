@@ -136,7 +136,7 @@ void MyGraph::insertEdge(std::string v, std::string w, std::string x) {
         std::cout<<"ERROR: Cannot proceed, one or more vertices don't exist."<<std::endl;
     }
 
-//14 ;; Remove edge (v, w) 
+//14 ;; Remove edge (v, w)
 void MyGraph::removeEdge(std::string v, std::string w) {
     if( thegraph.find(v) != thegraph.end() && thegraph.find(w) != thegraph.end()){
         std::string edge = thegraph[v][w].edgename;
@@ -205,8 +205,8 @@ MyGraph::MyGraph(const MyGraph& other) {
         thegraph[g_iter->first]= node_hashmap(g_iter->second);
         *g_iter++;
         }
-    set_of_vertices = my_set(other.set_of_vertices);
-    set_of_edges = my_set(other.set_of_edges);
+    set_of_vertices = string_set(other.set_of_vertices);
+    set_of_edges = string_set(other.set_of_edges);
     number_of_edges= other.number_of_edges;
     number_of_nodes= other.number_of_nodes;
     }
@@ -293,8 +293,8 @@ MyGraph MyGraph::copyGraph() const {
     while (g_iter != thegraph.end()){
         output.thegraph[g_iter->first]= node_hashmap(g_iter->second);
         *g_iter++;}
-    output.set_of_vertices = my_set(set_of_vertices);
-    output.set_of_edges = my_set(set_of_edges);
+    output.set_of_vertices = string_set(set_of_vertices);
+    output.set_of_edges = string_set(set_of_edges);
     output.number_of_edges= number_of_edges;
     output.number_of_nodes= number_of_nodes;
     return output;
@@ -315,7 +315,7 @@ MyGraph MyGraph::graph_difference(MyGraph const& g2) const{
 MyGraph MyGraph::graph_complement() const{
     MyGraph output = copyGraph();
     graph_hashmap::const_iterator g_iter = thegraph.begin();
-    my_set::const_iterator g2_iter;
+    string_set::const_iterator g2_iter;
     while (g_iter != thegraph.end()){
         g2_iter = set_of_vertices.begin();
         while ( g2_iter != set_of_vertices.end()){
@@ -362,8 +362,8 @@ void MySubGraph::insertNode(std::string name_of_country, std::string name_of_con
     countries_continents[name_of_country]=name_of_continent;
 }
 
-my_set MySubGraph::subgraphContents(const std::string& name_continent){
-    my_set setOfCountries(allSubgraphs.at(name_continent));
+string_set MySubGraph::subgraphContents(const std::string& name_continent){
+    string_set setOfCountries(allSubgraphs.at(name_continent));
     return setOfCountries;
 }
 

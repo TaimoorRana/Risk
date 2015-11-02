@@ -15,7 +15,7 @@ struct Edge{
 
 typedef std::unordered_map<std::string, Edge> node_hashmap;
 typedef std::unordered_map<std::string, node_hashmap> graph_hashmap;
-typedef std::set<std::string> my_set;
+typedef std::set<std::string> string_set;
 typedef std::unordered_map< std::string, std::set< std::string> > subgraph;
 
 
@@ -28,20 +28,20 @@ private:
     int number_of_nodes;
     int number_of_edges;
     graph_hashmap thegraph;
-    my_set set_of_vertices;
-    my_set set_of_edges;
+    string_set set_of_vertices;
+    string_set set_of_edges;
 public:
     MyGraph(): number_of_nodes(0), number_of_edges(0) {} //using initialization list
     MyGraph(MyGraph const&);
     MyGraph copyUtil(const MyGraph&);
-    my_set nodes() const;
-    my_set edges() const;
+    string_set nodes() const;
+    string_set edges() const;
     int countAllNodes() const;
     int countAllEdges() const;
     Edge getEdge(std::string, std::string) const;
-    my_set incidentEdges(std::string v) const;
+    string_set incidentEdges(std::string v) const;
     std::string opposite(std::string, std::string) const;
-    my_set endNodes(std::string) const;
+    string_set endNodes(std::string) const;
     bool areAdjacent(std::string, std::string) const;
     void insertNode(std::string);
     void removeNode(std::string);
@@ -73,7 +73,7 @@ class MySubGraph : public MyGraph{
 
 public :
     void insertNode(std::string, std::string);
-    my_set subgraphContents(const std::string&);
+    string_set subgraphContents(const std::string&);
     std::string getSubgraphName(const std::string&);
 };
 

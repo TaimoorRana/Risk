@@ -23,20 +23,20 @@ int main() {
     map.console_print_list_of_countries("Asia");
     map.console_print_list_of_countries("Europe");
 
-    map.makeCountriesAdjacent("Arabia","Russia");
-    map.makeCountriesAdjacent("Arabia","India");
-    map.makeCountriesAdjacent("India","Persia");
-    map.makeCountriesAdjacent("Persia","Arabia");
-    map.makeCountriesAdjacent("Persia","Russia");
-    map.makeCountriesAdjacent("China","Persia");
-    map.makeCountriesAdjacent("India","China");
+    map.addNeighbour("Arabia","Russia");
+    map.addNeighbour("Arabia","India");
+    map.addNeighbour("India","Persia");
+    map.addNeighbour("Persia","Arabia");
+    map.addNeighbour("Persia","Russia");
+    map.addNeighbour("China","Persia");
+    map.addNeighbour("India","China");
 
-    if(map.adjacentCountries("India", "Russia"))
+    if(map.areCountriesAdjacent("India", "Russia"))
         std::cout<<"Countries are adjacent"<<std::endl;
     else
         std::cout<<"Countries are NOT adjacent."<<std::endl;
 
-    if(map.adjacentCountries("China", "Persia"))
+    if(map.areCountriesAdjacent("China", "Persia"))
         std::cout<<"Countries are adjacent"<<std::endl;
     else
         std::cout<<"Countries are NOT adjacent."<<std::endl;

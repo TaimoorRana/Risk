@@ -41,7 +41,7 @@ bool Player::hasCountry(const std::string& countryName)
 
 bool Player::hasContinent(const std::string& continentName)
 {
-    std::set<std::string> countryList = map.listCountriesInsideContinent(continentName);
+    std::set<std::string> countryList = map.getCountriesInContinent(continentName);
     std::set<std::string>::iterator countryListIterator;
 
     std::set<std::string>::iterator countriesOwnedIterator;
