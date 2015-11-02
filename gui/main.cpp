@@ -1,12 +1,5 @@
 #include <iostream>
 #include <QApplication>
-#include <QGraphicsScene>
-#include <QGraphicsView>
-#include <QGraphicsRectItem>
-#include <QDebug>
-#include <QDate>
-#include <QString>
-#include <QTextStream>
 
 #include "librisk.h"
 #include "main_window.h"
