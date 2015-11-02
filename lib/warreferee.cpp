@@ -1,11 +1,9 @@
 #include "warreferee.h"
-#include "dices.h"
 #include <iostream>
+#include <vector>
+#include "librisk.h"
 
-WarReferee::WarReferee()
-{
-    dices = new Dices(MAX_DICES);
-}
+WarReferee::WarReferee() {}
 
 void WarReferee::setPlayers(Player& attacker1, Player& defender1){
     this->defender = &defender1;
@@ -59,8 +57,8 @@ void WarReferee::calculateLosses(Country& attackerCountry, Country& defenderCoun
  */
 void WarReferee::calculateLossesHelper(Country& attackerCountry, int attackerDices, Country& defenderCountry, int defenderDices){
 //     dices rolled by both players
-    std::vector<int> attackerResults = dices->roll(attackerDices);
-    std::vector<int> defenderResults = dices->roll(defenderDices);
+    std::vector<int> attackerResults = roll_dice(attackerDices);
+    std::vector<int> defenderResults = roll_dice(defenderDices);
 
     int attackerLosses = 0;
     int defenderLosses = 0;
@@ -125,10 +123,6 @@ void WarReferee::startWar(Player& attacker,Country& attackerCountry, Player& def
 {
     setPlayers(attacker, defender);
     allInMode(attackerCountry,defenderCountry);
-}
-
-WarReferee::~WarReferee(){
-    delete dices;
 }
 
 WarReferee& WarReferee::getInstance()

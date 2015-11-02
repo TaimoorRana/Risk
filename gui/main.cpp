@@ -8,9 +8,9 @@
 #include <QString>
 #include <QTextStream>
 
+#include "librisk.h"
 #include "main_window.h"
 #include "country.h"
-#include "dices.h"
 #include "continent.h"
 #include "warreferee.h"
 #include "player.h"
@@ -20,6 +20,8 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+    librisk_init();
+
     QApplication application(argc, argv);
 
     // Player creation

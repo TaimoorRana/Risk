@@ -7,6 +7,7 @@
 using namespace std;
 
 int main() {
+    librisk_init();
 
     RiskMap& map = RiskMap::getInstance();
 
