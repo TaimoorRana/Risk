@@ -69,5 +69,11 @@ public:
     virtual void registerObserver(PlayerObserver*);
     virtual void unregisterObserver(PlayerObserver*);
     virtual void notifyObserver();
+
+    /*
+     * calculate total armies from all countries
+     */
+
+    int getTotalArmies();
 };
 #endif // PLAYER_H

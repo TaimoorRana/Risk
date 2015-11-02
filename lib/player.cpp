@@ -107,9 +107,20 @@ void Player::unregisterObserver(PlayerObserver *observer)
 
 void Player::notifyObserver()
 {
+    getTotalArmies();
     for(std::set<PlayerObserver*>::iterator observerListIterator = observerList.begin(); observerListIterator != observerList.end(); observerListIterator++){
         (*observerListIterator)->update(namesOfCountriesOwned,namesOfContinentsOwned,reinforcements,totalArmy,battleWon);
     }
+}
+
+int Player::getTotalArmies()
+{
+    int totalArmies = 0;
+    for(std::string countryName : namesOfCountriesOwned){
+        totalArmies += map.getCountryObj(countryName)->getArmies();
+    }
+    totalArmy = totalArmies;
+    return totalArmies;
 }
 
 std::set<std::string> Player::getCountryOwned(){
