@@ -1,5 +1,6 @@
 #include "country.h"
 #include "player.h"
+#include <algorithm>
 
 Player::Player(std::string name)
 {
@@ -91,6 +92,35 @@ void Player::transferSoldiers(std::string& countryFromName, std::string& country
         countryfrom->removeArmies(soldiers);
         countryTo->addArmies(soldiers);
     }
+}
+
+void Player::registerObserver(PlayerObserver *observer)
+{
+    observerList.insert(observer);
+}
+
+void Player::unregisterObserver(PlayerObserver *observer)
+{
+   //observerList.erase(std::remove(observerList.begin(), observerList.end(), observer), observerList.end());
+
+}
+
+void Player::notifyObserver()
+{
+    getTotalArmies();
+    for(std::set<PlayerObserver*>::iterator observerListIterator = observerList.begin(); observerListIterator != observerList.end(); observerListIterator++){
+        (*observerListIterator)->update(namesOfCountriesOwned,namesOfContinentsOwned,reinforcements,totalArmy,battleWon);
+    }
+}
+
+int Player::getTotalArmies()
+{
+    int totalArmies = 0;
+    for(std::string countryName : namesOfCountriesOwned){
+        totalArmies += map.getCountryObj(countryName)->getArmies();
+    }
+    totalArmy = totalArmies;
+    return totalArmies;
 }
 
 std::set<std::string> Player::getCountryOwned(){

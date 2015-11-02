@@ -4,18 +4,20 @@
 #include <string>
 #include <set>
 #include "risk_map.h"
-
+#include "playersubject.h"
+#include "playerobserver.h"
 class Country; // forward declaration
 
-class Player{
+class Player: public PlayerSubject{
 private:
-
+    int reinforcements;
+    int battleWon;
+    int totalArmy;
     std::string name;
-	int reinforcements;
     std::set<std::string> namesOfCountriesOwned;
     std::set<std::string> namesOfContinentsOwned;
     RiskMap& map = RiskMap::getInstance();
-    int battleWon;
+    std::set<PlayerObserver*> observerList;
 
 public:
 
@@ -60,5 +62,18 @@ public:
      @params int: soldiers to transfer
      */
 	void transferSoldiers(std::string&, std::string& ,const int&);
+
+    /*
+     * Observer Pattern Methods
+     */
+    virtual void registerObserver(PlayerObserver*);
+    virtual void unregisterObserver(PlayerObserver*);
+    virtual void notifyObserver();
+
+    /*
+     * calculate total armies from all countries
+     */
+
+    int getTotalArmies();
 };
 #endif // PLAYER_H
