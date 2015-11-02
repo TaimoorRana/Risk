@@ -14,6 +14,7 @@
 #include "continent.h"
 #include "warreferee.h"
 #include "player.h"
+#include "playerview.h"
 #include "risk_map.h"
 
 using namespace std;
@@ -25,7 +26,11 @@ int main(int argc, char *argv[])
     // Player creation
         Player player1("player1");
         Player player2("player2");
-    
+
+        PlayerView pv;
+        player1.registerObserver(&pv);
+
+
         RiskMap& map = RiskMap::getInstance();
         map.addCountry("Canada", "America", 20);
         map.addCountry("Us", "America", 20);
@@ -50,11 +55,13 @@ int main(int argc, char *argv[])
         warReferee.startWar(player1,*canada,player2,*us);
         std::cout <<"Current army in " << canada->getNameCountry() << " after the war : " <<canada->getArmies() << std::endl;
         std::cout <<"Current army in " << us->getNameCountry() << " after the war : " <<us->getArmies() << std::endl;
+        player1.notifyObserver();
 
+        std::cout << pv.getNumberOfArmies() << "test";
         // reset soldiers in both countries
-        canada->setArmies(20);
-        us->setArmies(20);
-        us->setPlayer(player2.getName());
+//        canada->setArmies(20);
+//        us->setArmies(20);
+//        us->setPlayer(player2.getName());
     
 //        warReferee = WarReferee::getInstance();
 //        // start manual war

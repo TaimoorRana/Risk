@@ -6,10 +6,9 @@ set(LIBRARY_SOURCE_FILES
 	GraphADT.cpp GraphADT.h
 	librisk.cpp librisk.h
         player.cpp player.h
-        playerobserver.cpp playerobserver.h
-        playersubject.cpp playersubject.h
+        playerobserver.h
+        playersubject.h
         playerview.cpp playerview.h
-
         risk_map.cpp risk_map.h
         warreferee.cpp warreferee.h
 )

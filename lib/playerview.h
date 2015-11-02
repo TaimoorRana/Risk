@@ -10,17 +10,14 @@ private:
     int nbrOfReinforcements;
     int nbrOfArmies;
     int nbrBattleWon;
-    int id;
-    static int idCounter;
 
 public:
-    PlayerView();
     void update (std::set<std::string>,std::set<std::string>,int,int,int);
-    std::set<std::string> getCountriesOwned();
-    std::set<std::string> getContinentsOwned();
-    int getNumberOfReinforcements();
-    int getNumberOfArmies();
-    int getNumberOfBattleWon();
+    std::set<std::string> getCountriesOwned() const;
+    std::set<std::string> getContinentsOwned() const;
+    int getNumberOfReinforcements() const;
+    int getNumberOfArmies() const;
+    int getNumberOfBattleWon() const;
 };
 
 #endif // PLAYERVIEW
