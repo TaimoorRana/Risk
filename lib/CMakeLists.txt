@@ -9,7 +9,6 @@ set(LIBRARY_SOURCE_FILES
         playerobserver.h
         playersubject.h
         playerview.cpp playerview.h
-        risk.cpp risk.h
         risk_map.cpp risk_map.h
         warreferee.cpp warreferee.h
 )
