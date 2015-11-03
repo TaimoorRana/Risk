@@ -10,7 +10,7 @@ WarReferee::WarReferee()
 /**
  * Calculates the loses each country occurs after the dice roll- if dices are specified
  */
-void WarReferee::calculateLosses(int attackerDices, int defenderDices)
+void WarReferee::calculateLosses(int &, int &)
 {
     this->attackerDices = attackerDices;
     this->defenderDices = defenderDices;

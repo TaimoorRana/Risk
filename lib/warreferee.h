@@ -7,7 +7,7 @@ class WarReferee{
 
 //use singleton pattern
 private:
-    
+    WarReferee();
     static const int MAX_DICES = 3;
     
     // Players
@@ -22,16 +22,29 @@ private:
     Dices *dices;
     int defenderDices;
     int attackerDices;
-    WarReferee();
+
+    /*
+     * Roll dices for both players and calculate Losses occured to each army;
+     */
+    void calculateLossesHelper();
+
 public:
     static WarReferee& getInstance();
 
+    /*
+     Player related methods
+     @params string: player name
+     */
     void setAttackerPlayer(std::string&);
     void setDefenderPlayer(std::string&);
     void setBothPlayers(std::string& , std::string&);
     std::string getAttackerPlayer();
     std::string getDefenderPlayer();
 
+    /*
+     Player Army related methods
+     @params int&: number of army
+     */
     void setDefenderArmy(int&);
     void setAttackerArmy(int&);
     void setBothArmies(int&,int&);
@@ -39,10 +52,25 @@ public:
     int getDefenderArmy();
 
 
-    void calculateLossesHelper();
+    /*
+     * Roll dices for both players and calculate Losses occured to each army - dices are assigned depending on the army size
+     */
     void calculateLosses();
-    void calculateLosses(int attackerDices, int defenderDices);
-    void startWar(std::string& attackerPlayer, int& attakerArmy, std::string& defenderPlayer, int& defenderArmy);
+    /*
+     * Roll dices for both players and calculate Losses occured to each army - dices amount is given by the user
+     * int: attacker Dices amount
+     * int: defender Dices amount
+     */
+    void calculateLosses(int& , int& );
+
+    /*
+     * Starts war between both players
+     * @string&: attacker Player
+     * @int&: attacker Army
+     * string&: defender Player
+     * int&: defender Army
+     */
+    void startWar(std::string& ,int& ,std::string& ,int&);
     void allInMode();
     ~WarReferee();
 };
