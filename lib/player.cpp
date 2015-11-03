@@ -63,6 +63,11 @@ bool Player::hasContinent(const std::string& continentName)
     return false;
 }
 
+std::set<std::string> Player::getContinentsOwned()
+{
+    return this->namesOfContinentsOwned;
+}
+
 std::string Player::getName(){
     return name;
 }
@@ -82,6 +87,11 @@ void Player::removeReinforcements(const int& amount)
 void Player::setReinforcements(const int& amount)
 {
     reinforcements = amount;
+}
+
+int Player::getReinforcements()
+{
+    return this->reinforcements;
 }
 
 
@@ -104,7 +114,12 @@ void Player::notifyObserver()
     }
 }
 
-int Player::getTotalArmies()
+int Player::setTotalArmy(const int &totalArmy)
+{
+    this->totalArmy = totalArmy;
+}
+
+int Player::getTotalArmy()
 {
     return totalArmy;
 }
@@ -116,6 +131,21 @@ std::set<std::string> Player::getCountryOwned(){
 
 void Player::increaseBattleWon(){
     battleWon++;
+}
+
+void Player::decreaseBattleWon()
+{
+    battleWon--;
+}
+
+void Player::setBattlesWon(const int &battleWon)
+{
+    this->battleWon = battleWon;
+}
+
+int Player::getBattlesWon()
+{
+    return battleWon;
 }
 
 

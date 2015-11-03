@@ -24,9 +24,12 @@ public:
 	Player(std::string name);
     Player(const Player& other);
     std::string getName();
-    
+
     // increase battleWon int by 1
     void increaseBattleWon();
+    void decreaseBattleWon();
+    void setBattlesWon();
+    int getBattlesWon();
 
     /*
      Reinforcements related methods
@@ -35,6 +38,7 @@ public:
     void addReinforcements(const int&);
     void removeReinforcements(const int&);
     void setReinforcements(const int&);
+    int  getReinforcements();
 
     /*
      Country related methods
@@ -52,13 +56,8 @@ public:
     void addContinent(const std::string&);
     void removeContinent(const std::string&);
     bool hasContinent(const std::string&);
+    std::set<std::string> getContinentsOwned();
 
-    /*
-     @params string: Country Name - Transfer from
-     @params string: Country Name - Transfer to
-     @params int: soldiers to transfer
-     */
-	void transferSoldiers(std::string&, std::string& ,const int&);
 
     /*
      * Observer Pattern Methods
@@ -68,9 +67,9 @@ public:
     virtual void notifyObserver();
 
     /*
-     * calculate total armies from all countries
+     * Army Related Methods
      */
-
-    int getTotalArmies();
+    int getTotalArmy();
+    int setTotalArmy();
 };
 #endif // PLAYER_H
