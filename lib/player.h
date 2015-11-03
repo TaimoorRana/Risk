@@ -16,7 +16,6 @@ private:
     std::string name;
     std::set<std::string> namesOfCountriesOwned;
     std::set<std::string> namesOfContinentsOwned;
-    RiskMap& map = RiskMap::getInstance();
     std::set<PlayerObserver*> observerList;
 
 public:
@@ -28,7 +27,7 @@ public:
     // increase battleWon int by 1
     void increaseBattleWon();
     void decreaseBattleWon();
-    void setBattlesWon();
+    void setBattlesWon(const int&);
     int getBattlesWon();
 
     /*
@@ -70,6 +69,6 @@ public:
      * Army Related Methods
      */
     int getTotalArmy();
-    int setTotalArmy();
+    int setTotalArmy(const int&);
 };
 #endif // PLAYER_H

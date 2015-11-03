@@ -108,7 +108,7 @@ void Player::unregisterObserver(PlayerObserver *observer)
 
 void Player::notifyObserver()
 {
-    getTotalArmies();
+    getTotalArmy();
     for(std::set<PlayerObserver*>::iterator observerListIterator = observerList.begin(); observerListIterator != observerList.end(); observerListIterator++){
         (*observerListIterator)->update(namesOfCountriesOwned,namesOfContinentsOwned,reinforcements,totalArmy,battleWon);
     }
