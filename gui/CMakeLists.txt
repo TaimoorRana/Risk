@@ -5,12 +5,11 @@ include(QtCommon)
 fix_project_version()
 
 set(GUI_SOURCE_FILES
-
 	main.cpp
 	main_window.cpp main_window.h
 	GameDriver.cpp GameDriver.h
-	States.h States.cpp
-	gameboardview.h gameboardview.cpp
+	States.cpp States.h
+	gameboardview.cpp gameboardview.h
 )
 
 set(GUI_RESOURCE_FILES

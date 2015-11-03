@@ -1,5 +1,6 @@
 #include "country.h"
 #include "player.h"
+#include <algorithm>
 
 Player::Player(std::string name)
 {
@@ -62,6 +63,11 @@ bool Player::hasContinent(const std::string& continentName)
     return false;
 }
 
+std::set<std::string> Player::getContinentsOwned()
+{
+    return this->namesOfContinentsOwned;
+}
+
 std::string Player::getName(){
     return name;
 }
@@ -83,14 +89,39 @@ void Player::setReinforcements(const int& amount)
     reinforcements = amount;
 }
 
-void Player::transferSoldiers(std::string& countryFromName, std::string& countryToName,const int& soldiers){
-    Country* countryfrom = map.getCountry(countryFromName);
-    Country* countryTo = map.getCountry(countryToName);
+int Player::getReinforcements()
+{
+    return this->reinforcements;
+}
 
-    if (countryfrom->getPlayer() == this->name && countryTo->getPlayer() == this->name) {
-        countryfrom->removeArmies(soldiers);
-        countryTo->addArmies(soldiers);
+
+void Player::registerObserver(PlayerObserver *observer)
+{
+    observerList.insert(observer);
+}
+
+void Player::unregisterObserver(PlayerObserver *observer)
+{
+   //observerList.erase(std::remove(observerList.begin(), observerList.end(), observer), observerList.end());
+
+}
+
+void Player::notifyObserver()
+{
+    getTotalArmy();
+    for(std::set<PlayerObserver*>::iterator observerListIterator = observerList.begin(); observerListIterator != observerList.end(); observerListIterator++){
+        (*observerListIterator)->update(namesOfCountriesOwned,namesOfContinentsOwned,reinforcements,totalArmy,battleWon);
     }
+}
+
+void Player::setTotalArmy(const int &totalArmy)
+{
+    this->totalArmy = totalArmy;
+}
+
+int Player::getTotalArmy()
+{
+    return totalArmy;
 }
 
 std::set<std::string> Player::getCountryOwned(){
@@ -100,6 +131,21 @@ std::set<std::string> Player::getCountryOwned(){
 
 void Player::increaseBattleWon(){
     battleWon++;
+}
+
+void Player::decreaseBattleWon()
+{
+    battleWon--;
+}
+
+void Player::setBattlesWon(const int &battleWon)
+{
+    this->battleWon = battleWon;
+}
+
+int Player::getBattlesWon()
+{
+    return battleWon;
 }
 
 

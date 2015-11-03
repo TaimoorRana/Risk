@@ -7,6 +7,7 @@
 #include "continent.h"
 #include "warreferee.h"
 #include "player.h"
+#include "playerview.h"
 #include "risk_map.h"
 
 using namespace std;
@@ -15,11 +16,14 @@ int main(int argc, char *argv[])
 {
     librisk_init();
 
-    QApplication application(argc, argv);
-
     // Player creation
+
     Player player1("player1");
     Player player2("player2");
+
+    PlayerView pv;
+    player1.registerObserver(&pv);
+
 
     RiskMap& map = RiskMap::getInstance();
     map.addCountry("Canada", "America", 20);
@@ -29,6 +33,7 @@ int main(int argc, char *argv[])
 
     Country* canada = map.getCountry("Canada");
     Country* us = map.getCountry("Us");
+
 
     // add country to players
     player1.addCountry(canada->getName());
@@ -41,26 +46,17 @@ int main(int argc, char *argv[])
     std::cout <<"Automatic dices rolls" << std::endl;
     std::cout <<"Current army in " << canada->getName()<< ": " <<canada->getArmies() << std::endl;
     std::cout <<"Current army in " << us->getName()<< ": " <<us->getArmies() << std::endl;
-    warReferee.startWar(player1,*canada,player2,*us);
-    std::cout <<"Current army in " << canada->getName() << " after the war : " <<canada->getArmies() << std::endl;
-    std::cout <<"Current army in " << us->getName() << " after the war : " <<us->getArmies() << std::endl;
+    std::string player1name = "taimoor";
+    std::string player2name = "rana";
+    int attackerArmy = 20;
+    int defenderArmy = 20;
+    warReferee.startWar(player1name,attackerArmy,player2name,defenderArmy);
+    std::cout <<"Current army in " << warReferee.getAttackerPlayer() << " after the war : " << warReferee.getAttackerArmy() << std::endl;
+    std::cout <<"Current army in " << warReferee.getDefenderPlayer() << " after the war : " << warReferee.getDefenderArmy() << std::endl;
+    player1.notifyObserver();
 
-    // reset soldiers in both countries
-    canada->setArmies(20);
-    us->setArmies(20);
-    us->setPlayer(player2.getName());
+    std::cout << pv.getNumberOfArmies() << "test";
 
-    // warReferee = WarReferee::getInstance();
-    // // start manual war
-    // std::cout <<"\n\n\n\nAutomatic dices rolls" << std::endl;
-    // std::cout <<"Current army in " << canada.getName()<< ": " <<canada.getArmies() << std::endl;
-    // std::cout <<"Current army in " << us.getName()<< ": " <<us.getArmies() << std::endl;
-    // warReferee.startWar(player1,canada,player2,us);
-    // std::cout <<"Current army in " << canada.getName() << " after the war : " <<canada.getArmies() << std::endl;
-    // std::cout <<"Current army in " << us.getName() << " after the war : " <<us.getArmies() << std::endl;
-
-    MainWindow* mw = new MainWindow();
-    mw->show();
-
+    QApplication application(argc, argv);
     return application.exec();
 }
