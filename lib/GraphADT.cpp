@@ -1,31 +1,31 @@
 #include "GraphADT.h"
 
 //02 ;; Return the set of all the vertices of the graph.
-std::set<std::string> MyGraph::nodes() const{
+std::set<std::string> GraphADT::nodes() const{
 	std::set<std::string> export_nodes(set_of_vertices);
 	return export_nodes;
 	}
 
 //03 ;; Return the set of all the edges of the graph.
-std::set<std::string> MyGraph::edges() const{
+std::set<std::string> GraphADT::edges() const{
 	std::set<std::string> export_edges(set_of_edges);
 	return export_edges;
 	}
 
 //04 ;; Return the number of vertices currently present in the graph.
-int MyGraph::countAllNodes() const {return number_of_nodes; }
+int GraphADT::countAllNodes() const {return number_of_nodes; }
 
 //05 ;; Return the number of edges currently present in the graph.
-int MyGraph::countAllEdges() const {return number_of_edges; }
+int GraphADT::countAllEdges() const {return number_of_edges; }
 
 //06 ;; Return the edge between vertices v and w;
 // An error occurs if there is no such edge.
-Edge MyGraph::getEdge(std::string v, std::string w) const{
+Edge GraphADT::getEdge(std::string v, std::string w) const{
 	Edge save(thegraph.at(v).at(w));
 	return save;}
 
 //07 ;; Return the set of the edges incident on vertex v.
-std::set<std::string> MyGraph::incidentEdges(std::string v) const{
+std::set<std::string> GraphADT::incidentEdges(std::string v) const{
 	std::set<std::string> set_of_incidents;
 	if( thegraph.find(v)!= thegraph.end()){
 		node_hashmap::const_iterator node_iterator = thegraph.at(v).begin();
@@ -41,7 +41,7 @@ std::set<std::string> MyGraph::incidentEdges(std::string v) const{
 
 //08 ;; Return the end-node of edge e distinct from node v
 // an error occurs if e is not incident on v.
-std::string MyGraph::opposite(std::string u, std::string e) const {
+std::string GraphADT::opposite(std::string u, std::string e) const {
 	node_hashmap::const_iterator node_iterator = thegraph.at(u).begin();
 	while( node_iterator != thegraph.at(u).end()){
 		if( strcmp( e.c_str(), thegraph.at(u).at(node_iterator->first).element.c_str() )==0 )
@@ -52,7 +52,7 @@ std::string MyGraph::opposite(std::string u, std::string e) const {
 	}
 
 //09 ;; Return the set of the end nodes of edge e.
-std::set<std::string> MyGraph::endNodes(std::string edge) const{
+std::set<std::string> GraphADT::endNodes(std::string edge) const{
 	std::set<std::string> setOfEndNodes;
 	graph_hashmap::const_iterator graphiter= thegraph.begin();
 	while(graphiter != thegraph.end()){
@@ -72,7 +72,7 @@ std::set<std::string> MyGraph::endNodes(std::string edge) const{
 	}
 
 //10 ;; Test whether nodes v and w are adjacent.
-bool MyGraph::areAdjacent(std::string v, std::string w) const{
+bool GraphADT::areAdjacent(std::string v, std::string w) const{
 	if (set_of_vertices.find(v) != set_of_vertices.end() &&
 		set_of_vertices.find(w) != set_of_vertices.end()){
 		return ( thegraph.at(v).find(w) != thegraph.at(v).end() &&
@@ -83,7 +83,7 @@ bool MyGraph::areAdjacent(std::string v, std::string w) const{
 	}
 
 //11 ;; Insert a new node
-void MyGraph::insertNode(std::string nodename) {
+void GraphADT::insertNode(std::string nodename) {
 	if (thegraph.find(nodename) == thegraph.end()){
 		//  node_hashmap x;
 		thegraph[nodename]= node_hashmap(); //x
@@ -95,7 +95,7 @@ void MyGraph::insertNode(std::string nodename) {
 	}
 
 //12 ;; Remove node v and all its incident edges
-void MyGraph::removeNode(std::string vertexname){
+void GraphADT::removeNode(std::string vertexname){
 	if ( set_of_vertices.find(vertexname) != set_of_vertices.end()){
 		graph_hashmap::const_iterator graphiter = thegraph.begin();
 		while (graphiter != thegraph.end()){
@@ -112,13 +112,13 @@ void MyGraph::removeNode(std::string vertexname){
 		std::cout<<"ERROR: Named vertex "<<vertexname<<" does not exist."<<std::endl;
 	}
 
-void MyGraph::insertEdge(std::string v, std::string w) {
+void GraphADT::insertEdge(std::string v, std::string w) {
 	this->insertEdge(v,w, std::to_string(this->number_of_edges+1));
 	}
 
 //;13 ;; Create and insert a new undirected edge with
 //end vertices v and w and storing element x
-void MyGraph::insertEdge(std::string v, std::string w, std::string x) {
+void GraphADT::insertEdge(std::string v, std::string w, std::string x) {
 	if( thegraph.find(v) != thegraph.end() && thegraph.find(w) != thegraph.end()){
 		if(thegraph[v].find(w) == thegraph[v].end() && thegraph[w].find(v) == thegraph[w].end()){
 			Edge e;
@@ -137,7 +137,7 @@ void MyGraph::insertEdge(std::string v, std::string w, std::string x) {
 	}
 
 //14 ;; Remove edge (v, w)
-void MyGraph::removeEdge(std::string v, std::string w) {
+void GraphADT::removeEdge(std::string v, std::string w) {
 	if( thegraph.find(v) != thegraph.end() && thegraph.find(w) != thegraph.end()){
 		std::string edge = thegraph[v][w].edgename;
 		(thegraph[v]).erase(w);
@@ -150,7 +150,7 @@ void MyGraph::removeEdge(std::string v, std::string w) {
 	}
 
 //;15 ;; Return the element associated with edge e.
-std::string MyGraph::getEdgeElem(std::string edgename) const {
+std::string GraphADT::getEdgeElem(std::string edgename) const {
 	std::unordered_map<std::string, std::unordered_map<std::string, Edge> >::const_iterator graphiter = thegraph.begin();
 	std::string found = "Not found.";
 	while(graphiter != thegraph.end()){
@@ -166,7 +166,7 @@ std::string MyGraph::getEdgeElem(std::string edgename) const {
 	}
 
 //16 ;; Replace the element stored at edge e with x
-void MyGraph::replaceEdgeElem(std::string edge, std::string x){
+void GraphADT::replaceEdgeElem(std::string edge, std::string x){
 	std::unordered_map<std::string, std::unordered_map<std::string, Edge> >::const_iterator graphiter = thegraph.begin();
 	while(graphiter != thegraph.end()){
 		std::unordered_map<std::string, Edge>::const_iterator node_iter = ((*graphiter).second).begin();
@@ -199,7 +199,7 @@ void printEdge(const Edge& e){
 /*
  * Copy constructor
  */
-MyGraph::MyGraph(const MyGraph& other) {
+GraphADT::GraphADT(const GraphADT& other) {
 	graph_hashmap::const_iterator g_iter = other.thegraph.begin();
 	while (g_iter != other.thegraph.end()){
 		thegraph[g_iter->first]= node_hashmap(g_iter->second);
@@ -212,7 +212,7 @@ MyGraph::MyGraph(const MyGraph& other) {
 	}
 
 
-bool MyGraph::isEqual(const MyGraph& graph2) const {
+bool GraphADT::isEqual(const GraphADT& graph2) const {
 	graph_hashmap::const_iterator g_iter = this->thegraph.begin();
 	std::set<std::string> notvisited(graph2.set_of_vertices);
 	while(g_iter != thegraph.end()){
@@ -241,12 +241,12 @@ bool MyGraph::isEqual(const MyGraph& graph2) const {
 	return (notvisited.size() == 0);
 }
 
-bool MyGraph::emptyGraph() {
+bool GraphADT::emptyGraph() {
 	return (number_of_nodes==0);
 }
 
-MyGraph MyGraph::graph_intersection(const MyGraph& g2) const {
-	MyGraph output;
+GraphADT GraphADT::graph_intersection(const GraphADT& g2) const {
+	GraphADT output;
 	graph_hashmap::const_iterator g1_it = this->thegraph.begin();
 	while(g1_it != this->thegraph.end()){
 		//If the vertex in g1 does not exist in g2, then skip it.
@@ -269,8 +269,8 @@ MyGraph MyGraph::graph_intersection(const MyGraph& g2) const {
 	}
 
 
-MyGraph MyGraph::graph_union(const MyGraph& g2) const {
-	MyGraph output = copyGraph();
+GraphADT GraphADT::graph_union(const GraphADT& g2) const {
+	GraphADT output = copyGraph();
 	graph_hashmap::const_iterator g2_it = g2.thegraph.begin();
 	while(g2_it != this->thegraph.end()){
 		if ( output.thegraph.find(g2_it->first) == output.thegraph.end())
@@ -287,8 +287,8 @@ MyGraph MyGraph::graph_union(const MyGraph& g2) const {
 	return output;
 	}
 
-MyGraph MyGraph::copyGraph() const {
-	MyGraph output;
+GraphADT GraphADT::copyGraph() const {
+	GraphADT output;
 	graph_hashmap::const_iterator g_iter = thegraph.begin();
 	while (g_iter != thegraph.end()){
 		output.thegraph[g_iter->first]= node_hashmap(g_iter->second);
@@ -300,8 +300,8 @@ MyGraph MyGraph::copyGraph() const {
 	return output;
 }
 
-MyGraph MyGraph::graph_difference(MyGraph const& g2) const{
-	MyGraph output = copyGraph();
+GraphADT GraphADT::graph_difference(GraphADT const& g2) const{
+	GraphADT output = copyGraph();
 	graph_hashmap::const_iterator g_iter = g2.thegraph.begin();
 	while( g_iter != g2.thegraph.end()){
 		if(output.set_of_vertices.find(g_iter->first) != output.set_of_vertices.end())
@@ -312,8 +312,8 @@ MyGraph MyGraph::graph_difference(MyGraph const& g2) const{
 	}
 
 
-MyGraph MyGraph::graph_complement() const{
-	MyGraph output = copyGraph();
+GraphADT GraphADT::graph_complement() const{
+	GraphADT output = copyGraph();
 	graph_hashmap::const_iterator g_iter = thegraph.begin();
 	string_set::const_iterator g2_iter;
 	while (g_iter != thegraph.end()){
@@ -334,7 +334,7 @@ MyGraph MyGraph::graph_complement() const{
 }
 
 
-void MyGraph::printGraph() const {
+void GraphADT::printGraph() const {
 	std::cout<<"______________\nPrinting Graph"<<std::endl;
 	graph_hashmap::const_iterator g_iter = thegraph.begin();
 	while ( g_iter != thegraph.end()){
@@ -350,24 +350,24 @@ void MyGraph::printGraph() const {
 	std::cout<<"\n\n"<<std::endl;
 	}
 
-bool DirectedMyGraph::areAdjacent(std::string v, std::string w) const{
+bool DirectedGraphADT::areAdjacent(std::string v, std::string w) const{
   return false;
 }
 
-void MySubGraph::insertNode(std::string name_of_country, std::string name_of_continent){
-	MyGraph::insertNode(name_of_country);
+void SubGraphADT::insertNode(std::string name_of_country, std::string name_of_continent){
+	GraphADT::insertNode(name_of_country);
 	if(allSubgraphs.find(name_of_continent) == allSubgraphs.end())
 		allSubgraphs[name_of_continent]= std::set<std::string>();
 	allSubgraphs.at(name_of_continent).insert(name_of_country);
 	countries_continents[name_of_country]=name_of_continent;
 }
 
-string_set MySubGraph::subgraphContents(const std::string& name_continent){
+string_set SubGraphADT::subgraphContents(const std::string& name_continent){
 	string_set setOfCountries(allSubgraphs.at(name_continent));
 	return setOfCountries;
 }
 
-std::string MySubGraph::getSubgraphName(const std::string& name_country){
+std::string SubGraphADT::getSubgraphName(const std::string& name_country){
 	return countries_continents.at(name_country);
 }
 

@@ -12,7 +12,7 @@ class RiskMap
 private:
 	std::unordered_map<std::string, Continent> continents;
 	std::unordered_map<std::string, Country> countries;
-	MySubGraph mapGraph;
+	SubGraphADT mapGraph;
 
 public:
 	RiskMap();

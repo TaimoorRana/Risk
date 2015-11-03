@@ -23,7 +23,7 @@ void printSet(const std::set<std::string>&);
 void printEdge(const Edge&);
 
 
-class MyGraph{
+class GraphADT {
 private:
 	int number_of_nodes;
 	int number_of_edges;
@@ -31,9 +31,9 @@ private:
 	string_set set_of_vertices;
 	string_set set_of_edges;
 public:
-	MyGraph(): number_of_nodes(0), number_of_edges(0) {} //using initialization list
-	MyGraph(MyGraph const&);
-	MyGraph copyUtil(const MyGraph&);
+	GraphADT(): number_of_nodes(0), number_of_edges(0) {} //using initialization list
+	GraphADT(GraphADT const&);
+	GraphADT copyUtil(const GraphADT&);
 	string_set nodes() const;
 	string_set edges() const;
 	int countAllNodes() const;
@@ -49,29 +49,29 @@ public:
 	void removeEdge(std::string, std::string);
 	std::string getEdgeElem (std::string) const;
 	void replaceEdgeElem(std::string, std::string);
-	bool isEqual(const MyGraph&) const;
+	bool isEqual(const GraphADT&) const;
 	bool emptyGraph();
-	MyGraph graph_intersection(const MyGraph&) const;
-	MyGraph graph_difference(const MyGraph&) const;
-	MyGraph graph_union(const MyGraph&) const;
-	MyGraph graph_complement() const;
+	GraphADT graph_intersection(const GraphADT&) const;
+	GraphADT graph_difference(const GraphADT&) const;
+	GraphADT graph_union(const GraphADT&) const;
+	GraphADT graph_complement() const;
 	void printGraph() const;
 	void insertEdge(std::string, std::string);
-	MyGraph copyGraph() const;
+	GraphADT copyGraph() const;
 };
 
-class DirectedMyGraph : MyGraph{
+class DirectedGraphADT : GraphADT {
 
 public:
 	bool areAdjacent(std::string, std::string) const;
 };
 
 
-class MySubGraph : public MyGraph{
+class SubGraphADT : public GraphADT {
 	subgraph allSubgraphs;
 	std::unordered_map <std::string, std::string> countries_continents;
 
-public :
+public:
 	void insertNode(std::string, std::string);
 	string_set subgraphContents(const std::string&);
 	std::string getSubgraphName(const std::string&);
