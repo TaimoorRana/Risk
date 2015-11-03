@@ -84,15 +84,6 @@ void Player::setReinforcements(const int& amount)
     reinforcements = amount;
 }
 
-void Player::transferSoldiers(std::string& countryFromName, std::string& countryToName,const int& soldiers){
-    Country* countryfrom = map.getCountryObj(countryFromName);
-    Country* countryTo = map.getCountryObj(countryToName);
-    
-    if (countryfrom->getPlayer() == this->name && countryTo->getPlayer() == this->name) {
-        countryfrom->removeArmies(soldiers);
-        countryTo->addArmies(soldiers);
-    }
-}
 
 void Player::registerObserver(PlayerObserver *observer)
 {
@@ -115,12 +106,7 @@ void Player::notifyObserver()
 
 int Player::getTotalArmies()
 {
-    int totalArmies = 0;
-    for(std::string countryName : namesOfCountriesOwned){
-        totalArmies += map.getCountryObj(countryName)->getArmies();
-    }
-    totalArmy = totalArmies;
-    return totalArmies;
+    return totalArmy;
 }
 
 std::set<std::string> Player::getCountryOwned(){
