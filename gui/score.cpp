@@ -3,23 +3,23 @@
 
 Score::Score(QGraphicsItem *parent, int score): QGraphicsTextItem(parent)
 {
-    this->score = score;
-    setPlainText(QString("Score: ") + QString::number(score));
-    setDefaultTextColor(Qt::blue);
-    setFont(QFont("times",16));
+	this->score = score;
+	setPlainText(QString("Score: ") + QString::number(score));
+	setDefaultTextColor(Qt::blue);
+	setFont(QFont("times",16));
 }
 
 void Score::addScore()
 {
-    score++;
-    setPlainText(QString("Score: ") + QString::number(score));
+	score++;
+	setPlainText(QString("Score: ") + QString::number(score));
 }
 
 int Score::getScore()
 {
-    return score;
+	return score;
 }
 
 void Score::update(int score){
-    setPlainText(QString("Score: ") + QString::number(score));
+	setPlainText(QString("Score: ") + QString::number(score));
 }

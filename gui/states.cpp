@@ -3,7 +3,7 @@
 
 void States:: setState(playPhase newState)
 {
-    emit stateChanged(newState);
-    emit testSignal();
+	emit stateChanged(newState);
+	emit testSignal();
 }
 

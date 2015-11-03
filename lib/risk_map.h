@@ -10,22 +10,21 @@
 class RiskMap
 {
 private:
-    std::unordered_map<std::string, Continent> continents;
-    std::unordered_map<std::string, Country> countries;
-    RiskMap();
-    MySubGraph mapGraph;
+	std::unordered_map<std::string, Continent> continents;
+	std::unordered_map<std::string, Country> countries;
+	MySubGraph mapGraph;
 
 public:
-    static RiskMap& getInstance();
-    bool areCountriesAdjacent(const std::string&, const std::string&);
-    void addCountry(const std::string&, const std::string&, int);
-    void addNeighbour(const std::string&, const std::string&);
-    Continent* getContinentOfCountry(const std::string&);
-    Continent* getContinent(const std::string&);
-    Country* getCountry(std::string);
-    string_set getCountriesInContinent(const std::string&);
-    string_set getNeighbours(const std::string&);
-    void console_print_list_of_neighbours(const std::string&);
-    void console_print_list_of_countries(const std::string&);
+	RiskMap();
+	bool areCountriesAdjacent(const std::string& country_a, const std::string& country_b);
+	void addCountry(const std::string& name_country, const std::string& name_continent, int number_armies);
+	void addNeighbour(const std::string& country_a, const std::string& country_b);
+	Continent* getContinentOfCountry(const std::string& name_country);
+	Continent* getContinent(const std::string& name_continent);
+	Country* getCountry(const std::string& name_country);
+	string_set getCountriesInContinent(const std::string& name_continent);
+	string_set getNeighbours(const std::string& name_country);
+	void consolePrintListOfNeighbours(const std::string& name_country);
+	void consolePrintListOfCountries(const std::string& name_continent);
 };
 #endif

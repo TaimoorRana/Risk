@@ -7,10 +7,10 @@ class Continent {
 private:
 	std::string name;
 public:
-    Continent():name(""){}
-    Continent(const std::string&);
-    Continent(const Continent&);
-    Continent& operator = (const Continent&);
-    std::string getName() const;
+	Continent():name(""){}
+	Continent(const std::string&);
+	Continent(const Continent&);
+	Continent& operator = (const Continent&);
+	std::string getName() const;
 };
 #endif // CONTINENT_H

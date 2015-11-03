@@ -16,18 +16,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	scene = new QGraphicsScene(this);
 	ui->graphicsView->setScene(scene);
 
-  QPen pen(Qt::black);
-  pen.setWidth(2);
+	QPen pen(Qt::black);
+	pen.setWidth(2);
 
-  QGraphicsRectItem* rectangle = scene->addRect(50, 0, 100, 50, pen, QBrush(Qt::blue));
-  QGraphicsEllipseItem* ellipse = scene->addEllipse(0, -100, 100, 300, pen, QBrush(Qt::green));
-  QGraphicsTextItem* text = scene->addText("Example Text", QFont("Verdana", 20));
+	QGraphicsRectItem* rectangle = scene->addRect(50, 0, 100, 50, pen, QBrush(Qt::blue));
+	QGraphicsEllipseItem* ellipse = scene->addEllipse(0, -100, 100, 300, pen, QBrush(Qt::green));
+	QGraphicsTextItem* text = scene->addText("Example Text", QFont("Verdana", 20));
 }
 
 
 MainWindow::~MainWindow() {
 	delete ui;
-    scene->clear();
+		scene->clear();
 	delete scene;
 }
 

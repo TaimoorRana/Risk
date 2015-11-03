@@ -6,8 +6,8 @@
 #include <vector>
 #include <unordered_map>
 
-void librisk_init();
-std::vector<int> roll_dice(int);
+void libriskInit();
+std::vector<int> rollDice(int);
 
 
 #endif // LIBRISK_H

@@ -38,7 +38,7 @@ void GameDriver::setNumberAndNamesOfPlayers()
 //	for (int i = 0; i < 4; i++)
 //	{
 //		cout << "Enter the name of player " << i+1 << " : ";
-		
+
 //		getline(cin, myName);
 //		players[i].name = myName;
 //		cout << "\n";
@@ -48,7 +48,7 @@ void GameDriver::setNumberAndNamesOfPlayers()
 
 void GameDriver::assignCountries()
 {
-	
+
 	std::cout << "\n\n****Countries Assigned to players\n\n";
 }
 
@@ -106,7 +106,7 @@ void GameDriver::reduce(Country& aCountry)
 {
 //	cout << "The selected country lost some troops";
 
-	
+
 	//aCountry.soldiers--;
 	//cout<< aCountry.name<< " has: "<< aCountry.soldiers;
 }
@@ -117,7 +117,7 @@ void GameDriver::attack(Country& atkCountry, Country& dfndCountry)
 	// Roll dice
 	// Compare dice for each player
 	// Remove soldiers based on the highest die value, in case of a tie, the attacker loses a soldier
-	// 
+	//
 
 //	string ans = "y";
 //	cout << "Do you want to attack?";
@@ -140,7 +140,7 @@ void GameDriver::attack(Country& atkCountry, Country& dfndCountry)
 //		if (ans2.compare("y") == 0)
 //			fortify(*countries[2], *countries[1], 4);
 //	}
-	
+
 
 }
 
