@@ -22,6 +22,8 @@ private slots:
 	void on_filenameLineEdit_textChanged(QString text);
 	void on_browsePushButton_clicked();
 	void on_loadPushButton_clicked();
+	void on_randOwnerPushButton_clicked();
+	void on_randArmiesPushButton_clicked();
 
 private:
 	bool validateFilename(const QString& text);

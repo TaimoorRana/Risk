@@ -3,10 +3,11 @@
 #include <QColor>
 #include <QFileDialog>
 #include <QFileInfo>
-#include <QGraphicsRectItem>
+#include <QGraphicsLineItem>
 #include <QGraphicsEllipseItem>
 #include <QGraphicsTextItem>
 #include <QPen>
+#include <random>
 
 #include "debug.h"
 #include "main_window.h"
@@ -20,20 +21,13 @@ MainWindow::MainWindow(Map* map, QWidget *parent) : QMainWindow(parent) {
 
 	scene = new QGraphicsScene(this);
 	ui->graphicsView->setScene(scene);
-
-  QPen pen(Qt::black);
-  pen.setWidth(2);
-
-  scene->addRect(50, 0, 100, 50, pen, QBrush(Qt::blue));
-  scene->addEllipse(0, -100, 100, 300, pen, QBrush(Qt::green));
-  scene->addText("Example Text", QFont("Verdana", 20));
 }
 
 
 MainWindow::~MainWindow() {
-	delete ui;
 	scene->clear();
 	delete scene;
+	delete ui;
 }
 
 bool MainWindow::validateFilename(const QString& text) {
@@ -60,21 +54,82 @@ void MainWindow::on_loadPushButton_clicked() {
 	observedMap->parse(ui->filenameLineEdit->text().toStdString());
 }
 
+void MainWindow::on_randOwnerPushButton_clicked() {
+	mt19937::result_type seed = time(0);
+	auto player_rand = std::bind(std::uniform_int_distribution<int>(0, observedMap->players.size()-1), mt19937(seed));
+
+	for (auto const &ent1 : observedMap->countries) {
+		Country* country = ent1.second;
+
+		auto it = observedMap->players.begin();
+		std::advance(it, player_rand());
+		Player* player = it->second;
+		country->setOwner(player);
+	}
+}
+
+void MainWindow::on_randArmiesPushButton_clicked() {
+	for (auto const &ent1 : observedMap->countries) {
+		Country* country = ent1.second;
+		country->setSoldiers(rand() % 10);
+	}
+}
+
 void MainWindow::observedUpdated() {
 	scene->clear();
+
+	debug("render event");
 
 	QFileInfo mapFile(ui->filenameLineEdit->text());
 	QFileInfo bmpFile(mapFile.path() + "/" + mapFile.baseName() + ".bmp");
 	QPixmap bg(bmpFile.absoluteFilePath());
 	scene->addPixmap(bg);
 
-	int diameter = 20;
-	QPen pen(Qt::black);
-  pen.setWidth(1);
+	int diameter = 0;
+	QFont font("Verdana", 10);
+
+	mt19937::result_type seed = 4;
+	auto color_rand = std::bind(std::uniform_int_distribution<int>(0, 255), mt19937(seed));
+
+	std::map<const Continent*, QColor> continentPalette = std::map<const Continent*, QColor>();
+	for (auto const &ent1 : observedMap->continents) {
+		Continent* continent = ent1.second;
+		continentPalette.insert(std::pair<const Continent*, QColor>(continent, QColor(color_rand(), color_rand(), color_rand())));
+	}
+
+	std::map<const Player*, QColor> playerPalette = std::map<const Player*, QColor>();
+	for (auto const &ent1 : observedMap->players) {
+		Player* player = ent1.second;
+		playerPalette.insert(std::pair<const Player*, QColor>(player, QColor(color_rand(), color_rand(), color_rand())));
+	}
+	playerPalette.insert(std::pair<const Player*, QColor>(NULL, QColor(204, 204, 204)));
 
 	for (auto const &ent1 : observedMap->countries) {
 		Country* country = ent1.second;
-		scene->addEllipse(country->getPositionX()-diameter/2, country->getPositionY()-diameter/2, diameter, diameter, pen, QBrush(Qt::green));
+
+		diameter = 30;
+		QColor continentColor(continentPalette.at(country->getContinent()));
+		QGraphicsEllipseItem* ellipse = scene->addEllipse(country->getPositionX()-diameter/2, country->getPositionY() - diameter/2, diameter, diameter, QPen(), QBrush(continentColor));
+		ellipse->setZValue(1);
+
+		diameter = 15;
+		QColor playerColor(playerPalette.at(country->getOwner()));
+		ellipse = scene->addEllipse(country->getPositionX()-diameter/2, country->getPositionY() - diameter/2, diameter, diameter, QPen(), QBrush(playerColor));
+		ellipse->setZValue(2);
+
+		Player* owner = country->getOwner();
+		QString playerText("Not Owned");
+		if (owner != NULL) {
+			playerText = owner->getName().c_str();
+		}
+
+		QString armiesText(std::to_string(country->getSoldiers()).c_str());
+		QGraphicsTextItem* armies = scene->addText(armiesText, font);
+		// http://stackoverflow.com/a/946734
+		int grey = playerColor.red()*0.299 + playerColor.green()*0.587 + playerColor.blue()*0.114;
+		armies->setDefaultTextColor(QColor(grey < 186 ? Qt::white : Qt::black));
+		armies->setPos(country->getPositionX()-8, country->getPositionY()-8);
+		armies->setZValue(3);
 	}
 
 	std::map<const Country*, bool> visited = std::map<const Country*, bool>();
@@ -89,7 +144,7 @@ void MainWindow::observedUpdated() {
 }
 
 void MainWindow::connectNeighboursVisit(std::map<const Country*, bool>& visited, Country* country) {
-	QPen pen(Qt::red);
+	QPen pen(QColor(0xFF, 0, 0, 0x40));
   pen.setWidth(1);
 
 	bool& was_visited = visited.at(country);
@@ -99,7 +154,8 @@ void MainWindow::connectNeighboursVisit(std::map<const Country*, bool>& visited,
 	was_visited = true;
 
 	for (auto const &neighbour : country->getNeighbours()) {
-		scene->addLine(country->getPositionX(), country->getPositionY(), neighbour->getPositionX(), neighbour->getPositionY(), pen);
+		QGraphicsLineItem* line = scene->addLine(country->getPositionX(), country->getPositionY(), neighbour->getPositionX(), neighbour->getPositionY(), pen);
+		line->setZValue(1);
 		connectNeighboursVisit(visited, neighbour);
 	}
 }

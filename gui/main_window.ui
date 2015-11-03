@@ -41,7 +41,7 @@
       <item>
        <widget class="QLineEdit" name="filenameLineEdit">
         <property name="text">
-         <string>../../maps/Canada/Canada.map</string>
+         <string>../../maps/World/World.map</string>
         </property>
        </widget>
       </item>
@@ -59,6 +59,20 @@
         </property>
         <property name="text">
          <string>Load Map</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="randOwnerPushButton">
+        <property name="text">
+         <string>Randomize ownership</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="randArmiesPushButton">
+        <property name="text">
+         <string>Randomize armies</string>
         </property>
        </widget>
       </item>

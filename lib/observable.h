@@ -14,7 +14,7 @@ public:
 	virtual void notifyObservers();
 	Observable();
 	~Observable() {};
-private:
+protected:
 	list<Observer*> observers;
 };
 

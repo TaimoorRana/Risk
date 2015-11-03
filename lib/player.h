@@ -14,20 +14,10 @@ private:
 	std::vector<Card> cards;
 public:
 	Player(std::string name);
-	void rollDices();
-
+	std::string getName() const;
+	void setName(const std::string& name);
 	void addCountry(Country *country);
 	void removeCountry(Country *country);
-
-	void addCard(Card card);
-	void removeCard(Card card);
-
-	void addNewSoldiers();
-	void removeNewSoldiers();
-
-	void transferSoldiers(Country countryFrom, Country countryTo, int Soldiers);
-
-	void attackCountry(Country country);
 };
 
 #endif // PLAYER_H

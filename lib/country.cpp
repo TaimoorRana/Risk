@@ -21,8 +21,6 @@ Country::Country(const Country& country) {
 	this->neighbours = std::vector<Country*>(country.neighbours);
 }
 
-Country::~Country() {}
-
 std::string Country::getName() const {
 	return this->name;
 }
@@ -42,6 +40,7 @@ Player* Country::getOwner() const {
 }
 void Country::setOwner(Player* owner) {
 	this->owner = owner;
+	this->notifyObservers();
 }
 
 int Country::getPositionX() const {
@@ -63,6 +62,7 @@ int Country::getSoldiers() const {
 }
 void Country::setSoldiers(int soldiers) {
 	this->soldiers = soldiers;
+	this->notifyObservers();
 }
 
 std::vector<Country*> Country::getNeighbours() const {

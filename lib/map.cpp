@@ -13,11 +13,13 @@
 Map::Map() {
 	this->continents = std::map<const std::string, Continent*>();
   this->countries = std::map<const std::string, Country*>();
+  this->players = std::map<const std::string, Player*>();
 }
 
 Map::Map(const Map& map) {
 	this->continents = std::map<const std::string, Continent*>(map.continents);
   this->countries = std::map<const std::string, Country*>(map.countries);
+  this->players = std::map<const std::string, Player*>(map.players);
 }
 
 Map::~Map() {
@@ -31,7 +33,7 @@ void Map::clear() {
 	this->notifyObservers();
 }
 
-Continent* Map::getContinent(const std::string name) {
+Continent* Map::getContinent(const std::string& name) {
 	std::string debug_str = "Looking up continent: ";
 	debug_str.append(name);
 	debug(debug_str);
@@ -43,13 +45,24 @@ void Map::addContinent(Continent* continent) {
 	this->notifyObservers();
 }
 
-Country* Map::getCountry(const std::string name) {
+Country* Map::getCountry(const std::string& name) {
 	return this->countries.at(name);
 }
 void Map::addCountry(Country* country) {
 	this->countries.insert(std::pair<const std::string, Country*>(country->getName(), country));
 	Continent* continent = country->getContinent();
 	continent->addCountry(country);
+	for (Observer* observer : observers) {
+		country->attachObserver(observer);
+  }
+	this->notifyObservers();
+}
+
+Player* Map::getPlayer(const std::string& name) {
+	return this->players.at(name);
+}
+void Map::addPlayer(Player* player) {
+	this->players.insert(std::pair<const std::string, Player*>(player->getName(), player));
 	this->notifyObservers();
 }
 

@@ -4,12 +4,13 @@
 #include <string>
 #include <vector>
 #include "continent.h"
+#include "observable.h"
 #include "player.h"
 
 class Continent; //forward declaration
 class Player; //forward declaration
 
-class Country {
+class Country : public Observable {
 private:
 	std::string name = "";
 	Continent* continent = NULL;
@@ -22,7 +23,7 @@ private:
 public:
 	Country(std::string name, Continent* continent, int x, int y);
 	Country(const Country& country);
-	~Country();
+	~Country() {};
 	std::string getName() const;
 	void setName(std::string name);
 	Continent* getContinent() const;

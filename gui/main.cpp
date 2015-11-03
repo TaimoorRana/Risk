@@ -20,5 +20,19 @@ int main(int argc, char *argv[]) {
 
 	map.attachObserver(mw);
 
+	map.parse("../../maps/World/World.map");
+
+	Player stewart = Player("Stewart");
+	Player adrianna = Player("Adrianna");
+	Player taimoor = Player("Taimoor");
+	Player elias = Player("Elias");
+	Player elliott = Player("Elliott");
+
+	map.addPlayer(&stewart);
+	map.addPlayer(&adrianna);
+	map.addPlayer(&taimoor);
+	map.addPlayer(&elias);
+	map.addPlayer(&elliott);
+
 	return application.exec();
 }
