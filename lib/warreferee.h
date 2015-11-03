@@ -11,10 +11,13 @@ private:
     static const int MAX_DICES = 3;
     
     // Players
-    Player* attacker;
-    Player* defender;
+    std::string attackerPlayer;
+    std::string defenderPlayer;
     
-    
+    // players armies
+    int attackerArmy;
+    int defenderArmy;
+
     // dices used by the players
     Dices *dices;
     int defenderDices;
@@ -22,12 +25,25 @@ private:
     WarReferee();
 public:
     static WarReferee& getInstance();
-    void setPlayers(Player &attacker, Player &defender);
-    void calculateLossesHelper(Country& attacker, int attackerDices, Country& defender, int defenderDices);
-    void calculateLosses(Country& attacker, Country& defender);
-    void calculateLosses(Country& attacker, int attackerDices,Country& defender, int defenderDices);
-    void startWar(Player &attacker, Country &attackerCountry, Player &defender, Country &defenderCountry);
-    void allInMode(Country& attacker, Country& defenderCountry);
+
+    void setAttackerPlayer(std::string&);
+    void setDefenderPlayer(std::string&);
+    void setBothPlayers(std::string& , std::string&);
+    std::string getAttackerPlayer();
+    std::string getDefenderPlayer();
+
+    void setDefenderArmy(int&);
+    void setAttackerArmy(int&);
+    void setBothArmies(int&,int&);
+    int getAttackerArmy();
+    int getDefenderArmy();
+
+
+    void calculateLossesHelper();
+    void calculateLosses();
+    void calculateLosses(int attackerDices, int defenderDices);
+    void startWar(std::string& attackerPlayer, int& attakerArmy, std::string& defenderPlayer, int& defenderArmy);
+    void allInMode();
     ~WarReferee();
 };
 

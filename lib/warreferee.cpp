@@ -7,49 +7,42 @@ WarReferee::WarReferee()
     dices = new Dices(MAX_DICES);
 }
 
-void WarReferee::setPlayers(Player& attacker1, Player& defender1){
-    this->defender = &defender1;
-    this->attacker = &attacker1;
-}
-
 /**
  * Calculates the loses each country occurs after the dice roll- if dices are specified
  */
-void WarReferee::calculateLosses(Country& attackerCountry, int attackerDices, Country& defenderCountry, int defenderDices)
+void WarReferee::calculateLosses(int attackerDices, int defenderDices)
 {
     this->attackerDices = attackerDices;
     this->defenderDices = defenderDices;
-    calculateLossesHelper(attackerCountry, attackerDices, defenderCountry, defenderDices);
+    calculateLossesHelper();
 }
 
 
 /**
  * Calculates the loses each country occurs after the dice roll - if dices are not specified
  */
-void WarReferee::calculateLosses(Country& attackerCountry, Country& defenderCountry){
+void WarReferee::calculateLosses(){
     // Determine amount of dices for the attacker depending on the army size
-    int attackerSoldiers = attackerCountry.getArmies();
-    int defenderSoldiers = defenderCountry.getArmies();
 
-    if (attackerSoldiers > 3){
+    if (this->attackerArmy > 3){
         attackerDices = 3;
-    }else if(attackerSoldiers == 3){
+    }else if(this->attackerArmy  == 3){
         attackerDices = 2;
-    }else if(attackerSoldiers == 2){
+    }else if(this->attackerArmy  == 2){
         attackerDices = 1;
     }else{
         std::cout << "error in calculateLosses Method\n";
     }
 
-    if(defenderSoldiers >= 2){
+    if(this->defenderArmy  >= 2){
         defenderDices = 2;
-    }else if(defenderSoldiers == 1){
+    }else if(this->defenderArmy == 1){
         defenderDices = 1;
     }else{
         std::cout << "error in calculateLosses Method\n";
     }
     
-    calculateLossesHelper(attackerCountry, attackerDices, defenderCountry, defenderDices);
+    calculateLossesHelper();
 }
 
 
@@ -57,16 +50,16 @@ void WarReferee::calculateLosses(Country& attackerCountry, Country& defenderCoun
 /**
  * Calculates the loses each country occurs after the dice roll - HELPER
  */
-void WarReferee::calculateLossesHelper(Country& attackerCountry, int attackerDices, Country& defenderCountry, int defenderDices){
-//     dices rolled by both players
+void WarReferee::calculateLossesHelper(){
+    //dices rolled by both players
     std::vector<int> attackerResults = dices->roll(attackerDices);
     std::vector<int> defenderResults = dices->roll(defenderDices);
     
     int attackerLosses = 0;
     int defenderLosses = 0;
     
-//    //Compare roll results
-//    //Attacker's highest dice is compared to Defender's highest dice
+   //Compare roll results
+   //Attacker's highest dice is compared to Defender's highest dice
     int dicesToCompare = (defenderDices <= attackerDices)? defenderDices : attackerDices;
     
     for(int x = 0; x < dicesToCompare; x++){
@@ -80,13 +73,13 @@ void WarReferee::calculateLossesHelper(Country& attackerCountry, int attackerDic
 
     
 //    // Remove soldiers lost from the battle
-    if (attackerCountry.getArmies() > attackerLosses) {
-        attackerCountry.setArmies(attackerCountry.getArmies()-attackerLosses);
+    if (attackerArmy > attackerLosses) {
+        attackerArmy = attackerArmy - attackerLosses;
     }else{
         std::cout << "Error: Could not remove soldiers from attackerCountry\n";
     }
-    if (defenderCountry.getArmies() >= defenderLosses) {
-        defenderCountry.setArmies(defenderCountry.getArmies()-defenderLosses);
+    if (defenderArmy >= defenderLosses) {
+        defenderArmy = defenderArmy - defenderLosses;
     }else{
         std::cout << "Error: Could not remove soldiers from defenderCountry\n";
     }
@@ -96,35 +89,30 @@ void WarReferee::calculateLossesHelper(Country& attackerCountry, int attackerDic
 
 
 
-void WarReferee::allInMode(Country& attackerCountry, Country& defenderCountry){
+void WarReferee::allInMode(){
     
-    while (attackerCountry.getArmies() > 1 && attackerCountry.getPlayer()!= defenderCountry.getPlayer()) {
-        calculateLosses(attackerCountry,defenderCountry);
-        if (defenderCountry.getArmies() <= 0) {
-            attacker->addCountry(defenderCountry.getNameCountry());
-            defenderCountry.setPlayer(attacker->getName());
-            //defenderPlayer->removeCountry(defender);
+    while (attackerArmy > 1) {
+        calculateLosses();
+        if (defenderArmy <= 0) {
+            break;
         }
     }
-    std::cout << attackerCountry.getArmies() << std::endl;
+    std::cout << attackerArmy << std::endl;
     
-    if (attackerCountry.getArmies() <= 1 ) {
+    if (attackerArmy <= 1 ) {
         std::cout << "Attacker cannot attack anymore\n";
     }else{
-        
         std::cout << "Attacker won and conquered\n";
-        const int soldiers = attackerDices;
-        std::string countryFromName = attackerCountry.getNameCountry();
-        std::string countryToName = defenderCountry.getNameCountry();
-        attacker->transferSoldiers(countryFromName, countryToName,soldiers);
     }
 }
 
 
-void WarReferee::startWar(Player& attacker,Country& attackerCountry, Player& defender, Country& defenderCountry)
+void WarReferee::startWar(std::string& attackerPlayer, int& attackerArmy, std::string& defenderPlayer, int& defenderArmy)
 {
-    setPlayers(attacker, defender);
-    allInMode(attackerCountry,defenderCountry);
+    setBothPlayers(attackerPlayer, defenderPlayer);
+    this->attackerArmy = attackerArmy;
+    this->defenderArmy = defenderArmy;
+    allInMode();
 }
 
 WarReferee::~WarReferee(){
@@ -138,5 +126,59 @@ WarReferee& WarReferee::getInstance()
         instance = new WarReferee();
     }
     return *instance;
+}
+
+void WarReferee::setBothPlayers(std::string& attackerPlayer, std::string& defenderPlayer){
+    this->attackerPlayer = attackerPlayer;
+    this->defenderPlayer = defenderPlayer;
+}
+
+
+void WarReferee::setAttackerPlayer(std::string& name)
+{
+    attackerPlayer = name;
+}
+
+void WarReferee::setDefenderPlayer(std::string & name)
+{
+    defenderPlayer = name;
+}
+
+void WarReferee::setDefenderArmy(int &army)
+{
+    attackerArmy = army;
+}
+
+void WarReferee::setAttackerArmy(int &army)
+{
+    defenderArmy = army;
+}
+
+void WarReferee::setBothArmies(int &attackerArmy, int &defenderArmy)
+{
+    this->attackerArmy = attackerArmy;
+    this->defenderArmy = defenderArmy;
+}
+
+
+
+std::string WarReferee::getAttackerPlayer()
+{
+    return attackerPlayer;
+}
+
+std::string WarReferee::getDefenderPlayer()
+{
+    return defenderPlayer;
+}
+
+int WarReferee::getAttackerArmy()
+{
+    return attackerArmy;
+}
+
+int WarReferee::getDefenderArmy()
+{
+    return defenderArmy;
 }
 
