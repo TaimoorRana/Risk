@@ -6,6 +6,7 @@ set(LIBRARY_SOURCE_FILES
 	GraphADT.cpp GraphADT.h
 	librisk.cpp librisk.h
 	map.cpp map.h
+	observable.cpp observable.h observer.h
 	player.cpp player.h
 )
 

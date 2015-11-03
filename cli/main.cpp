@@ -4,7 +4,7 @@
 #include "debug.h"
 
 void print_help(char *argv[]) {
-	std::cout << "Usage: risk-a1-cli filename.map" << std::endl;
+	std::cout << "Usage: risk-a2-cli filename.map" << std::endl;
 }
 
 int main(int argc, char *argv[]) {
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 	retval = map_print_validation(map);
 	if (retval) {
 		path.append(".new");
-		Map::save(path, *map);
+		map->save(path);
 	}
 
 	delete map;

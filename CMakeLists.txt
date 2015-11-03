@@ -26,7 +26,7 @@ IF (APPLE)
 ENDIF (APPLE)
 
 # Basic info about project
-project(risk-a1 VERSION 0.0.1)
+project(risk-a2 VERSION 0.0.1)
 
 # Set additional project information
 set(COMPANY "COMP345")
@@ -36,3 +36,4 @@ set(IDENTIFIER "github.taimoorrana1.risk-a1")
 # Process subdirectories
 add_subdirectory(lib)
 add_subdirectory(cli)
+add_subdirectory(gui)

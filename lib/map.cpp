@@ -21,12 +21,14 @@ Map::Map(const Map& map) {
 }
 
 Map::~Map() {
-	for (auto const &ent1 : this->continents) {
-		delete ent1.second;
-	}
-	for (auto const &ent1 : this->countries) {
-		delete ent1.second;
-	}
+	this->disableNotify = true;
+	this->clear();
+}
+
+void Map::clear() {
+	this->continents.clear();
+	this->countries.clear();
+	this->notifyObservers();
 }
 
 Continent* Map::getContinent(const std::string name) {
@@ -38,6 +40,7 @@ Continent* Map::getContinent(const std::string name) {
 }
 void Map::addContinent(Continent* continent) {
 	this->continents.insert(std::pair<const std::string, Continent*>(continent->getName(), continent));
+	this->notifyObservers();
 }
 
 Country* Map::getCountry(const std::string name) {
@@ -47,17 +50,12 @@ void Map::addCountry(Country* country) {
 	this->countries.insert(std::pair<const std::string, Country*>(country->getName(), country));
 	Continent* continent = country->getContinent();
 	continent->addCountry(country);
+	this->notifyObservers();
 }
 
-Map* Map::load(const std::string& path) {
-	struct stat buffer;
-	bool exists = (stat (path.c_str(), &buffer) == 0);
-
-	if (!exists) {
-		return NULL;
-	}
-
-	Map* map = new Map();
+void Map::parse(const std::string& path) {
+	this->disableNotify = true;
+	this->clear();
 
 	std::ifstream infile(path);
 	std::string line;
@@ -108,13 +106,13 @@ Map* Map::load(const std::string& path) {
 			debug(debug_str);
 
 			Continent* continent = new Continent(values[0], atoi(values[1].c_str()));
-			map->addContinent(continent);
+			this->addContinent(continent);
 		}
 		else if (mode == MAP_PARSE_MODE_COUNTRIES) {
 			while (std::getline(line_stream, item, ',')) {
 				values.push_back(item);
 			}
-			Continent* continent = map->getContinent(values[3]);
+			Continent* continent = this->getContinent(values[3]);
 
 			debug_str = "  Adding country: ";
 			debug_str.append(values[0]);
@@ -124,11 +122,11 @@ Map* Map::load(const std::string& path) {
 
 			Country* country = new Country(values[0], continent, atoi(values[1].c_str()), atoi(values[2].c_str()));
 
-			map->addCountry(country);
+			this->addCountry(country);
 		}
 		else {
 			debug("Error parsing line: " + line);
-			return NULL;
+			return;
 		}
 	}
 
@@ -175,10 +173,10 @@ Map* Map::load(const std::string& path) {
 			while (std::getline(line_stream, item, ',')) {
 				values.push_back(item);
 			}
-			Country* country = map->getCountry(values[0]);
+			Country* country = this->getCountry(values[0]);
 			std::vector<std::string>::iterator iter;
 			for (iter = values.begin() + 4; iter < values.end(); iter++) {
-				Country* neighbour = map->getCountry(*iter);
+				Country* neighbour = this->getCountry(*iter);
 				country->addNeighbour(neighbour);
 
 				debug_str = "  ";
@@ -190,16 +188,29 @@ Map* Map::load(const std::string& path) {
 		}
 		else {
 			debug("Error parsing line: " + line);
-			return NULL;
+			return;
 		}
 	}
 
 	debug("Finished parsing: " + path);
+	this->disableNotify = false;
+	this->notifyObservers();
+}
 
+Map* Map::load(const std::string& path) {
+	struct stat buffer;
+	bool exists = (stat (path.c_str(), &buffer) == 0);
+
+	if (!exists) {
+		return NULL;
+	}
+
+	Map* map = new Map();
+	map->parse(path);
 	return map;
 }
 
-bool Map::save(const std::string& path, const Map& map) {
+bool Map::save(const std::string& path) {
 	std::string debug_str("Saving map file to ");
 	debug_str.append(path);
 	debug(debug_str);
@@ -209,14 +220,14 @@ bool Map::save(const std::string& path, const Map& map) {
 	}
 
 	outfile << "[Continents]" << std::endl;
-	for (auto const &ent1 : map.continents) {
+	for (auto const &ent1 : this->continents) {
 		Continent* continent = ent1.second;
 		outfile << continent->getName() << "=" << continent->getReinforcementBonus() << std::endl;
 	}
 	outfile << std::endl;
 
 	outfile << "[Territories]" << std::endl;
-	for (auto const &ent1 : map.countries) {
+	for (auto const &ent1 : this->countries) {
 		Country* country = ent1.second;
 		Continent* continent = country->getContinent();
 		outfile << country->getName() << "," << country->getPositionX() << "," << country->getPositionY() << "," << continent->getName();
@@ -229,4 +240,11 @@ bool Map::save(const std::string& path, const Map& map) {
 
 	outfile.close();
 	return true;
+}
+
+void Map::notifyObservers() {
+	if (this->disableNotify) {
+		return;
+	}
+	Observable::notifyObservers();
 }

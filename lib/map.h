@@ -5,21 +5,25 @@
 #include <string>
 #include "continent.h"
 #include "country.h"
+#include "observable.h"
 
-class Map {
+class Map : public Observable {
 private:
-
+	bool disableNotify = false;
 public:
 	std::map<const std::string, Continent*> continents;
   std::map<const std::string, Country*> countries;
 	Map();
 	Map(const Map& map);
 	~Map();
+	void clear();
 	static Map* load(const std::string& path);
-	static bool save(const std::string& path, const Map& map);
+	void parse(const std::string& path);
+	bool save(const std::string& path);
 	Continent* getContinent(const std::string name);
 	void addContinent(Continent* continent);
 	Country* getCountry(const std::string name);
   void addCountry(Country* continent);
+  void notifyObservers();
 };
 #endif // MAP_H
