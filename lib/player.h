@@ -25,9 +25,6 @@ public:
     Player(const Player& other);
     std::string getName();
     
-    
-	void rollDices();
-    
     // increase battleWon int by 1
     void increaseBattleWon();
 
