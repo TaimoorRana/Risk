@@ -1,4 +1,4 @@
-#include "dicesreferee.h"
+#include "dices_referee.h"
 #include <iostream>
 #include <vector>
 #include "librisk.h"
@@ -7,10 +7,6 @@ DicesReferee::DicesReferee()
 {
 	dices = new Dices(MAX_DICES);
 }
-
-
-
-
 
 /**
  * Calculates the loses each country occurs after the dice roll- if dices are specified
@@ -24,44 +20,32 @@ std::vector<CountryLost*> DicesReferee::calculateLosses(Country& attacker, int a
 	return casualtyResults;
 }
 
-
-
-
-
 /**
  * Calculates the loses each country occurs after the dice roll - if dices are not specified
  */
-std::vector<CountryLost*> DicesReferee::calculateLosses(Country& attacker, Country& defender){
+std::vector<CountryLost*> DicesReferee::calculateLosses(Country& attacker, Country& defender) {
 	// Determine amount of dices for the attacker depending on the army size
-
 	if (attacker.getSoldiers() >= 4) {
 		attackerDices = 3;
-	}else if (attacker.getSoldiers() >= 3){
+	}
+	else if (attacker.getSoldiers() >= 3){
 		attackerDices = 2;
-	}else{
+	}
+	else{
 		attackerDices = 1;
 	}
 
 	// Determine amount of dices for the defender depending on the army size
-
 	if (defender.getSoldiers() >= 2) {
 		defenderDices = 2;
-	}else{
+	}
+	else{
 		defenderDices = 1;
 	}
 
-
-
 	std::vector<CountryLost*> casualtyResults = calculateLossesHelper(attacker, attackerDices, defender, defenderDices);
-
 	return casualtyResults;
-
 }
-
-
-
-
-
 
 /**
  * Calculates the loses each country occurs after the dice roll - HELPER
@@ -76,10 +60,11 @@ std::vector<CountryLost*> DicesReferee::calculateLossesHelper(Country &attacker,
 
 	//Compare roll results
 	//Attacker's highest dice is compared to Defender's highest dice
-	for(int x = 0; x < defenderDices; x++){
-		if(attackerResults[x] > defenderResults[x]){
+	for (int x = 0; x < defenderDices; x++){
+		if (attackerResults[x] > defenderResults[x]){
 			defenderLosses++;
-		}else{
+		}
+		else{
 			attackerLosses++;
 		}
 	}
@@ -113,7 +98,8 @@ void DicesReferee::allInMode(Country& attacker, Country& defender){
 
 	if (attacker.getSoldiers() <= 1 ) {
 		std::cout << "Attacker cannot attack anymore\n";
-	}else{
+	}
+	else{
 		std::cout << "Attacker won and conquered\n";
 		attakerPlayer->transferSoldiers(attacker, defender, attackerDices);
 	}
@@ -127,7 +113,7 @@ void DicesReferee::allInMode(Country& attacker, Country& defender){
  */
 void DicesReferee::removeSoldiers(std::vector<CountryLost*> countriesCasualties)
 {
-	for(int x = 0; x < countriesCasualties.size(); x++){
+	for (int x = 0; x < countriesCasualties.size(); x++){
 		Country& ptrCountry = countriesCasualties[x]->getCountry();
 		ptrCountry.adjustSoldiers(countriesCasualties.at(x)->getLosses());
 

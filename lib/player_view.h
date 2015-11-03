@@ -1,6 +1,6 @@
 #ifndef PLAYERVIEW
 #define PLAYERVIEW
-#include "playerobserver.h"
+#include "player_observer.h"
 #include <string>
 #include <set>
 class PlayerView: public PlayerObserver{

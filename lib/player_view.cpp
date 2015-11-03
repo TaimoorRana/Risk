@@ -1,4 +1,4 @@
-#include "playerview.h"
+#include "player_view.h"
 
 
 void PlayerView::update(std::set<std::string> countriesOwnedList, std::set<std::string>continentsOwnedList, int reinforcements, int totalArmies, int totalBattleWon)

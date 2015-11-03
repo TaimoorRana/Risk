@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "librisk.h"
-#include "warreferee.h"
+#include "war_referee.h"
 
 WarReferee::WarReferee() {};
 

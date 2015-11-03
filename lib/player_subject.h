@@ -1,6 +1,6 @@
 #ifndef PLAYERSUBJECT
 #define PLAYERSUBJECT
-#include "playerobserver.h"
+#include "player_observer.h"
 class PlayerSubject{
 public:
 	virtual void registerObserver(PlayerObserver*) = 0;
