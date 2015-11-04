@@ -29,7 +29,7 @@ void Player::removeCountry(const std::string& countryName)
 	// map.getCountry(countryName)->setPlayer("");
 }
 
-bool Player::hasCountry(const std::string& countryName)
+bool Player::hasCountry(const std::string& countryName) const
 {
 	 std::set<std::string>::iterator countryOwnedIterator;
 	 for(countryOwnedIterator = namesOfCountriesOwned.begin(); countryOwnedIterator != namesOfCountriesOwned.end();countryOwnedIterator++){
@@ -40,7 +40,7 @@ bool Player::hasCountry(const std::string& countryName)
 	return false;
 }
 
-bool Player::hasContinent(const std::string& continentName)
+bool Player::hasContinent(const std::string& continentName) const
 {
 	//std::set<std::string> countryList = map.getCountriesInContinent(continentName);
 	std::set<std::string>::iterator countryListIterator;
@@ -63,12 +63,13 @@ bool Player::hasContinent(const std::string& continentName)
 	return false;
 }
 
-std::set<std::string> Player::getContinentsOwned()
+std::set<std::string> Player::getContinentsOwned() const
 {
 	return this->namesOfContinentsOwned;
 }
 
-std::string Player::getName(){
+std::string Player::getName() const
+{
 	return name;
 }
 
@@ -89,7 +90,7 @@ void Player::setReinforcements(const int& amount)
 	reinforcements = amount;
 }
 
-int Player::getReinforcements()
+int Player::getReinforcements() const
 {
 	return this->reinforcements;
 }
@@ -119,7 +120,7 @@ void Player::setTotalArmy(const int &totalArmy)
 	this->totalArmy = totalArmy;
 }
 
-int Player::getTotalArmy()
+int Player::getTotalArmy() const
 {
 	return totalArmy;
 }
@@ -143,7 +144,7 @@ void Player::setBattlesWon(const int &battleWon)
 	this->battleWon = battleWon;
 }
 
-int Player::getBattlesWon()
+int Player::getBattlesWon() const
 {
 	return battleWon;
 }

@@ -9,25 +9,25 @@ class Country; // forward declaration
 
 class Player: public PlayerSubject{
 private:
-	int reinforcements;
-	int battleWon;
-	int totalArmy;
-	std::string name;
+	int reinforcements = 0;
+	int battleWon = 0;
+	int totalArmy = 0;
+	std::string name = "";
 	std::set<std::string> namesOfCountriesOwned;
 	std::set<std::string> namesOfContinentsOwned;
 	std::set<PlayerObserver*> observerList;
 
 public:
-
+	Player() {}
 	Player(std::string name);
 	Player(const Player& other);
-	std::string getName();
+	std::string getName() const;
 
 	// increase battleWon int by 1
 	void increaseBattleWon();
 	void decreaseBattleWon();
 	void setBattlesWon(const int &battleWon);
-	int getBattlesWon();
+	int getBattlesWon() const;
 
 	/*
 	 Reinforcements related methods
@@ -36,7 +36,7 @@ public:
 	void addReinforcements(const int&);
 	void removeReinforcements(const int&);
 	void setReinforcements(const int&);
-	int  getReinforcements();
+	int getReinforcements() const;
 
 	/*
 	 Country related methods
@@ -44,7 +44,7 @@ public:
 	 */
 	void addCountry(const std::string&);
 	void removeCountry(const std::string&);
-	bool hasCountry(const std::string&);
+	bool hasCountry(const std::string&) const;
 	std::set<std::string> getCountryOwned();
 
 	/*
@@ -53,8 +53,8 @@ public:
 	*/
 	void addContinent(const std::string&);
 	void removeContinent(const std::string&);
-	bool hasContinent(const std::string&);
-	std::set<std::string> getContinentsOwned();
+	bool hasContinent(const std::string&) const;
+	std::set<std::string> getContinentsOwned() const;
 
 
 	/*
@@ -67,7 +67,7 @@ public:
 	/*
 	 * Army Related Methods
 	 */
-	int getTotalArmy();
+	int getTotalArmy() const;
 	void setTotalArmy(const int& totalArmy);
 };
 #endif // PLAYER_H

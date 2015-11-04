@@ -24,6 +24,7 @@ private:
 	bool disableNotify = false;
 	std::unordered_map<std::string, Continent> continents;
 	std::unordered_map<std::string, Country> countries;
+	std::unordered_map<std::string, Player> players;
 	SubGraphADT mapGraph;
 
 public:
@@ -31,20 +32,26 @@ public:
 	~RiskMap();
 	bool areCountriesAdjacent(const std::string& country_a, const std::string& country_b);
 	void addCountry(const std::string& name_country, const std::string& name_continent, int number_armies);
-	void addCountry(Country& country, const std::string& continentName);
+	void addCountry(const Country& country, const std::string& continentName);
 	void addContinent(const std::string& name, int reinforcementBonus);
-	void addContinent(Continent& continent);
+	void addContinent(const Continent& continent);
 	void addNeighbour(const std::string& country_a, const std::string& country_b);
+	void addPlayer(const Player& player);
 	Continent* getContinentOfCountry(const std::string& name_country);
 	Continent* getContinent(const std::string& name);
 	Country* getCountry(const std::string& name_country);
 	string_set getCountriesInContinent(const std::string& name_continent);
 	string_set getNeighbours(const std::string& name_country);
+	Player* getPlayer(const std::string& playerName);
+	const std::unordered_map<std::string, Continent>& getContinents() const;
+	const std::unordered_map<std::string, Country>& getCountries() const;
+	const std::unordered_map<std::string, Player>& getPlayers() const;
 	void consolePrintListOfNeighbours(const std::string& name_country);
 	void consolePrintListOfCountries(const std::string& name_continent);
 	static RiskMap* load(const std::string& path);
 	void parse(const std::string& path);
 	bool save(const std::string& path);
 	void clear();
+	void notifyObservers();
 };
 #endif

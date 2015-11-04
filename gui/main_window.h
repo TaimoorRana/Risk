@@ -4,23 +4,34 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 
+#include "risk_map.h"
+#include "observer.h"
+
 namespace Ui {
 	class MainWindow;
 }
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow, public Observer {
 	Q_OBJECT
 
-	public:
-		MainWindow(QWidget *parent = 0);
-		~MainWindow();
+public:
+	MainWindow(RiskMap* map, QWidget *parent = 0);
+	~MainWindow();
 
-	private slots:
-		void on_pushButton_clicked();
+private slots:
+	void on_filenameLineEdit_textChanged(QString text);
+	void on_browsePushButton_clicked();
+	void on_loadPushButton_clicked();
+	void on_randOwnerPushButton_clicked();
+	void on_randArmiesPushButton_clicked();
 
-	private:
-		Ui::MainWindow *ui;
-		QGraphicsScene *scene;
+private:
+	bool validateFilename(const QString& text);
+	void observedUpdated();
+	void connectNeighboursVisit(std::map<const std::string, bool>& visited, const Country* country);
+	Ui::MainWindow* ui;
+	QGraphicsScene* scene;
+	RiskMap* observedMap;
 };
 
 #endif // MAINWINDOW_H

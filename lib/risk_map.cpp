@@ -18,8 +18,8 @@ void RiskMap::addContinent(const std::string& name, int reinforcementBonus){
 	}
 }
 
-void RiskMap::addContinent(Continent& continent){
-	continents[continent.getName()] = Continent(continent);
+void RiskMap::addContinent(const Continent& continent){
+	continents[continent.getName()] = continent;
 }
 
 void RiskMap::addCountry(const std::string& name_country, const std::string& name_continent, int number_armies){
@@ -32,9 +32,9 @@ void RiskMap::addCountry(const std::string& name_country, const std::string& nam
 	mapGraph.insertNode(name_country, name_continent);
 }
 
-void RiskMap::addCountry(Country& country, const std::string& continentName){
+void RiskMap::addCountry(const Country& country, const std::string& continentName){
 	if (countries.find(country.getName()) == countries.end()) {
-		countries[country.getName()] = Country(country);
+		countries[country.getName()] = country;
 	}
 	mapGraph.insertNode(country.getName(), continentName);
 }
@@ -43,17 +43,23 @@ void RiskMap::addNeighbour(const std::string& country_a, const std::string& coun
 	mapGraph.insertEdge(country_a, country_b);
 }
 
+void RiskMap::addPlayer(const Player& player) {
+	if (this->players.find(player.getName()) == this->players.end()) {
+		this->players[player.getName()] = player;
+	}
+}
+
 Continent* RiskMap::getContinentOfCountry(const std::string& name_country){
 	std::string name_continent(mapGraph.getSubgraphName(name_country));
 	return &continents[name_continent];
 }
 
 Continent* RiskMap::getContinent(const std::string& name){
-	return &continents[name];
+	return &this->continents[name];
 }
 
 Country* RiskMap::getCountry(const std::string& name_country){
-	return &countries[name_country];
+	return &this->countries[name_country];
 }
 
 string_set RiskMap::getCountriesInContinent(const std::string& name_continent){
@@ -62,6 +68,10 @@ string_set RiskMap::getCountriesInContinent(const std::string& name_continent){
 
 string_set RiskMap::getNeighbours(const std::string& name_country){
 	return mapGraph.incidentEdges(name_country);
+}
+
+Player* RiskMap::getPlayer(const std::string& playerName){
+	return &this->players[playerName];
 }
 
 void RiskMap::consolePrintListOfNeighbours(const std::string& name_country){
@@ -278,4 +288,21 @@ void RiskMap::clear() {
 	this->continents.clear();
 	this->countries.clear();
 	this->notifyObservers();
+}
+
+const std::unordered_map<std::string, Continent>& RiskMap::getContinents() const {
+	return this->continents;
+}
+const std::unordered_map<std::string, Country>& RiskMap::getCountries() const {
+	return this->countries;
+}
+const std::unordered_map<std::string, Player>& RiskMap::getPlayers() const {
+	return this->players;
+}
+
+void RiskMap::notifyObservers() {
+	if (this->disableNotify) {
+		return;
+	}
+	Observable::notifyObservers();
 }
