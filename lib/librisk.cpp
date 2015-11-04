@@ -1,6 +1,8 @@
 #include "librisk.h"
 #include <iostream>
 #include <time.h>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -25,6 +27,6 @@ std::vector<int> rollDice(int amount)
 		randNumber = (randNumber % 6) + 1;
 		results.push_back(randNumber);
 	}
-	std::sort(results.begin(), results.end());
+    std::sort(results.begin(), results.end());
 	return results;
 }
