@@ -1,17 +1,12 @@
-
 #include "librisk.h"
-#include "GraphADT.h"
+#include "graph_adt.h"
 #include "risk_map.h"
-
-
-using namespace std;
 
 int main() {
 	libriskInit();
 
 	RiskMap map = RiskMap();
 
-	//Continent asia = Continent("Asia");
 	Continent asia("Asia");
 
 	map.addCountry("Persia", asia.getName(), 1);

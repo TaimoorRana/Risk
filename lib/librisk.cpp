@@ -1,8 +1,8 @@
-#include "librisk.h"
 #include <iostream>
+#include <algorithm>
 #include <time.h>
 
-using namespace std;
+#include "librisk.h"
 
 /**
  * Common initializations.

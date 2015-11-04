@@ -1,42 +1,70 @@
 #include "country.h"
 #include "debug.h"
 
-Country::Country(const std::string& name_country, int n_armies) {
-	this->name_of_country=name_country;
-	this->setArmies(n_armies);
-	this->setPlayer("");
+Country::Country(const std::string& name) {
+	this->name = name;
 }
 
-Country::Country(const std::string& name): name_of_country(name){}
+Country::Country(const std::string& name, int x, int y, int armies) {
+	this->setName(name);
+	this->setArmies(armies);
+	this->setPlayer("");
+	this->setPositionX(x);
+	this->setPositionY(y);
+}
+
 Country::Country(Country const& country) {
-	name_of_country = country.name_of_country;
-	armies = country.armies;
-	name_of_player = country.name_of_player;
+	this->name = country.name;
+	this->armies = country.armies;
+	this->player = country.player;
 }
 
 std::string Country::getName() const {
-	return this->name_of_country;
+	return this->name;
 }
 
 void Country::setName(const std::string& name) {
-	this->name_of_country = name;
+	this->name = name;
 }
 
-void Country::setPlayer(const std::string& nameOfPlayer){this->name_of_player = nameOfPlayer;}
-std::string Country::getPlayer(){
-	std::string player(name_of_player);
+void Country::setPlayer(const std::string& playerName) {
+	this->player = playerName;
+}
+
+std::string Country::getPlayer() const {
 	return player;
 }
 
-void Country::setArmies(const int& armies){this->armies=armies;}
-int Country::getArmies(){return armies;}
+void Country::setArmies(const int& armies) {
+	this->armies = armies;
+}
 
-void Country::removeArmies(const int& amount){
+int Country::getArmies() const {
+	return this->armies;
+}
+
+void Country::removeArmies(const int& amount) {
 	if (armies - amount >= 0) {
-		armies -= amount;
+		this->armies -= amount;
 	}
 }
 
-void Country::addArmies(const int& amount){
-	armies += amount;
+void Country::addArmies(const int& amount) {
+	this->armies += amount;
+}
+
+int Country::getPositionX() const {
+	return this->x;
+}
+
+void Country::setPositionX(int x) {
+	this->x = x;
+}
+
+int Country::getPositionY() const {
+	return this->x;
+}
+
+void Country::setPositionY(int y) {
+	this->y = y;
 }

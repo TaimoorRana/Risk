@@ -5,22 +5,27 @@
 
 class Country {
 private:
-
-	std::string name_of_country;
-	std::string name_of_player;
-	int armies;
+	std::string name = "";
+	std::string player = "";
+	int armies = 0;
+	int x = 0;
+	int y = 0;
 public:
-	Country():name_of_country(""){}
-	Country(const std::string&);
-	Country(const std::string&, int);
+	Country();
+	Country(const std::string& name);
+	Country(const std::string& name, int x, int y, int armies);
 	Country(const Country&);
 	std::string getName() const;
 	void setName(const std::string&);
 	void setPlayer(const std::string&);
-	std::string getPlayer();
+	std::string getPlayer() const;
 	void setArmies(const int&);
 	void removeArmies(const int&);
 	void addArmies(const int&);
-	int getArmies();
+	int getArmies() const;
+	int getPositionX() const;
+	void setPositionX(int x);
+	int getPositionY() const;
+	void setPositionY(int y);
 };
 #endif // COUNTRY_H

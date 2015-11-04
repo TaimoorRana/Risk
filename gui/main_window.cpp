@@ -19,9 +19,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 	QPen pen(Qt::black);
 	pen.setWidth(2);
 
-	QGraphicsRectItem* rectangle = scene->addRect(50, 0, 100, 50, pen, QBrush(Qt::blue));
-	QGraphicsEllipseItem* ellipse = scene->addEllipse(0, -100, 100, 300, pen, QBrush(Qt::green));
-	QGraphicsTextItem* text = scene->addText("Example Text", QFont("Verdana", 20));
+	scene->addRect(50, 0, 100, 50, pen, QBrush(Qt::blue));
+	scene->addEllipse(0, -100, 100, 300, pen, QBrush(Qt::green));
+	scene->addText("Example Text", QFont("Verdana", 20));
 }
 
 

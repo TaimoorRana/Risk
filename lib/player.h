@@ -3,8 +3,8 @@
 
 #include <string>
 #include <set>
-#include "playersubject.h"
-#include "playerobserver.h"
+#include "player_subject.h"
+#include "player_observer.h"
 class Country; // forward declaration
 
 class Player: public PlayerSubject{

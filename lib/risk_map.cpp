@@ -1,19 +1,42 @@
+#include <vector>
+
 #include "risk_map.h"
+#include "debug.h"
 
 RiskMap::RiskMap(){}
+RiskMap::~RiskMap(){
+	this->clear();
+}
 
 bool RiskMap::areCountriesAdjacent(const std::string& country_a, const std::string& country_b){
 	return mapGraph.areAdjacent(country_a, country_b);
 }
 
-void RiskMap::addCountry( const std::string& name_country, const std::string& name_continent, int number_armies){
-	if(continents.find( name_continent) == continents.end() ){
-		continents[name_continent] = Continent(name_continent);
-		}
-	if(countries.find( name_country) == countries.end() ){
-		countries[name_country] = Country(name_country, number_armies);
+void RiskMap::addContinent(const std::string& name, int reinforcementBonus){
+	if (continents.find(name) == continents.end()) {
+		continents[name] = Continent(name);
+	}
+}
+
+void RiskMap::addContinent(Continent& continent){
+	continents[continent.getName()] = continent;
+}
+
+void RiskMap::addCountry(const std::string& name_country, const std::string& name_continent, int number_armies){
+	if (continents.find(name_continent) == continents.end()) {
+		this->addContinent(name_continent, 0);
+	}
+	if (countries.find(name_country) == countries.end()) {
+		countries[name_country] = Country(name_country, 0, 0, number_armies);
 	}
 	mapGraph.insertNode(name_country, name_continent);
+}
+
+void RiskMap::addCountry(Country& country, const std::string& continentName){
+	if (countries.find(country.getName()) == countries.end()) {
+		countries[country.getName()] = country;
+	}
+	mapGraph.insertNode(country.getName(), continentName);
 }
 
 void RiskMap::addNeighbour(const std::string& country_a, const std::string& country_b){
@@ -25,8 +48,8 @@ Continent* RiskMap::getContinentOfCountry(const std::string& name_country){
 	return &continents[name_continent];
 }
 
-Continent* RiskMap::getContinent(const std::string& name_continent){
-	return &continents[name_continent];
+Continent* RiskMap::getContinent(const std::string& name){
+	return &continents[name];
 }
 
 Country* RiskMap::getCountry(const std::string& name_country){
@@ -59,4 +82,200 @@ void RiskMap::consolePrintListOfCountries(const std::string& name_continent){
 		std::cout<<"\t\t"<< *c_iter<<std::endl;
 		c_iter++;
 	}
+}
+
+void RiskMap::parse(const std::string& path) {
+	this->disableNotify = true;
+	this->clear();
+
+	std::ifstream infile(path);
+	std::string line;
+	int mode = 0;
+
+	while (std::getline(infile, line))
+	{
+		std::string debug_str("Read line: ");
+		debug_str.append(line);
+		debug(debug_str);
+		// Windows prefers /r/n, but getline() breaks only on \n.
+		if (line[line.size() - 1] == '\r')
+				line.resize(line.size() - 1);
+
+		// Set the mode for how we should process lines based on section headers
+		if (line.compare("[Map]") == 0) {
+			mode = MAP_PARSE_MODE_MAP;
+			debug("  Parsing map metadata");
+			continue;
+		}
+		if (line.compare("[Continents]") == 0) {
+			mode = MAP_PARSE_MODE_CONTINENTS;
+			debug("  Parsing continents");
+			continue;
+		}
+		if (line.compare("[Territories]") == 0) {
+			mode = MAP_PARSE_MODE_COUNTRIES;
+			debug("  Parsing countries");
+			continue;
+		}
+
+		// Process lines per the current mode.
+		std::string item;
+		std::stringstream line_stream(line);
+		std::vector<std::string> values;
+	  if (mode == MAP_PARSE_MODE_MAP || line.length() == 0) {
+			debug_str = "  Skipping: ";
+			debug_str.append(line);
+			debug(debug_str);
+			continue;
+		}
+		else if (mode == MAP_PARSE_MODE_CONTINENTS) {
+			while (std::getline(line_stream, item, '=')) {
+				values.push_back(item);
+			}
+			debug_str = "  Adding continent: ";
+			debug_str.append(values[0]);
+			debug(debug_str);
+
+			Continent continent(values[0]);
+			continent.setReinforcementBonus(atoi(values[1].c_str()));
+			this->addContinent(continent);
+		}
+		else if (mode == MAP_PARSE_MODE_COUNTRIES) {
+			while (std::getline(line_stream, item, ',')) {
+				values.push_back(item);
+			}
+			std::string continentName(values[3]);
+
+			debug_str = "  Adding country: ";
+			debug_str.append(values[0]);
+			debug_str.append(" in continent ");
+			debug_str.append(continentName);
+			debug(debug_str);
+
+			Country country(values[0], atoi(values[1].c_str()), atoi(values[2].c_str()), 0);
+
+			this->addCountry(country, continentName);
+		}
+		else {
+			debug("Error parsing line: " + line);
+			return;
+		}
+	}
+
+	debug("Parsing file again to configure adjacencies");
+	infile.clear();
+	infile.seekg(0, std::ios_base::beg);
+	while (std::getline(infile, line))
+	{
+		std::string debug_str("Read line: ");
+		debug_str.append(line);
+		debug(debug_str);
+		// Windows prefers /r/n, but getline() breaks only on \n.
+		if (line[line.size() - 1] == '\r')
+				line.resize(line.size() - 1);
+
+		// Set the mode for how we should process lines based on section headers
+		if (line.compare("[Map]") == 0) {
+			mode = MAP_PARSE_MODE_MAP;
+			debug("  Parsing map metadata");
+			continue;
+		}
+		if (line.compare("[Continents]") == 0) {
+			mode = MAP_PARSE_MODE_CONTINENTS;
+			debug("  Parsing continents");
+			continue;
+		}
+		if (line.compare("[Territories]") == 0) {
+			mode = MAP_PARSE_MODE_COUNTRIES;
+			debug("  Parsing countries");
+			continue;
+		}
+
+		// Process lines per the current mode.
+		std::string item;
+		std::stringstream line_stream(line);
+		std::vector<std::string> values;
+	  if (mode != MAP_PARSE_MODE_COUNTRIES || line.length() == 0) {
+			debug_str = "  Skipping: ";
+			debug_str.append(line);
+			debug(debug_str);
+			continue;
+		}
+		else if (mode == MAP_PARSE_MODE_COUNTRIES) {
+			while (std::getline(line_stream, item, ',')) {
+				values.push_back(item);
+			}
+			Country* country = this->getCountry(values[0]);
+			std::vector<std::string>::iterator iter;
+			for (iter = values.begin() + 4; iter < values.end(); iter++) {
+				Country* neighbour = this->getCountry(*iter);
+				this->addNeighbour(country->getName(), neighbour->getName());
+
+				debug_str = "  ";
+				debug_str.append(country->getName());
+				debug_str.append(" touches ");
+				debug_str.append(neighbour->getName());
+				debug(debug_str);
+			}
+		}
+		else {
+			debug("Error parsing line: " + line);
+			return;
+		}
+	}
+
+	debug("Finished parsing: " + path);
+	this->disableNotify = false;
+	this->notifyObservers();
+}
+
+RiskMap* RiskMap::load(const std::string& path) {
+	struct stat buffer;
+	bool exists = (stat (path.c_str(), &buffer) == 0);
+
+	if (!exists) {
+		return NULL;
+	}
+
+	RiskMap* map = new RiskMap();
+	map->parse(path);
+	return map;
+}
+
+bool RiskMap::save(const std::string& path) {
+	std::string debug_str("Saving map file to ");
+	debug_str.append(path);
+	debug(debug_str);
+	std::ofstream outfile(path, std::ios::out);
+	if (!outfile.is_open()) {
+		return false;
+	}
+
+	outfile << "[Continents]" << std::endl;
+	for (auto const &ent1 : this->continents) {
+		const Continent& continent = ent1.second;
+		outfile << continent.getName() << "=" << continent.getReinforcementBonus() << std::endl;
+	}
+	outfile << std::endl;
+
+	outfile << "[Territories]" << std::endl;
+	for (auto const &ent1 : this->countries) {
+		const Country& country = ent1.second;
+		const Continent* continent = this->getContinentOfCountry(country.getName());
+		outfile << country.getName() << "," << country.getPositionX() << "," << country.getPositionY() << "," << continent->getName();
+		for (auto const &neighbour_country : this->getNeighbours(country.getName())) {
+			outfile << "," << neighbour_country;
+		}
+		outfile << std::endl;
+	}
+	outfile << std::endl;
+
+	outfile.close();
+	return true;
+}
+
+void RiskMap::clear() {
+	this->continents.clear();
+	this->countries.clear();
+	this->notifyObservers();
 }

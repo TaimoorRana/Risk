@@ -2,14 +2,14 @@
 #include <vector>
 
 #include "librisk.h"
-#include "warreferee.h"
+#include "war_referee.h"
 
 WarReferee::WarReferee() {};
 
 /**
  * Calculates the loses each country occurs after the dice roll- if dices are specified
  */
-void WarReferee::calculateLosses(int &, int &)
+void WarReferee::calculateLosses(int &attackerDices, int &defenderDices)
 {
 	this->attackerDices = attackerDices;
 	this->defenderDices = defenderDices;

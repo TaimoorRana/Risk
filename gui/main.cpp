@@ -5,9 +5,9 @@
 #include "main_window.h"
 #include "country.h"
 #include "continent.h"
-#include "warreferee.h"
+#include "war_referee.h"
 #include "player.h"
-#include "playerview.h"
+#include "player_view.h"
 #include "risk_map.h"
 
 using namespace std;

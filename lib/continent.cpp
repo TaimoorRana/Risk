@@ -1,8 +1,26 @@
 #include "continent.h"
 #include "debug.h"
-#include <iostream>
 
+Continent::Continent(const std::string& name) {
+	this->name = name;
+}
 
-Continent::Continent(const std::string& name): name(name) { }
-Continent::Continent(const Continent& continent) { name = continent.name;}
-std::string Continent::getName() const { return this->name;}
+Continent::Continent(const Continent& continent) {
+	name = continent.name;
+	reinforcementBonus = continent.reinforcementBonus;
+}
+
+std::string Continent::getName() const {
+	return this->name;
+}
+
+void Continent::setName(const std::string& name) {
+	this->name = name;
+}
+int Continent::getReinforcementBonus() const {
+	return this->reinforcementBonus;
+}
+
+void Continent::setReinforcementBonus(int bonus) {
+	this->reinforcementBonus = bonus;
+}
