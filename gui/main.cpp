@@ -58,5 +58,9 @@ int main(int argc, char *argv[])
 	std::cout << pv.getNumberOfArmies() << "test";
 
 	QApplication application(argc, argv);
+
+	MainWindow* mw = new MainWindow();
+	mw->show();
+
 	return application.exec();
 }

@@ -8,7 +8,7 @@ private:
 	std::string name = "";
 	int reinforcementBonus = 0;
 public:
-	Continent();
+	Continent() {};
 	Continent(const std::string& name);
 	Continent(const Continent& continent);
 	std::string getName() const;

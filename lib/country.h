@@ -11,7 +11,7 @@ private:
 	int x = 0;
 	int y = 0;
 public:
-	Country();
+	Country() {};
 	Country(const std::string& name);
 	Country(const std::string& name, int x, int y, int armies);
 	Country(const Country&);

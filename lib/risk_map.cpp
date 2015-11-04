@@ -19,7 +19,7 @@ void RiskMap::addContinent(const std::string& name, int reinforcementBonus){
 }
 
 void RiskMap::addContinent(Continent& continent){
-	continents[continent.getName()] = continent;
+	continents[continent.getName()] = Continent(continent);
 }
 
 void RiskMap::addCountry(const std::string& name_country, const std::string& name_continent, int number_armies){
@@ -34,7 +34,7 @@ void RiskMap::addCountry(const std::string& name_country, const std::string& nam
 
 void RiskMap::addCountry(Country& country, const std::string& continentName){
 	if (countries.find(country.getName()) == countries.end()) {
-		countries[country.getName()] = country;
+		countries[country.getName()] = Country(country);
 	}
 	mapGraph.insertNode(country.getName(), continentName);
 }

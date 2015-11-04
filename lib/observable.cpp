@@ -2,7 +2,7 @@
 #include "observer.h"
 
 Observable::Observable() {
-	observers = list<Observer*>();
+	observers = std::list<Observer*>();
 }
 void Observable::attachObserver(Observer* observer){
   observers.push_back(observer);
