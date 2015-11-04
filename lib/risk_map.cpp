@@ -26,15 +26,16 @@ void RiskMap::addCountry(const std::string& name_country, const std::string& nam
 	if (continents.find(name_continent) == continents.end()) {
 		this->addContinent(name_continent, 0);
 	}
-	if (countries.find(name_country) == countries.end()) {
-		countries[name_country] = Country(name_country, 0, 0, number_armies);
-	}
-	mapGraph.insertNode(name_country, name_continent);
+	Country country(name_country, 0, 0, number_armies);
+	this->addCountry(country, name_continent);
 }
 
 void RiskMap::addCountry(const Country& country, const std::string& continentName){
 	if (countries.find(country.getName()) == countries.end()) {
 		countries[country.getName()] = country;
+		for (Observer* observer : observers) {
+			countries[country.getName()].attachObserver(observer);
+	  }
 	}
 	mapGraph.insertNode(country.getName(), continentName);
 }

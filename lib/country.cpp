@@ -29,6 +29,7 @@ void Country::setName(const std::string& name) {
 
 void Country::setPlayer(const std::string& playerName) {
 	this->player = playerName;
+	this->notifyObservers();
 }
 
 std::string Country::getPlayer() const {
@@ -37,6 +38,7 @@ std::string Country::getPlayer() const {
 
 void Country::setArmies(const int& armies) {
 	this->armies = armies;
+	this->notifyObservers();
 }
 
 int Country::getArmies() const {

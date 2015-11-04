@@ -1,9 +1,9 @@
 #ifndef COUNTRY_H
 #define COUNTRY_H
-
 #include <string>
+#include "observable.h"
 
-class Country {
+class Country : public Observable {
 private:
 	std::string name = "";
 	std::string player = "";
