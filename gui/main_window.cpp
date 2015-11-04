@@ -112,6 +112,7 @@ void MainWindow::observedUpdated() {
 		diameter = 30;
 		Continent* continent = observedMap->getContinentOfCountry(country.getName());
 		QColor continentColor(continentPalette.at(continent->getName()));
+		debug("Position: " + std::to_string(country.getPositionX()) + "," + std::to_string(country.getPositionX()));
 		QGraphicsEllipseItem* ellipse = scene->addEllipse(country.getPositionX()-diameter/2, country.getPositionY() - diameter/2, diameter, diameter, QPen(), QBrush(continentColor));
 		ellipse->setZValue(1);
 
@@ -141,6 +142,9 @@ void MainWindow::observedUpdated() {
 		visited.insert(std::pair<const std::string, bool>(country.getName(), false));
 	}
 
+	if (observedMap->getCountries().size() == 0) {
+		return;
+	}
 	const Country* country = &observedMap->getCountries().begin()->second;
 	connectNeighboursVisit(visited, country);
 }

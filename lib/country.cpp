@@ -62,7 +62,7 @@ void Country::setPositionX(int x) {
 }
 
 int Country::getPositionY() const {
-	return this->x;
+	return this->y;
 }
 
 void Country::setPositionY(int y) {

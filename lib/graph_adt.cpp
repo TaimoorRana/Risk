@@ -109,7 +109,7 @@ void GraphADT::removeNode(std::string vertexname){
 		number_of_nodes--;
 		}
 	else
-		std::cout<<"ERROR: Named vertex "<<vertexname<<" does not exist."<<std::endl;
+		std::cout<<"ERROR: Named vertex " << vertexname << " does not exist."<<std::endl;
 	}
 
 void GraphADT::insertEdge(std::string v, std::string w) {
@@ -130,10 +130,10 @@ void GraphADT::insertEdge(std::string v, std::string w, std::string x) {
 			number_of_edges++;
 			}
 		else
-			std::cout<<"ERROR: The edge already exists."<<std::endl;
+			std::cout<<"ERROR: The edge " << v << " to " << w << " already exists." << std::endl;
 		}
 	else
-		std::cout<<"ERROR: Cannot proceed, one or more vertices don't exist."<<std::endl;
+		std::cout << "ERROR: Cannot proceed, one or more vertices don't exist." << std::endl;
 	}
 
 //14 ;; Remove edge (v, w)
@@ -146,7 +146,7 @@ void GraphADT::removeEdge(std::string v, std::string w) {
 		number_of_edges--;
 		}
 	else
-		std::cout<<"ERROR: Either "<<v<<" or "<<w<<" vertices were not found.";
+		std::cout << "ERROR: Either " << v << " or " << w << " vertices were not found.";
 	}
 
 //;15 ;; Return the element associated with edge e.
