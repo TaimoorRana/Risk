@@ -4,7 +4,7 @@
 
 Player::Player(std::string name)
 {
-    this->name = name;
+	this->name = name;
 }
 
 
@@ -27,18 +27,18 @@ void Player::removeCountry(const std::string& countryName)
     }
 }
 
-bool Player::hasCountry(const std::string& countryName)
+bool Player::hasCountry(const std::string& countryName) const
 {
-     std::set<std::string>::iterator countryOwnedIterator;
-     for(countryOwnedIterator = namesOfCountriesOwned.begin(); countryOwnedIterator != namesOfCountriesOwned.end();countryOwnedIterator++){
-        if(*countryOwnedIterator == countryName){
-            return true;
-        }
-    }
-    return false;
+	 std::set<std::string>::iterator countryOwnedIterator;
+	 for(countryOwnedIterator = namesOfCountriesOwned.begin(); countryOwnedIterator != namesOfCountriesOwned.end();countryOwnedIterator++){
+		if(*countryOwnedIterator == countryName){
+			return true;
+		}
+	}
+	return false;
 }
 
-bool Player::hasContinent(const std::string& continentName)
+bool Player::hasContinent(const std::string& continentName) const
 {
 
     std::set<std::string>::iterator continentsOwnedIterator;
@@ -51,41 +51,42 @@ bool Player::hasContinent(const std::string& continentName)
     return false;
 }
 
-std::set<std::string> Player::getContinentsOwned()
+std::set<std::string> Player::getContinentsOwned() const
 {
-    return this->namesOfContinentsOwned;
+	return this->namesOfContinentsOwned;
 }
 
-std::string Player::getName(){
-    return name;
+std::string Player::getName() const
+{
+	return name;
 }
 
 void Player::addReinforcements(const int& amount)
 {
-    reinforcements += amount;
+	reinforcements += amount;
 }
 
 void Player::removeReinforcements(const int& amount)
 {
-    if(reinforcements - amount >= 0 ){
-        reinforcements -= amount;
-    }
+	if(reinforcements - amount >= 0 ){
+		reinforcements -= amount;
+	}
 }
 
 void Player::setReinforcements(const int& amount)
 {
-    reinforcements = amount;
+	reinforcements = amount;
 }
 
-int Player::getReinforcements()
+int Player::getReinforcements() const
 {
-    return this->reinforcements;
+	return this->reinforcements;
 }
 
 
 void Player::registerObserver(PlayerObserver *observer)
 {
-    observerList.insert(observer);
+	observerList.insert(observer);
 }
 
 void Player::unregisterObserver(PlayerObserver *observer)
@@ -102,38 +103,38 @@ void Player::notifyObserver()
     }
 }
 
-int Player::setTotalArmy(const int &totalArmy)
+void Player::setTotalArmy(const int &totalArmy)
 {
-    this->totalArmy = totalArmy;
+	this->totalArmy = totalArmy;
 }
 
-int Player::getTotalArmy()
+int Player::getTotalArmy() const
 {
-    return totalArmy;
+	return totalArmy;
 }
 
 std::set<std::string> Player::getCountryOwned(){
-    std::set<std::string> copy(namesOfCountriesOwned);
-    return copy;
+	std::set<std::string> copy(namesOfCountriesOwned);
+	return copy;
 }
 
 void Player::increaseBattleWon(){
-    battleWon++;
+	battleWon++;
 }
 
 void Player::decreaseBattleWon()
 {
-    battleWon--;
+	battleWon--;
 }
 
 void Player::setBattlesWon(const int &battleWon)
 {
-    this->battleWon = battleWon;
+	this->battleWon = battleWon;
 }
 
-int Player::getBattlesWon()
+int Player::getBattlesWon() const
 {
-    return battleWon;
+	return battleWon;
 }
 
 

@@ -5,12 +5,15 @@
 
 class Continent {
 private:
-	std::string name;
+	std::string name = "";
+	int reinforcementBonus = 0;
 public:
-    Continent():name(""){}
-    Continent(const std::string&);
-    Continent(const Continent&);
-    Continent& operator = (const Continent&);
-    std::string getNameContinent() const;
+	Continent() {};
+	Continent(const std::string& name);
+	Continent(const Continent& continent);
+	std::string getName() const;
+	void setName(const std::string& name);
+	int getReinforcementBonus() const;
+	void setReinforcementBonus(int bonus);
 };
 #endif // CONTINENT_H

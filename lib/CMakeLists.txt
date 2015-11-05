@@ -1,16 +1,16 @@
 set(LIBRARY_SOURCE_FILES
 	continent.cpp continent.h
-        country.cpp country.h
-        debug.cpp debug.h
-        dices.cpp dices.h
-	GraphADT.cpp GraphADT.h
+	country.cpp country.h
+	debug.cpp debug.h
+	graph_adt.cpp graph_adt.h
 	librisk.cpp librisk.h
-        player.cpp player.h
-        playerobserver.h
-        playersubject.h
-        playerview.cpp playerview.h
-        risk_map.cpp risk_map.h
-        warreferee.cpp warreferee.h
+	observable.cpp observable.h observer.h
+	player.cpp player.h
+	player_observer.h
+	player_subject.h
+	player_view.cpp player_view.h
+	risk_map.cpp risk_map.h
+	war_referee.cpp war_referee.h
 )
 
 add_library(lib${PROJECT_NAME} STATIC ${LIBRARY_SOURCE_FILES})

@@ -4,16 +4,16 @@
 
 class States:public QObject
 {
-    Q_OBJECT
-    Q_ENUMS(state)
+	Q_OBJECT
+	Q_ENUMS(state)
 public:
-    States();
-    enum playPhase{ REINFORCE,ATTACK,MOVE};
-    void setState(States::playPhase newState);
+	States();
+	enum playPhase{ REINFORCE,ATTACK,MOVE};
+	void setState(States::playPhase newState);
 
 signals:
-    void stateChanged(States::playPhase newState);
-    void testSignal(void);
+	void stateChanged(States::playPhase newState);
+	void testSignal(void);
 
 };
 

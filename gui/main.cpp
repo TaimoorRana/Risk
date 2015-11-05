@@ -10,19 +10,11 @@
 #include <QSplashScreen>
 #include <QTimer>
 
-#include "risk.h"
-#include "country.h"
-#include "dices.h"
-#include "continent.h"
-#include "warreferee.h"
-#include "player.h"
-#include "playerview.h"
+#include "main_window.h"
 #include "risk_map.h"
 
-using namespace std;
+int main(int argc, char *argv[]) {
 
-int main(int argc, char *argv[])
-{
     QApplication application(argc, argv);
 
     QSplashScreen *splash = new QSplashScreen;
@@ -33,4 +25,5 @@ int main(int argc, char *argv[])
     QTimer::singleShot(2500,&w,SLOT(show()));
 
     return application.exec();
+
 }

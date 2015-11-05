@@ -21,57 +21,57 @@
 
 class GameBoardView:public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
 
-    GameBoardView();
+	GameBoardView();
 
-    virtual ~GameBoardView();
+	virtual ~GameBoardView();
 
-    QLabel *currentPlayerTurn;
+	QLabel *currentPlayerTurn;
 
-    void turns();
-    void endOfTurn();
-    enum Mode{reinforceMode,attackMode,moveMode, endOfTurnMode};
-    Mode currentMode= reinforceMode;
+	void turns();
+	void endOfTurn();
+	enum Mode{reinforceMode,attackMode,moveMode, endOfTurnMode};
+	Mode currentMode= reinforceMode;
 private:
 
-    QVBoxLayout *mainLayout;/**< MainLayout for the game */
-    // grid layout of board
-    QGridLayout *boardLayout;/**<SubLayout */
-    //buttons added
-    QPushButton *beginGameButton;/**<beginGameButton */
-    QPushButton *reinforce;/**<reinforce */
-    QPushButton *attack;/**<attackButton */
-    QPushButton *move; /**<move Button */
-    QLabel *selectPlayers; /**<Highliting which player to select Label */
-    QComboBox *comboBox;
-    QLabel *comboBoxLabel;
-    QLabel *gameBeganLabel;
-    QMenuBar *gameMenu;
-    //check if the game has begun
-    bool gameBegun=false;
-    int numberOfPlayers;
-    //will for future turn into players
-    int *arrayOfPlayers;
-    QLabel *attackLabel;
-    QLabel *moveLabel;
-    QLabel *reinforceLabel;
-    QAction *reinforceAction;
-    QAction *moveAction;
-    QAction *attackAction;
-    QAction *endTurnAction;
-    int turnNumber;
+	QVBoxLayout *mainLayout;/**< MainLayout for the game */
+	// grid layout of board
+	QGridLayout *boardLayout;/**<SubLayout */
+	//buttons added
+	QPushButton *beginGameButton;/**<beginGameButton */
+	QPushButton *reinforce;/**<reinforce */
+	QPushButton *attack;/**<attackButton */
+	QPushButton *move; /**<move Button */
+	QLabel *selectPlayers; /**<Highliting which player to select Label */
+	QComboBox *comboBox;
+	QLabel *comboBoxLabel;
+	QLabel *gameBeganLabel;
+	QMenuBar *gameMenu;
+	//check if the game has begun
+	bool gameBegun=false;
+	int numberOfPlayers;
+	//will for future turn into players
+	int *arrayOfPlayers;
+	QLabel *attackLabel;
+	QLabel *moveLabel;
+	QLabel *reinforceLabel;
+	QAction *reinforceAction;
+	QAction *moveAction;
+	QAction *attackAction;
+	QAction *endTurnAction;
+	int turnNumber;
 
-    //slot for each possibili
+	//slot for each possibili
 
 public  slots:
-    void beginGame();
-    void endOfGame();
-    void attackPhase();
-    void reinforcePhase();
-    void movePhase();
-    void endTurn();
+	void beginGame();
+	void endOfGame();
+	void attackPhase();
+	void reinforcePhase();
+	void movePhase();
+	void endTurn();
 };
 
 #endif // GAMEBOARDVIEW_H

@@ -1,34 +1,57 @@
 #ifndef RISK_MAP
 #define RISK_MAP
 
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <stdio.h>
+#include <sys/stat.h>
 #include <unordered_map>
 
 #include "country.h"
 #include "continent.h"
-#include "GraphADT.h"
+#include "graph_adt.h"
+#include "player.h"
+#include "observable.h"
 
-class RiskMap
+#define MAP_PARSE_MODE_MAP 1
+#define MAP_PARSE_MODE_CONTINENTS 2
+#define MAP_PARSE_MODE_COUNTRIES 3
+
+class RiskMap : public Observable
 {
 private:
-    std::unordered_map<std::string, Continent> continents;
-    std::unordered_map<std::string, Country> countries;
-    RiskMap();
-    MySubGraph mapGraph;
+	bool disableNotify = false;
+	std::unordered_map<std::string, Continent> continents;
+	std::unordered_map<std::string, Country> countries;
+	std::unordered_map<std::string, Player> players;
+	SubGraphADT mapGraph;
 
 public:
-    static RiskMap& getInstance();
-    bool adjacentCountries(const std::string&, const std::string&);
-    void addCountry(const std::string&, const std::string&, int);
-    void makeCountriesAdjacent(const std::string&, const std::string&);
-    void setPlayerOwner(const std::string&, const std::string&);
-    std::string getPlayerOwner(const std::string&);
-    void setArmies(const std::string&, int);
-    int getArmies(const std::string&);
-    std::string getContinentName(const std::string&);
-    Country* getCountryObj(std::string);
-    my_set listCountriesInsideContinent(const std::string&);
-    void console_print_list_of_neighbours(const std::string&);
-    void console_print_list_of_countries(const std::string&);
-    my_set listOfNeighbours(const std::string&);
+	RiskMap();
+	~RiskMap();
+	bool areCountriesAdjacent(const std::string& country_a, const std::string& country_b);
+	void addCountry(const std::string& name_country, const std::string& name_continent, int number_armies);
+	void addCountry(const Country& country, const std::string& continentName);
+	void addContinent(const std::string& name, int reinforcementBonus);
+	void addContinent(const Continent& continent);
+	void addNeighbour(const std::string& country_a, const std::string& country_b);
+	void addPlayer(const Player& player);
+	Continent* getContinentOfCountry(const std::string& name_country);
+	Continent* getContinent(const std::string& name);
+	Country* getCountry(const std::string& name_country);
+	string_set getCountriesInContinent(const std::string& name_continent);
+	string_set getNeighbours(const std::string& name_country);
+	Player* getPlayer(const std::string& playerName);
+	const std::unordered_map<std::string, Continent>& getContinents() const;
+	const std::unordered_map<std::string, Country>& getCountries() const;
+	const std::unordered_map<std::string, Player>& getPlayers() const;
+	void consolePrintListOfNeighbours(const std::string& name_country);
+	void consolePrintListOfCountries(const std::string& name_continent);
+	static RiskMap* load(const std::string& path);
+	void parse(const std::string& path);
+	bool save(const std::string& path);
+	void clear();
+	void notifyObservers();
 };
 #endif
