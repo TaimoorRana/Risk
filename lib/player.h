@@ -20,7 +20,7 @@ private:
 public:
 	Player() {}
 	Player(std::string name);
-	Player(const Player& other);
+    //Player(const Player& other);
 	std::string getName() const;
 
 	// increase battleWon int by 1

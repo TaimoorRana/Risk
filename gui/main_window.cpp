@@ -8,6 +8,8 @@
 #include <QGraphicsTextItem>
 #include <QPen>
 #include <random>
+#include <functional>
+#include <time.h>
 
 #include "debug.h"
 #include "main_window.h"
