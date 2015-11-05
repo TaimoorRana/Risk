@@ -11,7 +11,6 @@ Player::Player(std::string name)
 void Player::addCountry(const std::string& countryName)
 {
     namesOfCountriesOwned.insert(countryName);
-    map.getCountryObj(countryName)->setPlayer(name);
 }
 
 
@@ -26,7 +25,6 @@ void Player::removeCountry(const std::string& countryName)
             break;
         }
     }
-    map.getCountryObj(countryName)->setPlayer("");
 }
 
 bool Player::hasCountry(const std::string& countryName)
@@ -42,24 +40,14 @@ bool Player::hasCountry(const std::string& countryName)
 
 bool Player::hasContinent(const std::string& continentName)
 {
-    std::set<std::string> countryList = map.listCountriesInsideContinent(continentName);
-    std::set<std::string>::iterator countryListIterator;
+
+    std::set<std::string>::iterator continentsOwnedIterator;
     
-    std::set<std::string>::iterator countriesOwnedIterator;
-    int matchFound=0;
-    
-    for (countryListIterator = countryList.begin(); countryListIterator != countryList.end(); countryListIterator++) {
-        for (countriesOwnedIterator = namesOfCountriesOwned.begin(); countriesOwnedIterator != namesOfCountriesOwned.end(); countriesOwnedIterator++) {
-            if (countryListIterator == countriesOwnedIterator ) {
-                matchFound++;
-            }
+    for (continentsOwnedIterator = namesOfContinentsOwned.begin(); continentsOwnedIterator != namesOfContinentsOwned.end(); continentsOwnedIterator++) {
+        if (*continentsOwnedIterator == continentName ) {
+            return true;
         }
     }
-    
-    if (matchFound == countryList.size()) {
-        return true;
-    }
-    
     return false;
 }
 
