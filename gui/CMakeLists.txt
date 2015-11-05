@@ -8,15 +8,15 @@ set(GUI_SOURCE_FILES
 	main.cpp
 	main_window.cpp main_window.h
 	GameDriver.cpp GameDriver.h
-	States.cpp States.h
+	states.cpp states.h
 	gameboardview.cpp gameboardview.h
 )
 
 set(GUI_RESOURCE_FILES
-	Stylesheet.qss
+	style_sheet.qss
 	#risk.qrc
 )
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/styleSheet.qss DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/style_sheet.qss DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 IF (APPLE)
 	add_project_meta(GUI_META_FILES)
