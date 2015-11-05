@@ -73,7 +73,7 @@ void MainWindow::on_randArmiesPushButton_clicked() {
 	for (auto const &ent1 : observedMap->getCountries()) {
 		const Country& country = ent1.second;
 		Country* mutableCountry = observedMap->getCountry(country.getName());
-		mutableCountry->setArmies(rand() % 10);
+        mutableCountry->setArmies((rand() % 10) + 1);
 	}
 }
 
