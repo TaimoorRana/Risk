@@ -8,7 +8,7 @@
 class Country; // forward declaration
 
 class Player: public PlayerSubject{
-private:
+protected:
 	int reinforcements = 0;
 	int battleWon = 0;
 	int totalArmy = 0;
@@ -28,6 +28,7 @@ public:
 	void decreaseBattleWon();
 	void setBattlesWon(const int &battleWon);
 	int getBattlesWon() const;
+
 
 	/*
 	 Reinforcements related methods
