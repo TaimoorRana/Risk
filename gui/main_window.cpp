@@ -77,6 +77,13 @@ void MainWindow::on_randArmiesPushButton_clicked() {
 	}
 }
 
+void MainWindow::on_savePushButton_clicked(){
+    debug("Save Button clicked\n");
+}
+
+void MainWindow::on_addCountryButton_clicked(){}
+
+
 void MainWindow::observedUpdated() {
 	scene->clear();
 

@@ -24,7 +24,8 @@ private slots:
 	void on_loadPushButton_clicked();
 	void on_randOwnerPushButton_clicked();
 	void on_randArmiesPushButton_clicked();
-
+    void on_savePushButton_clicked();
+    void on_addCountryButton_clicked();
 private:
 	bool validateFilename(const QString& text);
 	void observedUpdated();
