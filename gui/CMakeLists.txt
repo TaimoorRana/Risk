@@ -6,7 +6,7 @@ fix_project_version()
 
 set(GUI_SOURCE_FILES
 	main.cpp
-	main_window.cpp main_window.h
+        main_window.cpp main_window.h main_window.ui
 	GameDriver.cpp GameDriver.h
 	states.cpp states.h
 	gameboardview.cpp gameboardview.h

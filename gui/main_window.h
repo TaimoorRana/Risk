@@ -30,10 +30,12 @@ private slots:
     void on_addNeighbourPushButton_clicked();
     void on_removeNeighbourPushButton_clicked();
 
+
 private:
 	bool validateFilename(const QString& text);
 	void observedUpdated();
 	void connectNeighboursVisit(std::map<const std::string, bool>& visited, const Country* country);
+    void mousePressEvent(QMouseEvent *event);
 	Ui::MainWindow* ui;
 	QGraphicsScene* scene;
 	RiskMap* observedMap;

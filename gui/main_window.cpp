@@ -14,17 +14,27 @@
 #include "debug.h"
 #include "main_window.h"
 #include "ui_main_window.h"
+#include <QMouseEvent>
+#include <qdebug.h>
 
 MainWindow::MainWindow(RiskMap* map, QWidget *parent) : QMainWindow(parent) {
 	ui = new Ui::MainWindow;
 	ui->setupUi(this);
-
 	observedMap = map;
-
 	scene = new QGraphicsScene(this);
 	ui->graphicsView->setScene(scene);
+    setMouseTracking(true);
 }
 
+void MainWindow::mousePressEvent(QMouseEvent *event){
+    int xpos =  event->pos().x();
+    int ypos =  event->pos().y();
+    qDebug()<< xpos;
+    qDebug()<< ypos;
+    QRectF r1(xpos-10-98,ypos-10-125,20,20);
+    QPen p(QColor(13,145,67,255));
+    scene->addEllipse(r1,p,QBrush());
+}
 
 MainWindow::~MainWindow() {
 	scene->clear();
