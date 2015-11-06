@@ -41,7 +41,7 @@
       <item>
        <widget class="QLineEdit" name="filenameLineEdit">
         <property name="text">
-         <string>../../maps/World/World.map</string>
+         <string>../../../maps/World/World.map</string>
         </property>
        </widget>
       </item>
@@ -63,7 +63,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="savePushButton">
+       <widget class="QPushButton" name="saveMapPushButton">
         <property name="text">
          <string>Save Map</string>
         </property>
@@ -89,28 +89,28 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QToolButton" name="toolButton">
+         <widget class="QToolButton" name="addCountryPushButton">
           <property name="text">
            <string>+Country   </string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="toolButton_2">
+         <widget class="QToolButton" name="removeCountryPushButton">
           <property name="text">
            <string>-Country    </string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="toolButton_3">
+         <widget class="QToolButton" name="addNeighbourPushButton">
           <property name="text">
            <string>+Neighbour</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="toolButton_4">
+         <widget class="QToolButton" name="removeNeighbourPushButton">
           <property name="text">
            <string>-Neighbour</string>
           </property>

@@ -56,35 +56,48 @@ void MainWindow::on_loadPushButton_clicked() {
 	observedMap->parse(ui->filenameLineEdit->text().toStdString());
 }
 
-void MainWindow::on_randOwnerPushButton_clicked() {
-	std::mt19937::result_type seed = time(0);
-	auto player_rand = std::bind(std::uniform_int_distribution<int>(0, observedMap->getPlayers().size()-1), std::mt19937(seed));
+// void MainWindow::on_randOwnerPushButton_clicked() {
+// 	std::mt19937::result_type seed = time(0);
+// 	auto player_rand = std::bind(std::uniform_int_distribution<int>(0, observedMap->getPlayers().size()-1), std::mt19937(seed));
+//
+// 	for (auto const &ent1 : observedMap->getCountries()) {
+// 		const Country& country = ent1.second;
+//
+// 		auto it = observedMap->getPlayers().begin();
+// 		std::advance(it, player_rand());
+// 		const Player& player = it->second;
+// 		Country* mutableCountry = observedMap->getCountry(country.getName());
+// 		mutableCountry->setPlayer(player.getName());
+// 	}
+// }
 
-	for (auto const &ent1 : observedMap->getCountries()) {
-		const Country& country = ent1.second;
+// void MainWindow::on_randArmiesPushButton_clicked() {
+// 	for (auto const &ent1 : observedMap->getCountries()) {
+// 		const Country& country = ent1.second;
+// 		Country* mutableCountry = observedMap->getCountry(country.getName());
+//         mutableCountry->setArmies((rand() % 10) + 1);
+// 	}
+// }
 
-		auto it = observedMap->getPlayers().begin();
-		std::advance(it, player_rand());
-		const Player& player = it->second;
-		Country* mutableCountry = observedMap->getCountry(country.getName());
-		mutableCountry->setPlayer(player.getName());
-	}
-}
-
-void MainWindow::on_randArmiesPushButton_clicked() {
-	for (auto const &ent1 : observedMap->getCountries()) {
-		const Country& country = ent1.second;
-		Country* mutableCountry = observedMap->getCountry(country.getName());
-        mutableCountry->setArmies((rand() % 10) + 1);
-	}
-}
-
-void MainWindow::on_savePushButton_clicked(){
+void MainWindow::on_saveMapPushButton_clicked(){
     debug("Save Button clicked\n");
 }
 
-void MainWindow::on_addCountryButton_clicked(){}
+void MainWindow::on_addCountryPushButton_clicked(){
+	debug("Add Country");
+}
 
+void MainWindow::on_removeCountryPushButton_clicked(){
+    debug("Remove Country");
+}
+
+void MainWindow::on_addNeighbourPushButton_clicked(){
+    debug("Add Neighbour");
+}
+
+void MainWindow::on_removeNeighbourPushButton_clicked(){
+    debug("Remove Neighbour");
+}
 
 void MainWindow::observedUpdated() {
 	scene->clear();
@@ -174,3 +187,6 @@ void MainWindow::connectNeighboursVisit(std::map<const std::string, bool>& visit
 		connectNeighboursVisit(visited, neighbour);
 	}
 }
+
+//void ClickableMap::mousePressEvent(QGraphicsSceneMouseEvent* w){
+//}

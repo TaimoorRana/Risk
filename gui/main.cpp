@@ -16,6 +16,10 @@ int main(int argc, char *argv[]) {
 
 	RiskMap map = RiskMap();
 	MainWindow* mw = new MainWindow(&map);
+
+//    ClickableMap cm;
+//    mw->addAction(cm);
+
 	mw->show();
 
     map.attachObserver(mw);
