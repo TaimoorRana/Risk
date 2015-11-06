@@ -6,6 +6,7 @@
 #include "computer_player.h"
 #include "aggressive.h"
 #include "random.h"
+#include "defensive.h"
 #include <set>
 #include <iostream>
 #include <string>
@@ -16,7 +17,7 @@ int main() {
     libriskInit();
     //create initial strategy
     //make sure to init
-    Strategy *strageyPattern = new Aggressive();
+    Strategy *strategyPattern = new Defensive();
     RiskMap map = RiskMap();
     int selectStrategy=1;
     cout <<"Select 1 for aggressive strategy\nSelect 2 for defensive\nSelect 3 for random attack strategy\n";
@@ -41,7 +42,7 @@ int main() {
 
     map.addCountry("Quebec", america.getName(), 1);
     map.addCountry("Ontario",america.getName(),1);
-    map.addCountry("New Brunswick",america.getName(),1);
+    map.addCountry("New Brunswick",america.getName(),2);
     map.addCountry("New York",america.getName(),1);
     map.addNeighbour("Ontario","Quebec");
     map.addNeighbour("Ontario","New York");
@@ -50,10 +51,11 @@ int main() {
     Country *ontario = map.getCountry("Ontario");
     Country *quebec = map.getCountry("Quebec");
     Country *newBrunswick = map.getCountry("New Brunswick");
-    Country *newYork = map.getCountry("NewYork");
+    Country *newYork = map.getCountry("New York");
 
     computer1->addCountry("Ontario");
     computer1->setAttackFrom(ontario->getName(),(ontario->getArmies()));
+    cout<<strategyPattern->decideAttackingCountry(map);
     human1.addCountry("Quebec");
     human1.addCountry("New Brunswick");
     human2.addCountry("New York");

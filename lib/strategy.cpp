@@ -12,7 +12,7 @@ Strategy::~Strategy()
 
 }
 
-void Strategy::setPlayer(string& nameOfPlayer)
+void Strategy::setPlayer(string nameOfPlayer)
 {
     this->nameOfPlayer = nameOfPlayer;
 }
@@ -20,13 +20,10 @@ void Strategy::setPlayer(string& nameOfPlayer)
 void Strategy::setAttackFrom(string countryName, int numberOfArmiesOnTerritory)
 {
     this->numberOfArmiesOnTerritory = numberOfArmiesOnTerritory;
-    this->countryToAttack = countryName;
+    this->currentCountry = countryName;
 }
 
-bool Strategy::isAttack()
-{
-    return false;
-}
+
 
 string Strategy::getCountryAttackFrom()
 {
@@ -41,6 +38,14 @@ bool Strategy::isSameOwner(string countryOwner1, string countryOwner2)
 int Strategy::getNumberOfArmies()
 {
     return numberOfArmiesOnTerritory;
+}
+
+void Strategy::setAttack(bool attack)
+{
+    this->attack = attack;
+}
+bool Strategy::isAttack(){
+    return attack;
 }
 
 string Strategy::decideAttackingCountry(RiskMap map)

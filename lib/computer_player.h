@@ -4,7 +4,6 @@
 #include "aggressive.h"
 #include "random.h"
 #include "player_subject.h"
-#include "player_observer.h"
 #include "player.h"
 #include <string>
 
@@ -16,6 +15,12 @@ public:
     void setStrategy(Strategy *strategyP);
     void setAttackFrom(std::string countryName, int numberOfArmies);
     Strategy* getStrategy();
+    /*
+     * Observer Pattern Methods
+     */
+    virtual void registerObserver(PlayerObserver*);
+    virtual void unregisterObserver(PlayerObserver*);
+    virtual void notifyObserver();
 private:
     Strategy* strategy;
 };

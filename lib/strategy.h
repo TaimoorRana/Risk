@@ -18,7 +18,7 @@ class Strategy
 public:
     Strategy();
     ~Strategy();
-    void setPlayer(string& nameOfPlayer);
+    void setPlayer(string nameOfPlayer);
     void setAttackFrom(string countryName, int numberOfArmiesOnTerritory);
     bool isAttack();
     void getMap(RiskMap map);
@@ -26,6 +26,7 @@ public:
     string getCountryAttackFrom();
     bool isSameOwner(std::string countryOwner1,std::string countryOwner2);
     int getNumberOfArmies();
+    void setAttack(bool attack);
 
     //may just use map and call internally
     virtual string decideAttackingCountry(RiskMap map);

@@ -4,6 +4,7 @@
 #include <vector>
 #include <set>
 #include "strategy.h"
+#include <random>
 
 
 class Random :public Strategy
@@ -11,7 +12,7 @@ class Random :public Strategy
 public:
     Random();
     ~Random();
-    string decideAttackingCountry(set<string> listOfAttackCountries);
+    string decideAttackingCountry(RiskMap map);
 };
 
 #endif // RANDOM_H

@@ -6,7 +6,8 @@ class Defensive : public Strategy
 {
 public:
     Defensive();
-     //string decideAttackingCountry(set<string> listOfAttackCountries);
+    ~Defensive();
+    string decideAttackingCountry(RiskMap map);
 private:
     //1.5 to 1
     double enemyRatio;

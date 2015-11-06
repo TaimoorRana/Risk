@@ -24,6 +24,23 @@ void ComputerPlayer::setAttackFrom(string countryName, int numberOfArmies)
 {
     strategy->setAttackFrom(countryName,numberOfArmies);
 
+
+
+}
+
+void ComputerPlayer::registerObserver(PlayerObserver *)
+{
+
+}
+
+void ComputerPlayer::unregisterObserver(PlayerObserver *)
+{
+
+}
+
+void ComputerPlayer::notifyObserver()
+{
+
 }
 
 
