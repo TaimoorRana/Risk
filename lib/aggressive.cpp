@@ -1,3 +1,4 @@
+#include "strategy.h"
 #include "aggressive.h"
 #include <set>
 #include <string>

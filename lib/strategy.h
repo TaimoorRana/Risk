@@ -17,7 +17,7 @@ class Strategy
 {
 public:
     Strategy();
-    virtual ~Strategy();
+    ~Strategy();
     void setPlayer(string& nameOfPlayer);
     void setAttackFrom(string countryName, int numberOfArmiesOnTerritory);
     bool isAttack();
