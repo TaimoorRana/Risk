@@ -49,5 +49,6 @@ int main() {
 
 	std::cout << "Country India belongs to: " << map.getContinentOfCountry("India")->getName() << std::endl;
 
+    map.save("riskmap_test0.map");
 	return 0;
 }
