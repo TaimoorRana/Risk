@@ -40,6 +40,12 @@ void RiskMap::addCountry(const Country& country, const std::string& continentNam
 	mapGraph.insertNode(country.getName(), continentName);
 }
 
+void RiskMap::addCountry(int x, int y){
+    Country country(x, y);
+    std::cout<<"insert country at ("<<x<<", "<<y<<" )"<<std::endl;
+//    mapGraph.insertNode();
+}
+
 void RiskMap::addNeighbour(const std::string& country_a, const std::string& country_b){
 	mapGraph.insertEdge(country_a, country_b);
 }

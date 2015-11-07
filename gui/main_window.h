@@ -39,6 +39,7 @@ private:
 	void observedUpdated();
 	void connectNeighboursVisit(std::map<const std::string, bool>& visited, const Country* country);
     void mousePressEvent(QMouseEvent *event);
+    void makePopupWindowAddCountryAppear(int x, int y);
 	Ui::MainWindow* ui;
 	QGraphicsScene* scene;
 	RiskMap* observedMap;

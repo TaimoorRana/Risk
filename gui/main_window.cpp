@@ -28,20 +28,33 @@ MainWindow::MainWindow(RiskMap* map, QWidget *parent) : QMainWindow(parent) {
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event){
+    int xpos =  event->pos().x();
+    int ypos =  event->pos().y();
+    qDebug()<< xpos;
+    qDebug()<< ypos;
+    QRectF r1(xpos-10-98,ypos-10-125,20,20);
+    QPen p(QColor(13,145,67,255));
+
+
     switch(tool){
         case ADDCOUNTRY:
-            int xpos =  event->pos().x();
-            int ypos =  event->pos().y();
-            qDebug()<< xpos;
-            qDebug()<< ypos;
-            QRectF r1(xpos-10-98,ypos-10-125,20,20);
-            QPen p(QColor(13,145,67,255));
+            makePopupWindowAddCountryAppear(xpos,ypos);
             scene->addEllipse(r1,p,QBrush());
+            observedMap->addCountry(xpos, ypos);
             break;
         case REMCOUNTRY:
-            
+            qDebug("Remove Country Tool had been selected");
             break;
+        case ADDLINK:
+        case REMLINK:
+        case OFF:
+        default:
+            return;
     }
+}
+
+void MainWindow::makePopupWindowAddCountryAppear(int x, int y){
+
 }
 
 MainWindow::~MainWindow() {
