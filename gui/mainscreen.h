@@ -16,6 +16,10 @@ class MainScreen : public QMainWindow
 public:
     explicit MainScreen(RiskMap* map,QWidget *parent = 0);
     ~MainScreen();
+    void mousePressEvent(QMouseEvent *e);
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::MainScreen *ui;

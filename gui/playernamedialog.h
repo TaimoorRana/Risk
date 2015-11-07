@@ -16,6 +16,9 @@ public:
     ~PlayerNameDialog();
     QString getText();
 
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::PlayerNameDialog *ui;
 };

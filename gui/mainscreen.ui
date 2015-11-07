@@ -38,7 +38,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_2">
+           <widget class="QRadioButton" name="attackRadio">
             <property name="text">
              <string>Attack</string>
             </property>
@@ -48,7 +48,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_3">
+           <widget class="QRadioButton" name="fortifyRadio">
             <property name="text">
              <string>Fortify</string>
             </property>
@@ -58,7 +58,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton">
+           <widget class="QRadioButton" name="reinforcementRadio">
             <property name="text">
              <string>Reinforcement</string>
             </property>
@@ -92,17 +92,7 @@
        </layout>
       </item>
       <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
+       <widget class="QGraphicsView" name="graphicsView"/>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -200,9 +190,9 @@
  <connections>
   <connection>
    <sender>pushButton</sender>
-   <signal>clicked()</signal>
+   <signal>released()</signal>
    <receiver>MainScreen</receiver>
-   <slot>close()</slot>
+   <slot>on_pushButton_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>523</x>
@@ -215,6 +205,9 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>on_pushButton_clicked()</slot>
+ </slots>
  <buttongroups>
   <buttongroup name="buttonGroup"/>
  </buttongroups>

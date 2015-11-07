@@ -28,15 +28,13 @@ int main(int argc, char *argv[]) {
     Player player2("Adrianna");
     map.addPlayer(player1);
     map.addPlayer(player2);
-    PlayerNameDialog dialog;
+
 
     MainScreen w(&map,0);
-
-
+    PlayerNameDialog dialog(&w);
     QTimer::singleShot(2500,splash,SLOT(close()));
     QTimer::singleShot(2500,&w,SLOT(show()));
     QTimer::singleShot(2600,&dialog,SLOT(show()));
-
 
     return application.exec();
 
