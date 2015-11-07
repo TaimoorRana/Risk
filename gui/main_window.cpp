@@ -24,16 +24,24 @@ MainWindow::MainWindow(RiskMap* map, QWidget *parent) : QMainWindow(parent) {
 	scene = new QGraphicsScene(this);
 	ui->graphicsView->setScene(scene);
     setMouseTracking(true);
+    tool = OFF;
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event){
-    int xpos =  event->pos().x();
-    int ypos =  event->pos().y();
-    qDebug()<< xpos;
-    qDebug()<< ypos;
-    QRectF r1(xpos-10-98,ypos-10-125,20,20);
-    QPen p(QColor(13,145,67,255));
-    scene->addEllipse(r1,p,QBrush());
+    switch(tool){
+        case ADDCOUNTRY:
+            int xpos =  event->pos().x();
+            int ypos =  event->pos().y();
+            qDebug()<< xpos;
+            qDebug()<< ypos;
+            QRectF r1(xpos-10-98,ypos-10-125,20,20);
+            QPen p(QColor(13,145,67,255));
+            scene->addEllipse(r1,p,QBrush());
+            break;
+        case REMCOUNTRY:
+            
+            break;
+    }
 }
 
 MainWindow::~MainWindow() {
@@ -95,18 +103,22 @@ void MainWindow::on_saveMapPushButton_clicked(){
 
 void MainWindow::on_addCountryPushButton_clicked(){
 	debug("Add Country");
+    tool = ADDCOUNTRY;
 }
 
 void MainWindow::on_removeCountryPushButton_clicked(){
     debug("Remove Country");
+    tool = REMCOUNTRY;
 }
 
 void MainWindow::on_addNeighbourPushButton_clicked(){
     debug("Add Neighbour");
+    tool = ADDLINK;
 }
 
 void MainWindow::on_removeNeighbourPushButton_clicked(){
     debug("Remove Neighbour");
+    tool = REMLINK;
 }
 
 void MainWindow::observedUpdated() {

@@ -11,6 +11,9 @@ namespace Ui {
 	class MainWindow;
 }
 
+enum ToolMode {ADDCOUNTRY, REMCOUNTRY, ADDLINK, REMLINK, OFF};
+
+
 class MainWindow : public QMainWindow, public Observer {
 	Q_OBJECT
 
@@ -39,6 +42,7 @@ private:
 	Ui::MainWindow* ui;
 	QGraphicsScene* scene;
 	RiskMap* observedMap;
+    ToolMode tool;
 };
 
 
