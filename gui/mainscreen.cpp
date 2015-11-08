@@ -1,30 +1,45 @@
 #include "mainscreen.h"
 #include "ui_mainscreen.h"
-#include <QTimer>
-#include <QMouseEvent>
-#include <QDebug>
-#include <QLabel>
+#include "player.h"
+#include "player_view.h"
+#include "playerinfowidget.h"
 
 MainScreen::MainScreen(RiskMap *map, QWidget *parent) :QMainWindow(parent), ui(new Ui::MainScreen)
 {
     ui->setupUi(this);
     nameDialog = new PlayerNameDialog(this);
     this->map = map;
-    //setupPlayers();
+	setupPlayers();
     setMouseTracking(true);
     ui->attackRadio->setChecked(true);
+
+//    Player* test = new Player("test");
+//	test->setBattlesWon(10);
+//	test->setReinforcements(3513);
+//	test->setTotalArmy(534);
+//	PlayerView* pv = new PlayerView(test);
+//	PlayerInfoWidget* playerInfoWidget = new PlayerInfoWidget(this,pv);
+//	ui->horizontalLayout_2->addWidget(playerInfoWidget);
+
 }
 
 void MainScreen::setupPlayers(){
-    std::unordered_map<std::string,Player> players = map->getPlayers();
-    std::unordered_map<std::string,Player>::iterator playerIterator;
-    for(playerIterator = players.begin(); playerIterator != players.end(); playerIterator++){
-        ui->nameLabel->setText(QString::fromStdString((playerIterator->second).getName()));
-    }
+	std::unordered_map<std::string,Player>::iterator playerIterator;
+	std::unordered_map<std::string,Player> players = map->getPlayers();
+	for(playerIterator = players.begin(); playerIterator != players.end(); playerIterator++){
+		PlayerView *pv =  new PlayerView(&(playerIterator->second));
+		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this,pv);
+		ui->horizontalLayout_2->addWidget(playerinfo);
+	}
 }
 
 void MainScreen::mousePressEvent(QMouseEvent *e){
     qDebug() <<e->pos().x();
+}
+
+void MainScreen::addPlayerView(QWidget *pvWidget)
+{
+    ui->verticalLayout_2->addWidget(pvWidget);
 }
 
 MainScreen::~MainScreen()

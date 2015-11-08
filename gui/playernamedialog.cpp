@@ -28,7 +28,7 @@ QString PlayerNameDialog::getText()
 void PlayerNameDialog::on_buttonBox_accepted()
 {
     QString name = "Name : " + ui->lineEdit->text();
-    this->parent()->findChild<QLabel*>("nameLabel")->setText(name);
+	//this->parent()->findChild<QLabel*>("nameLabel")->setText(name);
 }
 
 

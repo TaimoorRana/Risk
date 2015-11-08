@@ -1,13 +1,29 @@
 #include "player_view.h"
 
 
-void PlayerView::update(std::set<std::string> countriesOwnedList, std::set<std::string>continentsOwnedList, int reinforcements, int totalArmies, int totalBattleWon)
+PlayerView::PlayerView(Player *player)
 {
-	this->countriesOwned = countriesOwnedList;
-	this->continentsOwned = continentsOwnedList;
-	this->nbrOfReinforcements = reinforcements;
-	this->nbrOfArmies = totalArmies;
-	this->nbrBattleWon = totalBattleWon;
+    this->player = player;
+    update();
+}
+
+PlayerView::~PlayerView()
+{
+    delete this->player;
+}
+
+void PlayerView::update(){
+    this->countriesOwned = player->getCountryOwned();
+    this->continentsOwned = player->getContinentsOwned();
+    this->nbrOfReinforcements = player->getReinforcements();
+    this->nbrOfArmies = player->getTotalArmy();
+    this->nbrBattleWon = player->getBattlesWon();
+	this->name = player->getName();
+}
+
+std::string PlayerView::getName() const
+{
+    return this->name;
 }
 
 std::set<std::string> PlayerView::getCountriesOwned() const

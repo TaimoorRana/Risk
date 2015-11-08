@@ -11,7 +11,7 @@ set(GUI_SOURCE_FILES
 	GameDriver.cpp GameDriver.h
 	states.cpp states.h
         gameboardview.cpp gameboardview.h
-        playerinforwidget.cpp playerinforwidget.h playerinforwidget.ui
+        playerinfowidget.cpp playerinfowidget.h playerinfowidget.ui
         playernamedialog.cpp playernamedialog.h playernamedialog.ui
 )
 

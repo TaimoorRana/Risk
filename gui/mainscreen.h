@@ -4,6 +4,10 @@
 #include <QMainWindow>
 #include <playernamedialog.h>
 #include <risk_map.h>
+#include <QTimer>
+#include <QMouseEvent>
+#include <QDebug>
+#include <QLabel>
 
 namespace Ui {
 class MainScreen;
@@ -17,6 +21,7 @@ public:
     explicit MainScreen(RiskMap* map,QWidget *parent = 0);
     ~MainScreen();
     void mousePressEvent(QMouseEvent *e);
+    void addPlayerView(QWidget* pvWidget);
 
 private slots:
     void on_pushButton_clicked();

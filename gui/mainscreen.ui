@@ -100,42 +100,7 @@
          <number>0</number>
         </property>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QWidget" name="PlayerInfoWidget" native="true">
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-             <item>
-              <widget class="QLabel" name="nameLabel">
-               <property name="text">
-                <string>Name:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="countriesLabel">
-               <property name="text">
-                <string>Countries:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="continentsLabel">
-               <property name="text">
-                <string>Continents:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="armiesLabel">
-               <property name="text">
-                <string>Armies:</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
+         <layout class="QVBoxLayout" name="verticalLayout_2"/>
         </item>
        </layout>
       </item>

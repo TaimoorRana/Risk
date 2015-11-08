@@ -15,6 +15,7 @@
 #include "mainscreen.h"
 #include "playernamedialog.h"
 
+
 int main(int argc, char *argv[]) {
 
     QApplication application(argc, argv);
@@ -26,9 +27,12 @@ int main(int argc, char *argv[]) {
     RiskMap map;
     Player player1("taimoor");
     Player player2("Adrianna");
+	Player player3("Elias");
+	player1.setTotalArmy(500);
     map.addPlayer(player1);
     map.addPlayer(player2);
-
+	map.addPlayer(player3);
+	map.addPlayer(Player("stewart"));
 
     MainScreen w(&map,0);
     PlayerNameDialog dialog(&w);
