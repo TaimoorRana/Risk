@@ -7,7 +7,7 @@
 MainScreen::MainScreen(RiskMap *map, QWidget *parent) :QMainWindow(parent), ui(new Ui::MainScreen)
 {
     ui->setupUi(this);
-    nameDialog = new PlayerNameDialog(this);
+//    nameDialog = new PlayerNameDialog(this); //This does not make a dialog window appear.
     this->map = map;
     setupPlayers();
     setMouseTracking(true);

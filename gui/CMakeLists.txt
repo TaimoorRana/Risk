@@ -11,7 +11,6 @@ set(GUI_SOURCE_FILES
 	states.cpp states.h
 	gameboardview.cpp gameboardview.h
         playernamedialog.cpp playernamedialog.h playernamedialog.ui
-
 )
 
 set(GUI_RESOURCE_FILES
