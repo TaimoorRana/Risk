@@ -9,7 +9,7 @@ set(GUI_SOURCE_FILES
         mainscreen.cpp mainscreen.h mainscreen.ui
 	GameDriver.cpp GameDriver.h
 	states.cpp states.h
-	gameboardview.cpp gameboardview.h
+        gameboardview.cpp gameboardview.h
         playernamedialog.cpp playernamedialog.h playernamedialog.ui
 
 )

@@ -17,7 +17,7 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_6">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_5">
       <item>
@@ -96,74 +96,43 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="topMargin">
+         <number>0</number>
+        </property>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <widget class="QLabel" name="Player1">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="Player1TotalCountries">
-            <property name="text">
-             <string>Total Countries</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
-           <widget class="QLabel" name="Player3">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="Player3TotalCountries">
-            <property name="text">
-             <string>Total Countries</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <item>
-           <widget class="QLabel" name="Player4">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="Player4TotalCountries">
-            <property name="text">
-             <string>Total Countries</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <widget class="QLabel" name="Player2">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="Player2TotalCountries">
-            <property name="text">
-             <string>Total Countries</string>
-            </property>
+           <widget class="QWidget" name="PlayerInfoWidget" native="true">
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QLabel" name="nameLabel">
+               <property name="text">
+                <string>Name:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="countriesLabel">
+               <property name="text">
+                <string>Countries:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="continentsLabel">
+               <property name="text">
+                <string>Continents:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="armiesLabel">
+               <property name="text">
+                <string>Armies:</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -187,24 +156,7 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>released()</signal>
-   <receiver>MainScreen</receiver>
-   <slot>on_pushButton_clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>523</x>
-     <y>42</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>596</x>
-     <y>40</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>on_pushButton_clicked()</slot>
  </slots>

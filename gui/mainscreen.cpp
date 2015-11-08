@@ -3,13 +3,14 @@
 #include <QTimer>
 #include <QMouseEvent>
 #include <QDebug>
+#include <QLabel>
 
 MainScreen::MainScreen(RiskMap *map, QWidget *parent) :QMainWindow(parent), ui(new Ui::MainScreen)
 {
     ui->setupUi(this);
     nameDialog = new PlayerNameDialog(this);
     this->map = map;
-    setupPlayers();
+    //setupPlayers();
     setMouseTracking(true);
     ui->attackRadio->setChecked(true);
 }
@@ -18,7 +19,7 @@ void MainScreen::setupPlayers(){
     std::unordered_map<std::string,Player> players = map->getPlayers();
     std::unordered_map<std::string,Player>::iterator playerIterator;
     for(playerIterator = players.begin(); playerIterator != players.end(); playerIterator++){
-        ui->Player1->setText(QString::fromStdString((playerIterator->second).getName()));
+        ui->nameLabel->setText(QString::fromStdString((playerIterator->second).getName()));
     }
 }
 
@@ -34,15 +35,14 @@ MainScreen::~MainScreen()
 void MainScreen::on_pushButton_clicked()
 {
     if(ui->attackRadio->isChecked()){
-        ui->reinforcementRadio->setChecked(true);
+        ui->fortifyRadio->setChecked(true);
         return;
     }else if(ui->fortifyRadio->isChecked()){
-        ui->attackRadio->setChecked(true);
-        
+        ui->reinforcementRadio->setChecked(true);
         return;
     }else{
         
-        ui->fortifyRadio->setChecked(true);
+        ui->attackRadio->setChecked(true);
         return;
     }
 }
