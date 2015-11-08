@@ -57,28 +57,28 @@
      <property name="spacing">
       <number>0</number>
      </property>
-     <item>
+     <item alignment="Qt::AlignRight">
       <widget class="QLabel" name="nameValueLabel">
        <property name="text">
         <string>CPU</string>
        </property>
       </widget>
      </item>
-     <item>
+     <item alignment="Qt::AlignRight">
       <widget class="QLabel" name="countriesValueLabel">
        <property name="text">
         <string>0</string>
        </property>
       </widget>
      </item>
-     <item>
+     <item alignment="Qt::AlignRight">
       <widget class="QLabel" name="continentsValueLabel">
        <property name="text">
         <string>0</string>
        </property>
       </widget>
      </item>
-     <item>
+     <item alignment="Qt::AlignRight">
       <widget class="QLabel" name="armiesValueLabel">
        <property name="text">
         <string>0</string>

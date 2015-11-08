@@ -21,53 +21,136 @@ public:
 	Player() {}
 	Player(std::string name);
     //Player(const Player& other);
+	/**
+	 * @brief getName
+	 * @return name of the player
+	 */
 	std::string getName() const;
 
-	// increase battleWon int by 1
+	/**
+	 * @brief increaseBattleWon increases battleWon value by 1
+	 */
 	void increaseBattleWon();
+
+	/**
+	 * @brief decreaseBattleWon decreases battleWon value by 1
+	 */
 	void decreaseBattleWon();
+
+	/**
+	 * @brief setBattlesWon sets battleWon value
+	 * @param battleWon
+	 */
 	void setBattlesWon(const int &battleWon);
+
+	/**
+	 * @brief getBattlesWon
+	 * @return total battles won
+	 */
     int getBattlesWon() const;
 
-	/*
-	 Reinforcements related methods
-	 @params int: number of soldiers
+
+	/**
+	 * @brief addReinforcements
+	 * @param amount
 	 */
-	void addReinforcements(const int&);
-	void removeReinforcements(const int&);
-	void setReinforcements(const int&);
+	void addReinforcements(const int& amount);
+
+	/**
+	 * @brief removeReinforcements
+	 * @param amount
+	 */
+	void removeReinforcements(const int& amount);
+
+	/**
+	 * @brief setReinforcements
+	 * @param amount
+	 */
+	void setReinforcements(const int& amount);
+
+	/**
+	 * @brief getReinforcements
+	 * @return total reinforcements
+	 */
 	int getReinforcements() const;
 
-	/*
-	 Country related methods
-	 @params string: countries name
+
+	/**
+	 * @brief addCountry
+	 * @param name
 	 */
-	void addCountry(const std::string&);
-	void removeCountry(const std::string&);
-	bool hasCountry(const std::string&) const;
+	void addCountry(const std::string& name);
+
+	/**
+	 * @brief removeCountry
+	 * @param name
+	 */
+	void removeCountry(const std::string& name);
+	/**
+	 * @brief hasCountry checks if the country belongs to the player
+	 * @param name
+	 * @return true if found
+	 */
+	bool hasCountry(const std::string& name) const;
+
+	/**
+	 * @brief getCountryOwned
+	 * @return a set of countries owned
+	 */
 	std::set<std::string> getCountryOwned();
 
-	/*
-	 continent related methods
-	 @params string: continents name
-	*/
-	void addContinent(const std::string&);
-	void removeContinent(const std::string&);
-	bool hasContinent(const std::string&) const;
+	/**
+	 * @brief addContinent
+	 * @param name
+	 */
+	void addContinent(const std::string& name);
+	/**
+	 * @brief removeContinent
+	 * @param name
+	 */
+	void removeContinent(const std::string& name);
+
+	/**
+	 * @brief hasContinent checks if the continent belongs to the player
+	 * @param name
+	 * @return true if found
+	 */
+	bool hasContinent(const std::string& name) const;
+
+	/**
+	 * @brief getContinentsOwned
+	 * @return a set of continents owned
+	 */
 	std::set<std::string> getContinentsOwned() const;
 
 
-	/*
-	 * Observer Pattern Methods
+	/**
+	 * @brief registerObserver
+	 * @param observer
 	 */
-	virtual void registerObserver(PlayerObserver*);
-	virtual void unregisterObserver(PlayerObserver*);
+	virtual void registerObserver(PlayerObserver* observer);
+
+	/**
+	 * @brief unregisterObserver
+	 * @param observer
+	 */
+	virtual void unregisterObserver(PlayerObserver* observer);
+
+	/**
+	 * @brief notifyObserver notify all the observers to update
+	 */
 	virtual void notifyObserver();
 
-	/*
-	 * Army Related Methods
+	/**
+	 * @brief getTotalArmy
+	 * @return total number of army
 	 */
 	int getTotalArmy() const;
+
+	/**
+	 * @brief setTotalArmy
+	 * @param totalArmy
+	 */
     void setTotalArmy(const int& totalArmy);
 };
 #endif // PLAYER_H

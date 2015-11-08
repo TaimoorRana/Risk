@@ -9,7 +9,7 @@ PlayerView::PlayerView(Player *player)
 
 PlayerView::~PlayerView()
 {
-    delete this->player;
+	player = nullptr;
 }
 
 void PlayerView::update(){
