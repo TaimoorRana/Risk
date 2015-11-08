@@ -6,6 +6,7 @@
 
 #include "risk_map.h"
 #include "observer.h"
+#include "country_name_dialog.h"
 
 namespace Ui {
 	class MainWindow;
@@ -44,6 +45,7 @@ private:
 	QGraphicsScene* scene;
 	RiskMap* observedMap;
     ToolMode tool;
+    CountryNameDialog *nameDialog;
 };
 
 

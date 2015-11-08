@@ -20,7 +20,8 @@
 MainWindow::MainWindow(RiskMap* map, QWidget *parent) : QMainWindow(parent) {
 	ui = new Ui::MainWindow;
 	ui->setupUi(this);
-	observedMap = map;
+    nameDialog = new CountryNameDialog(this);
+    observedMap = map;
 	scene = new QGraphicsScene(this);
 	ui->graphicsView->setScene(scene);
     setMouseTracking(true);
@@ -30,14 +31,17 @@ MainWindow::MainWindow(RiskMap* map, QWidget *parent) : QMainWindow(parent) {
 void MainWindow::mousePressEvent(QMouseEvent *event){
     int xpos =  event->pos().x();
     int ypos =  event->pos().y();
+    xpos-=108;
+    ypos-=135;
     qDebug()<< xpos;
     qDebug()<< ypos;
-    QRectF r1(xpos-10-98,ypos-10-125,20,20);
+    QRectF r1(xpos,ypos,20,20);
     QPen p(QColor(13,145,67,255));
 
 
     switch(tool){
         case ADDCOUNTRY:
+            qDebug("Add Country Tool had been selected");
             makePopupWindowAddCountryAppear(xpos,ypos);
             scene->addEllipse(r1,p,QBrush());
             observedMap->addCountry(xpos, ypos);
@@ -54,7 +58,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
 }
 
 void MainWindow::makePopupWindowAddCountryAppear(int x, int y){
-
+    nameDialog = new CountryNameDialog(this);
 }
 
 MainWindow::~MainWindow() {

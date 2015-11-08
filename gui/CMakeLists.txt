@@ -10,6 +10,7 @@ set(GUI_SOURCE_FILES
 	GameDriver.cpp GameDriver.h
 	states.cpp states.h
 	gameboardview.cpp gameboardview.h
+        country_name_dialog.cpp country_name_dialog.h
 )
 
 set(GUI_RESOURCE_FILES
