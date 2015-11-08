@@ -17,7 +17,7 @@ int main() {
     libriskInit();
     //create initial strategy
     //make sure to init
-    Strategy *strategyPattern = new Defensive();
+    Strategy *strategyPattern = new Random();
     RiskMap map = RiskMap();
     int selectStrategy=1;
     cout <<"Select 1 for aggressive strategy\nSelect 2 for defensive\nSelect 3 for random attack strategy\n";
@@ -34,36 +34,60 @@ int main() {
     //while loop while in game
     Player human1("human1");
     Player human2("human2");
-    ComputerPlayer *computer1 = new ComputerPlayer("computer1");
-    computer1->setStrategy(strategyPattern);
+    ComputerPlayer computer1("computer1");
+    strategyPattern->setPlayer("computer1");
+    computer1.setStrategy(strategyPattern);
 
 
     Continent america("America");
-
-    map.addCountry("Quebec", america.getName(), 1);
-    map.addCountry("Ontario",america.getName(),1);
-    map.addCountry("New Brunswick",america.getName(),2);
-    map.addCountry("New York",america.getName(),1);
+    computer1.addCountry("Ontario");
+    human1.addCountry("Quebec");
+    human1.addCountry("New Brunswick");
+    //human1.addCountry("New York");
+    computer1.addCountry("New York");
+    map.addContinent(america);
+    //map.addCountry("Quebec", america.getName(), 1);
+    // map.addCountry("Ontario",america.getName(),4);
+    // map.addCountry("New Brunswick",america.getName(),2);
+    // map.addCountry("New York",america.getName(),1);
+    //all upper case
+    Country ontario("Ontario");
+    ontario.setArmies(5);
+    Country quebec("Quebec");
+    ontario.setArmies(4);
+    Country newYork("New York");
+    newYork.setArmies(2);
+    Country newBrunswick ("New Brunswick");
+    newBrunswick.setArmies(1);
+    ontario.setPlayer("computer1");
+    quebec.setPlayer("human1");
+    newYork.setPlayer("computer1");
+    newBrunswick.setPlayer("human1");
+    map.addCountry(ontario,america.getName());
+    map.addCountry(quebec,america.getName());
+    map.addCountry(newYork,america.getName());
+    map.addCountry(newBrunswick,america.getName());
     map.addNeighbour("Ontario","Quebec");
     map.addNeighbour("Ontario","New York");
     map.addNeighbour("Quebec","New Brunswick");
     map.addNeighbour("Quebec","New York");
-    Country *ontario = map.getCountry("Ontario");
+
+    /*Country *ontario = map.getCountry("Ontario");
     Country *quebec = map.getCountry("Quebec");
     Country *newBrunswick = map.getCountry("New Brunswick");
-    Country *newYork = map.getCountry("New York");
+    Country *newYork = map.getCountry("New York");*/
 
-    computer1->addCountry("Ontario");
-    computer1->setAttackFrom(ontario->getName(),(ontario->getArmies()));
-    cout<<strategyPattern->decideAttackingCountry(map);
-    human1.addCountry("Quebec");
-    human1.addCountry("New Brunswick");
-    human2.addCountry("New York");
+
+    map.addPlayer(computer1);
+    map.addPlayer(human1);
+    cout << "country name"<<map.getCountry("Quebec")->getPlayer();
+    computer1.setAttackFrom(ontario.getName(),(ontario.getArmies()));
+    cout<< "who we attavkin" <<strategyPattern->decideAttackingCountry(map)<<"\n";
     map.consolePrintListOfCountries("America");
-    set<string> listOfAttackCountries = map.getNeighbours(ontario->getName());
+    set<string> listOfAttackCountries = map.getNeighbours(ontario.getName());
     // cout<< listOfAttackCountries.
 
-    map.consolePrintListOfNeighbours(ontario->getName());
+    map.consolePrintListOfNeighbours(ontario.getName());
 
 
     if(map.areCountriesAdjacent("New York", "Quebec"))

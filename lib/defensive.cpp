@@ -20,7 +20,8 @@ string Defensive::decideAttackingCountry(RiskMap map)
     listOfAttackCountries = map.getNeighbours(getCountryAttackFrom());
     string_set::const_iterator c_iter = listOfAttackCountries.begin();
     while(c_iter!=listOfAttackCountries.end()){
-        if(map.getCountry(*c_iter)->getArmies()&& !isSameOwner(map.getCountry(*c_iter)->getPlayer(),nameOfPlayer)){
+        if(map.getCountry(*c_iter)->getArmies() <getNumberOfArmies()
+                && !isSameOwner(map.getCountry(*c_iter)->getPlayer(),nameOfPlayer)){
             countryToAttack = *c_iter;
 
         }
