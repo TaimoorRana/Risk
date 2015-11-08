@@ -10,7 +10,9 @@
 #include <set>
 #include <iostream>
 #include <string>
-
+/**
+@file main.cpp
+*/
 using namespace std;
 /**
  * @brief main
@@ -31,20 +33,9 @@ int main() {
     Strategy *strategyPattern = new Random();
     RiskMap map = RiskMap();
     int selectStrategy=1;
-    cout <<"Select 1 for aggressive strategy\nSelect 2 for defensive\nSelect 3 for random attack strategy\n";
-    //cin >> selectStrategy;
-    if(selectStrategy==1){
 
-    }
-    else if (selectStrategy==2){
-
-    }else{
-
-    }
-    bool inGame=false;
-    //while loop while in game
+     //while loop while in game
     Player human1("human1");
-    Player human2("human2");
     ComputerPlayer computer1("computer1");
     strategyPattern->setPlayer("computer1");
     computer1.setStrategy(strategyPattern);
@@ -63,12 +54,6 @@ int main() {
     quebec.setPlayer(human1.getName());
     ontario.setPlayer(human1.getName());
     newBrunswick.setPlayer(computer1.getName());
-    //map.addCountry("Quebec", america.getName(), 1);
-    // map.addCountry("Ontario",america.getName(),4);
-    // map.addCountry("New Brunswick",america.getName(),2);
-    // map.addCountry("New York",america.getName(),1);
-    //all upper case
-
     ontario.setArmies(5);
     newYork.setArmies(2);
     quebec.setArmies(3);
@@ -97,10 +82,10 @@ int main() {
     map.consolePrintListOfNeighbours(ontario.getName());
     map.addPlayer(computer1);
     map.addPlayer(human1);
-    cout << "country name "<<map.getCountry("Quebec")->getPlayer();
+    //cout << "country name "<<map.getCountry("Quebec")->getPlayer();
     computer1.setAttackFrom(ontario.getName(),(ontario.getArmies()));
     cout << "using random strategy pattern" << endl;
-    cout<< "who we attavkin " <<strategyPattern->decideAttackingCountry(map)<<"\n";
+    cout<< "who we attackin " <<strategyPattern->decideAttackingCountry(map)<<"\n";
     map.consolePrintListOfCountries("America");
     set<string> listOfAttackCountries = map.getNeighbours(ontario.getName());
     // cout<< listOfAttackCountries.
@@ -112,14 +97,14 @@ int main() {
     strategyPattern->setPlayer("computer1");
     computer1.setStrategy(strategyPattern);
     computer1.setAttackFrom(ontario.getName(),(ontario.getArmies()));
-    cout<< "who we attavkin " <<strategyPattern->decideAttackingCountry(map)<<"\n";
+    cout<< "who we attackin " <<strategyPattern->decideAttackingCountry(map)<<"\n";
     cout << "using defensive strategy pattern" << endl;
     strategyPattern  = new Defensive();
     strategyPattern->setPlayer("computer1");
     computer1.setStrategy(strategyPattern);
     computer1.setAttackFrom(ontario.getName(),(ontario.getArmies()));
 
-    cout<< "who we attavkin " <<strategyPattern->decideAttackingCountry(map)<<"\n";
+    cout<< "who we attackin " <<strategyPattern->decideAttackingCountry(map)<<"\n";
 
     if(map.areCountriesAdjacent("New York", "Quebec"))
         std::cout<<"Countries are adjacent"<<std::endl;
