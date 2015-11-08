@@ -2,17 +2,17 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QGraphicsScene>
 
 #include "risk_map.h"
 #include "observer.h"
 #include "country_name_dialog.h"
+#include "enum_tooltype.h"
+#include "map_scene.h"
 
 namespace Ui {
 	class MainWindow;
 }
 
-enum ToolMode {ADDCOUNTRY, REMCOUNTRY, ADDLINK, REMLINK, OFF};
 
 
 class MainWindow : public QMainWindow, public Observer {
@@ -21,6 +21,7 @@ class MainWindow : public QMainWindow, public Observer {
 public:
 	MainWindow(RiskMap* map, QWidget *parent = 0);
 	~MainWindow();
+    ToolMode getSelectedTool();
 
 private slots:
 	void on_filenameLineEdit_textChanged(QString text);
@@ -39,13 +40,10 @@ private:
 	bool validateFilename(const QString& text);
 	void observedUpdated();
 	void connectNeighboursVisit(std::map<const std::string, bool>& visited, const Country* country);
-    void mousePressEvent(QMouseEvent *event);
-    void makePopupWindowAddCountryAppear(int x, int y);
 	Ui::MainWindow* ui;
-	QGraphicsScene* scene;
+    MapScene* scene;
 	RiskMap* observedMap;
     ToolMode tool;
-    CountryNameDialog *nameDialog;
 };
 
 

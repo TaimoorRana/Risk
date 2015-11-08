@@ -7,6 +7,8 @@
 #include <QGraphicsEllipseItem>
 #include <QGraphicsTextItem>
 #include <QPen>
+#include <QInputDialog>
+
 #include <random>
 #include <functional>
 #include <time.h>
@@ -17,48 +19,17 @@
 #include <QMouseEvent>
 #include <qdebug.h>
 
+#include "country_qgraphics_object.h"
+
+
 MainWindow::MainWindow(RiskMap* map, QWidget *parent) : QMainWindow(parent) {
 	ui = new Ui::MainWindow;
 	ui->setupUi(this);
-    nameDialog = new CountryNameDialog(this);
     observedMap = map;
-	scene = new QGraphicsScene(this);
+	scene = new MapScene(map, this);
 	ui->graphicsView->setScene(scene);
     setMouseTracking(true);
     tool = OFF;
-}
-
-void MainWindow::mousePressEvent(QMouseEvent *event){
-    int xpos =  event->pos().x();
-    int ypos =  event->pos().y();
-    xpos-=108;
-    ypos-=135;
-    qDebug()<< xpos;
-    qDebug()<< ypos;
-    QRectF r1(xpos,ypos,20,20);
-    QPen p(QColor(13,145,67,255));
-
-
-    switch(tool){
-        case ADDCOUNTRY:
-            qDebug("Add Country Tool had been selected");
-            makePopupWindowAddCountryAppear(xpos,ypos);
-            scene->addEllipse(r1,p,QBrush());
-            observedMap->addCountry(xpos, ypos);
-            break;
-        case REMCOUNTRY:
-            qDebug("Remove Country Tool had been selected");
-            break;
-        case ADDLINK:
-        case REMLINK:
-        case OFF:
-        default:
-            return;
-    }
-}
-
-void MainWindow::makePopupWindowAddCountryAppear(int x, int y){
-    nameDialog = new CountryNameDialog(this);
 }
 
 MainWindow::~MainWindow() {
@@ -66,6 +37,11 @@ MainWindow::~MainWindow() {
 	delete scene;
 	delete ui;
 }
+
+ToolMode MainWindow::getSelectedTool(){
+	return tool;
+}
+
 
 bool MainWindow::validateFilename(const QString& text) {
 	QFileInfo mapFile(text);
@@ -116,6 +92,7 @@ void MainWindow::on_loadPushButton_clicked() {
 
 void MainWindow::on_saveMapPushButton_clicked(){
     debug("Save Button clicked\n");
+	 observedMap->save("riskmap_test0.map");
 }
 
 void MainWindow::on_addCountryPushButton_clicked(){
@@ -170,30 +147,34 @@ void MainWindow::observedUpdated() {
 	for (auto const &ent1 : observedMap->getCountries()) {
 		const Country& country = ent1.second;
 
-		diameter = 30;
-		Continent* continent = observedMap->getContinentOfCountry(country.getName());
-		QColor continentColor(continentPalette.at(continent->getName()));
-		QGraphicsEllipseItem* ellipse = scene->addEllipse(country.getPositionX()-diameter/2, country.getPositionY() - diameter/2, diameter, diameter, QPen(), QBrush(continentColor));
-		ellipse->setZValue(1);
+//		diameter = 30;
+//		Continent* continent = observedMap->getContinentOfCountry(country.getName());
+//		QColor continentColor(continentPalette.at(continent->getName()));
+//		QGraphicsEllipseItem* ellipse = scene->addEllipse(country.getPositionX()-diameter/2, country.getPositionY() - diameter/2, diameter, diameter, QPen(), QBrush(continentColor));
+//		ellipse->setZValue(1);
 
-		diameter = 15;
-		QColor playerColor(playerPalette.at(country.getPlayer()));
-		ellipse = scene->addEllipse(country.getPositionX()-diameter/2, country.getPositionY() - diameter/2, diameter, diameter, QPen(), QBrush(playerColor));
-		ellipse->setZValue(2);
+//		diameter = 15;
+//		QColor playerColor(playerPalette.at(country.getPlayer()));
+//		ellipse = scene->addEllipse(country.getPositionX()-diameter/2, country.getPositionY() - diameter/2, diameter, diameter, QPen(), QBrush(playerColor));
+//		ellipse->setZValue(2);
 
-		Player* owner = observedMap->getPlayer(country.getPlayer());
-		QString playerText("Not Owned");
-		if (owner != NULL) {
-			playerText = owner->getName().c_str();
-		}
+//		Player* owner = observedMap->getPlayer(country.getPlayer());
+//		QString playerText("Not Owned");
+//		if (owner != NULL) {
+//			playerText = owner->getName().c_str();
+//		}
 
-		QString armiesText(std::to_string(country.getArmies()).c_str());
-		QGraphicsTextItem* armies = scene->addText(armiesText, font);
-		// http://stackoverflow.com/a/946734
-		int grey = playerColor.red()*0.299 + playerColor.green()*0.587 + playerColor.blue()*0.114;
-		armies->setDefaultTextColor(QColor(grey < 186 ? Qt::white : Qt::black));
-		armies->setPos(country.getPositionX()-8, country.getPositionY()-8);
-		armies->setZValue(3);
+//		QString armiesText(std::to_string(country.getArmies()).c_str());
+//		QGraphicsTextItem* armies = scene->addText(armiesText, font);
+//		// http://stackoverflow.com/a/946734
+//		int grey = playerColor.red()*0.299 + playerColor.green()*0.587 + playerColor.blue()*0.114;
+//		armies->setDefaultTextColor(QColor(grey < 186 ? Qt::white : Qt::black));
+//		armies->setPos(country.getPositionX()-8, country.getPositionY()-8);
+//		armies->setZValue(3);
+
+		CountryQGraphicsObject* item = new CountryQGraphicsObject(observedMap->getCountry(country.getName()));
+		item->setPos(country.getPositionX(), country.getPositionY());
+		this->scene->addItem(item);
 	}
 
 	std::map<const std::string, bool> visited = std::map<const std::string, bool>();
@@ -227,5 +208,3 @@ void MainWindow::connectNeighboursVisit(std::map<const std::string, bool>& visit
 	}
 }
 
-//void ClickableMap::mousePressEvent(QGraphicsSceneMouseEvent* w){
-//}

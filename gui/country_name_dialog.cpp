@@ -12,13 +12,12 @@ CountryNameDialog::~CountryNameDialog()
     delete ui;
 }
 
-QString CountryNameDialog::getText()
+QString CountryNameDialog::getCountryName()
 {
-    return ui->lineEdit->text();
+    return ui->CountryNameLineEdit->text();
 }
 
-
-void CountryNameDialog::on_buttonBox_accepted()
+QString CountryNameDialog::getContinentName()
 {
-    this->parent()->findChild<QLabel*>("Player1")->setText(ui->lineEdit->text());
+    return ui->ContinentNameLineEdit->text();
 }

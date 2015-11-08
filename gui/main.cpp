@@ -10,6 +10,7 @@
 
 #include "main_window.h"
 #include "risk_map.h"
+#include "country_name_dialog.h"
 
 int main(int argc, char *argv[]) {
 	QApplication application(argc, argv);
@@ -20,7 +21,11 @@ int main(int argc, char *argv[]) {
 //    ClickableMap cm;
 //    mw->addAction(cm);
 
+
 	mw->show();
+
+//    CountryNameDialog dialog(&mw);
+//    dialog->show();
 
     map.attachObserver(mw);
 

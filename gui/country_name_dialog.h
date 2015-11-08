@@ -15,9 +15,8 @@ public:
     explicit CountryNameDialog(QWidget *parent = 0);
     ~CountryNameDialog();
     QString getText();
-
-private slots:
-    void on_buttonBox_accepted();
+    QString getContinentName();
+    QString getCountryName();
 
 private:
     Ui::CountryNameDialog *ui;

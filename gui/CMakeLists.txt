@@ -6,11 +6,14 @@ fix_project_version()
 
 set(GUI_SOURCE_FILES
 	main.cpp
-  main_window.cpp main_window.h main_window.ui
+	main_window.cpp main_window.h main_window.ui
 	GameDriver.cpp GameDriver.h
 	states.cpp states.h
 	gameboardview.cpp gameboardview.h
-        country_name_dialog.cpp country_name_dialog.h
+	country_name_dialog.cpp country_name_dialog.h country_name_dialog.ui
+	map_scene.cpp map_scene.h
+	enum_tooltype.h
+	country_qgraphics_object.cpp country_qgraphics_object.h
 )
 
 set(GUI_RESOURCE_FILES

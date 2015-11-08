@@ -22,28 +22,24 @@ void RiskMap::addContinent(const Continent& continent){
 	continents[continent.getName()] = continent;
 }
 
-void RiskMap::addCountry(const std::string& name_country, const std::string& name_continent, int number_armies){
+Country* RiskMap::addCountry(const std::string& name_country, const std::string& name_continent, int number_armies){
 	if (continents.find(name_continent) == continents.end()) {
 		this->addContinent(name_continent, 0);
 	}
-	Country country(name_country, 0, 0, number_armies);
-	this->addCountry(country, name_continent);
+	Country* country = this->addCountry(Country(name_country, 0, 0, number_armies), name_continent);
+    return country;
 }
 
-void RiskMap::addCountry(const Country& country, const std::string& continentName){
+Country* RiskMap::addCountry(const Country& country, const std::string& continentName){
 	if (countries.find(country.getName()) == countries.end()) {
 		countries[country.getName()] = country;
 		for (Observer* observer : observers) {
-			countries[country.getName()].attachObserver(observer);
+			this->countries[country.getName()].attachObserver(observer);
 	  }
 	}
-	mapGraph.insertNode(country.getName(), continentName);
-}
-
-void RiskMap::addCountry(int x, int y){
-    Country country(x, y);
-    std::cout<<"insert country at ("<<x<<", "<<y<<" )"<<std::endl;
-//    mapGraph.insertNode();
+	if (! mapGraph.insertNode(country.getName(), continentName))
+		return nullptr;
+	return &this->countries[country.getName()];
 }
 
 void RiskMap::addNeighbour(const std::string& country_a, const std::string& country_b){
