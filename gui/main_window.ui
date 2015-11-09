@@ -41,7 +41,7 @@
       <item>
        <widget class="QLineEdit" name="filenameLineEdit">
         <property name="text">
-         <string>../../../maps/World/World.map</string>
+         <string>../../maps/World/World.map</string>
         </property>
        </widget>
       </item>

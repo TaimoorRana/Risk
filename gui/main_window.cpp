@@ -67,6 +67,11 @@ void MainWindow::on_browsePushButton_clicked() {
 
 void MainWindow::on_loadPushButton_clicked() {
 	observedMap->parse(ui->filenameLineEdit->text().toStdString());
+	if(!observedMap->validate()){
+		debug("Failed to load Map.");
+		observedMap->clear();
+	}
+
 }
 
 void MainWindow::on_newPushButton_clicked() {
@@ -78,7 +83,13 @@ void MainWindow::on_newPushButton_clicked() {
 
 void MainWindow::on_saveMapPushButton_clicked(){
     debug("Save Button clicked\n");
-	 observedMap->save("riskmap_test0.map");
+	if(observedMap->validate()){
+		observedMap->save("riskmap_test0.map");
+	}
+	else{
+		debug("Map not valid, not saving...");
+		return;
+	}
 }
 
 void MainWindow::on_addCountryPushButton_clicked(){
