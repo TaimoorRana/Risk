@@ -41,7 +41,7 @@
       <item>
        <widget class="QLineEdit" name="filenameLineEdit">
         <property name="text">
-         <string>../../maps/World/World.map</string>
+         <string>../../../maps/World/World.map</string>
         </property>
        </widget>
       </item>
@@ -109,6 +109,13 @@
          <widget class="QToolButton" name="removeCountryPushButton">
           <property name="text">
            <string>-Country    </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="moveCountryPushButton">
+          <property name="text">
+           <string>* Country   </string>
           </property>
          </widget>
         </item>

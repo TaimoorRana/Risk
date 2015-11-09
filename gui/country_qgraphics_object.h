@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QGraphicsItem>
 
+
 #include "country.h"
 
 class CountryQGraphicsObject: public QGraphicsItem
@@ -15,10 +16,10 @@ public:
 	Country* getCountry() const;
 
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-	bool pressed;
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 };
 
 #endif // COUNTRYQGRAPHICSOBJECT_H

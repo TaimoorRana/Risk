@@ -68,7 +68,7 @@ int Country::getPositionX() const {
 
 void Country::setPositionX(int x) {
 	this->x = x;
-	this->notifyObservers();
+//	this->notifyObservers();
 }
 
 int Country::getPositionY() const {
@@ -77,5 +77,5 @@ int Country::getPositionY() const {
 
 void Country::setPositionY(int y) {
 	this->y = y;
-	this->notifyObservers();
+//	this->notifyObservers();
 }

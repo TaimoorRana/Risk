@@ -102,6 +102,12 @@ void MainWindow::on_removeCountryPushButton_clicked(){
     tool = REMCOUNTRY;
 }
 
+void MainWindow::on_moveCountryPushButton_clicked(){
+    debug("Move Country");
+    tool = MOVCOUNTRY;
+}
+
+
 void MainWindow::on_addNeighbourPushButton_clicked(){
     debug("Add Neighbour");
     tool = ADDLINK;
@@ -112,7 +118,8 @@ void MainWindow::on_removeNeighbourPushButton_clicked(){
     tool = REMLINK;
 }
 
-void MainWindow::observedUpdated() {
+void MainWindow::   observedUpdated() {
+    QMutexLocker locker(&mutex);
 	scene->clear();
 
 	debug("render event");
@@ -139,7 +146,7 @@ void MainWindow::observedUpdated() {
 	if (observedMap->getCountries().size() == 0) {
 		return;
 	}
-	const Country* country = &observedMap->getCountries().begin()->second;
+//	const Country* country = &observedMap->getCountries().begin()->second;
 
 	for (auto const &ent1 : observedMap->getCountries()) {
 		const Country& country = ent1.second;

@@ -4,7 +4,6 @@
 
 CountryQGraphicsObject::CountryQGraphicsObject(Country* c)
 {
-	pressed = false;
 	setFlag(ItemIsSelectable);
 	setAcceptTouchEvents(true);
 	this->country = c;
@@ -20,44 +19,34 @@ QRectF CountryQGraphicsObject::boundingRect() const{
 }
 
 void CountryQGraphicsObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
-	QRectF rect = boundingRect();
-//	painter->drawRect(rect);
 	QPen pen(Qt::black,1);
 	painter->setPen(pen);
 	painter->setBrush(QBrush(Qt::green));
-//	painter->drawEllipse(rect);
 	painter->drawEllipse(QPointF(0, 0), 5, 5);
 	painter->drawText(QPointF(-23,17), QString::fromStdString(country->getName()));
-
-//	painter->drawEllipse(QPointF(0,0),15,15);
-//	painter->drawText(QPointF(-33,27), QString::fromStdString(country->getName()));
-
-
-//	if (pressed){
-//		QPen pen(Qt::red,3);
-//		painter->setPen(pen);
-//		painter->drawEllipse(rect);
-//	}
-//	else{
-//		QPen pen(Qt::black, 3);
-//		painter->setPen(pen);
-//		painter->drawRect(rect);
-//	}
 }
 
 void CountryQGraphicsObject::mousePressEvent(QGraphicsSceneMouseEvent *event){
-	pressed = !pressed;
-	update();
-//	QTimer *t = new QTimer();
-//	t->start(500);
-
-	QGraphicsItem::mousePressEvent(event);
-	qDebug()<< QString::fromStdString(country->getName());
-//	qDebug()<< parentItem()
+    QGraphicsItem::mousePressEvent(event);
+    qDebug("Mouse released within QCountryObj");
+    update();
+    qDebug()<< "Mouse was pressed at: "<< QString::fromStdString(country->getName());
 }
 
 void CountryQGraphicsObject::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
-	pressed = !pressed;
-	update();
-	QGraphicsItem::mouseReleaseEvent(event);
+    QGraphicsItem::mouseReleaseEvent(event);
+    qDebug("Mouse released within QCountryObj");
+    qDebug()<< "Mouse was pressed at: "<< QString::fromStdString(country->getName());
+
+    update();
+//    this->getCountry()->notifyObservers();
 }
+
+void CountryQGraphicsObject::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
+    QGraphicsItem::mouseMoveEvent(event);
+//    update();
+//    this->getCountry()->notifyObservers();
+    qDebug()<< "Mouse was pressed at: "<< QString::fromStdString(country->getName());
+
+}
+

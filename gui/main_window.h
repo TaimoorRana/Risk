@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMutexLocker>
 
 #include "risk_map.h"
 #include "observer.h"
@@ -17,7 +18,7 @@ namespace Ui {
 
 class MainWindow : public QMainWindow, public Observer {
 	Q_OBJECT
-
+    mutable QMutex mutex;
 public:
 	MainWindow(RiskMap* map, QWidget *parent = 0);
 	~MainWindow();
@@ -32,6 +33,7 @@ private slots:
     void on_saveMapPushButton_clicked();
     void on_addCountryPushButton_clicked();
     void on_removeCountryPushButton_clicked();
+    void on_moveCountryPushButton_clicked();
     void on_addNeighbourPushButton_clicked();
     void on_removeNeighbourPushButton_clicked();
 
