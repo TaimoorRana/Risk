@@ -35,6 +35,7 @@ public:
 	Country* addCountry(const Country& country, const std::string& continentName);
 	void addContinent(const std::string& name, int reinforcementBonus);
 	void addContinent(const Continent& continent);
+	void remCountry(const Country& country);
 	void addNeighbour(const std::string& country_a, const std::string& country_b);
 	void addPlayer(const Player& player);
 	Continent* getContinentOfCountry(const std::string& name_country);

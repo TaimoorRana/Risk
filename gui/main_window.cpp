@@ -52,9 +52,11 @@ bool MainWindow::validateFilename(const QString& text) {
 void MainWindow::on_filenameLineEdit_textChanged(QString text) {
 	if (this->validateFilename(text)) {
 		ui->loadPushButton->setEnabled(true);
+		ui->newPushButton->setEnabled(true);
 	}
 	else {
 		ui->loadPushButton->setEnabled(false);
+		ui->newPushButton->setEnabled(false);
 	}
 }
 
@@ -67,28 +69,12 @@ void MainWindow::on_loadPushButton_clicked() {
 	observedMap->parse(ui->filenameLineEdit->text().toStdString());
 }
 
-// void MainWindow::on_randOwnerPushButton_clicked() {
-// 	std::mt19937::result_type seed = time(0);
-// 	auto player_rand = std::bind(std::uniform_int_distribution<int>(0, observedMap->getPlayers().size()-1), std::mt19937(seed));
-//
-// 	for (auto const &ent1 : observedMap->getCountries()) {
-// 		const Country& country = ent1.second;
-//
-// 		auto it = observedMap->getPlayers().begin();
-// 		std::advance(it, player_rand());
-// 		const Player& player = it->second;
-// 		Country* mutableCountry = observedMap->getCountry(country.getName());
-// 		mutableCountry->setPlayer(player.getName());
-// 	}
-// }
+void MainWindow::on_newPushButton_clicked() {
+	observedMap->clear();
+	qDebug("Loading new map");
+}
 
-// void MainWindow::on_randArmiesPushButton_clicked() {
-// 	for (auto const &ent1 : observedMap->getCountries()) {
-// 		const Country& country = ent1.second;
-// 		Country* mutableCountry = observedMap->getCountry(country.getName());
-//         mutableCountry->setArmies((rand() % 10) + 1);
-// 	}
-// }
+
 
 void MainWindow::on_saveMapPushButton_clicked(){
     debug("Save Button clicked\n");
@@ -125,56 +111,12 @@ void MainWindow::observedUpdated() {
 	QPixmap bg(bmpFile.absoluteFilePath());
 	scene->addPixmap(bg);
 
-	int diameter = 0;
-	QFont font("Verdana", 10);
-
-	std::mt19937::result_type seed = 4;
-	auto color_rand = std::bind(std::uniform_int_distribution<int>(0, 255), std::mt19937(seed));
-
-	std::map<const std::string, QColor> continentPalette = std::map<const std::string, QColor>();
-	for (auto const &ent1 : observedMap->getContinents()) {
-		const Continent& continent = ent1.second;
-		continentPalette.insert(std::pair<const std::string, QColor>(continent.getName(), QColor(color_rand(), color_rand(), color_rand())));
-	}
-
-	std::map<std::string, QColor> playerPalette = std::map<std::string, QColor>();
-	for (auto const &ent1 : observedMap->getPlayers()) {
-		const Player& player = ent1.second;
-		playerPalette.insert(std::pair<std::string, QColor>(player.getName(), QColor(color_rand(), color_rand(), color_rand())));
-	}
-	playerPalette.insert(std::pair<const std::string, QColor>("", QColor(204, 204, 204)));
-
 	for (auto const &ent1 : observedMap->getCountries()) {
 		const Country& country = ent1.second;
-
-//		diameter = 30;
-//		Continent* continent = observedMap->getContinentOfCountry(country.getName());
-//		QColor continentColor(continentPalette.at(continent->getName()));
-//		QGraphicsEllipseItem* ellipse = scene->addEllipse(country.getPositionX()-diameter/2, country.getPositionY() - diameter/2, diameter, diameter, QPen(), QBrush(continentColor));
-//		ellipse->setZValue(1);
-
-//		diameter = 15;
-//		QColor playerColor(playerPalette.at(country.getPlayer()));
-//		ellipse = scene->addEllipse(country.getPositionX()-diameter/2, country.getPositionY() - diameter/2, diameter, diameter, QPen(), QBrush(playerColor));
-//		ellipse->setZValue(2);
-
-//		Player* owner = observedMap->getPlayer(country.getPlayer());
-//		QString playerText("Not Owned");
-//		if (owner != NULL) {
-//			playerText = owner->getName().c_str();
-//		}
-
-//		QString armiesText(std::to_string(country.getArmies()).c_str());
-//		QGraphicsTextItem* armies = scene->addText(armiesText, font);
-//		// http://stackoverflow.com/a/946734
-//		int grey = playerColor.red()*0.299 + playerColor.green()*0.587 + playerColor.blue()*0.114;
-//		armies->setDefaultTextColor(QColor(grey < 186 ? Qt::white : Qt::black));
-//		armies->setPos(country.getPositionX()-8, country.getPositionY()-8);
-//		armies->setZValue(3);
-
 		CountryQGraphicsObject* item = new CountryQGraphicsObject(observedMap->getCountry(country.getName()));
 		item->setPos(country.getPositionX(), country.getPositionY());
 		this->scene->addItem(item);
+		item->setZValue(10);
 	}
 
 	std::map<const std::string, bool> visited = std::map<const std::string, bool>();
@@ -187,7 +129,10 @@ void MainWindow::observedUpdated() {
 		return;
 	}
 	const Country* country = &observedMap->getCountries().begin()->second;
-	connectNeighboursVisit(visited, country);
+	for (auto const &ent1 : observedMap->getCountries()) {
+		const Country& country = ent1.second;
+		connectNeighboursVisit(visited, &country);
+	}
 }
 
 void MainWindow::connectNeighboursVisit(std::map<const std::string, bool>& visited, const Country* country) {

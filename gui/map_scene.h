@@ -14,7 +14,8 @@ public:
 	MapScene(RiskMap* map, QWidget *parent = 0);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 private:
-	RiskMap* map;
+	RiskMap* map = 0;
+	Country* lastPicked = 0;
 };
 
 #endif // MAP_SCENE_H

@@ -39,11 +39,19 @@ Country* RiskMap::addCountry(const Country& country, const std::string& continen
 	}
 	if (! mapGraph.insertNode(country.getName(), continentName))
 		return nullptr;
+	this->notifyObservers();
 	return &this->countries[country.getName()];
+}
+
+void RiskMap::remCountry(const Country& country){
+	debug("Deleting Country" + country.getName());
+	countries.erase(country.getName());
+	mapGraph.removeNode(country.getName());
 }
 
 void RiskMap::addNeighbour(const std::string& country_a, const std::string& country_b){
 	mapGraph.insertEdge(country_a, country_b);
+	this->notifyObservers();
 }
 
 void RiskMap::addPlayer(const Player& player) {

@@ -12,6 +12,7 @@ class CountryQGraphicsObject: public QGraphicsItem
 public:
 	CountryQGraphicsObject(Country* c);
 	QRectF boundingRect() const;
+	Country* getCountry() const;
 
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	bool pressed;

@@ -4,6 +4,7 @@
 #include "map_scene.h"
 #include "enum_tooltype.h"
 #include "country_qgraphics_object.h"
+#include "debug.h"
 
 MapScene::MapScene(RiskMap* map, QWidget *parent){
 	this->setParent(parent);
@@ -22,7 +23,8 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	MainWindow* parent = qobject_cast<MainWindow*>(this->parent());
 	CountryNameDialog nameDialog(parent);
 	Country* c;
-	CountryQGraphicsObject *item;
+	QGraphicsItem *itemAt = nullptr;
+	CountryQGraphicsObject *item = nullptr;
 
 	switch(parent->getSelectedTool()){
 		case ADDCOUNTRY:
@@ -38,18 +40,37 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 			c->setPositionX(xpos);
 			c->setPositionY(ypos);
-
-			item = new CountryQGraphicsObject(c);
-			item->setPos(event->scenePos());
-			this->addItem(item);
-
 			break;
 		case REMCOUNTRY:
 			qDebug("Remove Country Tool had been selected");
+
+//			qobject_cast<CountryQGraphicsObject*>
+
+//			qDebug()<< typeid(dynamic_cast<CountryQGraphicsObject*>(this->itemAt(event->scenePos(), QTransform()))).name();
+//			if ( (dynamic_cast<CountryQGraphicsObject*>(this->itemAt(event->scenePos(), QTransform()))->getCountry()) == nullptr)
+//				qDebug("Null pointer");
+
+//			qDebug()<< (dynamic_cast<CountryQGraphicsObject*>(this->itemAt(event->scenePos(), QTransform()))->getCountry());
+//			item = dynamic_cast<CountryQGraphicsObject*>(this->itemAt(event->scenePos(), QTransform()));
+//			map->remCountry(item->getCountry());
+//			delete item;
+
 			break;
 		case ADDLINK:
 			qDebug("Add link between countries.");
-
+			itemAt = this->itemAt(event->scenePos(), QTransform());
+			item = dynamic_cast<CountryQGraphicsObject*>(itemAt);
+			if (item == nullptr) {
+				return;
+			}
+			if (lastPicked != 0) {
+				debug("Second pick is " + item->getCountry()->getName());
+				map->addNeighbour(item->getCountry()->getName(), lastPicked->getName());
+				lastPicked = 0;
+			}else{
+				debug("First pick is " + item->getCountry()->getName());
+				lastPicked = item->getCountry();
+			}
 			break;
 		case REMLINK:
 		case OFF:
