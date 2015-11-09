@@ -147,7 +147,11 @@ void MainWindow::observedUpdated() {
 		return;
 	}
 	const Country* country = &observedMap->getCountries().begin()->second;
-	connectNeighboursVisit(visited, country);
+
+	for (auto const &ent1 : observedMap->getCountries()) {
+		const Country& country = ent1.second;
+		connectNeighboursVisit(visited, &country);
+	}
 }
 
 void MainWindow::connectNeighboursVisit(std::map<const std::string, bool>& visited, const Country* country) {

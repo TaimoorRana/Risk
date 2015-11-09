@@ -238,6 +238,11 @@ void RiskMap::parse(const std::string& path) {
 	debug("Finished parsing: " + path);
 	this->disableNotify = false;
 	this->notifyObservers();
+
+	if (this->validate()) {
+		debug("Map is valid");
+	}
+
 }
 
 RiskMap* RiskMap::load(const std::string& path) {
@@ -288,6 +293,7 @@ bool RiskMap::save(const std::string& path) {
 void RiskMap::clear() {
 	this->continents.clear();
 	this->countries.clear();
+	this->mapGraph = SubGraphADT();
 	this->notifyObservers();
 }
 
@@ -299,6 +305,75 @@ const std::unordered_map<std::string, Country>& RiskMap::getCountries() const {
 }
 const std::unordered_map<std::string, Player>& RiskMap::getPlayers() const {
 	return this->players;
+}
+
+bool RiskMap::validate() {
+	bool result;
+
+	// Check all countries form a connected graph
+	result = isConnectedGraph("");
+	if (!result) {
+		return false;
+	}
+
+	// Check each continent's countries are connected subgraphs
+	for (auto const &ent1 : this->continents) {
+		const Continent& continent = ent1.second;
+		result = isConnectedGraph(continent.getName());
+		if (!result) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void RiskMap::isConnectedGraphHelper(std::unordered_map<const Country*, bool>& visited, Country* country, const std::string& limit_to) {
+	if (limit_to.size() > 0 && this->getContinentOfCountry(country->getName())->getName().compare(limit_to) != 0) {
+		return;
+	}
+	bool& was_visited = visited.at(country);
+	if (was_visited) {
+		return;
+	}
+	was_visited = true;
+
+	for (auto const &neighbourName : this->getNeighbours(country->getName())) {
+		Country* neighbour = this->getCountry(neighbourName);
+		this->isConnectedGraphHelper(visited, neighbour, limit_to);
+	}
+}
+
+bool RiskMap::isConnectedGraph(const std::string& limit_to) {
+	std::unordered_map<const Country*, bool> visited = std::unordered_map<const Country*, bool>();
+	for (auto const &ent1 : this->countries) {
+		const Country& country = ent1.second;
+
+		if (limit_to.size() > 0 && this->getContinentOfCountry(country.getName())->getName().compare(limit_to) != 0) {
+			continue;
+		}
+
+		visited.insert(std::pair<const Country*, bool>(&country, false));
+	}
+
+	Country* country = NULL;
+	if (limit_to.size() > 0) {
+		country = this->getCountry(*this->getCountriesInContinent(limit_to).begin());
+	}
+	else {
+		country = &this->countries.begin()->second;
+	}
+	this->isConnectedGraphHelper(visited, country, limit_to);
+
+	for (auto const &ent1 : visited) {
+		if (!ent1.second) {
+			Country country = *ent1.first;
+			debug("Country " + country.getName() + " is not connected.");
+			return false;
+		}
+	}
+
+	return true;
 }
 
 void RiskMap::notifyObservers() {
