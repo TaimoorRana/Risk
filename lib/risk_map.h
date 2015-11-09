@@ -53,6 +53,9 @@ public:
 	void parse(const std::string& path);
 	bool save(const std::string& path);
 	void clear();
+	bool validate();
+	void isConnectedGraphHelper(std::unordered_map<const Country*, bool>& visited, Country* country, const std::string& limit_to);
+	bool isConnectedGraph(const std::string& limit_to);
 	void notifyObservers();
 };
 #endif

@@ -18,17 +18,9 @@ int main(int argc, char *argv[]) {
 	RiskMap map = RiskMap();
 	MainWindow* mw = new MainWindow(&map);
 
-//    ClickableMap cm;
-//    mw->addAction(cm);
-
-
 	mw->show();
 
-//    CountryNameDialog dialog(&mw);
-//    dialog->show();
-
     map.attachObserver(mw);
-
 
 	return application.exec();
 }
