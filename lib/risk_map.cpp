@@ -298,6 +298,7 @@ bool RiskMap::save(const std::string& path) {
 void RiskMap::clear() {
 	this->continents.clear();
 	this->countries.clear();
+	this->mapGraph = new SubGraphADT();
 	this->notifyObservers();
 }
 
