@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named doc
+
+# Build rule for target.
+doc: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 doc
+.PHONY : doc
+
+# fast build rule for target.
+doc/fast:
+	$(MAKE) -f CMakeFiles/doc.dir/build.make CMakeFiles/doc.dir/build
+.PHONY : doc/fast
+
+#=============================================================================
 # Target rules for targets named librisk
 
 # Build rule for target.
@@ -135,6 +148,19 @@ risk-cli: cmake_check_build_system
 risk-cli/fast:
 	$(MAKE) -f cli/CMakeFiles/risk-cli.dir/build.make cli/CMakeFiles/risk-cli.dir/build
 .PHONY : risk-cli/fast
+
+#=============================================================================
+# Target rules for targets named Qt5CopyBinaries
+
+# Build rule for target.
+Qt5CopyBinaries: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Qt5CopyBinaries
+.PHONY : Qt5CopyBinaries
+
+# fast build rule for target.
+Qt5CopyBinaries/fast:
+	$(MAKE) -f gui/CMakeFiles/Qt5CopyBinaries.dir/build.make gui/CMakeFiles/Qt5CopyBinaries.dir/build
+.PHONY : Qt5CopyBinaries/fast
 
 #=============================================================================
 # Target rules for targets named risk-gui
@@ -170,8 +196,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... doc"
 	@echo "... librisk"
 	@echo "... risk-cli"
+	@echo "... Qt5CopyBinaries"
 	@echo "... risk-gui_automoc"
 	@echo "... risk-gui"
 .PHONY : help

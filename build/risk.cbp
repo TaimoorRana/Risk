@@ -37,6 +37,16 @@
             <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
+      <Target title="doc">
+         <Option working_dir="/Users/adriannediaz/QTprojects/Risk/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 doc" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
       <Target title="librisk">
          <Option output="/Users/adriannediaz/QTprojects/Risk/build/lib/liblibrisk.a" prefix_auto="0" extension_auto="0" />
          <Option working_dir="/Users/adriannediaz/QTprojects/Risk/build/lib" />
@@ -129,6 +139,16 @@
             <CompileFile command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/cli/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
             <Clean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/cli/Makefile&quot;  VERBOSE=1 clean" />
             <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/cli/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="Qt5CopyBinaries">
+         <Option working_dir="/Users/adriannediaz/QTprojects/Risk/build/gui" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 Qt5CopyBinaries" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
       <Target title="risk-gui_automoc">
@@ -349,6 +369,9 @@
       <Unit filename="/Users/adriannediaz/QTprojects/Risk/CMakeLists.txt">
           <Option virtualFolder="CMake Files\" />
       </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/Doxyfile.in">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
       <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/CMakeLists.txt">
           <Option virtualFolder="CMake Files\lib\" />
       </Unit>
@@ -427,6 +450,12 @@
       <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake">
           <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
       </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5GuiConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
       <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Core/Qt5CoreConfigVersion.cmake">
           <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Core\" />
       </Unit>
@@ -440,6 +469,12 @@
           <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Core\" />
       </Unit>
       <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Core/Qt5CoreMacros.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Core\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Core/Qt5CoreConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Core\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Core/Qt5CoreConfig.cmake">
           <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Core\" />
       </Unit>
       <Unit filename="/Users/adriannediaz/QTprojects/Risk/resources/MacOSXBundleInfo.plist.in">

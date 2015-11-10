@@ -1,4 +1,6 @@
 #include <QDebug>
+//#include <QString>
+
 #include "main_window.h"
 
 #include "map_scene.h"
@@ -29,8 +31,10 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	switch(parent->getSelectedTool()){
 		case ADDCOUNTRY:
             qDebug("MAPSCENE: Add Country Tool had been selected");
+            nameDialog.setLastContinentName(lastContinent);
 			if(nameDialog.exec() == QDialog::Rejected)
 				return;
+            lastContinent = nameDialog.getContinentName();
 			c = map->addCountry(nameDialog.getCountryName().toStdString(), nameDialog.getContinentName().toStdString(), 0);
 			if( c == nullptr)
 				return;
@@ -41,16 +45,9 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 		case REMCOUNTRY:
             qDebug("MAPSCENE: Remove Country Tool had been selected");
 
-//			qobject_cast<CountryQGraphicsObject*>
+            item = getCountryGraphicsObjAt(event);
 
-//			qDebug()<< typeid(dynamic_cast<CountryQGraphicsObject*>(this->itemAt(event->scenePos(), QTransform()))).name();
-//			if ( (dynamic_cast<CountryQGraphicsObject*>(this->itemAt(event->scenePos(), QTransform()))->getCountry()) == nullptr)
-//				qDebug("Null pointer");
-
-//			qDebug()<< (dynamic_cast<CountryQGraphicsObject*>(this->itemAt(event->scenePos(), QTransform()))->getCountry());
-//			item = dynamic_cast<CountryQGraphicsObject*>(this->itemAt(event->scenePos(), QTransform()));
-//			map->remCountry(item->getCountry());
-//			delete item;
+//            item->getCountry()
 
 			break;
         case MOVCOUNTRY:
@@ -161,7 +158,7 @@ void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
 }
 
 CountryQGraphicsObject* MapScene::getCountryGraphicsObjAt(QGraphicsSceneMouseEvent *event){
-    QMutexLocker locker(&mutex);
+//    QMutexLocker locker(&mutex);
 
     QGraphicsItem *itemAt = nullptr;
     CountryQGraphicsObject *item = nullptr;

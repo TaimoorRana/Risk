@@ -3,7 +3,8 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
-#include <QMutexLocker>
+//#include <QMutexLocker>
+#include <QString>
 
 #include "country_qgraphics_object.h"
 
@@ -13,7 +14,6 @@
 
 class MapScene: public QGraphicsScene
 {
-    mutable QMutex mutex;
 public:
 	MapScene(RiskMap* map, QWidget *parent = 0);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -24,6 +24,8 @@ public:
 private:
 	RiskMap* map = 0;
 	Country* lastPicked = 0;
+//    mutable QMutex mutex;
+    QString lastContinent;
 };
 
 #endif // MAP_SCENE_H

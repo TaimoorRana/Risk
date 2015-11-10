@@ -101,35 +101,35 @@
         <item>
          <widget class="QToolButton" name="addCountryPushButton">
           <property name="text">
-           <string>+Country   </string>
+           <string>+ Country</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QToolButton" name="removeCountryPushButton">
           <property name="text">
-           <string>-Country    </string>
+           <string>- Country </string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QToolButton" name="moveCountryPushButton">
           <property name="text">
-           <string>* Country   </string>
+           <string>* Country</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QToolButton" name="addNeighbourPushButton">
           <property name="text">
-           <string>+Neighbour</string>
+           <string>+ Link    </string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QToolButton" name="removeNeighbourPushButton">
           <property name="text">
-           <string>-Neighbour</string>
+           <string>-  Link    </string>
           </property>
          </widget>
         </item>

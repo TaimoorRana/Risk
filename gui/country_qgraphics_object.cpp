@@ -1,6 +1,6 @@
 #include <QDebug>
 #include "country_qgraphics_object.h"
-#include <QTimer>
+//#include <QTimer>
 
 CountryQGraphicsObject::CountryQGraphicsObject(Country* c)
 {

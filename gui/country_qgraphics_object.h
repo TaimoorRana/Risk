@@ -14,6 +14,7 @@ public:
 	CountryQGraphicsObject(Country* c);
 	QRectF boundingRect() const;
 	Country* getCountry() const;
+    void deleteCountry();
 
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 protected:

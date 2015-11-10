@@ -119,7 +119,7 @@ void MainWindow::on_removeNeighbourPushButton_clicked(){
 }
 
 void MainWindow::   observedUpdated() {
-    QMutexLocker locker(&mutex);
+//    QMutexLocker locker(&mutex);
 	scene->clear();
 
 	debug("render event");
