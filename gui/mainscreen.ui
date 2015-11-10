@@ -117,8 +117,20 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="fileMenu">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="mapEditorAction"/>
+   </widget>
+   <addaction name="fileMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="mapEditorAction">
+   <property name="text">
+    <string>Map Editor</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

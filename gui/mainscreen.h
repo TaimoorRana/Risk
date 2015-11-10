@@ -1,20 +1,16 @@
 #ifndef MAINSCREEN_H
 #define MAINSCREEN_H
-
 #include <QMainWindow>
+#include <QMouseEvent>
+#include <QString>
+
 #include <playernamedialog.h>
 #include <risk_map.h>
-#include <QTimer>
-#include <QMouseEvent>
-#include <QDebug>
-#include <QLabel>
+#include "map_editor.h"
 #include "ui_mainscreen.h"
-#include "player.h"
-#include "player_view.h"
-#include "playerinfowidget.h"
 
 namespace Ui {
-class MainScreen;
+    class MainScreen;
 }
 
 class MainScreen : public QMainWindow
@@ -22,7 +18,7 @@ class MainScreen : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainScreen(RiskMap* map,QWidget *parent = 0);
+    explicit MainScreen(RiskMap* map, QWidget *parent = 0);
     ~MainScreen();
     void mousePressEvent(QMouseEvent *e);
     void addPlayerView(QWidget* pvWidget);
@@ -32,12 +28,14 @@ public:
 
 private slots:
     void on_pushButton_clicked();
+    void on_mapEditorAction_triggered();
 
 private:
 	QString playerName;
 	int CPUs;
     Ui::MainScreen *ui;
     PlayerNameDialog *nameDialog;
+    MapEditor *editor;
     RiskMap *map;
 
 	void setupPlayer();

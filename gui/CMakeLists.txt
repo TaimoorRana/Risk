@@ -7,7 +7,7 @@ fix_project_version()
 set(GUI_SOURCE_FILES
 	main.cpp
 	country_name_dialog.cpp country_name_dialog.h country_name_dialog.ui
-	main_window.cpp main_window.h main_window.ui
+	map_editor.cpp map_editor.h map_editor.ui
 	mainscreen.cpp mainscreen.h mainscreen.ui
 	GameDriver.cpp GameDriver.h
 	states.cpp states.h
@@ -16,7 +16,7 @@ set(GUI_SOURCE_FILES
 	playernamedialog.cpp playernamedialog.h playernamedialog.ui
 	map_scene.cpp map_scene.h
 	enum_tooltype.h
-	country_qgraphics_object.cpp country_qgraphics_object.h
+	qgraphics_country_item.cpp qgraphics_country_item.h
 )
 
 set(GUI_RESOURCE_FILES

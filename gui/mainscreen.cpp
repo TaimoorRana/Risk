@@ -1,12 +1,17 @@
+#include <QDebug>
+
 #include "mainscreen.h"
+#include "player.h"
+#include "player_view.h"
+#include "playerinfowidget.h"
 
 MainScreen::MainScreen(RiskMap *map, QWidget *parent) :QMainWindow(parent), ui(new Ui::MainScreen)
 {
-    ui->setupUi(this);
-    nameDialog = new PlayerNameDialog(this);
+	ui->setupUi(this);
+	nameDialog = new PlayerNameDialog(this);
 	this->map = map;
-    setMouseTracking(true);
-    ui->attackRadio->setChecked(true);
+	setMouseTracking(true);
+	ui->attackRadio->setChecked(true);
 }
 
 void MainScreen::setupPlayers(){
@@ -30,11 +35,10 @@ void MainScreen::setupCPUs()
 		ui->horizontalLayout_2->addWidget(playerinfo);
 		map->addPlayer(*cpu);
 	}
-
 }
 
 void MainScreen::mousePressEvent(QMouseEvent *e){
-    qDebug() <<e->pos().x();
+		qDebug() <<e->pos().x();
 }
 
 void MainScreen::addPlayerView(QWidget *pvWidget)
@@ -54,19 +58,35 @@ void MainScreen::setPLayerName(QString name)
 
 MainScreen::~MainScreen()
 {
-    delete ui;
+	delete nameDialog;
+	delete editor;
+	delete ui;
 }
 
 void MainScreen::on_pushButton_clicked()
 {
-    if(ui->attackRadio->isChecked()){
-        ui->fortifyRadio->setChecked(true);
-        return;
-    }else if(ui->fortifyRadio->isChecked()){
-        ui->reinforcementRadio->setChecked(true);
-        return;
-    }else{
-        ui->attackRadio->setChecked(true);
-        return;
-    }
+		if(ui->attackRadio->isChecked()){
+			ui->fortifyRadio->setChecked(true);
+			return;
+		}else if(ui->fortifyRadio->isChecked()){
+			ui->reinforcementRadio->setChecked(true);
+			return;
+		}else{
+			ui->attackRadio->setChecked(true);
+			return;
+		}
+}
+
+/**
+ * Callback to handle user selecting File > Map Editor.
+ */
+void MainScreen::on_mapEditorAction_triggered() {
+	if (editor != NULL) {
+		this->editor->show();
+		this->editor->raise();
+	}
+	else {
+		this->editor = new MapEditor(this);
+		this->editor->show();
+	}
 }
