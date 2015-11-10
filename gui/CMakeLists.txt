@@ -27,6 +27,8 @@ IF (APPLE)
 ENDIF (APPLE)
 
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Gui REQUIRED)
 include_directories("${CMAKE_SOURCE_DIR}/lib")
 
 add_executable(${PROJECT_NAME}-gui ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
@@ -42,3 +44,47 @@ target_link_libraries(${PROJECT_NAME}-gui lib${PROJECT_NAME})
 if (APPLE)
 	set_target_properties(${PROJECT_NAME}-gui PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/resources/MacOSXBundleInfo.plist.in)
 endif (APPLE)
+
+add_custom_target(Qt5CopyBinaries
+  # todo: check if debug and release folder exist
+  # debug version
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/libEGLd.dll          ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/libGLESv2d.dll       ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Cored.dll         ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Guid.dll          ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Declaratived.dll  ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Networkd.dll      ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5OpenGLd.dll       ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Scriptd.dll       ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Sqld.dll          ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Widgetsd.dll      ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Xmld.dll          ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5XmlPatternsd.dll  ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/icuin54.dll          ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/icuuc54.dll          ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/icudt54.dll          ${CMAKE_CURRENT_BINARY_DIR}/Debug
+  
+  # release version
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/libEGL.dll           ${CMAKE_CURRENT_BINARY_DIR}/Release
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/libGLESv2.dll        ${CMAKE_CURRENT_BINARY_DIR}/Release
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Core.dll          ${CMAKE_CURRENT_BINARY_DIR}/Release
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Gui.dll           ${CMAKE_CURRENT_BINARY_DIR}/Release
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Declarative.dll   ${CMAKE_CURRENT_BINARY_DIR}/Release
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Network.dll       ${CMAKE_CURRENT_BINARY_DIR}/Release
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5OpenGL.dll        ${CMAKE_CURRENT_BINARY_DIR}/Release
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Script.dll        ${CMAKE_CURRENT_BINARY_DIR}/Release
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Sql.dll           ${CMAKE_CURRENT_BINARY_DIR}/Release
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Widgets.dll       ${CMAKE_CURRENT_BINARY_DIR}/Release
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5Xml.dll           ${CMAKE_CURRENT_BINARY_DIR}/Release
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/Qt5XmlPatterns.dll   ${CMAKE_CURRENT_BINARY_DIR}/Release
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/icuin54.dll          ${CMAKE_CURRENT_BINARY_DIR}/Release
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/icuuc54.dll          ${CMAKE_CURRENT_BINARY_DIR}/Release
+  COMMAND ${CMAKE_COMMAND} -E copy ${Qt5Core_DIR}/../../../bin/icudt54.dll          ${CMAKE_CURRENT_BINARY_DIR}/Release
+
+  # Output Message
+  COMMENT "Copying Qt binaries from '${Qt5Core_DIR}/../../bin/' to '${CMAKE_BINARY_DIR}'" VERBATIM
+)
+
+IF (WIN32)
+	add_dependencies(${PROJECT_NAME}-gui Qt5CopyBinaries)
+ENDIF (WIN32)
