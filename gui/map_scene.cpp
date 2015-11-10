@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <QString>
 #include "main_window.h"
 
 #include "map_scene.h"
@@ -25,6 +26,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	CountryNameDialog nameDialog(parent);
 	Country* c;
 	CountryQGraphicsObject *item = nullptr;
+	Country x;
 
 	switch(parent->getSelectedTool()){
 		case ADDCOUNTRY:
@@ -40,6 +42,8 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			break;
 		case REMCOUNTRY:
             qDebug("MAPSCENE: Remove Country Tool had been selected");
+			debug("About to delete "+item->getCountry()->getName());
+//			map->remCountry(*(item->getCountry()));
 
 //			qobject_cast<CountryQGraphicsObject*>
 
