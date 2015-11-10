@@ -1,23 +1,24 @@
 #include "playerinfowidget.h"
 #include "ui_playerinfowidget.h"
 
-PlayerInfoWidget::PlayerInfoWidget(QWidget *parent, PlayerView *pv) :QWidget(parent),ui(new Ui::PlayerInfoWidget)
+PlayerInfoWidget::PlayerInfoWidget(QWidget *parent, Player *subject) :QWidget(parent),ui(new Ui::PlayerInfoWidget)
 {
 	ui->setupUi(this);
-	this->pv =pv;
-	setPlayerInfo();
+	this->player =subject;
+	update();
 }
 
 PlayerInfoWidget::~PlayerInfoWidget()
 {
 	delete ui;
+	player = nullptr;
 }
 
-void PlayerInfoWidget::setPlayerInfo()
+void PlayerInfoWidget::update()
 {
-	ui->nameValueLabel->setText(QString::fromStdString(pv->getName()));
-	ui->countriesValueLabel->setText(QString::number(pv->getCountriesOwned().size()));
-	ui->continentsValueLabel->setText(QString::number(pv->getContinentsOwned().size()));
-	ui->armiesValueLabel->setText(QString::number(pv->getNumberOfArmies()));
+	ui->nameValueLabel->setText(QString::fromStdString(player->getName()));
+	ui->countriesValueLabel->setText(QString::number(player->getCountriesOwned().size()));
+	ui->continentsValueLabel->setText(QString::number(player->getContinentsOwned().size()));
+	ui->armiesValueLabel->setText(QString::number(player->getTotalArmy()));
 }
 

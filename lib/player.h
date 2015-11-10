@@ -94,10 +94,10 @@ public:
 	bool hasCountry(const std::string& name) const;
 
 	/**
-	 * @brief getCountryOwned
+	 * @brief getCountriesOwned
 	 * @return a set of countries owned
 	 */
-	std::set<std::string> getCountryOwned();
+	std::set<std::string> getCountriesOwned();
 
 	/**
 	 * @brief addContinent

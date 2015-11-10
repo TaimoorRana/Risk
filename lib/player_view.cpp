@@ -13,7 +13,7 @@ PlayerView::~PlayerView()
 }
 
 void PlayerView::update(){
-    this->countriesOwned = player->getCountryOwned();
+	this->countriesOwned = player->getCountriesOwned();
     this->continentsOwned = player->getContinentsOwned();
     this->nbrOfReinforcements = player->getReinforcements();
     this->nbrOfArmies = player->getTotalArmy();

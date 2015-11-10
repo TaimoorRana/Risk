@@ -8,6 +8,10 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include <QLabel>
+#include "ui_mainscreen.h"
+#include "player.h"
+#include "player_view.h"
+#include "playerinfowidget.h"
 
 namespace Ui {
 class MainScreen;
@@ -22,15 +26,22 @@ public:
     ~MainScreen();
     void mousePressEvent(QMouseEvent *e);
     void addPlayerView(QWidget* pvWidget);
+	void setCPUs(int total);
+	void setPLayerName(QString name);
+	void setupPlayers();
 
 private slots:
     void on_pushButton_clicked();
 
 private:
+	QString playerName;
+	int CPUs;
     Ui::MainScreen *ui;
     PlayerNameDialog *nameDialog;
     RiskMap *map;
-    void setupPlayers();
+
+	void setupPlayer();
+	void setupCPUs();
 };
 
 #endif // MAINSCREEN_H

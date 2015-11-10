@@ -1,6 +1,8 @@
 #include "playernamedialog.h"
 #include "ui_playernamedialog.h"
+#include "mainscreen.h"
 #include <QDebug>
+#include <iostream>
 
 PlayerNameDialog::PlayerNameDialog(QWidget *parent) :QDialog(parent),ui(new Ui::PlayerNameDialog)
 {
@@ -19,16 +21,24 @@ PlayerNameDialog::~PlayerNameDialog()
     delete ui;
 }
 
-QString PlayerNameDialog::getText()
+QString* PlayerNameDialog::getText()
 {
-    return ui->lineEdit->text();
+	return name;
+}
+
+QString* PlayerNameDialog::getChoice()
+{
+	return choice;
 }
 
 
 void PlayerNameDialog::on_buttonBox_accepted()
 {
-    QString name = "Name : " + ui->lineEdit->text();
-	//this->parent()->findChild<QLabel*>("nameLabel")->setText(name);
+	dynamic_cast<MainScreen*>(this->parent())->setPLayerName(ui->lineEdit->text());
+	dynamic_cast<MainScreen*>(this->parent())->setCPUs(ui->comboBox->currentText().toInt());
+	dynamic_cast<MainScreen*>(this->parent())->setupPlayers();
+	dynamic_cast<MainScreen*>(this->parent())->show();
+
 }
 
 

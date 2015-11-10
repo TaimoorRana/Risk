@@ -2,24 +2,25 @@
 #define PLAYERINFOWIDGET_H
 
 #include <QWidget>
-#include "player_view.h"
+#include "player.h"
+#include"player_observer.h"
 
 namespace Ui {
 class PlayerInfoWidget;
 }
 
-class PlayerInfoWidget : public QWidget
+class PlayerInfoWidget : public QWidget, public PlayerObserver
 {
 	Q_OBJECT
 
 public:
-	explicit PlayerInfoWidget(QWidget *parent = 0, PlayerView* pv = 0);
+	explicit PlayerInfoWidget(QWidget *parent = 0, Player* subject = 0);
 	~PlayerInfoWidget();
-	void setPlayerInfo();
+	void update();
 
 private:
 	Ui::PlayerInfoWidget *ui;
-	PlayerView* pv;
+	Player* player;
 };
 
 #endif // PLAYERINFORWIDGET_H

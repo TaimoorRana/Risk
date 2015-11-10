@@ -112,7 +112,7 @@ int Player::getTotalArmy() const
 	return totalArmy;
 }
 
-std::set<std::string> Player::getCountryOwned(){
+std::set<std::string> Player::getCountriesOwned(){
 	std::set<std::string> copy(namesOfCountriesOwned);
 	return copy;
 }

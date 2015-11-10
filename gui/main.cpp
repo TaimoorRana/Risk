@@ -15,7 +15,7 @@
 #include "mainscreen.h"
 #include "playernamedialog.h"
 
-
+using namespace std;
 int main(int argc, char *argv[]) {
 
     QApplication application(argc, argv);
@@ -33,12 +33,10 @@ int main(int argc, char *argv[]) {
     map.addPlayer(player2);
 	map.addPlayer(player3);
 	map.addPlayer(Player("stewart"));
-
+	QTimer::singleShot(2500,splash,SLOT(close()));
     MainScreen w(&map,0);
-    PlayerNameDialog dialog(&w);
-    QTimer::singleShot(2500,splash,SLOT(close()));
-    QTimer::singleShot(2500,&w,SLOT(show()));
-    QTimer::singleShot(2600,&dialog,SLOT(show()));
+	PlayerNameDialog dialog(&w);
+	QTimer::singleShot(2500,&dialog,SLOT(show()));
 
     return application.exec();
 

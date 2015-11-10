@@ -1,36 +1,36 @@
 #include "mainscreen.h"
-#include "ui_mainscreen.h"
-#include "player.h"
-#include "player_view.h"
-#include "playerinfowidget.h"
 
 MainScreen::MainScreen(RiskMap *map, QWidget *parent) :QMainWindow(parent), ui(new Ui::MainScreen)
 {
     ui->setupUi(this);
     nameDialog = new PlayerNameDialog(this);
-    this->map = map;
-	setupPlayers();
+	this->map = map;
     setMouseTracking(true);
     ui->attackRadio->setChecked(true);
-
-//    Player* test = new Player("test");
-//	test->setBattlesWon(10);
-//	test->setReinforcements(3513);
-//	test->setTotalArmy(534);
-//	PlayerView* pv = new PlayerView(test);
-//	PlayerInfoWidget* playerInfoWidget = new PlayerInfoWidget(this,pv);
-//	ui->horizontalLayout_2->addWidget(playerInfoWidget);
-
 }
 
 void MainScreen::setupPlayers(){
-	std::unordered_map<std::string,Player>::iterator playerIterator;
-	std::unordered_map<std::string,Player> players = map->getPlayers();
-	for(playerIterator = players.begin(); playerIterator != players.end(); playerIterator++){
-		PlayerView *pv =  new PlayerView(&(playerIterator->second));
-		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this,pv);
+	setupPlayer();
+	setupCPUs();
+}
+
+void MainScreen::setupPlayer()
+{
+	Player* player = new Player(this->playerName.toStdString());
+	PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this,player);
+	ui->horizontalLayout_2->addWidget(playerinfo);
+	map->addPlayer(*player);
+}
+
+void MainScreen::setupCPUs()
+{
+	for(int x = 0; x < CPUs; x++){
+		Player* cpu = new Player("CPU");
+		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this,cpu);
 		ui->horizontalLayout_2->addWidget(playerinfo);
+		map->addPlayer(*cpu);
 	}
+
 }
 
 void MainScreen::mousePressEvent(QMouseEvent *e){
@@ -39,7 +39,17 @@ void MainScreen::mousePressEvent(QMouseEvent *e){
 
 void MainScreen::addPlayerView(QWidget *pvWidget)
 {
-    ui->verticalLayout_2->addWidget(pvWidget);
+	ui->verticalLayout_2->addWidget(pvWidget);
+}
+
+void MainScreen::setCPUs(int total)
+{
+	this->CPUs = total;
+}
+
+void MainScreen::setPLayerName(QString name)
+{
+	this->playerName = name;
 }
 
 MainScreen::~MainScreen()
@@ -56,7 +66,6 @@ void MainScreen::on_pushButton_clicked()
         ui->reinforcementRadio->setChecked(true);
         return;
     }else{
-        
         ui->attackRadio->setChecked(true);
         return;
     }
