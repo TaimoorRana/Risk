@@ -1,6 +1,5 @@
 #include <QDebug>
 #include "country_qgraphics_object.h"
-//#include <QTimer>
 
 CountryQGraphicsObject::CountryQGraphicsObject(Country* c)
 {
@@ -11,6 +10,11 @@ CountryQGraphicsObject::CountryQGraphicsObject(Country* c)
 
 Country* CountryQGraphicsObject::getCountry() const{
 	return this->country;
+}
+
+void CountryQGraphicsObject::deleteCountry(){
+//    Country d(&country);
+    qDebug()<<"About to delete country";
 }
 
 

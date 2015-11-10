@@ -20,7 +20,7 @@
 #include <qdebug.h>
 
 #include "country_qgraphics_object.h"
-
+#include "custom_country_connection.h"
 
 MainWindow::MainWindow(RiskMap* map, QWidget *parent) : QMainWindow(parent) {
 	ui = new Ui::MainWindow;
@@ -118,6 +118,8 @@ void MainWindow::on_removeNeighbourPushButton_clicked(){
     tool = REMLINK;
 }
 
+
+
 void MainWindow::   observedUpdated() {
 //    QMutexLocker locker(&mutex);
 	scene->clear();
@@ -155,8 +157,7 @@ void MainWindow::   observedUpdated() {
 }
 
 void MainWindow::connectNeighboursVisit(std::map<const std::string, bool>& visited, const Country* country) {
-	QPen pen(QColor(0xFF, 0, 0, 0x40));
-	pen.setWidth(1);
+
 
 	bool& was_visited = visited.at(country->getName());
 	if (was_visited) {
@@ -166,8 +167,14 @@ void MainWindow::connectNeighboursVisit(std::map<const std::string, bool>& visit
 
 	for (auto const &neighbour_str : observedMap->getNeighbours(country->getName())) {
 		Country* neighbour = observedMap->getCountry(neighbour_str);
-		QGraphicsLineItem* line = scene->addLine(country->getPositionX(), country->getPositionY(), neighbour->getPositionX(), neighbour->getPositionY(), pen);
-		line->setZValue(1);
+//        CustomCountryConnection* line = scene->addLine(country->getPositionX(), country->getPositionY(), neighbour->getPositionX(), neighbour->getPositionY(), pen);
+//        CustomCountryConnection line(country->getPositionX(), country->getPositionY(), neighbour->getPositionX(), neighbour->getPositionY(), dynamic_cast<QGraphicsItem*>(scene));
+//        scene->addItem(dynamic_cast<QGraphicsItem*>(&line));
+        CustomCountryConnection *line = new CustomCountryConnection(country->getPositionX(), country->getPositionY(), neighbour->getPositionX(), neighbour->getPositionY(), dynamic_cast<QGraphicsItem*>(scene));
+        this->scene->addItem(line);
+
+        line->setBoundingRegionGranularity(1.0);
+        line->setZValue(1);
 		connectNeighboursVisit(visited, neighbour);
 	}
 }

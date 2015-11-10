@@ -108,7 +108,7 @@
         <item>
          <widget class="QToolButton" name="removeCountryPushButton">
           <property name="text">
-           <string>- Country </string>
+           <string>- Country</string>
           </property>
          </widget>
         </item>
@@ -122,14 +122,14 @@
         <item>
          <widget class="QToolButton" name="addNeighbourPushButton">
           <property name="text">
-           <string>+ Link    </string>
+           <string>+  Link    </string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QToolButton" name="removeNeighbourPushButton">
           <property name="text">
-           <string>-  Link    </string>
+           <string>-   Link    </string>
           </property>
          </widget>
         </item>

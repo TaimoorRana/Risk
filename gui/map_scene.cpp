@@ -44,11 +44,9 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			break;
 		case REMCOUNTRY:
             qDebug("MAPSCENE: Remove Country Tool had been selected");
-
             item = getCountryGraphicsObjAt(event);
-
-//            item->getCountry()
-
+            map->remCountry(*(item->getCountry()));
+            map->notifyObservers();
 			break;
         case MOVCOUNTRY:
             qDebug("MAPSCENE: Move Country Tool had been selected.");
@@ -77,6 +75,10 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 			break;
 		case REMLINK:
+            qDebug("MAPSCENE: Remove Link between countries");
+//            item = getCountryGraphicsObjAt(event);
+//            map->remCountry(*(item->getCountry()));
+//            map->notifyObservers();
 		case OFF:
 		default:
 			return;
