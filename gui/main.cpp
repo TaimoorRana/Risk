@@ -10,14 +10,13 @@
 #include <QSplashScreen>
 #include <QTimer>
 
-//#include "main_window.h"
 #include "risk_map.h"
 #include "mainscreen.h"
 #include "playernamedialog.h"
+#include "country_name_dialog.h"
 
 using namespace std;
 int main(int argc, char *argv[]) {
-
     QApplication application(argc, argv);
 
     QSplashScreen *splash = new QSplashScreen;
@@ -39,5 +38,4 @@ int main(int argc, char *argv[]) {
 	QTimer::singleShot(2500,&dialog,SLOT(show()));
 
     return application.exec();
-
 }

@@ -41,7 +41,7 @@
       <item>
        <widget class="QLineEdit" name="filenameLineEdit">
         <property name="text">
-         <string>../../maps/World/World.map</string>
+         <string>../../../maps/World/World.map</string>
         </property>
        </widget>
       </item>
@@ -63,23 +63,95 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="randOwnerPushButton">
+       <widget class="QPushButton" name="newPushButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
-         <string>Randomize ownership</string>
+         <string>New Map</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="randArmiesPushButton">
+       <widget class="QPushButton" name="saveMapPushButton">
         <property name="text">
-         <string>Randomize armies</string>
+         <string>Save Map</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>30</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </item>
     <item>
-     <widget class="QGraphicsView" name="graphicsView"/>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QToolButton" name="addCountryPushButton">
+          <property name="text">
+           <string>+ Country</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="removeCountryPushButton">
+          <property name="text">
+           <string>- Country </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="moveCountryPushButton">
+          <property name="text">
+           <string>* Country</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="addNeighbourPushButton">
+          <property name="text">
+           <string>+ Link    </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="removeNeighbourPushButton">
+          <property name="text">
+           <string>-  Link    </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QGraphicsView" name="graphicsView"/>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

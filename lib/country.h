@@ -14,6 +14,7 @@ public:
 	Country() {};
 	Country(const std::string& name);
 	Country(const std::string& name, int x, int y, int armies);
+    Country(int x, int y);
 	Country(const Country&);
 	std::string getName() const;
 	void setName(const std::string&);

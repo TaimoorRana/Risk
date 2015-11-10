@@ -13,6 +13,13 @@ Country::Country(const std::string& name, int x, int y, int armies) {
 	this->setPositionY(y);
 }
 
+Country::Country(int x, int y) {
+    this->setName("");
+    this->setPlayer("");
+    this->setPositionX(x);
+    this->setPositionY(y);
+}
+
 Country::Country(Country const& country) {
 	this->name = country.name;
 	this->armies = country.armies;
@@ -61,6 +68,7 @@ int Country::getPositionX() const {
 
 void Country::setPositionX(int x) {
 	this->x = x;
+//	this->notifyObservers();
 }
 
 int Country::getPositionY() const {
@@ -69,4 +77,5 @@ int Country::getPositionY() const {
 
 void Country::setPositionY(int y) {
 	this->y = y;
+//	this->notifyObservers();
 }

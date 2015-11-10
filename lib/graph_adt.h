@@ -43,7 +43,7 @@ public:
 	std::string opposite(std::string, std::string) const;
 	string_set endNodes(std::string) const;
 	bool areAdjacent(std::string, std::string) const;
-	void insertNode(std::string);
+	bool insertNode(std::string);
 	void removeNode(std::string);
 	void insertEdge(std::string, std::string, std::string);
 	void removeEdge(std::string, std::string);
@@ -72,7 +72,7 @@ class SubGraphADT : public GraphADT {
 	std::unordered_map <std::string, std::string> countries_continents;
 
 public:
-	void insertNode(std::string, std::string);
+	bool insertNode(std::string, std::string);
 	string_set subgraphContents(const std::string&);
 	std::string getSubgraphName(const std::string&);
 };
