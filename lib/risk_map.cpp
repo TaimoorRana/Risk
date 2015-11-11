@@ -22,26 +22,30 @@ void RiskMap::addContinent(const Continent& continent){
 	continents[continent.getName()] = continent;
 }
 
-void RiskMap::addCountry(const std::string& name_country, const std::string& name_continent, int number_armies){
-	if (continents.find(name_continent) == continents.end()) {
-		this->addContinent(name_continent, 0);
-	}
-	Country country(name_country, 0, 0, number_armies);
-	this->addCountry(country, name_continent);
-}
-
-void RiskMap::addCountry(const Country& country, const std::string& continentName){
+Country* RiskMap::addCountry(const Country& country, const std::string& continentName){
 	if (countries.find(country.getName()) == countries.end()) {
 		countries[country.getName()] = country;
-		for (Observer* observer : observers) {
-			countries[country.getName()].attachObserver(observer);
-	  }
 	}
-	mapGraph.insertNode(country.getName(), continentName);
+	if (! mapGraph.insertNode(country.getName(), continentName))
+		return nullptr;
+	this->notifyObservers();
+	return &this->countries[country.getName()];
+}
+
+void RiskMap::remCountry(const Country& country){
+	debug("Deleting Country" + country.getName());
+	countries.erase(country.getName());
+	mapGraph.removeNode(country.getName());
 }
 
 void RiskMap::addNeighbour(const std::string& country_a, const std::string& country_b){
 	mapGraph.insertEdge(country_a, country_b);
+	this->notifyObservers();
+}
+
+void RiskMap::remNeighbour(const std::string& country_a, const std::string& country_b){
+	mapGraph.removeEdge(country_a, country_b);
+	this->notifyObservers();
 }
 
 void RiskMap::addPlayer(const Player& player) {
@@ -133,7 +137,7 @@ void RiskMap::parse(const std::string& path) {
 		std::string item;
 		std::stringstream line_stream(line);
 		std::vector<std::string> values;
-	  if (mode == MAP_PARSE_MODE_MAP || line.length() == 0) {
+		if (mode == MAP_PARSE_MODE_MAP || line.length() == 0) {
 			debug_str = "  Skipping: ";
 			debug_str.append(line);
 			debug(debug_str);
@@ -163,8 +167,10 @@ void RiskMap::parse(const std::string& path) {
 			debug_str.append(continentName);
 			debug(debug_str);
 
-			Country country(values[0], atoi(values[1].c_str()), atoi(values[2].c_str()), 0);
-
+			Country country(values[0]);
+			country.setPositionX(atoi(values[1].c_str()));
+			country.setPositionY(atoi(values[2].c_str()));
+			country.setArmies(0);
 			this->addCountry(country, continentName);
 		}
 		else {
@@ -206,7 +212,7 @@ void RiskMap::parse(const std::string& path) {
 		std::string item;
 		std::stringstream line_stream(line);
 		std::vector<std::string> values;
-	  if (mode != MAP_PARSE_MODE_COUNTRIES || line.length() == 0) {
+		if (mode != MAP_PARSE_MODE_COUNTRIES || line.length() == 0) {
 			debug_str = "  Skipping: ";
 			debug_str.append(line);
 			debug(debug_str);
@@ -238,6 +244,11 @@ void RiskMap::parse(const std::string& path) {
 	debug("Finished parsing: " + path);
 	this->disableNotify = false;
 	this->notifyObservers();
+
+	if (this->validate()) {
+		debug("Map is valid");
+	}
+
 }
 
 RiskMap* RiskMap::load(const std::string& path) {
@@ -288,6 +299,7 @@ bool RiskMap::save(const std::string& path) {
 void RiskMap::clear() {
 	this->continents.clear();
 	this->countries.clear();
+	this->mapGraph = SubGraphADT();
 	this->notifyObservers();
 }
 
@@ -299,6 +311,75 @@ const std::unordered_map<std::string, Country>& RiskMap::getCountries() const {
 }
 const std::unordered_map<std::string, Player>& RiskMap::getPlayers() const {
 	return this->players;
+}
+
+bool RiskMap::validate() {
+	bool result;
+
+	// Check all countries form a connected graph
+	result = isConnectedGraph("");
+	if (!result) {
+		return false;
+	}
+
+	// Check each continent's countries are connected subgraphs
+	for (auto const &ent1 : this->continents) {
+		const Continent& continent = ent1.second;
+		result = isConnectedGraph(continent.getName());
+		if (!result) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void RiskMap::isConnectedGraphHelper(std::unordered_map<const Country*, bool>& visited, Country* country, const std::string& limit_to) {
+	if (limit_to.size() > 0 && this->getContinentOfCountry(country->getName())->getName().compare(limit_to) != 0) {
+		return;
+	}
+	bool& was_visited = visited.at(country);
+	if (was_visited) {
+		return;
+	}
+	was_visited = true;
+
+	for (auto const &neighbourName : this->getNeighbours(country->getName())) {
+		Country* neighbour = this->getCountry(neighbourName);
+		this->isConnectedGraphHelper(visited, neighbour, limit_to);
+	}
+}
+
+bool RiskMap::isConnectedGraph(const std::string& limit_to) {
+	std::unordered_map<const Country*, bool> visited = std::unordered_map<const Country*, bool>();
+	for (auto const &ent1 : this->countries) {
+		const Country& country = ent1.second;
+
+		if (limit_to.size() > 0 && this->getContinentOfCountry(country.getName())->getName().compare(limit_to) != 0) {
+			continue;
+		}
+
+		visited.insert(std::pair<const Country*, bool>(&country, false));
+	}
+
+	Country* country = NULL;
+	if (limit_to.size() > 0) {
+		country = this->getCountry(*this->getCountriesInContinent(limit_to).begin());
+	}
+	else {
+		country = &this->countries.begin()->second;
+	}
+	this->isConnectedGraphHelper(visited, country, limit_to);
+
+	for (auto const &ent1 : visited) {
+		if (!ent1.second) {
+			Country country = *ent1.first;
+			debug("Country " + country.getName() + " is not connected.");
+			return false;
+		}
+	}
+
+	return true;
 }
 
 void RiskMap::notifyObservers() {

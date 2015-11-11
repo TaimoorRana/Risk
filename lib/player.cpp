@@ -10,23 +10,21 @@ Player::Player(std::string name)
 
 void Player::addCountry(const std::string& countryName)
 {
-	namesOfCountriesOwned.insert(countryName);
-	// map.getCountry(countryName)->setPlayer(name);
+    namesOfCountriesOwned.insert(countryName);
 }
 
 
 void Player::removeCountry(const std::string& countryName)
 {
-	std::set<std::string>::iterator countryOwnedIterator;
-	int index = 0;
-	for(countryOwnedIterator = namesOfCountriesOwned.begin(); countryOwnedIterator != namesOfCountriesOwned.end();countryOwnedIterator++){
-		index++;
-		if(*countryOwnedIterator == countryName){
-			namesOfCountriesOwned.erase(countryOwnedIterator);
-			break;
-		}
-	}
-	// map.getCountry(countryName)->setPlayer("");
+    std::set<std::string>::iterator countryOwnedIterator;
+    int index = 0;
+    for(countryOwnedIterator = namesOfCountriesOwned.begin(); countryOwnedIterator != namesOfCountriesOwned.end();countryOwnedIterator++){
+        index++;
+        if(*countryOwnedIterator == countryName){
+            namesOfCountriesOwned.erase(countryOwnedIterator);
+            break;
+        }
+    }
 }
 
 bool Player::hasCountry(const std::string& countryName) const
@@ -42,25 +40,15 @@ bool Player::hasCountry(const std::string& countryName) const
 
 bool Player::hasContinent(const std::string& continentName) const
 {
-	//std::set<std::string> countryList = map.getCountriesInContinent(continentName);
-	std::set<std::string>::iterator countryListIterator;
 
-	std::set<std::string>::iterator countriesOwnedIterator;
-	int matchFound=0;
-
-	// for (countryListIterator = countryList.begin(); countryListIterator != countryList.end(); countryListIterator++) {
-	// 	for (countriesOwnedIterator = namesOfCountriesOwned.begin(); countriesOwnedIterator != namesOfCountriesOwned.end(); countriesOwnedIterator++) {
-	// 		if (countryListIterator == countriesOwnedIterator ) {
-	// 			matchFound++;
-	// 		}
-	// 	}
-	// }
-
-	// if (matchFound == countryList.size()) {
-	// 	return true;
-	// }
-
-	return false;
+    std::set<std::string>::iterator continentsOwnedIterator;
+    
+    for (continentsOwnedIterator = namesOfContinentsOwned.begin(); continentsOwnedIterator != namesOfContinentsOwned.end(); continentsOwnedIterator++) {
+        if (*continentsOwnedIterator == continentName ) {
+            return true;
+        }
+    }
+    return false;
 }
 
 std::set<std::string> Player::getContinentsOwned() const
@@ -109,10 +97,9 @@ void Player::unregisterObserver(PlayerObserver *observer)
 
 void Player::notifyObserver()
 {
-	getTotalArmy();
-	for(std::set<PlayerObserver*>::iterator observerListIterator = observerList.begin(); observerListIterator != observerList.end(); observerListIterator++){
-		(*observerListIterator)->update(namesOfCountriesOwned,namesOfContinentsOwned,reinforcements,totalArmy,battleWon);
-	}
+    for(std::set<PlayerObserver*>::iterator observerListIterator = observerList.begin(); observerListIterator != observerList.end(); observerListIterator++){
+        (*observerListIterator)->update();
+    }
 }
 
 void Player::setTotalArmy(const int &totalArmy)
@@ -125,7 +112,7 @@ int Player::getTotalArmy() const
 	return totalArmy;
 }
 
-std::set<std::string> Player::getCountryOwned(){
+std::set<std::string> Player::getCountriesOwned(){
 	std::set<std::string> copy(namesOfCountriesOwned);
 	return copy;
 }

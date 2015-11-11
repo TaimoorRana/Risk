@@ -9,12 +9,17 @@ int main() {
 
 	Continent asia("Asia");
 
-	map.addCountry("Persia", asia.getName(), 1);
+	Country c = Country("Persia");
+	map.addCountry(c, asia.getName());
 
-	map.addCountry("Arabia","Asia",2);
-	map.addCountry("China","Asia",2);
-	map.addCountry("India","Asia",1);
-	map.addCountry("Russia","Europe",2);
+	c = Country("Arabia");
+	map.addCountry(c, "Asia");
+	c = Country("China");
+	map.addCountry(c, "Asia");
+	c = Country("India");
+	map.addCountry(c, "Asia");
+	c = Country("Russia");
+	map.addCountry(c, "Europe");
 
 	map.consolePrintListOfCountries("Asia");
 	map.consolePrintListOfCountries("Europe");
@@ -49,5 +54,6 @@ int main() {
 
 	std::cout << "Country India belongs to: " << map.getContinentOfCountry("India")->getName() << std::endl;
 
+	map.save("riskmap_test0.map");
 	return 0;
 }

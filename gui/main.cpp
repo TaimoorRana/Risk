@@ -7,30 +7,37 @@
 #include <QDate>
 #include <QString>
 #include <QTextStream>
+#include <QSplashScreen>
+#include <QTimer>
 
-#include "main_window.h"
 #include "risk_map.h"
+#include "mainscreen.h"
+#include "playernamedialog.h"
+#include "country_name_dialog.h"
 
+using namespace std;
 int main(int argc, char *argv[]) {
-	QApplication application(argc, argv);
+    QApplication application(argc, argv);
 
-	RiskMap map = RiskMap();
-	MainWindow* mw = new MainWindow(&map);
-	mw->show();
+    QSplashScreen *splash = new QSplashScreen;
+    QPixmap splashImg = QPixmap("/Users/taimoorrana/Desktop/Risk/gui/risk1.png").scaled(600, 300);
+    splash->setPixmap(splashImg);
+    splash->show();
+    RiskMap map;
+    Player player1("taimoor");
+    Player player2("Adrianna");
+	Player player3("Elias");
+	player1.setTotalArmy(500);
+    map.addPlayer(player1);
+    map.addPlayer(player2);
+	map.addPlayer(player3);
+	map.addPlayer(Player("stewart"));
+	QTimer::singleShot(2500,splash,SLOT(close()));
 
-	map.attachObserver(mw);
+    MainScreen w(&map,0);
+    w.setupPlayers();
+	QTimer::singleShot(2500,&w,SLOT(show()));
+    w.show();
 
-	Player stewart = Player("Stewart");
-	Player adrianna = Player("Adrianna");
-	Player taimoor = Player("Taimoor");
-	Player elias = Player("Elias");
-	Player elliott = Player("Elliott");
-
-	map.addPlayer(stewart);
-	map.addPlayer(adrianna);
-	map.addPlayer(taimoor);
-	map.addPlayer(elias);
-	map.addPlayer(elliott);
-
-	return application.exec();
+    return application.exec();
 }

@@ -83,15 +83,17 @@ bool GraphADT::areAdjacent(std::string v, std::string w) const{
 	}
 
 //11 ;; Insert a new node
-void GraphADT::insertNode(std::string nodename) {
+bool GraphADT::insertNode(std::string nodename) {
 	if (thegraph.find(nodename) == thegraph.end()){
 		//  node_hashmap x;
 		thegraph[nodename]= node_hashmap(); //x
 		number_of_nodes++;
 		set_of_vertices.insert(nodename);
+		return true;
 		}
 	else
 		std::cout<<"Error: Could not add vertex."<<std::endl;
+		return false;
 	}
 
 //12 ;; Remove node v and all its incident edges
@@ -354,12 +356,14 @@ bool DirectedGraphADT::areAdjacent(std::string v, std::string w) const{
   return false;
 }
 
-void SubGraphADT::insertNode(std::string name_of_country, std::string name_of_continent){
-	GraphADT::insertNode(name_of_country);
+bool SubGraphADT::insertNode(std::string name_of_country, std::string name_of_continent){
+	if (!GraphADT::insertNode(name_of_country))
+		return false;
 	if(allSubgraphs.find(name_of_continent) == allSubgraphs.end())
 		allSubgraphs[name_of_continent]= std::set<std::string>();
 	allSubgraphs.at(name_of_continent).insert(name_of_country);
 	countries_continents[name_of_country]=name_of_continent;
+	return true;
 }
 
 string_set SubGraphADT::subgraphContents(const std::string& name_continent){
