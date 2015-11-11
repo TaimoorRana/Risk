@@ -18,8 +18,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 	int xpos =  event->scenePos().x();
 	int ypos =  event->scenePos().y();
-	qDebug()<< xpos;
-	qDebug()<< ypos;
+	qDebug() << "MAPSCENE mousePress at " << xpos << "," << ypos;
 	QRectF r1(xpos-10,ypos-10,20,20);
 	QPen p(QColor(13,145,67,255));
 	MapEditor* parent = qobject_cast<MapEditor*>(this->parent());
@@ -34,20 +33,19 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			if(nameDialog.exec() == QDialog::Rejected)
 				return;
 			lastContinent = nameDialog.getContinentName();
-			c = map->addCountry(nameDialog.getCountryName().toStdString(), nameDialog.getContinentName().toStdString(), 0);
+			c = map->addCountry(Country(nameDialog.getCountryName().toStdString()), nameDialog.getContinentName().toStdString());
 			if( c == nullptr)
 				return;
 			c->setPositionX(xpos);
 			c->setPositionY(ypos);
-			c->notifyObservers();
 			break;
 		case REMCOUNTRY:
 			qDebug("MAPSCENE: Remove Country Tool had been selected");
-			item = getCountryGraphicsObjAt(event);
+			item = getQGraphicsCountryItemFromEvent(event);
 			break;
 		case MOVCOUNTRY:
 			qDebug("MAPSCENE: Move Country Tool had been selected.");
-			item = getCountryGraphicsObjAt(event);
+			item = getQGraphicsCountryItemFromEvent(event);
 			if (item == nullptr) {return;}
 
 			item->setFlag(QGraphicsCountryItem::ItemIsMovable);
@@ -55,7 +53,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			break;
 		case ADDLINK:
 			qDebug("MAPSCENE: Add link between countries.");
-			item = getCountryGraphicsObjAt(event);
+			item = getQGraphicsCountryItemFromEvent(event);
 			if (item == nullptr) {return;}
 
 			if (lastPicked != 0)
@@ -79,79 +77,46 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 }
 
 void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
+	QGraphicsScene::mouseReleaseEvent(event);
+
 	MapEditor* parent = qobject_cast<MapEditor*>(this->parent());
 	int xpos =  event->scenePos().x();
 	int ypos =  event->scenePos().y();
-	qDebug()<< xpos;
-	qDebug()<< ypos;
+	qDebug() << "MAPSCENE mouseRelease at " << xpos << "," << ypos;
 
 	QGraphicsCountryItem *countryQ = nullptr;
-	countryQ = getCountryGraphicsObjAt(event);
-	if (countryQ == nullptr) {return;}
-
-	switch(parent->getSelectedTool())
-	{
-	case ADDCOUNTRY:
-		qDebug("MAPSCENE: ReleaseMouse / Add Country Tool.");
-
-		break;
-	case REMCOUNTRY:
-		qDebug("MAPSCENE: ReleaseMouse / Rem Country Tool.");
-		break;
-	case MOVCOUNTRY:
-		qDebug("MAPSCENE: ReleaseMouse / Move Country Tool.");
-		countryQ->getCountry()->setPositionX(xpos);
-		countryQ->getCountry()->setPositionY(ypos);
-		countryQ->setFlag(QGraphicsCountryItem::ItemIsMovable,false);
-		qDebug("Make item un-movable.");
-		break;
-	case ADDLINK:
-		qDebug("MAPSCENE: ReleaseMouse / Add Link Tool.");
-		break;
-	case REMLINK:
-		qDebug("MAPSCENE: ReleaseMouse / Rem Link Tool.");
-
-		break;
-	case OFF:
-	default:
-		break;
-	}
-
-	countryQ->getCountry()->notifyObservers();
-}
-
-void MapScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
-	int xpos =  event->scenePos().x();
-	int ypos =  event->scenePos().y();
-
-	QGraphicsCountryItem *countryQ = nullptr;
-	countryQ = getCountryGraphicsObjAt(event);
+	countryQ = getQGraphicsCountryItemFromEvent(event);
 	if (countryQ == nullptr) {
 		return;
 	}
 
-	MapEditor* parent = qobject_cast<MapEditor*>(this->parent());
-	switch(parent->getSelectedTool()) {
+	switch (parent->getSelectedTool()) {
 		case ADDCOUNTRY:
+			qDebug("MAPSCENE: ReleaseMouse / Add Country Tool.");
 			break;
 		case REMCOUNTRY:
+			qDebug("MAPSCENE: ReleaseMouse / Rem Country Tool.");
 			break;
 		case MOVCOUNTRY:
-			countryQ->getCountry()->setPositionX(xpos);
-			countryQ->getCountry()->setPositionY(ypos);
-			countryQ->getCountry()->notifyObservers();
+			qDebug("MAPSCENE: ReleaseMouse / Move Country Tool.");
 			break;
 		case ADDLINK:
+			qDebug("MAPSCENE: ReleaseMouse / Add Link Tool.");
 			break;
 		case REMLINK:
+			qDebug("MAPSCENE: ReleaseMouse / Rem Link Tool.");
+
 			break;
 		case OFF:
 		default:
 			break;
 	}
+
+	// Re-draws the whole scene, fixing text that gets left behind from dragging QGraphicsCountryItem objects (due to their out of bound text)
+	this->update();
 }
 
-QGraphicsCountryItem* MapScene::getCountryGraphicsObjAt(QGraphicsSceneMouseEvent *event){
+QGraphicsCountryItem* MapScene::getQGraphicsCountryItemFromEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsItem *itemAt = nullptr;
 	QGraphicsCountryItem *item = nullptr;
 	itemAt = this->itemAt(event->scenePos(), QTransform());

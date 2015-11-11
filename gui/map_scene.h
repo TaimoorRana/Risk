@@ -15,13 +15,12 @@ public:
 	MapScene(RiskMap* map, QWidget *parent = 0);
 		void mousePressEvent(QGraphicsSceneMouseEvent *event);
 		void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-		void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-		QGraphicsCountryItem* getCountryGraphicsObjAt(QGraphicsSceneMouseEvent *event);
 
 private:
 	RiskMap* map = 0;
 	Country* lastPicked = 0;
 	QString lastContinent;
+	QGraphicsCountryItem* getQGraphicsCountryItemFromEvent(QGraphicsSceneMouseEvent *event);
 };
 
 #endif // MAP_SCENE_H

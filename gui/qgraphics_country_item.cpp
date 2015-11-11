@@ -1,20 +1,15 @@
-#include <QDebug>
 #include "qgraphics_country_item.h"
-//#include <QTimer>
+#include "debug.h"
 
-QGraphicsCountryItem::QGraphicsCountryItem(Country* c)
-{
-	setFlag(ItemIsSelectable);
-	setAcceptTouchEvents(true);
+QGraphicsCountryItem::QGraphicsCountryItem(Country* c) {
 	this->country = c;
 }
 
-Country* QGraphicsCountryItem::getCountry() const{
+Country* QGraphicsCountryItem::getCountry() const {
 	return this->country;
 }
 
-
-QRectF QGraphicsCountryItem::boundingRect() const{
+QRectF QGraphicsCountryItem::boundingRect() const {
 	return QRectF(-8,-8,16,16);
 }
 
@@ -26,27 +21,9 @@ void QGraphicsCountryItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
 	painter->drawText(QPointF(-23,17), QString::fromStdString(country->getName()));
 }
 
-void QGraphicsCountryItem::mousePressEvent(QGraphicsSceneMouseEvent *event){
-    QGraphicsItem::mousePressEvent(event);
-    qDebug("Mouse released within QCountryObj");
-    update();
-    qDebug()<< "Mouse was pressed at: "<< QString::fromStdString(country->getName());
-}
-
 void QGraphicsCountryItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
-    QGraphicsItem::mouseReleaseEvent(event);
-    qDebug("Mouse released within QCountryObj");
-    qDebug()<< "Mouse was pressed at: "<< QString::fromStdString(country->getName());
-
-    update();
-//    this->getCountry()->notifyObservers();
+	QGraphicsItem::mouseReleaseEvent(event);
+	this->country->setPositionX(event->scenePos().x());
+	this->country->setPositionY(event->scenePos().y());
+	this->country->notifyObservers();
 }
-
-void QGraphicsCountryItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
-    QGraphicsItem::mouseMoveEvent(event);
-//    update();
-//    this->getCountry()->notifyObservers();
-    qDebug()<< "Mouse was pressed at: "<< QString::fromStdString(country->getName());
-
-}
-

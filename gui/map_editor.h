@@ -2,7 +2,6 @@
 #define MAPEDITOR_H
 
 #include <QMainWindow>
-#include <QMutexLocker>
 
 #include "risk_map.h"
 #include "observer.h"
@@ -37,11 +36,10 @@ private slots:
 private:
 	bool validateFilename(const QString& text);
 	void observedUpdated();
-	void connectNeighboursVisit(std::map<const std::string, bool>& visited, const Country* country);
+	void connectNeighboursVisit(std::map<const std::string, bool>& visited, Country* country);
 	Ui::MapEditor* ui;
 	MapScene* scene;
 	RiskMap* observedMap;
 	ToolMode tool;
-	mutable QMutex mutex;
 };
 #endif // MAPEDITOR_H

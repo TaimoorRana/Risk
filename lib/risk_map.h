@@ -31,7 +31,6 @@ public:
 	RiskMap();
 	~RiskMap();
 	bool areCountriesAdjacent(const std::string& country_a, const std::string& country_b);
-	Country* addCountry(const std::string& name_country, const std::string& name_continent, int number_armies);
 	Country* addCountry(const Country& country, const std::string& continentName);
 	void addContinent(const std::string& name, int reinforcementBonus);
 	void addContinent(const Continent& continent);

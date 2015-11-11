@@ -130,6 +130,9 @@
    <property name="text">
     <string>Map Editor</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
   </action>
  </widget>
  <resources/>

@@ -35,7 +35,8 @@ int main(int argc, char *argv[]) {
 	QTimer::singleShot(2500,splash,SLOT(close()));
     MainScreen w(&map,0);
 	PlayerNameDialog dialog(&w);
-	QTimer::singleShot(2500,&dialog,SLOT(show()));
+	//QTimer::singleShot(2500,&dialog,SLOT(show()));
+    dialog.show();
 
     return application.exec();
 }

@@ -22,20 +22,9 @@ void RiskMap::addContinent(const Continent& continent){
 	continents[continent.getName()] = continent;
 }
 
-Country* RiskMap::addCountry(const std::string& name_country, const std::string& name_continent, int number_armies){
-	if (continents.find(name_continent) == continents.end()) {
-		this->addContinent(name_continent, 0);
-	}
-	Country* country = this->addCountry(Country(name_country, 0, 0, number_armies), name_continent);
-    return country;
-}
-
 Country* RiskMap::addCountry(const Country& country, const std::string& continentName){
 	if (countries.find(country.getName()) == countries.end()) {
 		countries[country.getName()] = country;
-		for (Observer* observer : observers) {
-			this->countries[country.getName()].attachObserver(observer);
-	  }
 	}
 	if (! mapGraph.insertNode(country.getName(), continentName))
 		return nullptr;
@@ -143,7 +132,7 @@ void RiskMap::parse(const std::string& path) {
 		std::string item;
 		std::stringstream line_stream(line);
 		std::vector<std::string> values;
-	  if (mode == MAP_PARSE_MODE_MAP || line.length() == 0) {
+		if (mode == MAP_PARSE_MODE_MAP || line.length() == 0) {
 			debug_str = "  Skipping: ";
 			debug_str.append(line);
 			debug(debug_str);
@@ -173,8 +162,10 @@ void RiskMap::parse(const std::string& path) {
 			debug_str.append(continentName);
 			debug(debug_str);
 
-			Country country(values[0], atoi(values[1].c_str()), atoi(values[2].c_str()), 0);
-
+			Country country(values[0]);
+			country.setPositionX(atoi(values[1].c_str()));
+			country.setPositionY(atoi(values[2].c_str()));
+			country.setArmies(0);
 			this->addCountry(country, continentName);
 		}
 		else {
@@ -216,7 +207,7 @@ void RiskMap::parse(const std::string& path) {
 		std::string item;
 		std::stringstream line_stream(line);
 		std::vector<std::string> values;
-	  if (mode != MAP_PARSE_MODE_COUNTRIES || line.length() == 0) {
+		if (mode != MAP_PARSE_MODE_COUNTRIES || line.length() == 0) {
 			debug_str = "  Skipping: ";
 			debug_str.append(line);
 			debug(debug_str);

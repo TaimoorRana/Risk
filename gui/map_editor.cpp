@@ -1,26 +1,15 @@
 #include <QDir>
-#include <QBrush>
 #include <QColor>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QGraphicsLineItem>
-#include <QGraphicsEllipseItem>
-#include <QGraphicsTextItem>
 #include <QPen>
-#include <QInputDialog>
-
-#include <random>
-#include <functional>
-#include <time.h>
 
 #include "debug.h"
 #include "map_editor.h"
 #include "ui_map_editor.h"
-#include <QMouseEvent>
-#include <qdebug.h>
-
 #include "qgraphics_country_item.h"
-
+#include "qgraphics_country_edge_item.h"
 
 MapEditor::MapEditor(QWidget *parent) : QMainWindow(parent) {
 	ui = new Ui::MapEditor;
@@ -32,7 +21,6 @@ MapEditor::MapEditor(QWidget *parent) : QMainWindow(parent) {
 	scene = new MapScene(observedMap, this);
 	ui->graphicsView->setScene(scene);
 
-	setMouseTracking(true);
 	tool = OFF;
 }
 
@@ -46,7 +34,6 @@ MapEditor::~MapEditor() {
 ToolMode MapEditor::getSelectedTool(){
 	return tool;
 }
-
 
 bool MapEditor::validateFilename(const QString& text) {
 	QFileInfo mapFile(text);
@@ -76,15 +63,12 @@ void MapEditor::on_loadPushButton_clicked() {
 		debug("Failed to load Map.");
 		observedMap->clear();
 	}
-
 }
 
 void MapEditor::on_newPushButton_clicked() {
 	observedMap->clear();
-	qDebug("Loading new map");
+	debug("Loading new map");
 }
-
-
 
 void MapEditor::on_saveMapPushButton_clicked(){
 		debug("Save Button clicked\n");
@@ -112,7 +96,6 @@ void MapEditor::on_moveCountryPushButton_clicked(){
 		tool = MOVCOUNTRY;
 }
 
-
 void MapEditor::on_addNeighbourPushButton_clicked(){
 		debug("Add Neighbour");
 		tool = ADDLINK;
@@ -123,8 +106,7 @@ void MapEditor::on_removeNeighbourPushButton_clicked(){
 		tool = REMLINK;
 }
 
-void MapEditor::   observedUpdated() {
-//    QMutexLocker locker(&mutex);
+void MapEditor::observedUpdated() {
 	scene->clear();
 
 	debug("render event");
@@ -137,6 +119,7 @@ void MapEditor::   observedUpdated() {
 	for (auto const &ent1 : observedMap->getCountries()) {
 		const Country& country = ent1.second;
 		QGraphicsCountryItem* item = new QGraphicsCountryItem(observedMap->getCountry(country.getName()));
+		item->setFlag(QGraphicsItem::ItemIsMovable);
 		item->setPos(country.getPositionX(), country.getPositionY());
 		this->scene->addItem(item);
 		item->setZValue(10);
@@ -151,15 +134,15 @@ void MapEditor::   observedUpdated() {
 	if (observedMap->getCountries().size() == 0) {
 		return;
 	}
-//	const Country* country = &observedMap->getCountries().begin()->second;
 
 	for (auto const &ent1 : observedMap->getCountries()) {
-		const Country& country = ent1.second;
-		connectNeighboursVisit(visited, &country);
+		const Country& tmpCountry = ent1.second;
+		Country* country = observedMap->getCountry(tmpCountry.getName());
+		connectNeighboursVisit(visited, country);
 	}
 }
 
-void MapEditor::connectNeighboursVisit(std::map<const std::string, bool>& visited, const Country* country) {
+void MapEditor::connectNeighboursVisit(std::map<const std::string, bool>& visited, Country* country) {
 	QPen pen(QColor(0xFF, 0, 0, 0x40));
 	pen.setWidth(1);
 
@@ -171,7 +154,8 @@ void MapEditor::connectNeighboursVisit(std::map<const std::string, bool>& visite
 
 	for (auto const &neighbour_str : observedMap->getNeighbours(country->getName())) {
 		Country* neighbour = observedMap->getCountry(neighbour_str);
-		QGraphicsLineItem* line = scene->addLine(country->getPositionX(), country->getPositionY(), neighbour->getPositionX(), neighbour->getPositionY(), pen);
+		QGraphicsCountryEdgeItem* line = new QGraphicsCountryEdgeItem(country, neighbour);
+		scene->addItem(line);
 		line->setZValue(1);
 		connectNeighboursVisit(visited, neighbour);
 	}

@@ -17,6 +17,7 @@ set(GUI_SOURCE_FILES
 	map_scene.cpp map_scene.h
 	enum_tooltype.h
 	qgraphics_country_item.cpp qgraphics_country_item.h
+	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h
 )
 
 set(GUI_RESOURCE_FILES

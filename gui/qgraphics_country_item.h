@@ -1,9 +1,8 @@
-#ifndef QGraphicsCountryItem_H
-#define QGraphicsCountryItem_H
-
+#ifndef QGRAPHICSCOUNTRYITEM_H
+#define QGRAPHICSCOUNTRYITEM_H
 #include <QPainter>
 #include <QGraphicsItem>
-
+#include <QGraphicsSceneMouseEvent>
 
 #include "country.h"
 
@@ -14,13 +13,9 @@ public:
 	QGraphicsCountryItem(Country* c);
 	QRectF boundingRect() const;
 	Country* getCountry() const;
-    void deleteCountry();
-
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 protected:
-	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 };
 
-#endif // QGraphicsCountryItem_H
+#endif // QGRAPHICSCOUNTRYITEM_H
