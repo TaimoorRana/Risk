@@ -1,4 +1,7 @@
-#include <QDebug>
+#include <functional>
+#include <random>
+
+#include <QMessageBox>
 
 #include "mainscreen.h"
 #include "map_scene.h"
@@ -35,6 +38,30 @@ void MainScreen::setupPlayers(){
 	this->CPUs = dialog.getAIPlayerCount();
 	this->mapPath = dialog.getMapPath();
 	this->map->parse(this->mapPath);
+	if (!this->map->validate()) {
+		QMessageBox errorDialog(this);
+		errorDialog.setWindowTitle("Error!");
+		errorDialog.setText("Invalid map");
+		errorDialog.setDetailedText("The map did not validate. Please contact its author.");
+		errorDialog.exec();
+		this->close();
+	}
+
+	std::mt19937::result_type seed = time(0);
+	auto player_rand = std::bind(std::uniform_int_distribution<int>(0, this->map->getPlayers().size()-1), std::mt19937(seed));
+	for (auto const &ent1 : this->map->getCountries()) {
+		// FIXME: We should really just not make these const.
+		const Country& ctmp = ent1.second;
+		Country* country = this->map->getCountry(ctmp.getName());
+		// Set random player
+		auto it = this->map->getPlayers().begin();
+		std::advance(it, player_rand());
+		const Player& ptmp = it->second;
+		Player* player = this->map->getPlayer(ptmp.getName());
+		country->setPlayer(player->getName());
+		// Set 2 armies
+		country->setArmies(2);
+	}
 
 	setupPlayer();
 	setupCPUs();

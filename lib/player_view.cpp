@@ -3,8 +3,8 @@
 
 PlayerView::PlayerView(Player *player)
 {
-    this->player = player;
-    update();
+		this->player = player;
+		update();
 }
 
 PlayerView::~PlayerView()
@@ -14,16 +14,16 @@ PlayerView::~PlayerView()
 
 void PlayerView::update(){
 	this->countriesOwned = player->getCountriesOwned();
-    this->continentsOwned = player->getContinentsOwned();
-    this->nbrOfReinforcements = player->getReinforcements();
-    this->nbrOfArmies = player->getTotalArmy();
-    this->nbrBattleWon = player->getBattlesWon();
+	this->continentsOwned = player->getContinentsOwned();
+	this->nbrOfReinforcements = player->getReinforcements();
+	this->nbrOfArmies = player->getTotalArmy();
+	this->nbrBattleWon = player->getBattlesWon();
 	this->name = player->getName();
 }
 
 std::string PlayerView::getName() const
 {
-    return this->name;
+		return this->name;
 }
 
 std::set<std::string> PlayerView::getCountriesOwned() const

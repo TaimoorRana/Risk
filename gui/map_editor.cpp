@@ -2,6 +2,7 @@
 #include <QColor>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QMessageBox>
 #include <QGraphicsLineItem>
 #include <QPen>
 
@@ -78,7 +79,11 @@ void MapEditor::on_saveMapPushButton_clicked(){
 		observedMap->save("riskmap_test0.map");
 	}
 	else{
-		debug("Map not valid, not saving...");
+		QMessageBox errorDialog(this);
+		errorDialog.setWindowTitle("Error!");
+		errorDialog.setText("Invalid map");
+		errorDialog.setDetailedText("The map did not validate. Please ensure that the set of all of countries are a connected graph, and countries in each continent are also connected subgraphs.");
+		errorDialog.exec();
 		return;
 	}
 }
