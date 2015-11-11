@@ -1,43 +1,30 @@
 #ifndef COUNTRY_H
 #define COUNTRY_H
-
 #include <string>
-#include <vector>
-#include "continent.h"
-#include "player.h"
+#include "observable.h"
 
-class Continent; //forward declaration
-class Player; //forward declaration
-
-class Country {
+class Country : public Observable {
 private:
 	std::string name = "";
-	Continent* continent = NULL;
-	Player* owner = NULL;
+	std::string player = "";
+	int armies = 0;
 	int x = 0;
 	int y = 0;
-	int soldiers = 0;
-	std::vector<Country*> neighbours = std::vector<Country*>();
-
 public:
-  Country();
-	Country(std::string name, Continent* continent, int x, int y);
-	Country(const Country& country);
-	~Country();
+	Country() {};
+	Country(const std::string& name);
+	Country(const Country&);
 	std::string getName() const;
-	void setName(std::string name);
-	Continent* getContinent() const;
-	void setContinent(Continent* continent);
-	Player* getOwner() const;
-	void setOwner(Player* player);
+	void setName(const std::string&);
+	void setPlayer(const std::string&);
+	std::string getPlayer() const;
+	void setArmies(const int&);
+	void removeArmies(const int&);
+	void addArmies(const int&);
+	int getArmies() const;
 	int getPositionX() const;
 	void setPositionX(int x);
 	int getPositionY() const;
 	void setPositionY(int y);
-	int getSoldiers() const;
-	void setSoldiers(int soldiers);
-  void adjustSoldiers(int soldiers);
-	std::vector<Country*> getNeighbours() const;
-	void addNeighbour(Country* country);
 };
 #endif // COUNTRY_H

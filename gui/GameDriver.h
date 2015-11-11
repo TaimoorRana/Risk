@@ -2,7 +2,7 @@
 #include "country.h"
 
 #include <iostream>
-#include <stdlib.h> 
+#include <stdlib.h>
 #ifndef DRIVER
 #define DRIVER
 
@@ -36,7 +36,7 @@ private:
 	/**
 	* @brief splashScreen Displays an intro screen and message to the user
 	*/
-	void splashScreen();
+	void showSplashScreen();
 
 	/**
 	* @brief setNumberOfPlayers Asks the user to enter the number of players as well as their names
@@ -52,7 +52,7 @@ private:
 	* @brief randomly reorder thge array of players to simulate throwing the dice and knowing who is player first, second,...
 	*/
 	void assignPlayersOrder();
-	
+
 	/**
 	* @brief getReinforcement Adjusts the number of soldiers the player gets at the beginning of their turn
 	* @param aPlayer

@@ -3,8 +3,8 @@
 
 class GameBoard{
 public:
-    void rollDices();
-    void compareResults();
+	void rollDices();
+	void compareResults();
 };
 
 #endif // GAMEBOARD

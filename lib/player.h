@@ -2,38 +2,155 @@
 #define PLAYER_H
 
 #include <string>
-#include <vector>
-#include "card.h"
-
+#include <set>
+#include "player_subject.h"
+#include "player_observer.h"
 class Country; // forward declaration
 
-class Player{
+class Player: public PlayerSubject{
 private:
-	std::string name;
-	int reinforcements;
-    std::vector<Country*> countriesOwned;
-	std::vector<Card> cards;
+	int reinforcements = 0;
+	int battleWon = 0;
+	int totalArmy = 0;
+	std::string name = "";
+	std::set<std::string> namesOfCountriesOwned;
+	std::set<std::string> namesOfContinentsOwned;
+    std::set<PlayerObserver*> observerList;
+
 public:
+	Player() {}
 	Player(std::string name);
     //Player(const Player& other);
-	void rollDices();
+	/**
+	 * @brief getName
+	 * @return name of the player
+	 */
+	std::string getName() const;
 
-	void addCountry(Country& country);
-	void removeCountry(Country& country);
-    Country* findCountry(std::string countryName);
+	/**
+	 * @brief increaseBattleWon increases battleWon value by 1
+	 */
+	void increaseBattleWon();
 
-	void addCard(Card card);
-	void removeCard(Card card);
+	/**
+	 * @brief decreaseBattleWon decreases battleWon value by 1
+	 */
+	void decreaseBattleWon();
 
-    std::string getName();
+	/**
+	 * @brief setBattlesWon sets battleWon value
+	 * @param battleWon
+	 */
+	void setBattlesWon(const int &battleWon);
 
-	void addNewSoldiers();
-	void removeNewSoldiers();
-    std::vector<Country> getCountryOwned();
+	/**
+	 * @brief getBattlesWon
+	 * @return total battles won
+	 */
+    int getBattlesWon() const;
 
-	void transferSoldiers(Country& countryFrom, Country& countryTo, int Soldiers);
 
-	void attackCountry(Country country);
+	/**
+	 * @brief addReinforcements
+	 * @param amount
+	 */
+	void addReinforcements(const int& amount);
+
+	/**
+	 * @brief removeReinforcements
+	 * @param amount
+	 */
+	void removeReinforcements(const int& amount);
+
+	/**
+	 * @brief setReinforcements
+	 * @param amount
+	 */
+	void setReinforcements(const int& amount);
+
+	/**
+	 * @brief getReinforcements
+	 * @return total reinforcements
+	 */
+	int getReinforcements() const;
+
+
+	/**
+	 * @brief addCountry
+	 * @param name
+	 */
+	void addCountry(const std::string& name);
+
+	/**
+	 * @brief removeCountry
+	 * @param name
+	 */
+	void removeCountry(const std::string& name);
+	/**
+	 * @brief hasCountry checks if the country belongs to the player
+	 * @param name
+	 * @return true if found
+	 */
+	bool hasCountry(const std::string& name) const;
+
+	/**
+	 * @brief getCountriesOwned
+	 * @return a set of countries owned
+	 */
+	std::set<std::string> getCountriesOwned();
+
+	/**
+	 * @brief addContinent
+	 * @param name
+	 */
+	void addContinent(const std::string& name);
+	/**
+	 * @brief removeContinent
+	 * @param name
+	 */
+	void removeContinent(const std::string& name);
+
+	/**
+	 * @brief hasContinent checks if the continent belongs to the player
+	 * @param name
+	 * @return true if found
+	 */
+	bool hasContinent(const std::string& name) const;
+
+	/**
+	 * @brief getContinentsOwned
+	 * @return a set of continents owned
+	 */
+	std::set<std::string> getContinentsOwned() const;
+
+
+	/**
+	 * @brief registerObserver
+	 * @param observer
+	 */
+	virtual void registerObserver(PlayerObserver* observer);
+
+	/**
+	 * @brief unregisterObserver
+	 * @param observer
+	 */
+	virtual void unregisterObserver(PlayerObserver* observer);
+
+	/**
+	 * @brief notifyObserver notify all the observers to update
+	 */
+	virtual void notifyObserver();
+
+	/**
+	 * @brief getTotalArmy
+	 * @return total number of army
+	 */
+	int getTotalArmy() const;
+
+	/**
+	 * @brief setTotalArmy
+	 * @param totalArmy
+	 */
+    void setTotalArmy(const int& totalArmy);
 };
-
 #endif // PLAYER_H

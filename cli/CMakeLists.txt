@@ -1,5 +1,5 @@
 set(CLI_SOURCE_FILES
-	risk.cpp
+	main.cpp
 )
 
 include_directories("${CMAKE_SOURCE_DIR}/lib")

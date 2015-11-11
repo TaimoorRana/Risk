@@ -6,7 +6,6 @@
 
 void debug(const std::string& string) {
 	std::cout << "DEBUG: " << string << std::endl;
-    std::cout << RAND_MAX;
 }
 
 void map_print_continents(std::map<const std::string, Continent*> continents) {

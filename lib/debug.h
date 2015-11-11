@@ -3,6 +3,8 @@
 #include <map>
 #include "map.h"
 
+#include <string>
+
 void debug(const std::string& string);
 void map_print_continents(std::map<const std::string, Continent*> countries);
 void map_print_countries(std::map<const std::string, Country*> continents);

@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include <QApplication>
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -8,23 +7,43 @@
 #include <QDate>
 #include <QString>
 #include <QTextStream>
+#include <QSplashScreen>
+#include <QTimer>
 
-#include "risk.h"
-#include "country.h"
-#include "dices.h"
-#include "continent.h"
+#include "risk_map.h"
+#include "mainscreen.h"
+#include "playernamedialog.h"
+#include "country_name_dialog.h"
 
-int main(int argc, char *argv[])
-{
-//    QApplication application(argc, argv);
-//    return application.exec();
+using namespace std;
+int main(int argc, char *argv[]) {
+    QApplication application(argc, argv);
 
-    using namespace std;
-    QDate d1(2007, 10,2), d2(QDate::currentDate());
-    int days;
-    cout<<"I came to Canada on "<<d1.toString("MMMM d yyyy").toStdString()<<"\nToday's date is "<<d2.toString("MMMM d yyyy").toStdString()<<endl;
-    days = d1.daysTo(d2);
-    cout<<"There are "<<days<<" days between "<<d1.toString("dd MMM yyyy").toStdString()<<" and "<<d2.toString(Qt::ISODate).toStdString()<<endl;
-    cout<<"Hellow"<<endl;
-    return 0;
+    QSplashScreen *splash = new QSplashScreen;
+    QPixmap splashImg = QPixmap("/Users/taimoorrana/Desktop/Risk/gui/risk1.png").scaled(600, 300);
+    splash->setPixmap(splashImg);
+    splash->show();
+    RiskMap map;
+	Player player1("Taimoor");
+    Player player2("Adrianna");
+	Player player3("Elias");
+	player1.setTotalArmy(500);
+    map.addPlayer(player1);
+    map.addPlayer(player2);
+	map.addPlayer(player3);
+	map.addPlayer(Player("stewart"));
+	QTimer::singleShot(2500,splash,SLOT(close()));
+
+    MainScreen w(&map,0);
+
+	if(w.setupPlayers() == false)
+	{
+		application.exit();
+		return -1;
+	}
+
+	QTimer::singleShot(2500,&w,SLOT(show()));
+    w.show();
+
+    return application.exec();
 }
