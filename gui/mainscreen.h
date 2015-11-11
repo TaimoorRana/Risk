@@ -23,7 +23,7 @@ public:
 	void addPlayerView(QWidget* pvWidget);
 	void setCPUs(int total);
 	void setPlayerName(std::string name);
-	void setupPlayers();
+	bool setupPlayers();
 	void observedUpdated();
 
 private slots:

@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     splash->setPixmap(splashImg);
     splash->show();
     RiskMap map;
-    Player player1("taimoor");
+	Player player1("Taimoor");
     Player player2("Adrianna");
 	Player player3("Elias");
 	player1.setTotalArmy(500);
@@ -35,7 +35,13 @@ int main(int argc, char *argv[]) {
 	QTimer::singleShot(2500,splash,SLOT(close()));
 
     MainScreen w(&map,0);
-    w.setupPlayers();
+
+	if(w.setupPlayers() == false)
+	{
+		application.exit();
+		return -1;
+	}
+
 	QTimer::singleShot(2500,&w,SLOT(show()));
     w.show();
 
