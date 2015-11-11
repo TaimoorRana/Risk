@@ -23,9 +23,9 @@ GameDriver GameDriver::getInstance()
 	return driver;
 }
 
-void GameDriver::splashScreen()
+void GameDriver::showSplashScreen()
 {
-	cout << "\tWELCOME TO RISK.... THE BEST STRATEGY GAME EVERRRRRRR!!!\n\n\n\n\n";
+	
 }
 
 
