@@ -1,8 +1,9 @@
 #ifndef PLAYERVIEW
 #define PLAYERVIEW
-#include "player_observer.h"
 #include <string>
 #include <set>
+#include "player_observer.h"
+#include "player.h"
 class PlayerView: public PlayerObserver{
 private:
 	std::set<std::string> countriesOwned;
@@ -10,9 +11,14 @@ private:
 	int nbrOfReinforcements;
 	int nbrOfArmies;
 	int nbrBattleWon;
+    std::string name;
+    Player* player;
 
 public:
-	void update (std::set<std::string>,std::set<std::string>,int,int,int);
+    PlayerView(Player* player);
+    ~PlayerView();
+    void update ();
+    std::string getName() const;
 	std::set<std::string> getCountriesOwned() const;
 	std::set<std::string> getContinentsOwned() const;
 	int getNumberOfReinforcements() const;
