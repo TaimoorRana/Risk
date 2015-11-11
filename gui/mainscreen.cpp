@@ -30,9 +30,13 @@ MainScreen::~MainScreen() {
 	delete ui;
 }
 
-void MainScreen::setupPlayers(){
+bool MainScreen::setupPlayers(){
 	PlayerNameDialog dialog(this);
-	dialog.exec();
+	if(dialog.exec() == QDialog::Rejected)
+	{
+		qDebug("Quitting");
+		return false;
+	}
 
 	this->playerName = dialog.getPlayerName();
 	this->CPUs = dialog.getAIPlayerCount();
@@ -65,6 +69,7 @@ void MainScreen::setupPlayers(){
 
 	setupPlayer();
 	setupCPUs();
+	return true;
 }
 
 void MainScreen::setupPlayer()
