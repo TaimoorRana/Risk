@@ -2,7 +2,7 @@
 #include <random>
 
 #include <QMessageBox>
-
+#include <time.h>
 #include "mainscreen.h"
 #include "map_scene.h"
 #include "map_renderer.h"
