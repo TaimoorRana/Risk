@@ -1,24 +1,24 @@
 #include <QDebug>
-#include "country_qgraphics_object.h"
+#include "qgraphics_country_item.h"
 //#include <QTimer>
 
-CountryQGraphicsObject::CountryQGraphicsObject(Country* c)
+QGraphicsCountryItem::QGraphicsCountryItem(Country* c)
 {
 	setFlag(ItemIsSelectable);
 	setAcceptTouchEvents(true);
 	this->country = c;
 }
 
-Country* CountryQGraphicsObject::getCountry() const{
+Country* QGraphicsCountryItem::getCountry() const{
 	return this->country;
 }
 
 
-QRectF CountryQGraphicsObject::boundingRect() const{
+QRectF QGraphicsCountryItem::boundingRect() const{
 	return QRectF(-8,-8,16,16);
 }
 
-void CountryQGraphicsObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
+void QGraphicsCountryItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
 	QPen pen(Qt::black,1);
 	painter->setPen(pen);
 	painter->setBrush(QBrush(Qt::green));
@@ -26,14 +26,14 @@ void CountryQGraphicsObject::paint(QPainter *painter, const QStyleOptionGraphics
 	painter->drawText(QPointF(-23,17), QString::fromStdString(country->getName()));
 }
 
-void CountryQGraphicsObject::mousePressEvent(QGraphicsSceneMouseEvent *event){
+void QGraphicsCountryItem::mousePressEvent(QGraphicsSceneMouseEvent *event){
     QGraphicsItem::mousePressEvent(event);
     qDebug("Mouse released within QCountryObj");
     update();
     qDebug()<< "Mouse was pressed at: "<< QString::fromStdString(country->getName());
 }
 
-void CountryQGraphicsObject::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
+void QGraphicsCountryItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
     QGraphicsItem::mouseReleaseEvent(event);
     qDebug("Mouse released within QCountryObj");
     qDebug()<< "Mouse was pressed at: "<< QString::fromStdString(country->getName());
@@ -42,7 +42,7 @@ void CountryQGraphicsObject::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 //    this->getCountry()->notifyObservers();
 }
 
-void CountryQGraphicsObject::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
+void QGraphicsCountryItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
     QGraphicsItem::mouseMoveEvent(event);
 //    update();
 //    this->getCountry()->notifyObservers();

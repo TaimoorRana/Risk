@@ -14,42 +14,47 @@
 #include <time.h>
 
 #include "debug.h"
-#include "main_window.h"
-#include "ui_main_window.h"
+#include "map_editor.h"
+#include "ui_map_editor.h"
 #include <QMouseEvent>
 #include <qdebug.h>
 
-#include "country_qgraphics_object.h"
+#include "qgraphics_country_item.h"
 
 
-MainWindow::MainWindow(RiskMap* map, QWidget *parent) : QMainWindow(parent) {
-	ui = new Ui::MainWindow;
+MapEditor::MapEditor(QWidget *parent) : QMainWindow(parent) {
+	ui = new Ui::MapEditor;
 	ui->setupUi(this);
-    observedMap = map;
-	scene = new MapScene(map, this);
+
+	observedMap = new RiskMap();
+	observedMap->attachObserver(this);
+
+	scene = new MapScene(observedMap, this);
 	ui->graphicsView->setScene(scene);
-    setMouseTracking(true);
-    tool = OFF;
+
+	setMouseTracking(true);
+	tool = OFF;
 }
 
-MainWindow::~MainWindow() {
+MapEditor::~MapEditor() {
 	scene->clear();
+	delete observedMap;
 	delete scene;
 	delete ui;
 }
 
-ToolMode MainWindow::getSelectedTool(){
+ToolMode MapEditor::getSelectedTool(){
 	return tool;
 }
 
 
-bool MainWindow::validateFilename(const QString& text) {
+bool MapEditor::validateFilename(const QString& text) {
 	QFileInfo mapFile(text);
 	QFileInfo bmpFile(mapFile.path() + "/" + mapFile.baseName() + ".bmp");
 	return mapFile.exists() && bmpFile.exists();
 }
 
-void MainWindow::on_filenameLineEdit_textChanged(QString text) {
+void MapEditor::on_filenameLineEdit_textChanged(QString text) {
 	if (this->validateFilename(text)) {
 		ui->loadPushButton->setEnabled(true);
 		ui->newPushButton->setEnabled(true);
@@ -60,12 +65,12 @@ void MainWindow::on_filenameLineEdit_textChanged(QString text) {
 	}
 }
 
-void MainWindow::on_browsePushButton_clicked() {
+void MapEditor::on_browsePushButton_clicked() {
 	QString filename(QFileDialog::getOpenFileName(this, tr("Open map"), QDir::currentPath(), tr("Risk map files (*.map)")));
 	ui->filenameLineEdit->setText(filename);
 }
 
-void MainWindow::on_loadPushButton_clicked() {
+void MapEditor::on_loadPushButton_clicked() {
 	observedMap->parse(ui->filenameLineEdit->text().toStdString());
 	if(!observedMap->validate()){
 		debug("Failed to load Map.");
@@ -74,15 +79,15 @@ void MainWindow::on_loadPushButton_clicked() {
 
 }
 
-void MainWindow::on_newPushButton_clicked() {
+void MapEditor::on_newPushButton_clicked() {
 	observedMap->clear();
 	qDebug("Loading new map");
 }
 
 
 
-void MainWindow::on_saveMapPushButton_clicked(){
-    debug("Save Button clicked\n");
+void MapEditor::on_saveMapPushButton_clicked(){
+		debug("Save Button clicked\n");
 	if(observedMap->validate()){
 		observedMap->save("riskmap_test0.map");
 	}
@@ -92,33 +97,33 @@ void MainWindow::on_saveMapPushButton_clicked(){
 	}
 }
 
-void MainWindow::on_addCountryPushButton_clicked(){
+void MapEditor::on_addCountryPushButton_clicked(){
 	debug("Add Country");
-    tool = ADDCOUNTRY;
+		tool = ADDCOUNTRY;
 }
 
-void MainWindow::on_removeCountryPushButton_clicked(){
-    debug("Remove Country");
-    tool = REMCOUNTRY;
+void MapEditor::on_removeCountryPushButton_clicked(){
+		debug("Remove Country");
+		tool = REMCOUNTRY;
 }
 
-void MainWindow::on_moveCountryPushButton_clicked(){
-    debug("Move Country");
-    tool = MOVCOUNTRY;
+void MapEditor::on_moveCountryPushButton_clicked(){
+		debug("Move Country");
+		tool = MOVCOUNTRY;
 }
 
 
-void MainWindow::on_addNeighbourPushButton_clicked(){
-    debug("Add Neighbour");
-    tool = ADDLINK;
+void MapEditor::on_addNeighbourPushButton_clicked(){
+		debug("Add Neighbour");
+		tool = ADDLINK;
 }
 
-void MainWindow::on_removeNeighbourPushButton_clicked(){
-    debug("Remove Neighbour");
-    tool = REMLINK;
+void MapEditor::on_removeNeighbourPushButton_clicked(){
+		debug("Remove Neighbour");
+		tool = REMLINK;
 }
 
-void MainWindow::   observedUpdated() {
+void MapEditor::   observedUpdated() {
 //    QMutexLocker locker(&mutex);
 	scene->clear();
 
@@ -131,7 +136,7 @@ void MainWindow::   observedUpdated() {
 
 	for (auto const &ent1 : observedMap->getCountries()) {
 		const Country& country = ent1.second;
-		CountryQGraphicsObject* item = new CountryQGraphicsObject(observedMap->getCountry(country.getName()));
+		QGraphicsCountryItem* item = new QGraphicsCountryItem(observedMap->getCountry(country.getName()));
 		item->setPos(country.getPositionX(), country.getPositionY());
 		this->scene->addItem(item);
 		item->setZValue(10);
@@ -154,7 +159,7 @@ void MainWindow::   observedUpdated() {
 	}
 }
 
-void MainWindow::connectNeighboursVisit(std::map<const std::string, bool>& visited, const Country* country) {
+void MapEditor::connectNeighboursVisit(std::map<const std::string, bool>& visited, const Country* country) {
 	QPen pen(QColor(0xFF, 0, 0, 0x40));
 	pen.setWidth(1);
 
