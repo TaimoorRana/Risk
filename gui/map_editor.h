@@ -2,12 +2,12 @@
 #define MAPEDITOR_H
 
 #include <QMainWindow>
-
-#include "risk_map.h"
-#include "observer.h"
 #include "country_name_dialog.h"
 #include "enum_tooltype.h"
 #include "map_scene.h"
+#include "observer.h"
+#include "risk_map.h"
+#include "ui_map_editor.h"
 
 namespace Ui {
 	class MapEditor;
@@ -29,7 +29,6 @@ private slots:
 	void on_saveMapPushButton_clicked();
 	void on_addCountryPushButton_clicked();
 	void on_removeCountryPushButton_clicked();
-	void on_moveCountryPushButton_clicked();
 	void on_addNeighbourPushButton_clicked();
 	void on_removeNeighbourPushButton_clicked();
 
@@ -37,6 +36,7 @@ private:
 	bool validateFilename(const QString& text);
 	void observedUpdated();
 	void connectNeighboursVisit(std::map<const std::string, bool>& visited, Country* country);
+	void resetToolbar();
 	Ui::MapEditor* ui;
 	MapScene* scene;
 	RiskMap* observedMap;

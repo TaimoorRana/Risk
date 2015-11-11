@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MapEditor</class>
- <widget class="QMainWindow" name="MainWindow">
+ <widget class="QMainWindow" name="MapEditor">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -103,6 +103,9 @@
           <property name="text">
            <string>+ Country</string>
           </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -110,12 +113,8 @@
           <property name="text">
            <string>- Country </string>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="moveCountryPushButton">
-          <property name="text">
-           <string>* Country</string>
+          <property name="checkable">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -124,12 +123,18 @@
           <property name="text">
            <string>+ Link    </string>
           </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item>
          <widget class="QToolButton" name="removeNeighbourPushButton">
           <property name="text">
            <string>-  Link    </string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
           </property>
          </widget>
         </item>

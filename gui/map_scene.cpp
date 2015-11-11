@@ -1,12 +1,7 @@
-#include <QDebug>
-//#include <QString>
-
+#include "enum_tooltype.h"
 #include "map_editor.h"
 #include "map_scene.h"
-#include "enum_tooltype.h"
 #include "qgraphics_country_item.h"
-#include "debug.h"
-
 
 MapScene::MapScene(RiskMap* map, QWidget *parent){
 	this->setParent(parent);
@@ -18,100 +13,65 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 	int xpos =  event->scenePos().x();
 	int ypos =  event->scenePos().y();
-	qDebug() << "MAPSCENE mousePress at " << xpos << "," << ypos;
 	QRectF r1(xpos-10,ypos-10,20,20);
 	QPen p(QColor(13,145,67,255));
 	MapEditor* parent = qobject_cast<MapEditor*>(this->parent());
 	CountryNameDialog nameDialog(parent);
-	Country* c;
+	Country* c = nullptr;
 	QGraphicsCountryItem *item = nullptr;
 
 	switch(parent->getSelectedTool()){
 		case ADDCOUNTRY:
-			qDebug("MAPSCENE: Add Country Tool had been selected");
 			nameDialog.setLastContinentName(lastContinent);
-			if(nameDialog.exec() == QDialog::Rejected)
+			if (nameDialog.exec() == QDialog::Rejected) {
 				return;
+			}
+
 			lastContinent = nameDialog.getContinentName();
 			c = map->addCountry(Country(nameDialog.getCountryName().toStdString()), nameDialog.getContinentName().toStdString());
-			if( c == nullptr)
+			if (c == nullptr) {
+				// FIXME inform user of error
 				return;
+			}
 			c->setPositionX(xpos);
 			c->setPositionY(ypos);
+			this->map->notifyObservers();
 			break;
+
 		case REMCOUNTRY:
-			qDebug("MAPSCENE: Remove Country Tool had been selected");
 			item = getQGraphicsCountryItemFromEvent(event);
-			break;
-		case MOVCOUNTRY:
-			qDebug("MAPSCENE: Move Country Tool had been selected.");
-			item = getQGraphicsCountryItemFromEvent(event);
-			if (item == nullptr) {return;}
-
-			item->setFlag(QGraphicsCountryItem::ItemIsMovable);
-			qDebug("Make item movable.");
-			break;
-		case ADDLINK:
-			qDebug("MAPSCENE: Add link between countries.");
-			item = getQGraphicsCountryItemFromEvent(event);
-			if (item == nullptr) {return;}
-
-			if (lastPicked != 0)
-			{
-				debug("Second pick is " + item->getCountry()->getName());
-				map->addNeighbour(item->getCountry()->getName(), lastPicked->getName());
-				lastPicked = 0;
+			if (item == nullptr) {
+				return;
 			}
-			else
-			{
-				debug("First pick is " + item->getCountry()->getName());
+
+			map->remCountry(*item->getCountry());
+			this->map->notifyObservers();
+			break;
+
+		case ADDLINK:
+			item = getQGraphicsCountryItemFromEvent(event);
+			if (item == nullptr) {
+				return;
+			}
+
+			if (lastPicked != nullptr) {
+				map->addNeighbour(item->getCountry()->getName(), lastPicked->getName());
+				lastPicked = nullptr;
+			}
+			else {
 				lastPicked = item->getCountry();
 			}
-
 			break;
+
 		case REMLINK:
 		case OFF:
 		default:
-			return;
+			break;
 	}
 }
 
 void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsScene::mouseReleaseEvent(event);
-
-	MapEditor* parent = qobject_cast<MapEditor*>(this->parent());
-	int xpos =  event->scenePos().x();
-	int ypos =  event->scenePos().y();
-	qDebug() << "MAPSCENE mouseRelease at " << xpos << "," << ypos;
-
-	QGraphicsCountryItem *countryQ = nullptr;
-	countryQ = getQGraphicsCountryItemFromEvent(event);
-	if (countryQ == nullptr) {
-		return;
-	}
-
-	switch (parent->getSelectedTool()) {
-		case ADDCOUNTRY:
-			qDebug("MAPSCENE: ReleaseMouse / Add Country Tool.");
-			break;
-		case REMCOUNTRY:
-			qDebug("MAPSCENE: ReleaseMouse / Rem Country Tool.");
-			break;
-		case MOVCOUNTRY:
-			qDebug("MAPSCENE: ReleaseMouse / Move Country Tool.");
-			break;
-		case ADDLINK:
-			qDebug("MAPSCENE: ReleaseMouse / Add Link Tool.");
-			break;
-		case REMLINK:
-			qDebug("MAPSCENE: ReleaseMouse / Rem Link Tool.");
-
-			break;
-		case OFF:
-		default:
-			break;
-	}
-
 	// Re-draws the whole scene, fixing text that gets left behind from dragging QGraphicsCountryItem objects (due to their out of bound text)
 	this->update();
 }

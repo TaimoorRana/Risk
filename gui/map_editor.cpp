@@ -7,7 +7,6 @@
 
 #include "debug.h"
 #include "map_editor.h"
-#include "ui_map_editor.h"
 #include "qgraphics_country_item.h"
 #include "qgraphics_country_edge_item.h"
 
@@ -81,29 +80,39 @@ void MapEditor::on_saveMapPushButton_clicked(){
 	}
 }
 
+void MapEditor::resetToolbar() {
+	ui->addCountryPushButton->setChecked(false);
+	ui->removeCountryPushButton->setChecked(false);
+	ui->addNeighbourPushButton->setChecked(false);
+	ui->removeNeighbourPushButton->setChecked(false);
+}
+
 void MapEditor::on_addCountryPushButton_clicked(){
-	debug("Add Country");
-		tool = ADDCOUNTRY;
+	bool checked = ui->addCountryPushButton->isChecked();
+	this->resetToolbar();
+	ui->addCountryPushButton->setChecked(checked);
+	this->tool = checked ? ADDCOUNTRY : OFF;
 }
 
 void MapEditor::on_removeCountryPushButton_clicked(){
-		debug("Remove Country");
-		tool = REMCOUNTRY;
-}
-
-void MapEditor::on_moveCountryPushButton_clicked(){
-		debug("Move Country");
-		tool = MOVCOUNTRY;
+	bool checked = ui->removeCountryPushButton->isChecked();
+	this->resetToolbar();
+	ui->removeCountryPushButton->setChecked(checked);
+	this->tool = checked ? REMCOUNTRY : OFF;
 }
 
 void MapEditor::on_addNeighbourPushButton_clicked(){
-		debug("Add Neighbour");
-		tool = ADDLINK;
+	bool checked = ui->addNeighbourPushButton->isChecked();
+	this->resetToolbar();
+	ui->addNeighbourPushButton->setChecked(checked);
+	this->tool = checked ? ADDLINK : OFF;
 }
 
 void MapEditor::on_removeNeighbourPushButton_clicked(){
-		debug("Remove Neighbour");
-		tool = REMLINK;
+	bool checked = ui->removeNeighbourPushButton->isChecked();
+	this->resetToolbar();
+	ui->removeNeighbourPushButton->setChecked(checked);
+	this->tool = checked ? REMLINK : OFF;
 }
 
 void MapEditor::observedUpdated() {
