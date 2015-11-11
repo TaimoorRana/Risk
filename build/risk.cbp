@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="risk" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;CMake Files\lib\;CMake Files\cli\;CMake Files\gui\;CMake Files\cmake\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\local\;CMake Files\..\..\..\..\usr\local\Cellar\;CMake Files\..\..\..\..\usr\local\Cellar\qt5\;CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\;CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\;CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\;CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Widgets\;CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\;CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Core\;CMake Files\resources\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="/Users/adriannediaz/QTprojects/Risk/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="edit_cache">
+         <Option working_dir="/Users/adriannediaz/QTprojects/Risk/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 edit_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="/Users/adriannediaz/QTprojects/Risk/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="librisk">
+         <Option output="/Users/adriannediaz/QTprojects/Risk/build/lib/liblibrisk.a" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/Users/adriannediaz/QTprojects/Risk/build/lib" />
+         <Option object_output="./" />
+         <Option type="2" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/7.0.0/include" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include" />
+            <Add directory="/Library/Frameworks" />
+            <Add directory="/System/Library/Frameworks" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/build/lib" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/lib" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/lib/Makefile&quot;  VERBOSE=1 librisk" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/lib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/lib/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/lib/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="librisk/fast">
+         <Option output="/Users/adriannediaz/QTprojects/Risk/build/lib/liblibrisk.a" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/Users/adriannediaz/QTprojects/Risk/build/lib" />
+         <Option object_output="./" />
+         <Option type="2" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/7.0.0/include" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include" />
+            <Add directory="/Library/Frameworks" />
+            <Add directory="/System/Library/Frameworks" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/build/lib" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/lib" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/lib/Makefile&quot;  VERBOSE=1 librisk/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/lib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/lib/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/lib/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="risk-cli">
+         <Option output="/Users/adriannediaz/QTprojects/Risk/build/cli/risk-cli" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/Users/adriannediaz/QTprojects/Risk/build/cli" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/7.0.0/include" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include" />
+            <Add directory="/Library/Frameworks" />
+            <Add directory="/System/Library/Frameworks" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/build/cli" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/cli" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/lib" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/cli/Makefile&quot;  VERBOSE=1 risk-cli" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/cli/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/cli/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/cli/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="risk-cli/fast">
+         <Option output="/Users/adriannediaz/QTprojects/Risk/build/cli/risk-cli" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/Users/adriannediaz/QTprojects/Risk/build/cli" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/7.0.0/include" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include" />
+            <Add directory="/Library/Frameworks" />
+            <Add directory="/System/Library/Frameworks" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/build/cli" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/cli" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/lib" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/cli/Makefile&quot;  VERBOSE=1 risk-cli/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/cli/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/cli/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/cli/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="Qt5CopyBinaries">
+         <Option working_dir="/Users/adriannediaz/QTprojects/Risk/build/gui" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 Qt5CopyBinaries" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="risk-gui_automoc">
+         <Option working_dir="/Users/adriannediaz/QTprojects/Risk/build/gui" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 risk-gui_automoc" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="risk-gui">
+         <Option output="/Users/adriannediaz/QTprojects/Risk/build/gui/risk-gui.app/Contents/MacOS/risk-gui" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/Users/adriannediaz/QTprojects/Risk/build/gui" />
+         <Option object_output="./" />
+         <Option type="0" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DQT_WIDGETS_LIB" />
+            <Add option="-DQT_GUI_LIB" />
+            <Add option="-DQT_CORE_LIB" />
+            <Add option="-DQT_NO_DEBUG" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/7.0.0/include" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include" />
+            <Add directory="/Library/Frameworks" />
+            <Add directory="/System/Library/Frameworks" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/build/gui" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/gui" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/lib" />
+            <Add directory="/usr/local/Cellar/qt5/5.5.1/./mkspecs/macx-clang" />
+            <Add directory="/usr/local/Cellar/qt5/5.5.1/lib/QtCore.framework" />
+            <Add directory="/usr/local/Cellar/qt5/5.5.1/lib/QtCore.framework/Headers" />
+            <Add directory="/usr/local/Cellar/qt5/5.5.1/lib/QtGui.framework" />
+            <Add directory="/usr/local/Cellar/qt5/5.5.1/lib/QtGui.framework/Headers" />
+            <Add directory="/usr/local/Cellar/qt5/5.5.1/lib/QtWidgets.framework" />
+            <Add directory="/usr/local/Cellar/qt5/5.5.1/lib/QtWidgets.framework/Headers" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 risk-gui" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="risk-gui/fast">
+         <Option output="/Users/adriannediaz/QTprojects/Risk/build/gui/risk-gui.app/Contents/MacOS/risk-gui" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/Users/adriannediaz/QTprojects/Risk/build/gui" />
+         <Option object_output="./" />
+         <Option type="0" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DQT_WIDGETS_LIB" />
+            <Add option="-DQT_GUI_LIB" />
+            <Add option="-DQT_CORE_LIB" />
+            <Add option="-DQT_NO_DEBUG" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/7.0.0/include" />
+            <Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include" />
+            <Add directory="/Library/Frameworks" />
+            <Add directory="/System/Library/Frameworks" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/build/gui" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/gui" />
+            <Add directory="/Users/adriannediaz/QTprojects/Risk/lib" />
+            <Add directory="/usr/local/Cellar/qt5/5.5.1/./mkspecs/macx-clang" />
+            <Add directory="/usr/local/Cellar/qt5/5.5.1/lib/QtCore.framework" />
+            <Add directory="/usr/local/Cellar/qt5/5.5.1/lib/QtCore.framework/Headers" />
+            <Add directory="/usr/local/Cellar/qt5/5.5.1/lib/QtGui.framework" />
+            <Add directory="/usr/local/Cellar/qt5/5.5.1/lib/QtGui.framework/Headers" />
+            <Add directory="/usr/local/Cellar/qt5/5.5.1/lib/QtWidgets.framework" />
+            <Add directory="/usr/local/Cellar/qt5/5.5.1/lib/QtWidgets.framework/Headers" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 risk-gui/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/adriannediaz/QTprojects/Risk/build/gui/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/cli/main.cpp">
+         <Option target="risk-cli"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/GameDriver.cpp">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/GameDriver.h">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/country_name_dialog.cpp">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/country_name_dialog.h">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/country_name_dialog.ui">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/enum_tooltype.h">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/gameboardview.cpp">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/gameboardview.h">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/main.cpp">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/mainscreen.cpp">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/mainscreen.h">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/mainscreen.ui">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/map_editor.cpp">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/map_editor.h">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/map_editor.ui">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/map_scene.cpp">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/map_scene.h">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/playerinfowidget.cpp">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/playerinfowidget.h">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/playerinfowidget.ui">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/playernamedialog.cpp">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/playernamedialog.h">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/playernamedialog.ui">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/qgraphics_country_item.cpp">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/qgraphics_country_item.h">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/states.cpp">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/states.h">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/style_sheet.qss">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/continent.cpp">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/continent.h">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/country.cpp">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/country.h">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/debug.cpp">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/debug.h">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/graph_adt.cpp">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/graph_adt.h">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/librisk.cpp">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/librisk.h">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/observable.cpp">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/observable.h">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/observer.h">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/player.cpp">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/player.h">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/player_observer.h">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/player_subject.h">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/player_view.cpp">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/player_view.h">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/risk_map.cpp">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/risk_map.h">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/war_referee.cpp">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/war_referee.h">
+         <Option target="librisk"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/resources/AppIcon.icns">
+         <Option target="risk-gui"/>
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/lib/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\lib\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/cli/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\cli\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/cmake/QtCommon.cmake">
+          <Option virtualFolder="CMake Files\cmake\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Widgets\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Widgets\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Widgets\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Widgets\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5GuiConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QCocoaIntegrationPlugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QDDSPlugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QICNSPlugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QJp2Plugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QMngPlugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QTgaPlugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QTiffPlugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QWbmpPlugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5Gui_QWebpPlugin.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Gui/Qt5GuiConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Gui\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Core/Qt5CoreConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Core\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Core/Qt5CoreConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Core\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Core/Qt5CoreConfigExtras.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Core\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Core\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Core/Qt5CoreMacros.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Core\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Core/Qt5CoreConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Core\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/../../../../usr/local/Cellar/qt5/5.5.1/lib/cmake/Qt5Core/Qt5CoreConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\Cellar\qt5\5.5.1\lib\cmake\Qt5Core\" />
+      </Unit>
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/resources/MacOSXBundleInfo.plist.in">
+          <Option virtualFolder="CMake Files\resources\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>

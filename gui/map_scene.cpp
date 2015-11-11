@@ -1,10 +1,6 @@
 #include <QDebug>
-<<<<<<< HEAD
 #include <QString>
-#include "main_window.h"
-=======
-//#include <QString>
->>>>>>> f957498e814474d54c2c79bde6dc7833fce47290
+
 
 #include "map_editor.h"
 #include "map_scene.h"
@@ -47,22 +43,6 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			c->notifyObservers();
 			break;
 		case REMCOUNTRY:
-<<<<<<< HEAD
-            qDebug("MAPSCENE: Remove Country Tool had been selected");
-			debug("About to delete "+item->getCountry()->getName());
-//			map->remCountry(*(item->getCountry()));
-
-//			qobject_cast<CountryQGraphicsObject*>
-
-//			qDebug()<< typeid(dynamic_cast<CountryQGraphicsObject*>(this->itemAt(event->scenePos(), QTransform()))).name();
-//			if ( (dynamic_cast<CountryQGraphicsObject*>(this->itemAt(event->scenePos(), QTransform()))->getCountry()) == nullptr)
-//				qDebug("Null pointer");
-
-//			qDebug()<< (dynamic_cast<CountryQGraphicsObject*>(this->itemAt(event->scenePos(), QTransform()))->getCountry());
-//			item = dynamic_cast<CountryQGraphicsObject*>(this->itemAt(event->scenePos(), QTransform()));
-//			map->remCountry(item->getCountry());
-//			delete item;
-=======
 			qDebug("MAPSCENE: Remove Country Tool had been selected");
 			item = getCountryGraphicsObjAt(event);
             map->remCountry(*(item->getCountry()));
@@ -72,7 +52,6 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			qDebug("MAPSCENE: Move Country Tool had been selected.");
 			item = getCountryGraphicsObjAt(event);
 			if (item == nullptr) {return;}
->>>>>>> f957498e814474d54c2c79bde6dc7833fce47290
 
 			item->setFlag(QGraphicsCountryItem::ItemIsMovable);
 			qDebug("Make item movable.");
@@ -96,6 +75,21 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 			break;
 		case REMLINK:
+		qDebug("MAPSCENE: Remove link between countries.");
+		item = getCountryGraphicsObjAt(event);
+		if (item == nullptr) {return;}
+
+		if (lastPicked != 0)
+		{
+			debug("Second pick is " + item->getCountry()->getName());
+			map->remNeighbour(item->getCountry()->getName(), lastPicked->getName());
+			lastPicked = 0;
+		}
+		else
+		{
+			debug("First pick is " + item->getCountry()->getName());
+			lastPicked = item->getCountry();
+		}
 		case OFF:
 		default:
 			return;
