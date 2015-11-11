@@ -36,7 +36,7 @@ private:
 	/**
 	* @brief splashScreen Displays an intro screen and message to the user
 	*/
-	void splashScreen();
+	void showSplashScreen();
 
 	/**
 	* @brief setNumberOfPlayers Asks the user to enter the number of players as well as their names

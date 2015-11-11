@@ -2,25 +2,29 @@
 #define PLAYERNAMEDIALOG_H
 
 #include <QDialog>
-#include <QString>
+#include <string>
+
 namespace Ui {
 class PlayerNameDialog;
 }
 
 class PlayerNameDialog : public QDialog
 {
-    Q_OBJECT
-
+	Q_OBJECT
 public:
-    explicit PlayerNameDialog(QWidget *parent = 0);
-    ~PlayerNameDialog();
-    QString getText();
+	explicit PlayerNameDialog(QWidget *parent = 0);
+	~PlayerNameDialog();
+	std::string getPlayerName();
+	std::string getMapPath();
+	int getAIPlayerCount();
 
 private slots:
-    void on_buttonBox_accepted();
+	void on_mapPathBrowsePushButton_clicked();
 
 private:
-    Ui::PlayerNameDialog *ui;
+	Ui::PlayerNameDialog *ui;
+	const int totalCPU = 4;
+	void setComboBox();
 };
 
 #endif // PLAYERNAMEDIALOG_H

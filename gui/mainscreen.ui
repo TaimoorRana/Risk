@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>828</width>
-    <height>542</height>
+    <width>1034</width>
+    <height>730</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_6">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_5">
       <item>
@@ -38,9 +38,9 @@
            </spacer>
           </item>
           <item>
-           <widget class="QRadioButton" name="attackRadio">
+           <widget class="QRadioButton" name="fortifyRadio">
             <property name="text">
-             <string>Attack</string>
+             <string>Fortify</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">buttonGroup</string>
@@ -48,9 +48,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="fortifyRadio">
+           <widget class="QRadioButton" name="attackRadio">
             <property name="text">
-             <string>Fortify</string>
+             <string>Attack</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">buttonGroup</string>
@@ -96,77 +96,11 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="topMargin">
+         <number>0</number>
+        </property>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QLabel" name="Player1">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="Player1TotalCountries">
-            <property name="text">
-             <string>Total Countries</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
-           <widget class="QLabel" name="Player3">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="Player3TotalCountries">
-            <property name="text">
-             <string>Total Countries</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <item>
-           <widget class="QLabel" name="Player4">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="Player4TotalCountries">
-            <property name="text">
-             <string>Total Countries</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <widget class="QLabel" name="Player2">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="Player2TotalCountries">
-            <property name="text">
-             <string>Total Countries</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <layout class="QVBoxLayout" name="verticalLayout_2"/>
         </item>
        </layout>
       </item>
@@ -179,32 +113,30 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>828</width>
+     <width>1034</width>
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="fileMenu">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="mapEditorAction"/>
+   </widget>
+   <addaction name="fileMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="mapEditorAction">
+   <property name="text">
+    <string>Map Editor</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>released()</signal>
-   <receiver>MainScreen</receiver>
-   <slot>on_pushButton_clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>523</x>
-     <y>42</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>596</x>
-     <y>40</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>on_pushButton_clicked()</slot>
  </slots>

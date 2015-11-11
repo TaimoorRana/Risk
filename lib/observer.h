@@ -7,7 +7,6 @@ class Observable;
 
 class Observer {
 public:
-	~Observer() {};
 	virtual void observedUpdated() = 0;
 protected:
 	Observer() {};

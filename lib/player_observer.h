@@ -3,6 +3,7 @@
 #include <set>
 #include <string>
 class PlayerObserver{
+
 public:
 	/*
 	 * @std::set<std::string> : list of countries
@@ -11,7 +12,7 @@ public:
 	 * @int                   : total armies
 	 * @int                   : total battles won
 	 */
-	virtual void update(std::set<std::string>,std::set<std::string>,int,int,int) = 0;
+    virtual void update() = 0;
 };
 
 #endif // PLAYEROBSERVER

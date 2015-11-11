@@ -31,11 +31,13 @@ public:
 	RiskMap();
 	~RiskMap();
 	bool areCountriesAdjacent(const std::string& country_a, const std::string& country_b);
-	void addCountry(const std::string& name_country, const std::string& name_continent, int number_armies);
-	void addCountry(const Country& country, const std::string& continentName);
+	Country* addCountry(const Country& country, const std::string& continentName);
 	void addContinent(const std::string& name, int reinforcementBonus);
 	void addContinent(const Continent& continent);
+	void remCountry(const Country& country);
 	void addNeighbour(const std::string& country_a, const std::string& country_b);
+	void remNeighbour(const std::string& country_a, const std::string& country_b);
+
 	void addPlayer(const Player& player);
 	Continent* getContinentOfCountry(const std::string& name_country);
 	Continent* getContinent(const std::string& name);
@@ -52,6 +54,9 @@ public:
 	void parse(const std::string& path);
 	bool save(const std::string& path);
 	void clear();
+	bool validate();
+	void isConnectedGraphHelper(std::unordered_map<const Country*, bool>& visited, Country* country, const std::string& limit_to);
+	bool isConnectedGraph(const std::string& limit_to);
 	void notifyObservers();
 };
 #endif
