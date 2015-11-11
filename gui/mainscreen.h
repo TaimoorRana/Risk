@@ -33,10 +33,10 @@ private slots:
 private:
 	QString playerName;
 	int CPUs;
-    Ui::MainScreen *ui;
+    Ui::MainScreen *ui=0;
     PlayerNameDialog *nameDialog;
-    MapEditor *editor;
-    RiskMap *map;
+    MapEditor *editor=0;
+    RiskMap *map=0;
 
 	void setupPlayer();
 	void setupCPUs();
