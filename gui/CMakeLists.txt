@@ -11,6 +11,7 @@ set(GUI_SOURCE_FILES
 	mainscreen.cpp mainscreen.h mainscreen.ui
 	GameDriver.cpp GameDriver.h
 	gameboardview.cpp gameboardview.h
+	gamedriver1.cpp gamedriver1.h
 	map_editor.cpp map_editor.h map_editor.ui
 	map_scene.cpp map_scene.h
 	map_renderer.cpp map_renderer.h
@@ -18,7 +19,6 @@ set(GUI_SOURCE_FILES
 	playernamedialog.cpp playernamedialog.h playernamedialog.ui
 	qgraphics_country_item.cpp qgraphics_country_item.h
 	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h
-	states.cpp states.h
 )
 
 set(GUI_RESOURCE_FILES
