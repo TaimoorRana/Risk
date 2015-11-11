@@ -43,7 +43,6 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			if (item == nullptr) {
 				return;
 			}
-
 			map->remCountry(*item->getCountry());
 			this->map->notifyObservers();
 			break;
