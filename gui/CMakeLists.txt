@@ -18,6 +18,7 @@ set(GUI_SOURCE_FILES
 	enum_tooltype.h
 	qgraphics_country_item.cpp qgraphics_country_item.h
 	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h
+        gamedriver1.cpp gamedriver1.h
 )
 
 set(GUI_RESOURCE_FILES
