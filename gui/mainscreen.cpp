@@ -51,7 +51,7 @@ void MainScreen::setCPUs(int total)
 	this->CPUs = total;
 }
 
-void MainScreen::setPLayerName(QString name)
+void MainScreen::setPlayerName(QString name)
 {
 	this->playerName = name;
 }

@@ -23,7 +23,7 @@ public:
     void mousePressEvent(QMouseEvent *e);
     void addPlayerView(QWidget* pvWidget);
 	void setCPUs(int total);
-	void setPLayerName(QString name);
+	void setPlayerName(QString name);
 	void setupPlayers();
 
 private slots:

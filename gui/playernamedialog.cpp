@@ -6,19 +6,19 @@
 
 PlayerNameDialog::PlayerNameDialog(QWidget *parent) :QDialog(parent),ui(new Ui::PlayerNameDialog)
 {
-    ui->setupUi(this);
-    setComboBox();
+	ui->setupUi(this);
+	setComboBox();
 }
 
 void PlayerNameDialog::setComboBox(){
-    for(int x = 0 ; x < totalCPU; x++){
-        ui->comboBox->addItem(QString::number(x+1));
-    }
+	for(int x = 0 ; x < totalCPU; x++){
+		ui->comboBox->addItem(QString::number(x+1));
+	}
 }
 
 PlayerNameDialog::~PlayerNameDialog()
 {
-    delete ui;
+	delete ui;
 }
 
 QString* PlayerNameDialog::getText()
@@ -34,11 +34,11 @@ QString* PlayerNameDialog::getChoice()
 
 void PlayerNameDialog::on_buttonBox_accepted()
 {
-	dynamic_cast<MainScreen*>(this->parent())->setPLayerName(ui->lineEdit->text());
-	dynamic_cast<MainScreen*>(this->parent())->setCPUs(ui->comboBox->currentText().toInt());
-	dynamic_cast<MainScreen*>(this->parent())->setupPlayers();
-	dynamic_cast<MainScreen*>(this->parent())->show();
-
+	MainScreen* parent = dynamic_cast<MainScreen*>(this->parent());
+	parent->setPlayerName(ui->lineEdit->text());
+	parent->setCPUs(ui->comboBox->currentText().toInt());
+	parent->setupPlayers();
+	parent->show();
 }
 
 
