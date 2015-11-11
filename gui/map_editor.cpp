@@ -7,6 +7,7 @@
 
 #include "debug.h"
 #include "map_editor.h"
+#include "map_renderer.h"
 #include "qgraphics_country_item.h"
 #include "qgraphics_country_edge_item.h"
 
@@ -18,6 +19,7 @@ MapEditor::MapEditor(QWidget *parent) : QMainWindow(parent) {
 	observedMap->attachObserver(this);
 
 	scene = new MapScene(observedMap, this);
+	scene->setEditable(true);
 	ui->graphicsView->setScene(scene);
 
 	tool = OFF;
@@ -57,7 +59,8 @@ void MapEditor::on_browsePushButton_clicked() {
 }
 
 void MapEditor::on_loadPushButton_clicked() {
-	observedMap->parse(ui->filenameLineEdit->text().toStdString());
+	this->mapPath = ui->filenameLineEdit->text().toStdString();
+	observedMap->parse(this->mapPath);
 	if(!observedMap->validate()){
 		debug("Failed to load Map.");
 		observedMap->clear();
@@ -116,57 +119,5 @@ void MapEditor::on_removeNeighbourPushButton_clicked(){
 }
 
 void MapEditor::observedUpdated() {
-	scene->clear();
-
-	debug("render event");
-
-	QFileInfo mapFile(ui->filenameLineEdit->text());
-	QFileInfo bmpFile(mapFile.path() + "/" + mapFile.baseName() + ".bmp");
-	QPixmap bg(bmpFile.absoluteFilePath());
-	scene->addPixmap(bg);
-
-	for (auto const &ent1 : observedMap->getCountries()) {
-		const Country& country = ent1.second;
-		QGraphicsCountryItem* item = new QGraphicsCountryItem(observedMap->getCountry(country.getName()));
-		item->setFlag(QGraphicsItem::ItemIsMovable);
-		item->setPos(country.getPositionX(), country.getPositionY());
-		this->scene->addItem(item);
-		item->setZValue(10);
-	}
-
-	std::map<const std::string, bool> visited = std::map<const std::string, bool>();
-	for (auto const &ent1 : observedMap->getCountries()) {
-		const Country& country = ent1.second;
-		visited.insert(std::pair<const std::string, bool>(country.getName(), false));
-	}
-
-	if (observedMap->getCountries().size() == 0) {
-		return;
-	}
-
-	for (auto const &ent1 : observedMap->getCountries()) {
-		const Country& tmpCountry = ent1.second;
-		Country* country = observedMap->getCountry(tmpCountry.getName());
-		connectNeighboursVisit(visited, country);
-	}
+	MapRenderer::updateScene(this->observedMap, this->scene, this->mapPath, true);
 }
-
-void MapEditor::connectNeighboursVisit(std::map<const std::string, bool>& visited, Country* country) {
-	QPen pen(QColor(0xFF, 0, 0, 0x40));
-	pen.setWidth(1);
-
-	bool& was_visited = visited.at(country->getName());
-	if (was_visited) {
-		return;
-	}
-	was_visited = true;
-
-	for (auto const &neighbour_str : observedMap->getNeighbours(country->getName())) {
-		Country* neighbour = observedMap->getCountry(neighbour_str);
-		QGraphicsCountryEdgeItem* line = new QGraphicsCountryEdgeItem(country, neighbour);
-		scene->addItem(line);
-		line->setZValue(1);
-		connectNeighboursVisit(visited, neighbour);
-	}
-}
-

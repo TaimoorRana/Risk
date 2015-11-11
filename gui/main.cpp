@@ -33,10 +33,11 @@ int main(int argc, char *argv[]) {
 	map.addPlayer(player3);
 	map.addPlayer(Player("stewart"));
 	QTimer::singleShot(2500,splash,SLOT(close()));
+
     MainScreen w(&map,0);
-	PlayerNameDialog dialog(&w);
-	//QTimer::singleShot(2500,&dialog,SLOT(show()));
-    dialog.show();
+    w.setupPlayers();
+	QTimer::singleShot(2500,&w,SLOT(show()));
+    w.show();
 
     return application.exec();
 }

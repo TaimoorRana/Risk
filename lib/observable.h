@@ -12,7 +12,6 @@ public:
 	virtual void detachObserver(Observer* observer);
 	virtual void notifyObservers();
 	Observable();
-	~Observable() {};
 protected:
 	std::list<Observer*> observers;
 };

@@ -5,24 +5,24 @@ include(QtCommon)
 fix_project_version()
 
 set(GUI_SOURCE_FILES
-	main.cpp
+	enum_tooltype.h
 	country_name_dialog.cpp country_name_dialog.h country_name_dialog.ui
-	map_editor.cpp map_editor.h map_editor.ui
+	main.cpp
 	mainscreen.cpp mainscreen.h mainscreen.ui
 	GameDriver.cpp GameDriver.h
-	states.cpp states.h
 	gameboardview.cpp gameboardview.h
+	map_editor.cpp map_editor.h map_editor.ui
+	map_scene.cpp map_scene.h
+	map_renderer.cpp map_renderer.h
 	playerinfowidget.cpp playerinfowidget.h playerinfowidget.ui
 	playernamedialog.cpp playernamedialog.h playernamedialog.ui
-	map_scene.cpp map_scene.h
-	enum_tooltype.h
 	qgraphics_country_item.cpp qgraphics_country_item.h
 	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h
+	states.cpp states.h
 )
 
 set(GUI_RESOURCE_FILES
 	style_sheet.qss
-	#risk.qrc
 )
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/style_sheet.qss DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 

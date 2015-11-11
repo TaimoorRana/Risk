@@ -19,6 +19,7 @@ public:
 	MapEditor(QWidget *parent = 0);
 	~MapEditor();
 	ToolMode getSelectedTool();
+	void observedUpdated();
 
 private slots:
 	void on_filenameLineEdit_textChanged(QString text);
@@ -33,13 +34,13 @@ private slots:
 	void on_removeNeighbourPushButton_clicked();
 
 private:
+	std::string mapPath = "";
+	Ui::MapEditor* ui = nullptr;
+	MapScene* scene = nullptr;
+	RiskMap* observedMap = nullptr;
+	ToolMode tool = OFF;
+
 	bool validateFilename(const QString& text);
-	void observedUpdated();
-	void connectNeighboursVisit(std::map<const std::string, bool>& visited, Country* country);
 	void resetToolbar();
-	Ui::MapEditor* ui;
-	MapScene* scene;
-	RiskMap* observedMap;
-	ToolMode tool;
 };
 #endif // MAPEDITOR_H

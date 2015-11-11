@@ -8,8 +8,20 @@ MapScene::MapScene(RiskMap* map, QWidget *parent){
 	this->map = map;
 }
 
+bool MapScene::getEditable() const {
+	return this->editable;
+}
+
+void MapScene::setEditable(bool editable) {
+	this->editable = editable;
+}
+
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsScene::mousePressEvent(event);
+
+	if (!this->editable) {
+		return;
+	}
 
 	int xpos =  event->scenePos().x();
 	int ypos =  event->scenePos().y();

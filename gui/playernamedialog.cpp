@@ -1,44 +1,39 @@
+#include <QDir>
+#include <QFileDialog>
+
+#include "mainscreen.h"
 #include "playernamedialog.h"
 #include "ui_playernamedialog.h"
-#include "mainscreen.h"
-#include <QDebug>
-#include <iostream>
 
-PlayerNameDialog::PlayerNameDialog(QWidget *parent) :QDialog(parent),ui(new Ui::PlayerNameDialog)
+PlayerNameDialog::PlayerNameDialog(QWidget *parent) : QDialog(parent), ui(new Ui::PlayerNameDialog)
 {
 	ui->setupUi(this);
 	setComboBox();
 }
 
-void PlayerNameDialog::setComboBox(){
-	for(int x = 0 ; x < totalCPU; x++){
-		ui->comboBox->addItem(QString::number(x+1));
-	}
-}
-
-PlayerNameDialog::~PlayerNameDialog()
-{
+PlayerNameDialog::~PlayerNameDialog() {
 	delete ui;
 }
 
-QString* PlayerNameDialog::getText()
-{
-	return name;
+void PlayerNameDialog::setComboBox(){
+	for (int x = 0 ; x < totalCPU; x++){
+		ui->AIPlayerCountComboBox->addItem(QString::number(x+1));
+	}
 }
 
-QString* PlayerNameDialog::getChoice()
-{
-	return choice;
+std::string PlayerNameDialog::getPlayerName() {
+	return ui->playerNameLineEdit->text().toStdString();
 }
 
-
-void PlayerNameDialog::on_buttonBox_accepted()
-{
-	MainScreen* parent = dynamic_cast<MainScreen*>(this->parent());
-	parent->setPlayerName(ui->lineEdit->text());
-	parent->setCPUs(ui->comboBox->currentText().toInt());
-	parent->setupPlayers();
-	parent->show();
+std::string PlayerNameDialog::getMapPath() {
+	return ui->mapPathLineEdit->text().toStdString();
 }
 
+int PlayerNameDialog::getAIPlayerCount() {
+	return ui->AIPlayerCountComboBox->currentText().toInt();
+}
 
+void PlayerNameDialog::on_mapPathBrowsePushButton_clicked() {
+	QString filename(QFileDialog::getOpenFileName(this, tr("Open map"), QDir::currentPath(), tr("Risk map files (*.map)")));
+	ui->mapPathLineEdit->setText(filename);
+}

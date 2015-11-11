@@ -13,30 +13,31 @@ namespace Ui {
     class MainScreen;
 }
 
-class MainScreen : public QMainWindow
+class MainScreen : public QMainWindow, public Observer
 {
     Q_OBJECT
 
 public:
     explicit MainScreen(RiskMap* map, QWidget *parent = 0);
     ~MainScreen();
-    void mousePressEvent(QMouseEvent *e);
     void addPlayerView(QWidget* pvWidget);
 	void setCPUs(int total);
-	void setPlayerName(QString name);
+	void setPlayerName(std::string name);
 	void setupPlayers();
+    void observedUpdated();
 
 private slots:
     void on_pushButton_clicked();
     void on_mapEditorAction_triggered();
 
 private:
-	QString playerName;
-	int CPUs;
-    Ui::MainScreen *ui;
-    PlayerNameDialog *nameDialog;
-    MapEditor *editor;
-    RiskMap *map;
+	std::string playerName = "";
+    std::string mapPath = "";
+	int CPUs = 0;
+    Ui::MainScreen *ui = nullptr;
+    MapEditor *editor = nullptr;
+    RiskMap *map = nullptr;
+    MapScene *scene = nullptr;
 
 	void setupPlayer();
 	void setupCPUs();
