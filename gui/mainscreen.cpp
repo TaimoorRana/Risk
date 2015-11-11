@@ -2,7 +2,7 @@
 #include <random>
 
 #include <QMessageBox>
-
+#include <time.h>
 #include "mainscreen.h"
 #include "map_scene.h"
 #include "map_renderer.h"
@@ -58,8 +58,11 @@ void MainScreen::setupPlayers(){
 		Player* player = this->map->getPlayer(ptmp.getName());
 		country->setPlayer(player->getName());
 		// Set 2 armies
+		player->addCountry(country->getName());
 		country->setArmies(2);
+		player->setTotalArmy(22);
 		player->notifyObserver();
+
 	}
 
 	setupPlayer();
@@ -68,10 +71,16 @@ void MainScreen::setupPlayers(){
 
 void MainScreen::setupPlayer()
 {
-	Player* player = new Player(this->playerName);
-	PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this,player);
-	ui->horizontalLayout_2->addWidget(playerinfo);
-	map->addPlayer(*player);
+	for(auto const &ent1: map->getPlayers()){
+		Player p = ent1.second;
+		Player *player = map->getPlayer(p.getName());
+		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this,player);
+		ui->horizontalLayout_2->addWidget(playerinfo);
+
+	}
+
+
+
 }
 
 void MainScreen::setupCPUs()
@@ -96,16 +105,16 @@ void MainScreen::setCPUs(int total)
 
 void MainScreen::on_pushButton_clicked()
 {
-		if(ui->fortifyRadio->isChecked()){
-			ui->attackRadio->setChecked(true);
-			return;
-		}else if(ui->attackRadio->isChecked()){
-			ui->reinforcementRadio->setChecked(true);
-			return;
-		}else{
-			ui->fortifyRadio->setChecked(true);
-			return;
-		}
+	if(ui->fortifyRadio->isChecked()){
+		ui->attackRadio->setChecked(true);
+		return;
+	}else if(ui->attackRadio->isChecked()){
+		ui->reinforcementRadio->setChecked(true);
+		return;
+	}else{
+		ui->fortifyRadio->setChecked(true);
+		return;
+	}
 }
 
 /**
