@@ -18,9 +18,7 @@ MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(
 
 	this->scene = new MapScene(map, this);
 	ui->graphicsView->setScene(scene);
-
-	setMouseTracking(true);
-	ui->attackRadio->setChecked(true);
+	ui->fortifyRadio->setChecked(true);
 }
 
 MainScreen::~MainScreen() {
@@ -61,6 +59,7 @@ void MainScreen::setupPlayers(){
 		country->setPlayer(player->getName());
 		// Set 2 armies
 		country->setArmies(2);
+		player->notifyObserver();
 	}
 
 	setupPlayer();
@@ -97,14 +96,14 @@ void MainScreen::setCPUs(int total)
 
 void MainScreen::on_pushButton_clicked()
 {
-		if(ui->attackRadio->isChecked()){
-			ui->fortifyRadio->setChecked(true);
+		if(ui->fortifyRadio->isChecked()){
+			ui->attackRadio->setChecked(true);
 			return;
-		}else if(ui->fortifyRadio->isChecked()){
+		}else if(ui->attackRadio->isChecked()){
 			ui->reinforcementRadio->setChecked(true);
 			return;
 		}else{
-			ui->attackRadio->setChecked(true);
+			ui->fortifyRadio->setChecked(true);
 			return;
 		}
 }

@@ -20,5 +20,6 @@ void PlayerInfoWidget::update()
 	ui->countriesValueLabel->setText(QString::number(player->getCountriesOwned().size()));
 	ui->continentsValueLabel->setText(QString::number(player->getContinentsOwned().size()));
 	ui->armiesValueLabel->setText(QString::number(player->getTotalArmy()));
+	//this->update();
 }
 

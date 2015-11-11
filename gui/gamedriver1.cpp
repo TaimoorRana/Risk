@@ -1,19 +1,21 @@
 #include "gamedriver1.h"
-#include "risk_map.h"
-#include "player.h"
-#include <set>
-#include <string>
 using namespace std;
 
 GameDriver1::GameDriver1(RiskMap *riskMap)
 {
-    this->riskMap = riskMap;
-    for(auto const &ent1: riskMap->getPlayers()){
-        const Player& p = ent1.second;
-        Player *player = riskMap->getPlayer(p.getName());
-        calculateReinforcementArmies(player);
+	MainScreen* mainWindow = new MainScreen(riskMap,0);
+	this->riskMap = riskMap;
+	mapScene = new MapScene(riskMap, mainWindow);
+	QSplashScreen *splash = new QSplashScreen;
+	QPixmap splashImg = QPixmap("/Users/taimoorrana/Desktop/Risk/gui/risk1.png").scaled(600, 300);
+	splash->setPixmap(splashImg);
+	QTimer::singleShot(2500,splash,SLOT(close()));
 
-    }
+//    for(auto const &ent1: riskMap->getPlayers()){
+//        const Player& p = ent1.second;
+//        Player *player = riskMap->getPlayer(p.getName());
+//        calculateReinforcementArmies(player);
+//    }
 
 }
 

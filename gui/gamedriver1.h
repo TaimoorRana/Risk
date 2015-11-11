@@ -2,8 +2,13 @@
 #define GAMEDRIVER1_H
 #include "risk_map.h"
 #include "player.h"
+#include "map_scene.h"
+#include "mainscreen.h"
+#include <QSplashScreen>
+#include <QPixmap>
 #include <string>
 #include <set>
+#include <QTimer>
 using namespace std;
 class GameDriver1
 {
@@ -28,16 +33,12 @@ public:
     void endTurn();
 
 private:
-
-    RiskMap *riskMap;
+	MapScene* mapScene;
+	RiskMap *riskMap;
     int numberOfPlayers;
     string currentPlayerName;
     bool gameBegun;
     bool canFortify;
-
-
-
-
 
 };
 
