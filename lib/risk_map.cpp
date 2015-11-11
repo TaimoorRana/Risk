@@ -16,10 +16,12 @@ void RiskMap::addContinent(const std::string& name, int reinforcementBonus){
 	if (continents.find(name) == continents.end()) {
 		continents[name] = Continent(name);
 	}
+	this->notifyObservers();
 }
 
 void RiskMap::addContinent(const Continent& continent){
 	continents[continent.getName()] = continent;
+	this->notifyObservers();
 }
 
 Country* RiskMap::addCountry(const Country& country, const std::string& continentName){
@@ -33,9 +35,9 @@ Country* RiskMap::addCountry(const Country& country, const std::string& continen
 }
 
 void RiskMap::remCountry(const Country& country){
-	debug("Deleting Country" + country.getName());
 	countries.erase(country.getName());
 	mapGraph.removeNode(country.getName());
+	this->notifyObservers();
 }
 
 void RiskMap::addNeighbour(const std::string& country_a, const std::string& country_b){
@@ -52,6 +54,7 @@ void RiskMap::addPlayer(const Player& player) {
 	if (this->players.find(player.getName()) == this->players.end()) {
 		this->players[player.getName()] = player;
 	}
+	this->notifyObservers();
 }
 
 Continent* RiskMap::getContinentOfCountry(const std::string& name_country){
