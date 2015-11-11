@@ -16,9 +16,9 @@ class MapScene: public QGraphicsScene
 {
 public:
 	MapScene(RiskMap* map, QWidget *parent = 0);
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     CountryQGraphicsObject* getCountryGraphicsObjAt(QGraphicsSceneMouseEvent *event);
 
 private:

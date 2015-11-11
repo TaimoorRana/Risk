@@ -14,7 +14,6 @@ set(GUI_SOURCE_FILES
 	map_scene.cpp map_scene.h
 	enum_tooltype.h
 	country_qgraphics_object.cpp country_qgraphics_object.h
-        custom_country_connection.cpp custom_country_connection.h
 )
 
 set(GUI_RESOURCE_FILES
