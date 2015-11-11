@@ -1,4 +1,4 @@
-#include <qDebug>
+#include <QDebug>
 
 #include "qgraphics_country_edge_item.h"
 

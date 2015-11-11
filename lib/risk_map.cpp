@@ -43,6 +43,11 @@ void RiskMap::addNeighbour(const std::string& country_a, const std::string& coun
 	this->notifyObservers();
 }
 
+void RiskMap::remNeighbour(const std::string& country_a, const std::string& country_b){
+	mapGraph.removeEdge(country_a, country_b);
+	this->notifyObservers();
+}
+
 void RiskMap::addPlayer(const Player& player) {
 	if (this->players.find(player.getName()) == this->players.end()) {
 		this->players[player.getName()] = player;

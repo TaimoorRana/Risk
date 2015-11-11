@@ -1,7 +1,11 @@
-#include "enum_tooltype.h"
+
+#include <QDebug>
+#include <QString>
+
 #include "map_editor.h"
 #include "map_scene.h"
 #include "qgraphics_country_item.h"
+#include "debug.h"
 
 MapScene::MapScene(RiskMap* map, QWidget *parent){
 	this->setParent(parent);
@@ -75,6 +79,21 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			break;
 
 		case REMLINK:
+		qDebug("MAPSCENE: Remove link between countries.");
+		item = getQGraphicsCountryItemFromEvent(event);
+		if (item == nullptr) {return;}
+
+		if (lastPicked != 0)
+		{
+			debug("Second pick is " + item->getCountry()->getName());
+			map->remNeighbour(item->getCountry()->getName(), lastPicked->getName());
+			lastPicked = 0;
+		}
+		else
+		{
+			debug("First pick is " + item->getCountry()->getName());
+			lastPicked = item->getCountry();
+		}
 		case OFF:
 		default:
 			break;

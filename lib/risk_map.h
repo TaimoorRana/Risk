@@ -36,6 +36,8 @@ public:
 	void addContinent(const Continent& continent);
 	void remCountry(const Country& country);
 	void addNeighbour(const std::string& country_a, const std::string& country_b);
+	void remNeighbour(const std::string& country_a, const std::string& country_b);
+
 	void addPlayer(const Player& player);
 	Continent* getContinentOfCountry(const std::string& name_country);
 	Continent* getContinent(const std::string& name);
