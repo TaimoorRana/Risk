@@ -257,10 +257,10 @@
       <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/gameboardview.h">
          <Option target="risk-gui"/>
       </Unit>
-      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/gamedriver1.cpp">
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/gamedriver.cpp">
          <Option target="risk-gui"/>
       </Unit>
-      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/gamedriver1.h">
+      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/gamedriver.h">
          <Option target="risk-gui"/>
       </Unit>
       <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/main.cpp">

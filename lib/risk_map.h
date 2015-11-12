@@ -21,13 +21,13 @@
 class RiskMap : public Observable
 {
 private:
-	bool disableNotify = false;
 	std::unordered_map<std::string, Continent> continents;
 	std::unordered_map<std::string, Country> countries;
 	std::unordered_map<std::string, Player> players;
 	SubGraphADT mapGraph;
 
 public:
+	bool disableNotify = false;
 	RiskMap();
 	~RiskMap();
 	bool areCountriesAdjacent(const std::string& country_a, const std::string& country_b);

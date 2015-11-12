@@ -3,6 +3,12 @@
 #include <string>
 #include "observable.h"
 
+/**
+ * @brief The Country class extends observable has the player name the number of armies
+ * on the country the postion of the country on the map, can set and get the number of armies
+ * and the position.
+ */
+
 class Country : public Observable {
 private:
 	std::string name = "";
@@ -11,20 +17,73 @@ private:
 	int x = 0;
 	int y = 0;
 public:
+	/**
+	 * @brief Country
+	 */
 	Country() {};
+	/**
+	 * @brief Country
+	 * @param name
+	 */
 	Country(const std::string& name);
+	/**
+	 * @brief Country
+	 */
 	Country(const Country&);
+	/**
+	 * @brief getName
+	 * @return
+	 */
 	std::string getName() const;
+	/**
+	 * @brief setName
+	 */
 	void setName(const std::string&);
+	/**
+	 * @brief setPlayer
+	 */
 	void setPlayer(const std::string&);
+	/**
+	 * @brief getPlayer
+	 * @return
+	 */
 	std::string getPlayer() const;
+	/**
+	 * @brief setArmies
+	 */
 	void setArmies(const int&);
+	/**
+	 * @brief removeArmies
+	 */
 	void removeArmies(const int&);
+	/**
+	 * @brief addArmies
+	 */
 	void addArmies(const int&);
+	/**
+	 * @brief getArmies
+	 * @return
+	 */
 	int getArmies() const;
+	/**
+	 * @brief getPositionX
+	 * @return
+	 */
 	int getPositionX() const;
+	/**
+	 * @brief setPositionX
+	 * @param x
+	 */
 	void setPositionX(int x);
+	/**
+	 * @brief getPositionY
+	 * @return
+	 */
 	int getPositionY() const;
+	/**
+	 * @brief setPositionY
+	 * @param y
+	 */
 	void setPositionY(int y);
 };
 #endif // COUNTRY_H

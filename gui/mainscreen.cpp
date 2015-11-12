@@ -1,8 +1,11 @@
 #include <functional>
 #include <random>
+#include <time.h>
 
 #include <QMessageBox>
-#include <time.h>
+#include <QFileInfo>
+#include <QString>
+
 #include "mainscreen.h"
 #include "map_scene.h"
 #include "map_renderer.h"
@@ -32,24 +35,38 @@ MainScreen::~MainScreen() {
 
 bool MainScreen::setupPlayers(){
 	PlayerNameDialog dialog(this);
-	if(dialog.exec() == QDialog::Rejected)
-	{
-		qDebug("Quitting");
-		return false;
-	}
 
-	this->playerName = dialog.getPlayerName();
-	this->CPUs = dialog.getAIPlayerCount();
-	this->mapPath = dialog.getMapPath();
-	this->map->parse(this->mapPath);
-	if (!this->map->validate()) {
-		QMessageBox errorDialog(this);
-		errorDialog.setWindowTitle("Error!");
-		errorDialog.setText("Invalid map");
-		errorDialog.setDetailedText("The map did not validate. Please contact its author.");
-		errorDialog.exec();
-		this->close();
+	bool valid = false;
+	while (!valid) {
+		if (dialog.exec() == QDialog::Rejected) {
+			exit(0);
+		}
+		this->playerName = dialog.getPlayerName();
+		this->CPUs = dialog.getAIPlayerCount();
+		this->mapPath = dialog.getMapPath();
+		QFileInfo mapFile(QString::fromStdString(this->mapPath));
+		if (!mapFile.exists()) {
+			QMessageBox errorDialog(this);
+			errorDialog.setWindowTitle("Error!");
+			errorDialog.setText("File not found");
+			errorDialog.setDetailedText("Please choose a file that exists, with the .map and .bmp files named the same and in the same folder.");
+			errorDialog.exec();
+			continue;
+		}
+
+		this->map->parse(this->mapPath);
+		if (!this->map->validate()) {
+			QMessageBox errorDialog(this);
+			errorDialog.setWindowTitle("Error!");
+			errorDialog.setText("Invalid map");
+			errorDialog.setDetailedText("The map did not validate. Please contact its author.");
+			errorDialog.exec();
+			continue;
+		}
+
+		valid = true;
 	}
+	this->map->notifyObservers();
 
 	std::mt19937::result_type seed = time(0);
 	auto player_rand = std::bind(std::uniform_int_distribution<int>(0, this->map->getPlayers().size()-1), std::mt19937(seed));

@@ -246,12 +246,6 @@ void RiskMap::parse(const std::string& path) {
 
 	debug("Finished parsing: " + path);
 	this->disableNotify = false;
-	this->notifyObservers();
-
-	if (this->validate()) {
-		debug("Map is valid");
-	}
-
 }
 
 RiskMap* RiskMap::load(const std::string& path) {
