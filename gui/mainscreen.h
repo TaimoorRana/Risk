@@ -9,6 +9,9 @@
 #include "map_editor.h"
 #include "ui_mainscreen.h"
 
+#include "game_modes.h"
+
+
 namespace Ui {
 	class MainScreen;
 }
@@ -25,7 +28,7 @@ public:
 	void setPlayerName(std::string name);
 	bool setupPlayers();
 	void observedUpdated();
-
+	Mode getCurrentMode();
 private slots:
 	void on_pushButton_clicked();
 	void on_mapEditorAction_triggered();
@@ -38,6 +41,7 @@ private:
 	MapEditor *editor = nullptr;
 	RiskMap *map = nullptr;
 	MapScene *scene = nullptr;
+	Mode currentMode;
 
 	void setupPlayer();
 	void setupCPUs();

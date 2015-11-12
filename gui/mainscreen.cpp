@@ -10,6 +10,7 @@
 #include "player_view.h"
 #include "playerinfowidget.h"
 
+
 MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainScreen)
 {
 	ui->setupUi(this);
@@ -111,15 +112,23 @@ void MainScreen::on_pushButton_clicked()
 {
 	if(ui->fortifyRadio->isChecked()){
 		ui->attackRadio->setChecked(true);
+		currentMode = ATTACKMODE;
 		return;
 	}else if(ui->attackRadio->isChecked()){
 		ui->reinforcementRadio->setChecked(true);
+		currentMode = REINFORCEMENTMODE;
 		return;
 	}else{
 		ui->fortifyRadio->setChecked(true);
+		currentMode = FORTIFICATIONMODE;
 		return;
 	}
 }
+
+Mode MainScreen::getCurrentMode(){
+	return currentMode;
+}
+
 
 /**
  * Callback to handle user selecting File > Map Editor.

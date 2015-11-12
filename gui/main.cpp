@@ -23,6 +23,5 @@ int main(int argc, char *argv[]) {
 	driver->addPlayer("taimoor");
 	driver->addPlayer("Elias");
 	driver->showSplashScreen();
-
     return application.exec();
 }

@@ -3,6 +3,8 @@
 
 #define GAMEDRIVER1_H
 
+#include "fortify_dialog.h"
+
 #include "risk_map.h"
 
 #include "player.h"
@@ -21,6 +23,8 @@
 
 #include <QTimer>
 
+
+
 using namespace std;
 
 class GameDriver1
@@ -28,6 +32,7 @@ class GameDriver1
 {
 
 public:
+
 
 	//player ordering
 
@@ -39,9 +44,6 @@ public:
 
 	~GameDriver1();
 
-	enum Mode{reinforceMode,attackMode,moveMode, endOfTurnMode};
-
-	Mode currentMode = reinforceMode;
 
 	void setPlayerName(string s);
 
@@ -82,6 +84,8 @@ private:
 	RiskMap* riskMap;
 
 	MainScreen* mainWindow;
+    
+    //FortifyDialog fortificationDialog;
 
 	int numberOfPlayers;
 
