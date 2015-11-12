@@ -25,7 +25,6 @@ void GameDriver::startGame()
 		if(attackModeCompleted == true && reinforceModeCompleted == true && fortificationModeCompleted == true){
 			currentPlayer++;
 			currentPlayerName = players[currentPlayer];
-
 			attackModeCompleted = false;
 			reinforceModeCompleted = false;
 			fortificationModeCompleted = false;
@@ -79,6 +78,7 @@ void GameDriver::showSplashScreen()
 
 	mainWindow->setupPlayers();
 	mainWindow->show();
+
 }
 
 
