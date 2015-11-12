@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QString>
 #include "country.h"
+#include "mainscreen.h"
 
 namespace Ui {
 class FortifyDialog;
@@ -21,7 +22,7 @@ public:
      * @param secondCountry A pointer to the destination country
      * @param parent The parent window that contains the dialog
      */
-    explicit FortifyDialog( Country* firstCountry, Country* secondCountry, QWidget *parent = 0);
+    explicit FortifyDialog( Country* firstCountry, Country* secondCountry, MainScreen* aParent, QWidget *parent = 0);
 
     /**
      * @brief FortifyDialog::~FortifyDialog
@@ -54,6 +55,7 @@ private:
     Ui::FortifyDialog *ui; ///< The dialog box object to access all the UI elements
     Country* firstCountry; ///< The country of origin from which armies will be moved
     Country* secondCountry; ///< The destination country to which armies will be moved
+    MainScreen* parent;
 };
 
 #endif // FORTIFY_DIALOG_H

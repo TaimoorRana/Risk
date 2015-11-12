@@ -106,6 +106,11 @@ void MainScreen::setCPUs(int total)
 	this->CPUs = total;
 }
 
+void MainScreen::setCurrentMode(Mode newMode)
+{
+    this->currentMode = newMode;
+}
+
 void MainScreen::on_pushButton_clicked()
 {
 	if(ui->reinforcementRadio->isChecked()){
@@ -121,6 +126,11 @@ void MainScreen::on_pushButton_clicked()
 		currentMode = REINFORCEMENTMODE;
 		return;
 	}
+}
+
+void MainScreen::endPhase()
+{
+    on_pushButton_clicked();
 }
 
 Mode MainScreen::getCurrentMode(){

@@ -29,9 +29,12 @@ public:
 	bool setupPlayers();
 	void observedUpdated();
 	Mode getCurrentMode();
+    void setCurrentMode(Mode newMode);
+    void endPhase();
 private slots:
-	void on_pushButton_clicked();
 	void on_mapEditorAction_triggered();
+    void on_pushButton_clicked();
+
 
 private:
 	std::string playerName = "";
