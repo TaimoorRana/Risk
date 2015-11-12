@@ -9,6 +9,7 @@
 #include "player.h"
 #include "player_view.h"
 #include "playerinfowidget.h"
+#include "gamedriver.h"
 
 
 MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainScreen)
@@ -121,10 +122,23 @@ void MainScreen::on_pushButton_clicked()
 		currentMode = REINFORCEMENTMODE;
 		return;
 	}
+
+	GameDriver* driver = GameDriver::getInstance();
+	driver->startGame();
 }
 
 Mode MainScreen::getCurrentMode(){
 	return currentMode;
+}
+
+void MainScreen::setCurrentPlayer(std::string name)
+{
+	this->currentPLayerName = name;
+}
+
+std::string MainScreen::getCurrentPlayer()
+{
+	return this->currentPLayerName;
 }
 
 

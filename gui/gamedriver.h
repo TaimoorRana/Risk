@@ -131,6 +131,8 @@ public:
 
 	void startGame();
 
+	std::string getCurrentPlayerName();
+
 private:
 
 	GameDriver();
@@ -153,7 +155,10 @@ private:
 
 	std::vector<std::string> players;
 
-
+	bool attackModeCompleted = false;
+	bool reinforceModeCompleted = false;
+	bool fortificationModeCompleted = false;
+	int currentPlayer = 0;
 
 };
 

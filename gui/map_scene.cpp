@@ -79,7 +79,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					return;
 				}
 
-				if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0) {
+				if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0 && parent->getCurrentPlayer().compare(item->getCountry()->getPlayer())) {
 					map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
 					item->getCountry()->addArmies(1);
 				}

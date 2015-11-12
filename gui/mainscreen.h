@@ -29,6 +29,9 @@ public:
 	bool setupPlayers();
 	void observedUpdated();
 	Mode getCurrentMode();
+	void setCurrentPlayer(std::string name);
+	std::string getCurrentPlayer();
+
 private slots:
 	void on_pushButton_clicked();
 	void on_mapEditorAction_triggered();
@@ -42,7 +45,7 @@ private:
 	RiskMap *map = nullptr;
 	MapScene *scene = nullptr;
 	Mode currentMode;
-
+	std::string currentPLayerName;
 	void setupPlayer();
 	void setupCPUs();
 };

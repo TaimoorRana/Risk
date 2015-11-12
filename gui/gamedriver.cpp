@@ -14,12 +14,6 @@ GameDriver* GameDriver::getInstance()
 
 void GameDriver::startGame()
 {
-	int currentPlayer = 0;
-	currentPlayerName = players[currentPlayer];
-	bool attackModeCompleted = false;
-	bool reinforceModeCompleted = false;
-	bool fortificationModeCompleted = false;
-	while(true){
 		if(this->mainWindow->getCurrentMode() == REINFORCEMENTMODE  ){
 			reinforceModeCompleted = true;
 		}else if(this->mainWindow->getCurrentMode() == ATTACKMODE){
@@ -27,7 +21,22 @@ void GameDriver::startGame()
 		}else{
 			fortificationModeCompleted = true;
 		}
-	}
+
+		if(attackModeCompleted == true && reinforceModeCompleted == true && fortificationModeCompleted == true){
+			currentPlayer++;
+			currentPlayerName = players[currentPlayer];
+
+			attackModeCompleted = false;
+			reinforceModeCompleted = false;
+			fortificationModeCompleted = false;
+
+			mainWindow->setCurrentPlayer(this->currentPlayerName);
+		}
+}
+
+string GameDriver::getCurrentPlayerName()
+{
+	return this->currentPlayerName;
 }
 
 void GameDriver::attackPhase(){}
@@ -63,24 +72,22 @@ void GameDriver::showSplashScreen()
 	QPixmap splashImg = QPixmap("../../../assets/risk1.png").scaled(600, 300);
 
 	splash->setPixmap(splashImg);
-	splash->show();
-	QTimer::singleShot(2500,splash,SLOT(close()));
-	QTimer::singleShot(2500,mainWindow,SLOT(setupPlayers()));
+	//splash->show();
+	//QTimer::singleShot(2500,splash,SLOT(close()));
 
-	//delete splash;
+	delete splash;
 
-	//mainWindow->setupPlayers();
+	mainWindow->setupPlayers();
 	mainWindow->show();
 }
 
 
 
 void GameDriver::addPlayer(string name)
-
 {
 	Player* player = new Player(name);
 	riskMap->addPlayer(*player);
-	//players.insert(name);
+	players.push_back(name);
 }
 
 GameDriver::GameDriver(){
