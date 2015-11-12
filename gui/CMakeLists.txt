@@ -10,7 +10,7 @@ set(GUI_SOURCE_FILES
 	main.cpp
 	mainscreen.cpp mainscreen.h mainscreen.ui
 	gameboardview.cpp gameboardview.h
-	gamedriver1.cpp gamedriver1.h
+        gamedriver.cpp gamedriver.h
 	map_editor.cpp map_editor.h map_editor.ui
 	map_scene.cpp map_scene.h
 	map_renderer.cpp map_renderer.h

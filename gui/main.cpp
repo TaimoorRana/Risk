@@ -14,12 +14,12 @@
 #include "mainscreen.h"
 #include "playernamedialog.h"
 #include "country_name_dialog.h"
-#include "gamedriver1.h"
+#include "gamedriver.h"
 
 using namespace std;
 int main(int argc, char *argv[]) {
     QApplication application(argc, argv);
-	GameDriver1* driver = GameDriver1::getInstance();
+	GameDriver* driver = GameDriver::getInstance();
 	driver->addPlayer("taimoor");
 	driver->addPlayer("Elias");
 	driver->showSplashScreen();
