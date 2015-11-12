@@ -28,7 +28,7 @@
 using namespace std;
 
 /**
- * @brief The GameDriver1 class
+ * @brief The GameDriver class
  * Handles the ordering of the game  the players turn the number of reinforcements
  * calculating the number of armies placed and allowed to place
  *
@@ -42,11 +42,7 @@ class GameDriver
 public:
 
 
-	//player ordering
 
-	//need using namespace std.
-
-	//player needs to know it his turn
 
 	//GameDriver(RiskMap *riskMap);
 
@@ -68,38 +64,66 @@ public:
 
 	string getPlayerName();
 	/**
-	 * @brief calculateReinforcementArmies
-	 * @param p the player pointer
-	 * calculates the reinforcements for the player using the continents and countries
+	 * @brief calculateReinforcementArmies calculates the reinforcements for the player using the continents and countries
 	 * that the player owns.
+	 * @param p the player pointer
+	 *
 	 */
 
 	void calculateReinforcementArmies(Player *p);
 
 	bool allArmiesPlaced; /**< checks whether all armies have been placed */
+
 	/**
-	 * @brief placeArmies
+	 * @brief placeArmies sets the number of armies to place.
 	 * @param i number of armies to place
-	 * sets the number of armies to place
+	 *
 	 */
 
 	void placeArmies(int i);
+	/**
+	 * @brief setNumberOfPlayers sets the number of players
+	 * @param numberOfPlayers game number of players
+	 */
 
 	void setNumberOfPlayers(int numberOfPlayers);
 
 	//void setMode(Mode m);
+	/**
+	 * @brief attackPhase
+	 */
 
 	void attackPhase();
+	/**
+	 * @brief implements reinforcePhase
+	 */
 
 	void reinforcePhase();
+	/**
+	 * @brief implements fortificationPhase
+	 */
 
 	void fortificationPhase();
+	/**
+	 * @brief implements endTurn
+	 */
 
 	void endTurn();
+	/**
+	 * @brief showSplashScreen the splash screen on game start
+	 */
 
 	void showSplashScreen();
+	/**
+	 * @brief addPlayer adds a player in string format
+	 * @param name
+	 */
 
 	void addPlayer(std::string name);
+	/**
+	 * @brief getInstance gets the singleton instance of the gamedriver
+	 * @return
+	 */
 
 	static GameDriver* getInstance();
 
