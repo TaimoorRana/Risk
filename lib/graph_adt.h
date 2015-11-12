@@ -5,7 +5,9 @@
 #include <unordered_map>
 #include <set>
 #include <iostream>
-
+/**
+ * @brief The Edge struct
+ */
 struct Edge{
 	std::string edgename;
 	std::string element;
@@ -21,7 +23,10 @@ typedef std::unordered_map< std::string, std::set< std::string> > subgraph;
 
 void printSet(const std::set<std::string>&);
 void printEdge(const Edge&);
-
+/**
+ * @brief The GraphADT class which implements all the standard features of a graph verifying connectivity etc..
+ *
+ */
 
 class GraphADT {
 private:
@@ -36,7 +41,15 @@ public:
 	GraphADT copyUtil(const GraphADT&);
 	string_set nodes() const;
 	string_set edges() const;
+	/**
+	 * @brief countAllNodes returns all the nodes
+	 * @return
+	 */
 	int countAllNodes() const;
+	/**
+	 * @brief countAllEdges returns all the edges
+	 * @return
+	 */
 	int countAllEdges() const;
 	Edge getEdge(std::string, std::string) const;
 	string_set incidentEdges(std::string v) const;
@@ -59,7 +72,9 @@ public:
 	void insertEdge(std::string, std::string);
 	GraphADT copyGraph() const;
 };
-
+/**
+ * @brief The DirectedGraphADT class implements the directed map extends GraphADT
+ */
 class DirectedGraphADT : GraphADT {
 
 public:
@@ -76,6 +91,10 @@ class SubGraphADT : public GraphADT {
 	std::unordered_map <std::string, std::string> countries_continents;
 
 public:
+	/**
+	 * @brief insertNode inserts a node
+	 * @return
+	 */
 	bool insertNode(std::string, std::string);
 	string_set subgraphContents(const std::string&);
 	std::string getSubgraphName(const std::string&);
