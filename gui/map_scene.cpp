@@ -21,6 +21,12 @@ void MapScene::setEditable(bool editable) {
 	this->editable = editable;
 }
 
+RiskMap* MapScene::getMap()
+{
+    return this->map;
+}
+
+
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsScene::mousePressEvent(event);
 
