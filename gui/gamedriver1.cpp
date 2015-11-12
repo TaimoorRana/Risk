@@ -9,7 +9,6 @@ void GameDriver1::attackPhase(){}
 void GameDriver1::reinforcePhase()
 
 {
-	currentMode = reinforceMode;
 }
 
 
@@ -17,10 +16,7 @@ void GameDriver1::reinforcePhase()
 void GameDriver1::fortificationPhase()
 
 {
-
-	canFortify = true;
 }
-
 
 
 GameDriver1* GameDriver1::getInstance()
@@ -65,18 +61,11 @@ void GameDriver1::addPlayer(string name)
 
 }
 
-
-
-
-
 GameDriver1::GameDriver1(){
 
 	this->riskMap = new RiskMap;
-
 	this->mainWindow = new MainScreen(riskMap,0);
-
 	this->mapScene = new MapScene(riskMap, mainWindow);
-
 }
 
 

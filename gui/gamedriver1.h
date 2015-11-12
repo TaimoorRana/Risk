@@ -21,6 +21,8 @@
 
 #include <QTimer>
 
+
+
 using namespace std;
 
 class GameDriver1
@@ -39,9 +41,6 @@ public:
 
 	~GameDriver1();
 
-	enum Mode{reinforceMode,attackMode,moveMode, endOfTurnMode};
-
-	Mode currentMode = reinforceMode;
 
 	void setPlayerName(string s);
 
