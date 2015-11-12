@@ -30,5 +30,6 @@ int main(int argc, char *argv[]) {
 	driver->addPlayer("taimoor");
 	driver->addPlayer("Elias");
 	driver->showSplashScreen();
+	driver->startGame();
     return application.exec();
 }
