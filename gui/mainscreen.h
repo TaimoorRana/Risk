@@ -31,6 +31,10 @@ public:
 	Mode getCurrentMode();
     void setCurrentMode(Mode newMode);
     void endPhase();
+
+	void setCurrentPlayer(std::string name);
+	std::string getCurrentPlayer();
+
 private slots:
 	void on_mapEditorAction_triggered();
     void on_pushButton_clicked();
@@ -45,7 +49,7 @@ private:
 	RiskMap *map = nullptr;
 	MapScene *scene = nullptr;
 	Mode currentMode;
-
+	std::string currentPLayerName;
 	void setupPlayer();
 	void setupCPUs();
 };
