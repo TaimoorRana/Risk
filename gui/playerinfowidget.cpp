@@ -5,6 +5,7 @@ PlayerInfoWidget::PlayerInfoWidget(QWidget *parent, Player *subject) :QWidget(pa
 {
 	ui->setupUi(this);
 	this->player =subject;
+	player->registerObserver(this);
 	update();
 }
 
@@ -20,5 +21,7 @@ void PlayerInfoWidget::update()
 	ui->countriesValueLabel->setText(QString::number(player->getCountriesOwned().size()));
 	ui->continentsValueLabel->setText(QString::number(player->getContinentsOwned().size()));
 	ui->armiesValueLabel->setText(QString::number(player->getTotalArmy()));
+	ui->reinforcementValue->setText(QString::number(player->getReinforcements()));
+	this->repaint();
 }
 

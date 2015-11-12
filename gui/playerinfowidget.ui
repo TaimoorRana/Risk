@@ -50,6 +50,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QLabel" name="reinforcementLabel">
+       <property name="text">
+        <string>Reinforcement</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -80,6 +87,13 @@
      </item>
      <item alignment="Qt::AlignRight">
       <widget class="QLabel" name="armiesValueLabel">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignRight">
+      <widget class="QLabel" name="reinforcementValue">
        <property name="text">
         <string>0</string>
        </property>

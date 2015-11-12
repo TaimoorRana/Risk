@@ -6,6 +6,7 @@
 #include "map_scene.h"
 #include "qgraphics_country_item.h"
 #include "debug.h"
+#include "mainscreen.h"
 
 MapScene::MapScene(RiskMap* map, QWidget *parent){
 	this->setParent(parent);
@@ -29,7 +30,13 @@ RiskMap* MapScene::getMap()
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsScene::mousePressEvent(event);
 
+	QGraphicsCountryItem *item = nullptr;
 	if (!this->editable) {
+		item = getQGraphicsCountryItemFromEvent(event);
+		item->getCountry()->addArmies(1);
+		map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
+		map->getPlayer(item->getCountry()->getPlayer())->notifyObserver();
+		debug(std::to_string(item->getCountry()->getArmies()));
 		return;
 	}
 
@@ -40,7 +47,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	MapEditor* parent = qobject_cast<MapEditor*>(this->parent());
 	CountryNameDialog nameDialog(parent);
 	Country* c = nullptr;
-	QGraphicsCountryItem *item = nullptr;
+
 
 	switch(parent->getSelectedTool()){
 		case ADDCOUNTRY:
