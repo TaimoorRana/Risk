@@ -5,22 +5,12 @@
 #include "playernamedialog.h"
 #include "ui_playernamedialog.h"
 
-PlayerNameDialog::PlayerNameDialog(QWidget *parent) : QDialog(parent), ui(new Ui::PlayerNameDialog)
-{
+PlayerNameDialog::PlayerNameDialog(QWidget *parent) : QDialog(parent), ui(new Ui::PlayerNameDialog) {
     ui->setupUi(this);
-    qDebug("Making dialog player");
 }
 
-PlayerNameDialog::~PlayerNameDialog()
-{
-    delete ui;
-    qDebug("Deleting dialog player");
-}
-
-void PlayerNameDialog::setComboBox(){
-	for (int x = 0 ; x < totalCPU; x++){
-		ui->AIPlayerCountComboBox->addItem(QString::number(x+1));
-	}
+PlayerNameDialog::~PlayerNameDialog() {
+  delete ui;
 }
 
 std::string PlayerNameDialog::getPlayerName() {
@@ -31,7 +21,7 @@ std::string PlayerNameDialog::getMapPath() {
 	return ui->mapPathLineEdit->text().toStdString();
 }
 
-int PlayerNameDialog::getAIPlayerCount() {
+int PlayerNameDialog::getPlayerCount() {
 	return ui->AIPlayerCountComboBox->currentText().toInt();
 }
 

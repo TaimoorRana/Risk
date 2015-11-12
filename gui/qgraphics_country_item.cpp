@@ -31,6 +31,7 @@ void QGraphicsCountryItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
 	painter->setBrush(QBrush(parent->getPlayerColor(this->country->getPlayer())));
 	painter->drawEllipse(QPointF(0, 0), diameter, diameter);
 
+	painter->setFont(QFont("Helvetica", 9));
 	std::string label = country->getName() + " (" + std::to_string(country->getArmies()) + ")";
 	painter->drawText(QPointF(-23,17), QString::fromStdString(label));
 }

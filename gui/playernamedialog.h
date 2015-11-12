@@ -16,15 +16,13 @@ public:
 	~PlayerNameDialog();
 	std::string getPlayerName();
 	std::string getMapPath();
-	int getAIPlayerCount();
+	int getPlayerCount();
 
 private slots:
 	void on_mapPathBrowsePushButton_clicked();
 
 private:
 	Ui::PlayerNameDialog *ui;
-	const int totalCPU = 4;
-	void setComboBox();
 };
 
 #endif // PLAYERNAMEDIALOG_H

@@ -42,8 +42,6 @@ bool MainScreen::setupPlayers(){
 		if (dialog.exec() == QDialog::Rejected) {
 			exit(0);
 		}
-		this->playerName = dialog.getPlayerName();
-		this->CPUs = dialog.getAIPlayerCount();
 		this->mapPath = dialog.getMapPath();
 		QFileInfo mapFile(QString::fromStdString(this->mapPath));
 		if (!mapFile.exists()) {
@@ -67,6 +65,16 @@ bool MainScreen::setupPlayers(){
 
 		valid = true;
 	}
+
+	for (int x = 0; x < dialog.getPlayerCount(); x++) {
+		Player* player = new Player("Player " + std::to_string(x+1));
+		map->addPlayer(*player);
+		player->setTotalArmy(22);
+		player->setReinforcements(10);
+		player->notifyObserver();
+		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this, player, this->scene);
+		ui->horizontalLayout_2->addWidget(playerinfo);
+	}
 	this->map->notifyObservers();
 
 	std::mt19937::result_type seed = time(0);
@@ -86,32 +94,7 @@ bool MainScreen::setupPlayers(){
 		country->setArmies(2);
 	}
 
-	setupPlayer();
-	setupCPUs();
 	return true;
-}
-
-void MainScreen::setupPlayer()
-{
-	for(auto const &ent1: map->getPlayers()){
-		Player p = ent1.second;
-		Player *player = map->getPlayer(p.getName());
-		player->setTotalArmy(22);
-		player->setReinforcements(10);
-		player->notifyObserver();
-		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this, player, this->scene);
-		ui->horizontalLayout_2->addWidget(playerinfo);
-	}
-}
-
-void MainScreen::setupCPUs()
-{
-	for(int x = 0; x < CPUs; x++){
-		Player* cpu = new Player("CPU");
-		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this,cpu);
-		ui->horizontalLayout_2->addWidget(playerinfo);
-		map->addPlayer(*cpu);
-	}
 }
 
 void MainScreen::addPlayerView(QWidget *pvWidget)
@@ -119,13 +102,7 @@ void MainScreen::addPlayerView(QWidget *pvWidget)
 	ui->verticalLayout_2->addWidget(pvWidget);
 }
 
-void MainScreen::setCPUs(int total)
-{
-	this->CPUs = total;
-}
-
-void MainScreen::setCurrentMode(Mode newMode)
-{
+void MainScreen::setCurrentMode(Mode newMode) {
     this->currentMode = newMode;
 }
 
@@ -151,7 +128,7 @@ void MainScreen::on_pushButton_clicked()
 
 void MainScreen::endPhase()
 {
-    on_pushButton_clicked();
+  on_pushButton_clicked();
 }
 
 Mode MainScreen::getCurrentMode(){
@@ -167,7 +144,6 @@ std::string MainScreen::getCurrentPlayer()
 {
 	return this->currentPLayerName;
 }
-
 
 /**
  * Callback to handle user selecting File > Map Editor.
