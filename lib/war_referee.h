@@ -89,10 +89,10 @@ public:
 
 	/**
 	 * @brief setBothArmies
-	 * @param army
-	 * @param army
+	 * @param attackerArmy
+	 * @param defenderArmy
 	 */
-	void setBothArmies(int& army,int& army);
+	void setBothArmies(int &attackerArmy, int &defenderArmy);
 
 	/**
 	 * @brief getAttackerArmy
