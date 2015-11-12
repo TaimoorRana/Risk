@@ -19,7 +19,8 @@ MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(
 
 	this->scene = new MapScene(map, this);
 	ui->graphicsView->setScene(scene);
-	ui->fortifyRadio->setChecked(true);
+	ui->reinforcementRadio->setChecked(true);
+	currentMode = REINFORCEMENTMODE;
 }
 
 MainScreen::~MainScreen() {
@@ -110,17 +111,17 @@ void MainScreen::setCPUs(int total)
 
 void MainScreen::on_pushButton_clicked()
 {
-	if(ui->fortifyRadio->isChecked()){
+	if(ui->reinforcementRadio->isChecked()){
 		ui->attackRadio->setChecked(true);
 		currentMode = ATTACKMODE;
 		return;
 	}else if(ui->attackRadio->isChecked()){
-		ui->reinforcementRadio->setChecked(true);
-		currentMode = REINFORCEMENTMODE;
-		return;
-	}else{
 		ui->fortifyRadio->setChecked(true);
 		currentMode = FORTIFICATIONMODE;
+		return;
+	}else{
+		ui->reinforcementRadio->setChecked(true);
+		currentMode = REINFORCEMENTMODE;
 		return;
 	}
 }

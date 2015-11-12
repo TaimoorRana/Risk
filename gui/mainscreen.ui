@@ -38,9 +38,9 @@
            </spacer>
           </item>
           <item>
-           <widget class="QRadioButton" name="fortifyRadio">
+           <widget class="QRadioButton" name="reinforcementRadio">
             <property name="text">
-             <string>Fortify</string>
+             <string>Reinforcement</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">buttonGroup</string>
@@ -58,9 +58,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="reinforcementRadio">
+           <widget class="QRadioButton" name="fortifyRadio">
             <property name="text">
-             <string>Reinforcement</string>
+             <string>Fortify</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">buttonGroup</string>
