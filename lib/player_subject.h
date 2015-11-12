@@ -3,8 +3,19 @@
 #include "player_observer.h"
 class PlayerSubject{
 public:
-	virtual void registerObserver(PlayerObserver*) = 0;
-	virtual void unregisterObserver(PlayerObserver*) = 0;
+	/**
+	 * @brief registerObserver
+	 * @param observer
+	 */
+	virtual void registerObserver(PlayerObserver* observer) = 0;
+	/**
+	 * @brief unregisterObserver
+	 * @param observer
+	 */
+	virtual void unregisterObserver(PlayerObserver* observer) = 0;
+	/**
+	 * @brief notifyObserver updates all the observers
+	 */
 	virtual void notifyObserver() = 0;
 };
 
