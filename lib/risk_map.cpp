@@ -53,11 +53,12 @@ void RiskMap::remNeighbour(const std::string& country_a, const std::string& coun
 	this->notifyObservers();
 }
 
-void RiskMap::addPlayer(const Player& player) {
+Player* RiskMap::addPlayer(const Player& player) {
 	if (this->players.find(player.getName()) == this->players.end()) {
 		this->players[player.getName()] = player;
 	}
 	this->notifyObservers();
+	return &this->players[player.getName()];
 }
 
 Continent* RiskMap::getContinentOfCountry(const std::string& name_country){

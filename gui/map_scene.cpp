@@ -79,8 +79,12 @@ void MapScene::observedUpdated() {
 		else {
 			color = QColor(color_rand(), color_rand(), color_rand());
 		}
-		debug("test: " + color.name().toStdString());
 		playerPalette.insert(std::pair<const std::string, QColor>(player.getName(), color));
+	}
+
+	debug("");
+	for (auto const &ent1 : this->playerPalette) {
+		debug("Player " + ent1.first + " is " + ent1.second.name().toStdString());
 	}
 }
 

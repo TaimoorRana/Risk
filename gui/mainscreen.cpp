@@ -66,14 +66,14 @@ bool MainScreen::setupPlayers(){
 		valid = true;
 	}
 
+	Player* player = nullptr;
 	for (int x = 0; x < dialog.getPlayerCount(); x++) {
-		Player* player = new Player("Player " + std::to_string(x+1));
-		map->addPlayer(*player);
+		player = map->addPlayer(Player("Player " + std::to_string(x+1)));
+		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this, player, this->scene);
 		player->setTotalArmy(22);
 		player->setReinforcements(10);
-		player->notifyObserver();
-		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this, player, this->scene);
 		ui->horizontalLayout_2->addWidget(playerinfo);
+		player->notifyObserver();
 	}
 	this->map->notifyObservers();
 
