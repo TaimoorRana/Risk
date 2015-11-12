@@ -12,6 +12,7 @@
 #include "map_scene.h"
 
 #include "mainscreen.h"
+#include "game_modes.h"
 
 #include <QSplashScreen>
 
@@ -22,6 +23,7 @@
 #include <set>
 
 #include <QTimer>
+#include <vector>
 
 
 
@@ -127,7 +129,7 @@ public:
 
 	static GameDriver* getInstance();
 
-
+	void startGame();
 
 private:
 
@@ -148,6 +150,8 @@ private:
 	bool gameBegun;
 
 	bool canFortify;
+
+	std::vector<std::string> players;
 
 
 
