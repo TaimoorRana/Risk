@@ -96,8 +96,22 @@ void MainScreen::setupPlayer()
 	for(auto const &ent1: map->getPlayers()){
 		Player p = ent1.second;
 		Player *player = map->getPlayer(p.getName());
-		player->setTotalArmy(22);
-		player->setReinforcements(10);
+		player->setTotalArmy(player->getCountriesOwned().size()*2);
+		set<string> continents =player->getContinentsOwned();
+		set<string>::iterator itContinents = continents.begin();
+		int reinforcementArmies=0;
+		//gets the reinforcement armies based if they have more than 9 countries
+		if(player->getContinentsOwned().size()>9){
+			reinforcementArmies = player->getCountriesOwned().size()/3;
+		}
+		else{
+			reinforcementArmies =3;
+		}
+		while(itContinents!= continents.end()){
+			reinforcementArmies += map->getContinent(*itContinents)->getReinforcementBonus();
+		}
+		player->setReinforcements(reinforcementArmies);
+
 		player->notifyObserver();
 		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this, player, this->scene);
 		ui->horizontalLayout_2->addWidget(playerinfo);
@@ -126,7 +140,7 @@ void MainScreen::setCPUs(int total)
 
 void MainScreen::setCurrentMode(Mode newMode)
 {
-    this->currentMode = newMode;
+	this->currentMode = newMode;
 }
 
 void MainScreen::on_pushButton_clicked()
@@ -151,7 +165,7 @@ void MainScreen::on_pushButton_clicked()
 
 void MainScreen::endPhase()
 {
-    on_pushButton_clicked();
+	on_pushButton_clicked();
 }
 
 Mode MainScreen::getCurrentMode(){
