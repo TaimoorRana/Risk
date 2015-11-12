@@ -36,8 +36,12 @@ QString FortifyDialog::getFortificationNumber()
 void FortifyDialog::accept()
 {
     int armies = ui->armiesSlider->value();
-    firstCountry->removeArmies(armies);
-    secondCountry->addArmies(armies);
+    if(firstCountry->getArmies() - armies > 1)
+    {
+        firstCountry->removeArmies(armies);
+        secondCountry->addArmies(armies);
+        this->close();
+    }
     
-    this->close();
+    
 }
