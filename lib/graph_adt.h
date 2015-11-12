@@ -66,7 +66,11 @@ public:
 	bool areAdjacent(std::string, std::string) const;
 };
 
-
+/**
+ * @brief The SubGraphADT class
+ * This subclasses the GraphADT class in order to obtain subgraphs from the graph.
+ * The subgraphs are stored as sets of std strings.
+ */
 class SubGraphADT : public GraphADT {
 	subgraph allSubgraphs;
 	std::unordered_map <std::string, std::string> countries_continents;
