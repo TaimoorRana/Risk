@@ -1,7 +1,8 @@
 #ifndef GAMEDRIVER1_H
 #define GAMEDRIVER1_H
-#include "risk_map.h"
+#include "map_scene.h"
 #include "player.h"
+#include "fortify_dialog.h"
 #include <string>
 #include <set>
 using namespace std;
@@ -11,7 +12,7 @@ public:
     //player ordering
     //need using namespace std.
     //player needs to know it his turn
-    GameDriver1(RiskMap *riskMap);
+    GameDriver1(MapScene *scene);
     ~GameDriver1();
     void setPlayerName(string s);
     string getPlayerName();
@@ -29,7 +30,8 @@ public:
 
 private:
 
-    RiskMap *riskMap;
+    MapScene *scene = nullptr;
+    FortifyDialog fortificationDialog;
     int numberOfPlayers;
     string currentPlayerName;
     bool gameBegun;

@@ -17,6 +17,8 @@ public:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	bool getEditable() const;
 	void setEditable(bool editable);
+    RiskMap* getMap();
+
 
 private:
 	RiskMap* map = 0;
