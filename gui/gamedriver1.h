@@ -3,6 +3,8 @@
 
 #define GAMEDRIVER1_H
 
+#include "fortify_dialog.h"
+
 #include "risk_map.h"
 
 #include "player.h"
@@ -30,6 +32,7 @@ class GameDriver1
 {
 
 public:
+
 
 	//player ordering
 
@@ -81,6 +84,7 @@ private:
 	RiskMap* riskMap;
 
 	MainScreen* mainWindow;
+    FortifyDialog fortificationDialog;
 
 	int numberOfPlayers;
 

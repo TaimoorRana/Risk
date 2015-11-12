@@ -21,16 +21,44 @@ void MapScene::setEditable(bool editable) {
 	this->editable = editable;
 }
 
+RiskMap* MapScene::getMap()
+{
+    return this->map;
+}
+
+
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsScene::mousePressEvent(event);
 
 	QGraphicsCountryItem *item = nullptr;
 	if (!this->editable) {
-		item = getQGraphicsCountryItemFromEvent(event);
-		item->getCountry()->addArmies(1);
-		map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
-		map->getPlayer(item->getCountry()->getPlayer())->notifyObserver();
-		debug(std::to_string(item->getCountry()->getArmies()));
+		MainScreen* parent = qobject_cast<MainScreen*>(this->parent());
+
+		switch(parent->getCurrentMode())
+		{
+		case REINFORCEMENTMODE:
+			item = getQGraphicsCountryItemFromEvent(event);
+			if (item == nullptr)
+			{
+				return;
+			}
+
+			if(map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0){
+				map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
+				item->getCountry()->addArmies(1);
+			}else{
+				return;
+			}
+			map->getPlayer(item->getCountry()->getPlayer())->notifyObserver();
+			debug(std::to_string(item->getCountry()->getArmies()));
+			break;
+		case ATTACKMODE:
+		case FORTIFICATIONMODE:
+		default:
+			break;
+		}
+
+
 		return;
 	}
 

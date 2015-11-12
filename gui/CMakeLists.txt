@@ -15,6 +15,7 @@ set(GUI_SOURCE_FILES
 	map_scene.cpp map_scene.h
 	map_renderer.cpp map_renderer.h
 	playerinfowidget.cpp playerinfowidget.h playerinfowidget.ui
+        fortify_dialog.cpp fortify_dialog.h fortify_dialog.ui
 	playernamedialog.cpp playernamedialog.h playernamedialog.ui
 	qgraphics_country_item.cpp qgraphics_country_item.h
 	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h

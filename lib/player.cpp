@@ -68,7 +68,7 @@ void Player::addReinforcements(const int& amount)
 
 void Player::removeReinforcements(const int& amount)
 {
-	if(reinforcements - amount >= 0 ){
+	if((reinforcements - amount) >= 0 ){
 		reinforcements -= amount;
 	}
 }

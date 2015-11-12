@@ -1,16 +1,11 @@
 #include "GameDriver.h"
+#include "map_scene.h"
 
 GameDriver GameDriver::driver;
 
 GameDriver::GameDriver()
 {
-//	continents[0] = new Continent("Africa", 5);
-//	continents[1] = new Continent("Asia", 7);
 
-//	for (int i = 0; i < sizeof(countries); i++)
-//	{
-//		countries[i] = new Country("country-"+('A'+i), *continents[i%2]);
-//	}
 }
 
 
