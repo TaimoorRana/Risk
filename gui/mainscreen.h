@@ -24,8 +24,6 @@ public:
 	explicit MainScreen(RiskMap* map, QWidget *parent = 0);
 	~MainScreen();
 	void addPlayerView(QWidget* pvWidget);
-	void setCPUs(int total);
-	void setPlayerName(std::string name);
 	bool setupPlayers();
 	void observedUpdated();
 	Mode getCurrentMode();
@@ -42,9 +40,6 @@ private:
 	RiskMap *map = nullptr;
 	MapScene *scene = nullptr;
 	Mode currentMode;
-
-	void setupPlayer();
-	void setupCPUs();
 };
 
 #endif // MAINSCREEN_H

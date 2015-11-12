@@ -19,7 +19,8 @@ PlayerInfoWidget::~PlayerInfoWidget()
 void PlayerInfoWidget::update()
 {
 	QColor playerColor = this->scene->getPlayerColor(this->player->getName());
-	ui->colorLabel->setStyleSheet(QString::fromStdString("QLabel { background-color : " + playerColor.name().toStdString() + "; }"));
+	std::string hexColor = playerColor.name().toStdString();
+	ui->colorLabel->setStyleSheet(QString::fromStdString("QLabel { background-color : " + hexColor + "; }"));
 	ui->nameValueLabel->setText(QString::fromStdString(player->getName()));
 	ui->countriesValueLabel->setText(QString::number(player->getCountriesOwned().size()));
 	ui->continentsValueLabel->setText(QString::number(player->getContinentsOwned().size()));

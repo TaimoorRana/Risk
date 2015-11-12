@@ -59,6 +59,7 @@ void MapScene::observedUpdated() {
 
 	seed = 8;
 	color_rand = std::bind(std::uniform_int_distribution<int>(0, 255), std::mt19937(seed));
+
 	this->playerPalette.clear();
 	std::vector<QColor> presetPlayerColors;
 	presetPlayerColors.push_back(QColor(0, 219, 0));
@@ -78,6 +79,7 @@ void MapScene::observedUpdated() {
 		else {
 			color = QColor(color_rand(), color_rand(), color_rand());
 		}
+		debug("test: " + color.name().toStdString());
 		playerPalette.insert(std::pair<const std::string, QColor>(player.getName(), color));
 	}
 }
@@ -88,12 +90,14 @@ QColor MapScene::getContinentColor(const std::string& countryName) {
 }
 
 QColor MapScene::getPlayerColor(const std::string& playerName) {
+	QColor color;
 	if (this->editable) {
-		return QColor(204, 204, 204);
+		color = QColor(204, 204, 204);
 	}
 	else {
-		return this->playerPalette.at(playerName);
+		color = this->playerPalette.at(playerName);
 	}
+	return color;
 }
 
 bool MapScene::getEditable() const {

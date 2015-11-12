@@ -25,10 +25,13 @@ void RiskMap::addContinent(const Continent& continent){
 }
 
 Country* RiskMap::addCountry(const Country& country, const std::string& continentName){
+	if (continents.find(continentName) == continents.end()) {
+		continents[continentName] = Continent(continentName);
+	}
 	if (countries.find(country.getName()) == countries.end()) {
 		countries[country.getName()] = country;
 	}
-	if (! mapGraph.insertNode(country.getName(), continentName))
+	if (!mapGraph.insertNode(country.getName(), continentName))
 		return nullptr;
 	this->notifyObservers();
 	return &this->countries[country.getName()];
