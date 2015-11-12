@@ -1,18 +1,18 @@
 #include "player_view.h"
 
-
 PlayerView::PlayerView(Player *player)
 {
-		this->player = player;
-		update();
+	this->player = player;
+	this->player->attachObserver(this);
+	this->observedUpdated();
 }
 
 PlayerView::~PlayerView()
 {
-	player = nullptr;
+	this->player->detachObserver(this);
 }
 
-void PlayerView::update(){
+void PlayerView::observedUpdated() {
 	this->countriesOwned = player->getCountriesOwned();
 	this->continentsOwned = player->getContinentsOwned();
 	this->nbrOfReinforcements = player->getReinforcements();
@@ -23,7 +23,7 @@ void PlayerView::update(){
 
 std::string PlayerView::getName() const
 {
-		return this->name;
+	return this->name;
 }
 
 std::set<std::string> PlayerView::getCountriesOwned() const

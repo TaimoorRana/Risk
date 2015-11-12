@@ -107,7 +107,7 @@ void RiskMap::consolePrintListOfCountries(const std::string& name_continent){
 }
 
 void RiskMap::parse(const std::string& path) {
-	this->disableNotify = true;
+	this->setNotificationsEnabled(false);
 	this->clear();
 
 	std::ifstream infile(path);
@@ -249,7 +249,7 @@ void RiskMap::parse(const std::string& path) {
 	}
 
 	debug("Finished parsing: " + path);
-	this->disableNotify = false;
+	this->setNotificationsEnabled(true);
 }
 
 RiskMap* RiskMap::load(const std::string& path) {
@@ -383,9 +383,3 @@ bool RiskMap::isConnectedGraph(const std::string& limit_to) {
 	return true;
 }
 
-void RiskMap::notifyObservers() {
-	if (this->disableNotify) {
-		return;
-	}
-	Observable::notifyObservers();
-}

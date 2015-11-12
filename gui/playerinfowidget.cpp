@@ -6,26 +6,25 @@ PlayerInfoWidget::PlayerInfoWidget(QWidget *parent, Player *subject, MapScene* s
 	ui->setupUi(this);
 	this->player = subject;
 	this->scene = scene;
-	player->registerObserver(this);
-	update();
+	this->player->attachObserver(this);
 }
 
 PlayerInfoWidget::~PlayerInfoWidget()
 {
 	delete ui;
-	player = nullptr;
+	this->player->detachObserver(this);
 }
 
-void PlayerInfoWidget::update()
+void PlayerInfoWidget::observedUpdated()
 {
 	QColor playerColor = this->scene->getPlayerColor(this->player->getName());
 	std::string hexColor = playerColor.name().toStdString();
 	ui->colorLabel->setStyleSheet(QString::fromStdString("QLabel { background-color : " + hexColor + "; }"));
-	ui->nameValueLabel->setText(QString::fromStdString(player->getName()));
-	ui->countriesValueLabel->setText(QString::number(player->getCountriesOwned().size()));
-	ui->continentsValueLabel->setText(QString::number(player->getContinentsOwned().size()));
-	ui->armiesValueLabel->setText(QString::number(player->getTotalArmy()));
-	ui->reinforcementValue->setText(QString::number(player->getReinforcements()));
+	ui->nameValueLabel->setText(QString::fromStdString(this->player->getName()));
+	ui->countriesValueLabel->setText(QString::number(this->player->getCountriesOwned().size()));
+	ui->continentsValueLabel->setText(QString::number(this->player->getContinentsOwned().size()));
+	ui->armiesValueLabel->setText(QString::number(this->player->getTotalArmy()));
+	ui->reinforcementValue->setText(QString::number(this->player->getReinforcements()));
 	this->repaint();
 }
 

@@ -131,15 +131,13 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				}
 
 				if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0 ) {
-
 					map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
 					item->getCountry()->addArmies(1);
 				}
 				else {
 					return;
 				}
-				map->getPlayer(item->getCountry()->getPlayer())->notifyObserver();
-				debug(std::to_string(item->getCountry()->getArmies()));
+				map->getPlayer(item->getCountry()->getPlayer())->notifyObservers();
 				break;
 			case ATTACKMODE:
 			case FORTIFICATIONMODE:

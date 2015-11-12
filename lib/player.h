@@ -3,11 +3,8 @@
 
 #include <string>
 #include <set>
-#include "player_subject.h"
-#include "player_observer.h"
-class Country; // forward declaration
 
-class Player: public PlayerSubject{
+class Player: public Observable {
 private:
 	int reinforcements = 0; ///< This player total reinforcement bonus
 	int battleWon = 0; ///< battle won
@@ -15,12 +12,11 @@ private:
 	std::string name = "";
 	std::set<std::string> namesOfCountriesOwned;
 	std::set<std::string> namesOfContinentsOwned;
-    std::set<PlayerObserver*> observerList;
 
 public:
 	Player() {}
 	Player(std::string name);
-    //Player(const Player& other);
+		//Player(const Player& other);
 	/**
 	 * @brief getName
 	 * @return name of the player
@@ -47,7 +43,7 @@ public:
 	 * @brief getBattlesWon
 	 * @return total battles won
 	 */
-    int getBattlesWon() const;
+		int getBattlesWon() const;
 
 
 	/**
@@ -123,24 +119,6 @@ public:
 	 */
 	std::set<std::string> getContinentsOwned() const;
 
-
-	/**
-	 * @brief registerObserver
-	 * @param observer
-	 */
-	virtual void registerObserver(PlayerObserver* observer);
-
-	/**
-	 * @brief unregisterObserver
-	 * @param observer
-	 */
-	virtual void unregisterObserver(PlayerObserver* observer);
-
-	/**
-	 * @brief notifyObserver notify all the observers to update
-	 */
-	virtual void notifyObserver();
-
 	/**
 	 * @brief getTotalArmy
 	 * @return total number of army
@@ -151,6 +129,6 @@ public:
 	 * @brief setTotalArmy
 	 * @param totalArmy
 	 */
-    void setTotalArmy(const int& totalArmy);
+		void setTotalArmy(const int& totalArmy);
 };
 #endif // PLAYER_H

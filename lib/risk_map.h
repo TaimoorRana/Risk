@@ -145,9 +145,6 @@ public:
 
 	void isConnectedGraphHelper(std::unordered_map<const Country*, bool>& visited, Country* country, const std::string& limit_to);
 	bool isConnectedGraph(const std::string& limit_to);
-	/**
-	 * @brief notifyObservers notifies the observer
-	 */
-	void notifyObservers();
 };
+
 #endif
