@@ -84,7 +84,8 @@ private:
 	RiskMap* riskMap;
 
 	MainScreen* mainWindow;
-    FortifyDialog fortificationDialog;
+    
+    //FortifyDialog fortificationDialog;
 
 	int numberOfPlayers;
 

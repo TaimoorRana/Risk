@@ -4,6 +4,16 @@
 
 using namespace std;
 
+GameDriver1* GameDriver1::getInstance()
+{
+    static GameDriver1* instance = nullptr;
+
+    if(instance == nullptr){
+        instance = new GameDriver1();
+    }
+    return instance;
+}
+
 void GameDriver1::attackPhase(){}
 
 void GameDriver1::reinforcePhase()
@@ -21,42 +31,11 @@ void GameDriver1::fortificationPhase()
     // click again to remove
     // if array is full pop up the fortification dialog
     // display names of selected countries
-    Country c1;
-    c1.setName("A");
-    Country c2;
-    c2.setName("B");
+   
 
-    Country selectedCountries[2];
-    selectedCountries[0]=c1;
-    selectedCountries[1]=c2;
-    // check for adjancency
-    if (mapScene->getMap()->areCountriesAdjacent(c1.getName(), c2.getName()))
-    {
-        // pop-up the transfer window
-        fortificationDialog.setOriginCountryName(QString::fromStdString(c1.getName()));
-        fortificationDialog.setDestinationCountryName(QString::fromStdString(c2.getName()));
-
-        fortificationDialog.show();
-    } else
-    {
-        // pop-up the transfer window
-        fortificationDialog.setOriginCountryName(QString::fromStdString("NAANANANNA"));
-        fortificationDialog.setDestinationCountryName(QString::fromStdString("BOOOOOOO"));
-
-        fortificationDialog.show();
-        // pop-up a non adjacent window
-	}
-}
-
-
-GameDriver1* GameDriver1::getInstance()
-{
-	static GameDriver1* instance = nullptr;
-
-	if(instance == nullptr){
-		instance = new GameDriver1();
-	}
-	return instance;
+    //fortificationDialog = fortificationDialog(c1);
+    
+    
 }
 
 
