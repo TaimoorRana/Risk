@@ -9,9 +9,9 @@ class Country; // forward declaration
 
 class Player: public PlayerSubject{
 private:
-	int reinforcements = 0;
-	int battleWon = 0;
-	int totalArmy = 0;
+	int reinforcements = 0; ///< This player total reinforcement bonus
+	int battleWon = 0; ///< battle won
+	int totalArmy = 0; ///< Total armies from all countries belonging to this player
 	std::string name = "";
 	std::set<std::string> namesOfCountriesOwned;
 	std::set<std::string> namesOfContinentsOwned;

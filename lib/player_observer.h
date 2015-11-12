@@ -5,12 +5,8 @@
 class PlayerObserver{
 
 public:
-	/*
-	 * @std::set<std::string> : list of countries
-	 * @std::set<std::string> : list of continents
-	 * @int                   : total reinforcements
-	 * @int                   : total armies
-	 * @int                   : total battles won
+	/**
+	 * @brief update updates this observer values
 	 */
     virtual void update() = 0;
 };
