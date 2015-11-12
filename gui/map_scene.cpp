@@ -4,6 +4,7 @@
 
 #include <functional>
 #include <random>
+#include <vector>
 
 #include "map_editor.h"
 #include "map_scene.h"
@@ -28,29 +29,71 @@ void MapScene::observedUpdated() {
 	std::mt19937::result_type seed = 4;
 	auto color_rand = std::bind(std::uniform_int_distribution<int>(0, 255), std::mt19937(seed));
 	this->continentPalette.clear();
+
+	std::vector<QColor> presetContinentColors;
+	presetContinentColors.push_back(QColor(255, 255, 153));
+	presetContinentColors.push_back(QColor(255, 204, 255));
+	presetContinentColors.push_back(QColor(204, 204, 255));
+	presetContinentColors.push_back(QColor(204, 244, 204));
+	presetContinentColors.push_back(QColor(255, 219, 157));
+	presetContinentColors.push_back(QColor(180, 226, 255));
+	presetContinentColors.push_back(QColor(206, 215, 140));
+	presetContinentColors.push_back(QColor(255, 152, 199));
+	presetContinentColors.push_back(QColor(241, 197, 197));
+	presetContinentColors.push_back(QColor(255, 155, 119));
+
+	int i=0;
+	QColor color;
 	for (auto const &ent1 : this->map->getContinents()) {
 		const Continent& continent = ent1.second;
-		continentPalette.insert(std::pair<const std::string, QColor>(continent.getName(), QColor(color_rand(), color_rand(), color_rand())));
+		// Use random colors if we've exhausted the preset ones
+		if (i < presetContinentColors.size()) {
+			color = presetContinentColors[i];
+			i++;
+		}
+		else {
+			color = QColor(color_rand(), color_rand(), color_rand());
+		}
+		continentPalette.insert(std::pair<const std::string, QColor>(continent.getName(), color));
 	}
 
 	seed = 8;
 	color_rand = std::bind(std::uniform_int_distribution<int>(0, 255), std::mt19937(seed));
 	this->playerPalette.clear();
+	std::vector<QColor> presetPlayerColors;
+	presetPlayerColors.push_back(QColor(0, 219, 0));
+	presetPlayerColors.push_back(QColor(255, 102, 236));
+	presetPlayerColors.push_back(QColor(255, 124, 36));
+	presetPlayerColors.push_back(QColor(0, 82, 245));
+	presetPlayerColors.push_back(QColor(255, 206, 10));
+	presetPlayerColors.push_back(QColor(239, 34, 34));
+	i=0;
 	for (auto const &ent1 : this->map->getPlayers()) {
 		const Player& player = ent1.second;
-		playerPalette.insert(std::pair<const std::string, QColor>(player.getName(), QColor(color_rand(), color_rand(), color_rand())));
+		// Use random colors if we've exhausted the preset ones
+		if (i < presetPlayerColors.size()) {
+			color = presetPlayerColors[i];
+			i++;
+		}
+		else {
+			color = QColor(color_rand(), color_rand(), color_rand());
+		}
+		playerPalette.insert(std::pair<const std::string, QColor>(player.getName(), color));
 	}
 }
 
 QColor MapScene::getContinentColor(const std::string& countryName) {
-	// FIXME: .at() error handling if element does not exist
 	Continent* continent = this->map->RiskMap::getContinentOfCountry(countryName);
 	return this->continentPalette.at(continent->getName());
 }
 
 QColor MapScene::getPlayerColor(const std::string& playerName) {
-	// FIXME: .at() error handling if element does not exist
-	return this->playerPalette.at(playerName);
+	if (this->editable) {
+		return QColor(204, 204, 204);
+	}
+	else {
+		return this->playerPalette.at(playerName);
+	}
 }
 
 bool MapScene::getEditable() const {

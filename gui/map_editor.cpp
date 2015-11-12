@@ -63,9 +63,14 @@ void MapEditor::on_loadPushButton_clicked() {
 	this->mapPath = ui->filenameLineEdit->text().toStdString();
 	observedMap->parse(this->mapPath);
 	if(!observedMap->validate()){
-		debug("Failed to load Map.");
+		QMessageBox errorDialog(this);
+		errorDialog.setWindowTitle("Error!");
+		errorDialog.setText("Invalid map");
+		errorDialog.setDetailedText("The map did not validate. Please ensure that the set of all of countries are a connected graph, and countries in each continent are also connected subgraphs.");
+		errorDialog.exec();
 		observedMap->clear();
 	}
+	this->observedMap->notifyObservers();
 }
 
 void MapEditor::on_newPushButton_clicked() {
