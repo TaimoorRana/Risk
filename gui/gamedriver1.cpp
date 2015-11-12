@@ -31,32 +31,11 @@ void GameDriver1::fortificationPhase()
     // click again to remove
     // if array is full pop up the fortification dialog
     // display names of selected countries
-    Country* c1 = new Country("Quebec");
-    c1->setArmies(30);
-    Country* c2 = new Country("Ontario");
+   
 
     //fortificationDialog = fortificationDialog(c1);
     
-    FortifyDialog* fortificationDialog = new FortifyDialog(c1);
-    fortificationDialog->setWindowTitle(QString::fromStdString("Transfering Armies"));
     
-    // check for adjancency
-    if (mapScene->getMap()->areCountriesAdjacent(c1->getName(), c2->getName()))
-    {
-        // pop-up the transfer window
-        fortificationDialog->setOriginCountryName(QString::fromStdString(c1->getName()));
-        fortificationDialog->setDestinationCountryName(QString::fromStdString(c2->getName()));
-        fortificationDialog->show();
-
-    } else
-    {
-        // pop-up the transfer window
-        fortificationDialog->setOriginCountryName(QString::fromStdString("Not"));
-        fortificationDialog->setDestinationCountryName(QString::fromStdString("Adjacent"));
-
-        fortificationDialog->show();
-        // pop-up a non adjacent window
-	}
 }
 
 
