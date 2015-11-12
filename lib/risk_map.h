@@ -51,6 +51,12 @@ public:
 	void consolePrintListOfNeighbours(const std::string& name_country);
 	void consolePrintListOfCountries(const std::string& name_continent);
 	static RiskMap* load(const std::string& path);
+
+	/**
+	 * @brief parse
+	 * This method parses a map file and then populates the map object with the contents retrieved.
+	 * @param path
+	 */
 	void parse(const std::string& path);
 	bool save(const std::string& path);
 	void clear();

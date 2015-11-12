@@ -177,12 +177,12 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				return;
 			}
 
-			if (lastPicked != nullptr) {
-				map->addNeighbour(item->getCountry()->getName(), lastPicked->getName());
-				lastPicked = nullptr;
+			if (lastCountryClicked != nullptr) {
+				map->addNeighbour(item->getCountry()->getName(), lastCountryClicked->getName());
+				lastCountryClicked = nullptr;
 			}
 			else {
-				lastPicked = item->getCountry();
+				lastCountryClicked = item->getCountry();
 			}
 			break;
 
@@ -193,14 +193,14 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				return;
 			}
 
-			if (lastPicked != 0) {
+			if (lastCountryClicked != 0) {
 				debug("Second pick is " + item->getCountry()->getName());
-				map->remNeighbour(item->getCountry()->getName(), lastPicked->getName());
-				lastPicked = 0;
+				map->remNeighbour(item->getCountry()->getName(), lastCountryClicked->getName());
+				lastCountryClicked = 0;
 			}
 			else {
 				debug("First pick is " + item->getCountry()->getName());
-				lastPicked = item->getCountry();
+				lastCountryClicked = item->getCountry();
 			}
 		case OFF:
 			default:
