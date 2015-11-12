@@ -9,7 +9,6 @@ set(GUI_SOURCE_FILES
 	country_name_dialog.cpp country_name_dialog.h country_name_dialog.ui
 	main.cpp
 	mainscreen.cpp mainscreen.h mainscreen.ui
-	GameDriver.cpp GameDriver.h
 	gameboardview.cpp gameboardview.h
 	gamedriver1.cpp gamedriver1.h
 	map_editor.cpp map_editor.h map_editor.ui
@@ -19,6 +18,7 @@ set(GUI_SOURCE_FILES
 	playernamedialog.cpp playernamedialog.h playernamedialog.ui
 	qgraphics_country_item.cpp qgraphics_country_item.h
 	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h
+
 )
 
 set(GUI_RESOURCE_FILES

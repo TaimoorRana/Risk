@@ -18,9 +18,7 @@ MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(
 
 	this->scene = new MapScene(map, this);
 	ui->graphicsView->setScene(scene);
-
-	setMouseTracking(true);
-	ui->attackRadio->setChecked(true);
+	ui->fortifyRadio->setChecked(true);
 }
 
 MainScreen::~MainScreen() {
@@ -64,6 +62,7 @@ bool MainScreen::setupPlayers(){
 		Player* player = this->map->getPlayer(ptmp.getName());
 		country->setPlayer(player->getName());
 		// Set 2 armies
+		player->addCountry(country->getName());
 		country->setArmies(2);
 	}
 
@@ -74,10 +73,18 @@ bool MainScreen::setupPlayers(){
 
 void MainScreen::setupPlayer()
 {
-	Player* player = new Player(this->playerName);
-	PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this,player);
-	ui->horizontalLayout_2->addWidget(playerinfo);
-	map->addPlayer(*player);
+	for(auto const &ent1: map->getPlayers()){
+		Player p = ent1.second;
+		Player *player = map->getPlayer(p.getName());
+		player->setTotalArmy(22);
+		player->setReinforcements(10);
+		player->notifyObserver();
+		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this,player);
+		ui->horizontalLayout_2->addWidget(playerinfo);	
+	}
+
+
+
 }
 
 void MainScreen::setupCPUs()
@@ -102,16 +109,16 @@ void MainScreen::setCPUs(int total)
 
 void MainScreen::on_pushButton_clicked()
 {
-		if(ui->attackRadio->isChecked()){
-			ui->fortifyRadio->setChecked(true);
-			return;
-		}else if(ui->fortifyRadio->isChecked()){
-			ui->reinforcementRadio->setChecked(true);
-			return;
-		}else{
-			ui->attackRadio->setChecked(true);
-			return;
-		}
+	if(ui->fortifyRadio->isChecked()){
+		ui->attackRadio->setChecked(true);
+		return;
+	}else if(ui->attackRadio->isChecked()){
+		ui->reinforcementRadio->setChecked(true);
+		return;
+	}else{
+		ui->fortifyRadio->setChecked(true);
+		return;
+	}
 }
 
 /**

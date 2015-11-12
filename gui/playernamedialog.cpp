@@ -7,12 +7,14 @@
 
 PlayerNameDialog::PlayerNameDialog(QWidget *parent) : QDialog(parent), ui(new Ui::PlayerNameDialog)
 {
-	ui->setupUi(this);
-	setComboBox();
+    ui->setupUi(this);
+    qDebug("Making dialog player");
 }
 
-PlayerNameDialog::~PlayerNameDialog() {
-	delete ui;
+PlayerNameDialog::~PlayerNameDialog()
+{
+    delete ui;
+    qDebug("Deleting dialog player");
 }
 
 void PlayerNameDialog::setComboBox(){
