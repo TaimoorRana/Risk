@@ -9,7 +9,6 @@ set(GUI_SOURCE_FILES
 	country_name_dialog.cpp country_name_dialog.h country_name_dialog.ui
 	main.cpp
 	mainscreen.cpp mainscreen.h mainscreen.ui
-	GameDriver.cpp GameDriver.h
 	gameboardview.cpp gameboardview.h
 	gamedriver1.cpp gamedriver1.h
 	map_editor.cpp map_editor.h map_editor.ui
