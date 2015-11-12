@@ -122,7 +122,8 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					return;
 				}
 
-				if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0) {
+                if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0)
+                {
 					map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
 					item->getCountry()->addArmies(1);
 				}
@@ -139,10 +140,12 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					return;
 				}
 				else {
-					if (lastCountryClicked == nullptr) {
+                    if (lastCountryClicked == nullptr || lastCountryClicked->getName().compare(item->getCountry()->getName()) == 0)
+                    {
 						lastCountryClicked = item->getCountry();
 					}
-					else {
+                    else
+                    {
 						std::string firstCountryName = lastCountryClicked->getName();
 						std::string secondCountryName = item->getCountry()->getName();
 
@@ -150,19 +153,24 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 						fortificationDialog->setWindowTitle(QString::fromStdString("Transfering Armies"));
 
 						// check for adjancency
-						if (map->areCountriesAdjacent(firstCountryName, secondCountryName)) {
-							if (lastCountryClicked->getPlayer().compare(item->getCountry()->getPlayer()) == 0) {
+                        if (map->areCountriesAdjacent(firstCountryName, secondCountryName))
+                        {
+                            // Countries must belong to same player
+                            if (lastCountryClicked->getPlayer().compare(item->getCountry()->getPlayer()) == 0)
+                            {
 								// pop-up the transfer window
 								fortificationDialog->setOriginCountryName(QString::fromStdString(firstCountryName));
 								fortificationDialog->setDestinationCountryName(QString::fromStdString(secondCountryName));
 							}
-							else {
+                            else
+                            {
 								// pop-up the transfer window
 								fortificationDialog->setOriginCountryName(QString::fromStdString("Different"));
 								fortificationDialog->setDestinationCountryName(QString::fromStdString("players"));
 							}
 						}
-						else {
+                        else
+                        {
 							// pop-up the transfer window
 							fortificationDialog->setOriginCountryName(QString::fromStdString("Countries not"));
 							fortificationDialog->setDestinationCountryName(QString::fromStdString("adjacent"));
