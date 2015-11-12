@@ -1,5 +1,8 @@
 #include "qgraphics_country_item.h"
 #include "debug.h"
+#include "map_scene.h"
+
+class MapScene;
 
 QGraphicsCountryItem::QGraphicsCountryItem(Country* c) {
 	this->country = c;
@@ -14,11 +17,22 @@ QRectF QGraphicsCountryItem::boundingRect() const {
 }
 
 void QGraphicsCountryItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
-	QPen pen(Qt::black,1);
+	int diameter = 0;
+	QPen pen(Qt::black, 1);
 	painter->setPen(pen);
-	painter->setBrush(QBrush(Qt::green));
-	painter->drawEllipse(QPointF(0, 0), 5, 5);
-	painter->drawText(QPointF(-23,17), QString::fromStdString(country->getName()));
+
+	MapScene* parent = dynamic_cast<MapScene*>(this->scene());
+
+	diameter = 10;
+	painter->setBrush(QBrush(parent->getContinentColor(this->country->getName())));
+	painter->drawEllipse(QPointF(0, 0), diameter, diameter);
+
+	diameter = 5;
+	painter->setBrush(QBrush(parent->getPlayerColor(this->country->getPlayer())));
+	painter->drawEllipse(QPointF(0, 0), diameter, diameter);
+
+	std::string label = country->getName() + " (" + std::to_string(country->getArmies()) + ")";
+	painter->drawText(QPointF(-23,17), QString::fromStdString(label));
 }
 
 void QGraphicsCountryItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
