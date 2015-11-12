@@ -2,6 +2,7 @@
 #include "ui_fortify_dialog.h"
 #include "debug.h"
 
+
 FortifyDialog::FortifyDialog(Country* firstCountry, Country* secondCountry, QWidget *parent) :QDialog(parent), ui(new Ui::FortifyDialog)
 {
     ui->setupUi(this);
