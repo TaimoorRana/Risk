@@ -227,12 +227,6 @@
       <Unit filename="/Users/adriannediaz/QTprojects/Risk/cli/main.cpp">
          <Option target="risk-cli"/>
       </Unit>
-      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/GameDriver.cpp">
-         <Option target="risk-gui"/>
-      </Unit>
-      <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/GameDriver.h">
-         <Option target="risk-gui"/>
-      </Unit>
       <Unit filename="/Users/adriannediaz/QTprojects/Risk/gui/country_name_dialog.cpp">
          <Option target="risk-gui"/>
       </Unit>
