@@ -81,12 +81,9 @@ void MainScreen::setupPlayer()
 		player->setTotalArmy(22);
 		player->setReinforcements(10);
 		player->notifyObserver();
-		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this,player);
-		ui->horizontalLayout_2->addWidget(playerinfo);	
+		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this, player, this->scene);
+		ui->horizontalLayout_2->addWidget(playerinfo);
 	}
-
-
-
 }
 
 void MainScreen::setupCPUs()

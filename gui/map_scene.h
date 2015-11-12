@@ -18,15 +18,16 @@ public:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	bool getEditable() const;
 	void setEditable(bool editable);
+	RiskMap* getMap();
+
 	void observedUpdated();
 	QColor getContinentColor(const std::string& countryName);
 	QColor getPlayerColor(const std::string& playerName);
 
-
 private:
 	RiskMap* map = 0;
 	Country* lastPicked = 0;
-    Country* lastCountryClicked = nullptr;
+	Country* lastCountryClicked = nullptr;
 	QString lastContinent;
 	QGraphicsCountryItem* getQGraphicsCountryItemFromEvent(QGraphicsSceneMouseEvent *event);
 	bool editable = false;

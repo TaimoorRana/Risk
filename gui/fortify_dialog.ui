@@ -18,8 +18,20 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="originCountry">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>origin</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -27,6 +39,9 @@
       <widget class="QLabel" name="destinationCountry">
        <property name="text">
         <string>detination</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -51,7 +66,7 @@
      <item>
       <widget class="QLabel" name="numArmies">
        <property name="text">
-        <string>00</string>
+        <string>  </string>
        </property>
       </widget>
      </item>
