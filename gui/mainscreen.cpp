@@ -123,7 +123,7 @@ void MainScreen::setReinforcements()
 		}
 		player->setReinforcements(reinforcementArmies);
 
-		player->notifyObserver();
+		player->notifyObservers();
 
 	}
 }
