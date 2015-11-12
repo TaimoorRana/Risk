@@ -70,7 +70,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
                         std::string firstCountryName = lastCountryClicked->getName();
                         std::string secondCountryName = item->getCountry()->getName();
                         
-                        FortifyDialog* fortificationDialog = new FortifyDialog(lastCountryClicked);
+                        FortifyDialog* fortificationDialog = new FortifyDialog(lastCountryClicked, item->getCountry());
                         fortificationDialog->setWindowTitle(QString::fromStdString("Transfering Armies"));
                         
                         // check for adjancency
