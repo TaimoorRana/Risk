@@ -31,7 +31,7 @@ void GameDriver1::fortificationPhase()
     selectedCountries[0]=c1;
     selectedCountries[1]=c2;
     // check for adjancency
-    if (scene->getMap()->areCountriesAdjacent(c1.getName(), c2.getName()))
+    if (mapScene->getMap()->areCountriesAdjacent(c1.getName(), c2.getName()))
     {
         // pop-up the transfer window
         fortificationDialog.setOriginCountryName(QString::fromStdString(c1.getName()));
