@@ -1,3 +1,8 @@
+#include <QBrush>
+#include <QFont>
+#include <QFontMetrics>
+#include <QPen>
+
 #include "qgraphics_country_item.h"
 #include "debug.h"
 #include "map_scene.h"
@@ -13,26 +18,31 @@ Country* QGraphicsCountryItem::getCountry() const {
 }
 
 QRectF QGraphicsCountryItem::boundingRect() const {
-	return QRectF(-8,-8,16,16);
+	return QRectF(-diameter, -diameter, diameter*2, diameter*2);
 }
 
 void QGraphicsCountryItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
-	int diameter = 0;
 	QPen pen(Qt::black, 1);
 	painter->setPen(pen);
 
 	MapScene* parent = dynamic_cast<MapScene*>(this->scene());
 
-	diameter = 10;
+	// Enable me to view the bounding rectangle
+	// painter->setBrush(QBrush(Qt::black));
+	// painter->drawRect(this->boundingRect());
+
 	painter->setBrush(QBrush(parent->getContinentColor(this->country->getName())));
-	painter->drawEllipse(QPointF(0, 0), diameter, diameter);
+	painter->drawEllipse(QPointF(0, 0), this->diameter, this->diameter);
 
-	diameter = 5;
 	painter->setBrush(QBrush(parent->getPlayerColor(this->country->getPlayer())));
-	painter->drawEllipse(QPointF(0, 0), diameter, diameter);
+	painter->drawEllipse(QPointF(0, 0), this->diameter/2, this->diameter/2);
 
+	QFont font = QFont("Helvetica", this->fontSize);
+	QFontMetrics metrics(font);
+	painter->setFont(font);
 	std::string label = country->getName() + " (" + std::to_string(country->getArmies()) + ")";
-	painter->drawText(QPointF(-23,17), QString::fromStdString(label));
+	int textWidth = metrics.width(QString::fromStdString(label))/2;
+	painter->drawText(QPointF(-textWidth/2,17), QString::fromStdString(label));
 }
 
 void QGraphicsCountryItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){

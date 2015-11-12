@@ -24,34 +24,28 @@ public:
 	explicit MainScreen(RiskMap* map, QWidget *parent = 0);
 	~MainScreen();
 	void addPlayerView(QWidget* pvWidget);
-
-    /**
-     * @brief setCPUs
-     * @param total Number of non-human players
-     */
-	void setCPUs(int total);
-	void setPlayerName(std::string name);
 	bool setupPlayers();
 	void observedUpdated();
 
-    /**
-     * @brief getCurrentMode
-     * @return The current game mode (REINFORCEMENTMODE, ATTACKMODE, FORTIFICATIONMODE)
-     */
+	/**
+	 * @brief getCurrentMode
+	 * @return The current game mode (REINFORCEMENTMODE, ATTACKMODE, FORTIFICATIONMODE)
+	 */
 	Mode getCurrentMode();
-    void setCurrentMode(Mode newMode);
+	void setCurrentMode(Mode newMode);
 
-    /**
-     * @brief endPhase This function simulates the click of the end phase button and switches to next player's turn
-     */
-    void endPhase();
+	/**
+	 * @brief endPhase This function simulates the click of the end phase button and switches to next player's turn
+	 */
+	void endPhase();
 
 	void setCurrentPlayer(std::string name);
+	void setReinforcements();
 	std::string getCurrentPlayer();
 
 private slots:
 	void on_mapEditorAction_triggered();
-    void on_pushButton_clicked();
+	void on_pushButton_clicked();
 
 
 private:
@@ -64,8 +58,6 @@ private:
 	MapScene *scene = nullptr;
 	Mode currentMode;
 	std::string currentPLayerName;
-	void setupPlayer();
-	void setupCPUs();
 };
 
 #endif // MAINSCREEN_H

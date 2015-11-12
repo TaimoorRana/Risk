@@ -25,10 +25,13 @@ void RiskMap::addContinent(const Continent& continent){
 }
 
 Country* RiskMap::addCountry(const Country& country, const std::string& continentName){
+	if (continents.find(continentName) == continents.end()) {
+		continents[continentName] = Continent(continentName);
+	}
 	if (countries.find(country.getName()) == countries.end()) {
 		countries[country.getName()] = country;
 	}
-	if (! mapGraph.insertNode(country.getName(), continentName))
+	if (!mapGraph.insertNode(country.getName(), continentName))
 		return nullptr;
 	this->notifyObservers();
 	return &this->countries[country.getName()];
@@ -50,11 +53,12 @@ void RiskMap::remNeighbour(const std::string& country_a, const std::string& coun
 	this->notifyObservers();
 }
 
-void RiskMap::addPlayer(const Player& player) {
+Player* RiskMap::addPlayer(const Player& player) {
 	if (this->players.find(player.getName()) == this->players.end()) {
 		this->players[player.getName()] = player;
 	}
 	this->notifyObservers();
+	return &this->players[player.getName()];
 }
 
 Continent* RiskMap::getContinentOfCountry(const std::string& name_country){

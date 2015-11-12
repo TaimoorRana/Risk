@@ -25,11 +25,9 @@ using namespace std;
  * @return
  */
 int main(int argc, char *argv[]) {
-    QApplication application(argc, argv);
+	QApplication application(argc, argv);
 	GameDriver* driver = GameDriver::getInstance();
-	driver->addPlayer("taimoor");
-	driver->addPlayer("Elias");
 	driver->showSplashScreen();
 	driver->startGame();
-    return application.exec();
+  return application.exec();
 }

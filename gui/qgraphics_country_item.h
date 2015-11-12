@@ -9,6 +9,8 @@
 class QGraphicsCountryItem: public QGraphicsItem
 {
 	Country* country = 0;
+	const int diameter = 10;
+	const int fontSize = 9;
 public:
 	QGraphicsCountryItem(Country* c);
 	QRectF boundingRect() const;

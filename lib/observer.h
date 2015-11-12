@@ -5,6 +5,7 @@
 // Forward declaration due to circular dependency
 class Observable;
 
+
 class Observer {
 public:
 	virtual void observedUpdated() = 0;

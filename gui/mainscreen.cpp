@@ -42,8 +42,6 @@ bool MainScreen::setupPlayers(){
 		if (dialog.exec() == QDialog::Rejected) {
 			exit(0);
 		}
-		this->playerName = dialog.getPlayerName();
-		this->CPUs = dialog.getAIPlayerCount();
 		this->mapPath = dialog.getMapPath();
 		QFileInfo mapFile(QString::fromStdString(this->mapPath));
 		if (!mapFile.exists()) {
@@ -67,6 +65,16 @@ bool MainScreen::setupPlayers(){
 
 		valid = true;
 	}
+
+	Player* player = nullptr;
+	for (int x = 0; x < dialog.getPlayerCount(); x++) {
+		player = map->addPlayer(Player("Player " + std::to_string(x+1)));
+		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this, player, this->scene);
+		player->setTotalArmy(22);
+		player->setReinforcements(10);
+		ui->horizontalLayout_2->addWidget(playerinfo);
+		player->notifyObserver();
+	}
 	this->map->notifyObservers();
 
 	std::mt19937::result_type seed = time(0);
@@ -85,13 +93,13 @@ bool MainScreen::setupPlayers(){
 		player->addCountry(country->getName());
 		country->setArmies(2);
 	}
+	setReinforcements();
 
-	setupPlayer();
-	setupCPUs();
 	return true;
 }
 
-void MainScreen::setupPlayer()
+
+void MainScreen::setReinforcements()
 {
 	for(auto const &ent1: map->getPlayers()){
 		Player p = ent1.second;
@@ -101,11 +109,12 @@ void MainScreen::setupPlayer()
 		set<string>::iterator itContinents = continents.begin();
 		int reinforcementArmies=0;
 		//gets the reinforcement armies based if they have more than 9 countries
-		if(player->getContinentsOwned().size()>9){
+
+		if(player->getCountriesOwned().size()>9){
 			reinforcementArmies = player->getCountriesOwned().size()/3;
 		}
 		else{
-			reinforcementArmies =3;
+			reinforcementArmies = 3;
 		}
 		while(itContinents!= continents.end()){
 			reinforcementArmies += map->getContinent(*itContinents)->getReinforcementBonus();
@@ -113,35 +122,25 @@ void MainScreen::setupPlayer()
 		player->setReinforcements(reinforcementArmies);
 
 		player->notifyObserver();
-		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this, player, this->scene);
-		ui->horizontalLayout_2->addWidget(playerinfo);
+
 	}
 }
 
-void MainScreen::setupCPUs()
-{
-	for(int x = 0; x < CPUs; x++){
-		Player* cpu = new Player("CPU");
-		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this,cpu);
-		ui->horizontalLayout_2->addWidget(playerinfo);
-		map->addPlayer(*cpu);
-	}
-}
+
+
 
 void MainScreen::addPlayerView(QWidget *pvWidget)
 {
 	ui->verticalLayout_2->addWidget(pvWidget);
 }
 
-void MainScreen::setCPUs(int total)
-{
-	this->CPUs = total;
-}
+
 
 void MainScreen::setCurrentMode(Mode newMode)
 {
 	this->currentMode = newMode;
 }
+
 
 void MainScreen::on_pushButton_clicked()
 {
@@ -166,6 +165,7 @@ void MainScreen::on_pushButton_clicked()
 void MainScreen::endPhase()
 {
 	on_pushButton_clicked();
+
 }
 
 Mode MainScreen::getCurrentMode(){
@@ -181,7 +181,6 @@ std::string MainScreen::getCurrentPlayer()
 {
 	return this->currentPLayerName;
 }
-
 
 /**
  * Callback to handle user selecting File > Map Editor.

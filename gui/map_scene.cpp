@@ -59,6 +59,7 @@ void MapScene::observedUpdated() {
 
 	seed = 8;
 	color_rand = std::bind(std::uniform_int_distribution<int>(0, 255), std::mt19937(seed));
+
 	this->playerPalette.clear();
 	std::vector<QColor> presetPlayerColors;
 	presetPlayerColors.push_back(QColor(0, 219, 0));
@@ -80,6 +81,11 @@ void MapScene::observedUpdated() {
 		}
 		playerPalette.insert(std::pair<const std::string, QColor>(player.getName(), color));
 	}
+
+	debug("");
+	for (auto const &ent1 : this->playerPalette) {
+		debug("Player " + ent1.first + " is " + ent1.second.name().toStdString());
+	}
 }
 
 QColor MapScene::getContinentColor(const std::string& countryName) {
@@ -88,12 +94,14 @@ QColor MapScene::getContinentColor(const std::string& countryName) {
 }
 
 QColor MapScene::getPlayerColor(const std::string& playerName) {
+	QColor color;
 	if (this->editable) {
-		return QColor(204, 204, 204);
+		color = QColor(204, 204, 204);
 	}
 	else {
-		return this->playerPalette.at(playerName);
+		color = this->playerPalette.at(playerName);
 	}
+	return color;
 }
 
 bool MapScene::getEditable() const {
@@ -122,7 +130,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					return;
 				}
 
-				if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0 && parent->getCurrentPlayer().compare(item->getCountry()->getPlayer())) {
+				if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0 ) {
 
 					map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
 					item->getCountry()->addArmies(1);

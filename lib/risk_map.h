@@ -87,7 +87,7 @@ public:
 	 * @brief addPlayer adds the player
 	 * @param player
 	 */
-	void addPlayer(const Player& player);
+	Player* addPlayer(const Player& player);
 	/**
 	 * @brief getContinentOfCountry gets a continent pointer of the country string
 	 * @param name_country
