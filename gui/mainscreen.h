@@ -24,12 +24,26 @@ public:
 	explicit MainScreen(RiskMap* map, QWidget *parent = 0);
 	~MainScreen();
 	void addPlayerView(QWidget* pvWidget);
+
+    /**
+     * @brief setCPUs
+     * @param total Number of non-human players
+     */
 	void setCPUs(int total);
 	void setPlayerName(std::string name);
 	bool setupPlayers();
 	void observedUpdated();
+
+    /**
+     * @brief getCurrentMode
+     * @return The current game mode (REINFORCEMENTMODE, ATTACKMODE, FORTIFICATIONMODE)
+     */
 	Mode getCurrentMode();
     void setCurrentMode(Mode newMode);
+
+    /**
+     * @brief endPhase This function simulates the click of the end phase button and switches to next player's turn
+     */
     void endPhase();
 
 	void setCurrentPlayer(std::string name);
