@@ -12,6 +12,7 @@
 #include "player.h"
 #include "player_view.h"
 #include "playerinfowidget.h"
+#include "gamedriver.h"
 
 
 MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainScreen)
@@ -101,6 +102,10 @@ void MainScreen::addPlayerView(QWidget *pvWidget)
 	ui->verticalLayout_2->addWidget(pvWidget);
 }
 
+void MainScreen::setCurrentMode(Mode newMode) {
+    this->currentMode = newMode;
+}
+
 void MainScreen::on_pushButton_clicked()
 {
 	if(ui->reinforcementRadio->isChecked()){
@@ -116,10 +121,28 @@ void MainScreen::on_pushButton_clicked()
 		currentMode = REINFORCEMENTMODE;
 		return;
 	}
+
+	GameDriver* driver = GameDriver::getInstance();
+	driver->startGame();
+}
+
+void MainScreen::endPhase()
+{
+  on_pushButton_clicked();
 }
 
 Mode MainScreen::getCurrentMode(){
 	return currentMode;
+}
+
+void MainScreen::setCurrentPlayer(std::string name)
+{
+	this->currentPLayerName = name;
+}
+
+std::string MainScreen::getCurrentPlayer()
+{
+	return this->currentPLayerName;
 }
 
 /**

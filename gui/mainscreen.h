@@ -26,10 +26,26 @@ public:
 	void addPlayerView(QWidget* pvWidget);
 	bool setupPlayers();
 	void observedUpdated();
+
+	/**
+	 * @brief getCurrentMode
+	 * @return The current game mode (REINFORCEMENTMODE, ATTACKMODE, FORTIFICATIONMODE)
+	 */
 	Mode getCurrentMode();
+	void setCurrentMode(Mode newMode);
+
+	/**
+	 * @brief endPhase This function simulates the click of the end phase button and switches to next player's turn
+	 */
+	void endPhase();
+
+	void setCurrentPlayer(std::string name);
+	std::string getCurrentPlayer();
+
 private slots:
-	void on_pushButton_clicked();
 	void on_mapEditorAction_triggered();
+	void on_pushButton_clicked();
+
 
 private:
 	std::string playerName = "";
@@ -40,6 +56,7 @@ private:
 	RiskMap *map = nullptr;
 	MapScene *scene = nullptr;
 	Mode currentMode;
+	std::string currentPLayerName;
 };
 
 #endif // MAINSCREEN_H

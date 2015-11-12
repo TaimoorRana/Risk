@@ -3,13 +3,14 @@
 #include "debug.h"
 
 
-FortifyDialog::FortifyDialog(Country* firstCountry, Country* secondCountry, QWidget *parent) :QDialog(parent), ui(new Ui::FortifyDialog)
+FortifyDialog::FortifyDialog(Country* firstCountry, Country* secondCountry, MainScreen* aParent, QWidget *parent) :QDialog(parent), ui(new Ui::FortifyDialog)
 {
     ui->setupUi(this);
     int currentArmiesInOriginCountry = firstCountry->getArmies();
     ui->armiesSlider->setMaximum(currentArmiesInOriginCountry-1);
     ui->armiesSlider->setMinimum(0);
 
+    this->parent = aParent;
     this->firstCountry = firstCountry;
     this->secondCountry = secondCountry;
 }
@@ -37,12 +38,13 @@ QString FortifyDialog::getFortificationNumber()
 void FortifyDialog::accept()
 {
     int armies = ui->armiesSlider->value();
-    if(firstCountry->getArmies() - armies > 1)
+    if(firstCountry->getArmies() - armies >= 1)
     {
         firstCountry->removeArmies(armies);
         secondCountry->addArmies(armies);
         this->close();
+        this->parent->endPhase();
     }
     
-    
+
 }

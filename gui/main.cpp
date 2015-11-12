@@ -28,5 +28,6 @@ int main(int argc, char *argv[]) {
 	QApplication application(argc, argv);
 	GameDriver* driver = GameDriver::getInstance();
 	driver->showSplashScreen();
-	return application.exec();
+	driver->startGame();
+  return application.exec();
 }
