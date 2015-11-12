@@ -71,8 +71,8 @@ void GameDriver::showSplashScreen()
 	QPixmap splashImg = QPixmap("../../../assets/risk1.png").scaled(600, 300);
 
 	splash->setPixmap(splashImg);
-	//splash->show();
-	//QTimer::singleShot(2500,splash,SLOT(close()));
+	splash->show();
+	QTimer::singleShot(2500,splash,SLOT(close()));
 
 	delete splash;
 
