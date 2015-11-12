@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QString>
+#include "country.h"
 
 namespace Ui {
 class FortifyDialog;
@@ -13,12 +14,12 @@ class FortifyDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit FortifyDialog(QWidget *parent = 0);
+    explicit FortifyDialog( Country* aCountry, QWidget *parent = 0);
     ~FortifyDialog();
     void setOriginCountryName(QString name);
     void setDestinationCountryName(QString name);
     QString getFortificationNumber();
-
+    void accept();
 private:
     Ui::FortifyDialog *ui;
 };
