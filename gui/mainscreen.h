@@ -40,6 +40,7 @@ public:
 	void endPhase();
 
 	void setCurrentPlayer(std::string name);
+	void setReinforcements();
 	std::string getCurrentPlayer();
 
 private slots:

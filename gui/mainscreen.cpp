@@ -95,18 +95,54 @@ bool MainScreen::setupPlayers(){
 		player->addCountry(country->getName());
 		country->setArmies(2);
 	}
+	setReinforcements();
 
 	return true;
 }
+
+
+void MainScreen::setReinforcements()
+{
+	for(auto const &ent1: map->getPlayers()){
+		Player p = ent1.second;
+		Player *player = map->getPlayer(p.getName());
+		player->setTotalArmy(player->getCountriesOwned().size()*2);
+		set<string> continents =player->getContinentsOwned();
+		set<string>::iterator itContinents = continents.begin();
+		int reinforcementArmies=0;
+		//gets the reinforcement armies based if they have more than 9 countries
+
+		if(player->getCountriesOwned().size()>9){
+			reinforcementArmies = player->getCountriesOwned().size()/3;
+		}
+		else{
+			reinforcementArmies = 3;
+		}
+		while(itContinents!= continents.end()){
+			reinforcementArmies += map->getContinent(*itContinents)->getReinforcementBonus();
+		}
+		player->setReinforcements(reinforcementArmies);
+
+		player->notifyObserver();
+
+	}
+}
+
+
+
 
 void MainScreen::addPlayerView(QWidget *pvWidget)
 {
 	ui->verticalLayout_2->addWidget(pvWidget);
 }
 
-void MainScreen::setCurrentMode(Mode newMode) {
-    this->currentMode = newMode;
+
+
+void MainScreen::setCurrentMode(Mode newMode)
+{
+	this->currentMode = newMode;
 }
+
 
 void MainScreen::on_pushButton_clicked()
 {
@@ -130,7 +166,8 @@ void MainScreen::on_pushButton_clicked()
 
 void MainScreen::endPhase()
 {
-  on_pushButton_clicked();
+	on_pushButton_clicked();
+
 }
 
 Mode MainScreen::getCurrentMode(){
