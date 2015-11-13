@@ -23,8 +23,12 @@ MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(
 
 	this->scene = new MapScene(map, this);
 	ui->graphicsView->setScene(scene);
-	ui->reinforcementRadio->setChecked(true);
-	currentMode = REINFORCEMENTMODE;
+	
+}
+
+void MainScreen::initializeMode(){
+    ui->reinforcementRadio->setChecked(true);
+    currentMode = REINFORCEMENTMODE;
     reinforceModeCompleted = true;
 }
 

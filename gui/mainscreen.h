@@ -57,13 +57,14 @@ private:
 	RiskMap *map = nullptr;
 	MapScene *scene = nullptr;
 	Mode currentMode;
+	std::vector<std::string> players;
 	std::string currentPLayerName;
 	bool attackModeCompleted = false;
 	bool reinforceModeCompleted = false;
 	bool fortificationModeCompleted = false;
 	int currentPlayer = 0;
-	std::vector<std::string> players;
     int totalPlayers;
+	void initializeMode();
 };
 
 #endif // MAINSCREEN_H
