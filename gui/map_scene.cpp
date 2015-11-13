@@ -122,7 +122,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsCountryItem *item = nullptr;
 	if (!this->editable) {
 		MainScreen* parent = qobject_cast<MainScreen*>(this->parent());
-
+		std::string currentPLayer = parent->getCurrentPlayer();
 		switch(parent->getCurrentMode()) {
 			case REINFORCEMENTMODE:
 				item = getQGraphicsCountryItemFromEvent(event);
@@ -130,7 +130,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					return;
 				}
 
-				if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0 ) {
+				if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0 && currentPLayer.compare(item->getCountry()->getPlayer()) == 0 ) {
 					map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
 					item->getCountry()->addArmies(1);
 				}

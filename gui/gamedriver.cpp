@@ -12,32 +12,6 @@ GameDriver* GameDriver::getInstance()
 	return instance;
 }
 
-void GameDriver::startGame()
-{
-		if(this->mainWindow->getCurrentMode() == REINFORCEMENTMODE  ){
-			reinforceModeCompleted = true;
-		}else if(this->mainWindow->getCurrentMode() == ATTACKMODE){
-			attackModeCompleted = true;
-		}else{
-			fortificationModeCompleted = true;
-		}
-
-		if(attackModeCompleted == true && reinforceModeCompleted == true && fortificationModeCompleted == true){
-			currentPlayer++;
-			currentPlayerName = players[currentPlayer];
-			attackModeCompleted = false;
-			reinforceModeCompleted = false;
-			fortificationModeCompleted = false;
-
-			mainWindow->setCurrentPlayer(this->currentPlayerName);
-		}
-}
-
-string GameDriver::getCurrentPlayerName()
-{
-	return this->currentPlayerName;
-}
-
 void GameDriver::attackPhase(){}
 
 void GameDriver::reinforcePhase()
@@ -87,7 +61,6 @@ void GameDriver::addPlayer(string name)
 {
 	Player* player = new Player(name);
 	riskMap->addPlayer(*player);
-	players.push_back(name);
 }
 
 GameDriver::GameDriver(){

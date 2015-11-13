@@ -25,6 +25,7 @@ MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(
 	ui->graphicsView->setScene(scene);
 	ui->reinforcementRadio->setChecked(true);
 	currentMode = REINFORCEMENTMODE;
+    reinforceModeCompleted = true;
 }
 
 MainScreen::~MainScreen() {
@@ -65,10 +66,14 @@ bool MainScreen::setupPlayers(){
 
 		valid = true;
 	}
-
+    totalPlayers = dialog.getPlayerCount();
 	Player* player = nullptr;
-	for (int x = 0; x < dialog.getPlayerCount(); x++) {
+	for (int x = 0; x < totalPlayers; x++) {
 		player = map->addPlayer(Player("Player " + std::to_string(x+1)));
+		if(x == 0){
+			currentPLayerName = "Player " + std::to_string(x+1);
+		}
+		players.push_back("Player " + std::to_string(x+1));
 		player->setNotificationsEnabled(false);
 		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this, player, this->scene);
 		ui->horizontalLayout_2->addWidget(playerinfo);
@@ -149,19 +154,18 @@ void MainScreen::on_pushButton_clicked()
 	if(ui->reinforcementRadio->isChecked()){
 		ui->attackRadio->setChecked(true);
 		currentMode = ATTACKMODE;
-		return;
+        attackModeCompleted = true;
 	}else if(ui->attackRadio->isChecked()){
 		ui->fortifyRadio->setChecked(true);
 		currentMode = FORTIFICATIONMODE;
-		return;
+        fortificationModeCompleted = true;
 	}else{
 		ui->reinforcementRadio->setChecked(true);
 		currentMode = REINFORCEMENTMODE;
-		return;
+        reinforceModeCompleted = true;
 	}
 
-	GameDriver* driver = GameDriver::getInstance();
-	driver->startGame();
+	startGame();
 }
 
 void MainScreen::endPhase()
@@ -201,3 +205,18 @@ void MainScreen::on_mapEditorAction_triggered() {
 void MainScreen::observedUpdated() {
 	MapRenderer::updateScene(this->map, this->scene, this->mapPath, false);
 }
+
+void MainScreen::startGame()
+{
+		if(attackModeCompleted == true && reinforceModeCompleted == true && fortificationModeCompleted == true){
+			currentPlayer++;
+            if(currentPlayer >= totalPlayers){
+                currentPlayer = 0;
+            }
+			currentPLayerName = players[currentPlayer];
+			attackModeCompleted = false;
+			reinforceModeCompleted = false;
+			fortificationModeCompleted = false;
+		}
+}
+

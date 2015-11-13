@@ -42,7 +42,7 @@ public:
 	void setCurrentPlayer(std::string name);
 	void setReinforcements();
 	std::string getCurrentPlayer();
-
+	void startGame();
 private slots:
 	void on_mapEditorAction_triggered();
 	void on_pushButton_clicked();
@@ -58,6 +58,12 @@ private:
 	MapScene *scene = nullptr;
 	Mode currentMode;
 	std::string currentPLayerName;
+	bool attackModeCompleted = false;
+	bool reinforceModeCompleted = false;
+	bool fortificationModeCompleted = false;
+	int currentPlayer = 0;
+	std::vector<std::string> players;
+    int totalPlayers;
 };
 
 #endif // MAINSCREEN_H

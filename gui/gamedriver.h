@@ -129,9 +129,7 @@ public:
 
 	static GameDriver* getInstance();
 
-	void startGame();
 
-	std::string getCurrentPlayerName();
 
 private:
 
@@ -147,18 +145,12 @@ private:
 
 	int numberOfPlayers;
 
-	string currentPlayerName;
+
 
 	bool gameBegun;
 
 	bool canFortify;
 
-	std::vector<std::string> players;
-
-	bool attackModeCompleted = false;
-	bool reinforceModeCompleted = false;
-	bool fortificationModeCompleted = false;
-	int currentPlayer = 0;
 
 };
 
