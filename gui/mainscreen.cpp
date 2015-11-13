@@ -151,6 +151,7 @@ void MainScreen::setCurrentMode(Mode newMode)
 
 void MainScreen::on_pushButton_clicked()
 {
+    startGame();
 	if(ui->reinforcementRadio->isChecked()){
 		ui->attackRadio->setChecked(true);
 		currentMode = ATTACKMODE;
@@ -164,8 +165,6 @@ void MainScreen::on_pushButton_clicked()
 		currentMode = REINFORCEMENTMODE;
         reinforceModeCompleted = true;
 	}
-
-	startGame();
 }
 
 void MainScreen::endPhase()

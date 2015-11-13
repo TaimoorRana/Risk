@@ -146,6 +146,9 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					return;
 				}
 				else {
+                    if (currentPLayer.compare(item->getCountry()->getPlayer()) != 0) {
+                        return;
+                    }
                     if (lastCountryClicked == nullptr || lastCountryClicked->getName().compare(item->getCountry()->getName()) == 0)
                     {
 						lastCountryClicked = item->getCountry();
