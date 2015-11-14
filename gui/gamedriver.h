@@ -1,31 +1,20 @@
-
 #ifndef GAMEDRIVER_H
-
 #define GAMEDRIVER_H
 
-#include "fortify_dialog.h"
-
-#include "risk_map.h"
-
-#include "player.h"
-
-#include "map_scene.h"
-
-#include "mainscreen.h"
-#include "game_modes.h"
-
+#include <QTimer>
 #include <QSplashScreen>
-
 #include <QPixmap>
 
 #include <string>
-
 #include <set>
-
-#include <QTimer>
 #include <vector>
 
-
+#include "fortify_dialog.h"
+#include "risk_map.h"
+#include "player.h"
+#include "map_scene.h"
+#include "mainscreen.h"
+#include "game_modes.h"
 
 using namespace std;
 

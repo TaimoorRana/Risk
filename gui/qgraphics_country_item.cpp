@@ -37,12 +37,12 @@ void QGraphicsCountryItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
 	painter->setBrush(QBrush(parent->getPlayerColor(this->country->getPlayer())));
 	painter->drawEllipse(QPointF(0, 0), this->diameter/2, this->diameter/2);
 
-	QFont font = QFont("Helvetica", this->fontSize);
+    QFont font = QFont("Open Sans", this->fontSize);
 	QFontMetrics metrics(font);
 	painter->setFont(font);
 	std::string label = country->getName() + " (" + std::to_string(country->getArmies()) + ")";
 	int textWidth = metrics.width(QString::fromStdString(label))/2;
-	painter->drawText(QPointF(-textWidth/2,17), QString::fromStdString(label));
+    painter->drawText(QPointF(-textWidth,19), QString::fromStdString(label));
 }
 
 void QGraphicsCountryItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){

@@ -1,4 +1,4 @@
-#include <QThread>
+#include <QThread> // For the splash screen
 #include "gamedriver.h"
 
 using namespace std;
