@@ -1,7 +1,13 @@
+#include <QThread>
 #include "gamedriver.h"
 
 using namespace std;
 
+/**
+ * @brief GameDriver::getInstance
+ * The GameDriver is a Singleton
+ * @return the sole instance of the GameDriver
+ */
 GameDriver* GameDriver::getInstance()
 {
 	static GameDriver* instance = nullptr;
@@ -42,11 +48,14 @@ void GameDriver::showSplashScreen()
 {
 	QSplashScreen *splash = new QSplashScreen;
 
-	QPixmap splashImg = QPixmap("../../../assets/risk1.png").scaled(600, 300);
+    QPixmap splashImg = QPixmap("../../../assets/risk1.png").scaled(800, 346);
 
 	splash->setPixmap(splashImg);
 	splash->show();
-	QTimer::singleShot(2500,splash,SLOT(close()));
+
+    qApp->processEvents();
+
+    QThread::msleep(1000);
 
 	delete splash;
 

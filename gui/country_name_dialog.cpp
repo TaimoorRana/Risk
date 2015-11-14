@@ -18,11 +18,12 @@ QString CountryNameDialog::getCountryName()
     return ui->CountryNameLineEdit->text();
 }
 
-void CountryNameDialog::setLastContinentName(const QString& lastContinent){
-    ui->ContinentNameLineEdit->setText(lastContinent);
-}
-
 QString CountryNameDialog::getContinentName()
 {
     return ui->ContinentNameLineEdit->text();
 }
+
+void CountryNameDialog::setLastContinentName(const QString& lastContinent){
+    ui->ContinentNameLineEdit->setText(lastContinent);
+}
+
