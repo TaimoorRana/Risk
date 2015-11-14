@@ -23,7 +23,7 @@ MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(
 
 	this->scene = new MapScene(map, this);
 	ui->graphicsView->setScene(scene);
-	
+    initializeMode();
 }
 
 void MainScreen::initializeMode(){
