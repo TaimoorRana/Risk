@@ -27,7 +27,7 @@ MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(
 }
 
 void MainScreen::initializeMode(){
-    ui->reinforcementRadio->setChecked(true);
+    ui->reinforcementLabel->setEnabled(true);
     currentMode = REINFORCEMENTMODE;
     reinforceModeCompleted = true;
 }
@@ -156,16 +156,25 @@ void MainScreen::setCurrentMode(Mode newMode)
 void MainScreen::on_pushButton_clicked()
 {
     startGame();
-	if(ui->reinforcementRadio->isChecked()){
-		ui->attackRadio->setChecked(true);
+    if(ui->reinforcementLabel->isEnabled()){
+        ui->reinforcementLabel->setEnabled(false);
+        ui->attackLabel->setEnabled(true);
+        ui->fortifyLabel->setEnabled(false);
+
 		currentMode = ATTACKMODE;
         attackModeCompleted = true;
-	}else if(ui->attackRadio->isChecked()){
-		ui->fortifyRadio->setChecked(true);
+    }else if(ui->attackLabel->isEnabled()){
+        ui->reinforcementLabel->setEnabled(false);
+        ui->attackLabel->setEnabled(false);
+        ui->fortifyLabel->setEnabled(true);
+
 		currentMode = FORTIFICATIONMODE;
         fortificationModeCompleted = true;
 	}else{
-		ui->reinforcementRadio->setChecked(true);
+        ui->reinforcementLabel->setEnabled(true);
+        ui->attackLabel->setEnabled(false);
+        ui->fortifyLabel->setEnabled(false);
+
 		currentMode = REINFORCEMENTMODE;
         reinforceModeCompleted = true;
 	}
