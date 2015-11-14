@@ -31,13 +31,14 @@ void MapScene::observedUpdated() {
 	this->continentPalette.clear();
 
 	std::vector<QColor> presetContinentColors;
-	presetContinentColors.push_back(QColor(255, 255, 153));
-	presetContinentColors.push_back(QColor(255, 204, 255));
-	presetContinentColors.push_back(QColor(204, 204, 255));
-	presetContinentColors.push_back(QColor(204, 244, 204));
-	presetContinentColors.push_back(QColor(255, 219, 157));
-	presetContinentColors.push_back(QColor(180, 226, 255));
-	presetContinentColors.push_back(QColor(206, 215, 140));
+    presetContinentColors.push_back(QColor(255, 255, 153)); //baby yellow
+    presetContinentColors.push_back(QColor(204, 204, 255)); //light pink
+    presetContinentColors.push_back(QColor(255, 204, 255)); //ligh purple
+    presetContinentColors.push_back(QColor(255, 219, 157)); //light orange
+    presetContinentColors.push_back(QColor(180, 226, 255)); //baby blue
+    presetContinentColors.push_back(QColor(204, 244, 204)); //lime green
+
+    presetContinentColors.push_back(QColor(206, 215, 140));
 	presetContinentColors.push_back(QColor(255, 152, 199));
 	presetContinentColors.push_back(QColor(241, 197, 197));
 	presetContinentColors.push_back(QColor(255, 155, 119));
