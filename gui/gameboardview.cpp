@@ -36,10 +36,6 @@ GameBoardView::GameBoardView() :
 	beginGameButton->setText("submit");
 	mainLayout->addWidget(beginGameButton);
 	connect(beginGameButton,SIGNAL(clicked()),this,SLOT(beginGame()));
-
-
-
-
 }
 /**
  * @brief GameBoardView::beginGame
@@ -172,7 +168,4 @@ void GameBoardView::endTurn(){
 		gameBeganLabel = new QLabel((QString("Your Game has begun Players:%1").arg(turnNumber)));
 		mainLayout->addWidget(gameBeganLabel);
 	}
-
-
 }
-
