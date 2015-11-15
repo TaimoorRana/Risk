@@ -108,6 +108,8 @@ bool MainScreen::setupPlayers(){
         country->setArmies(2);
         iter++;
     }
+
+
     setReinforcements();
 
 	return true;

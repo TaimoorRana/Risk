@@ -135,11 +135,20 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 		switch(parent->getCurrentMode()) {
 			case REINFORCEMENTMODE:
-				if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0 && currentPLayer.compare(item->getCountry()->getPlayer()) == 0 ) {
-					map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
-					item->getCountry()->addArmies(1);
-				}
+                if(currentPLayer.compare(item->getCountry()->getPlayer()) == 0 ){
+                    if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0) {
+                        map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
+                        item->getCountry()->addArmies(1);
+                    }
+                    else{
+                        GameErrorDialog *outOfReinforcements = new GameErrorDialog(QString::fromStdString("You have 0 reinforcements left."), parent);
+                        outOfReinforcements->show();
+                        return;
+                    }
+                }
 				else {
+                    GameErrorDialog *notYourTurn = new GameErrorDialog(QString::fromStdString("You must choose your own country."), parent);
+                    notYourTurn->show();
 					return;
 				}
 				map->getPlayer(item->getCountry()->getPlayer())->notifyObservers();
