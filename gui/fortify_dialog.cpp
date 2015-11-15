@@ -9,7 +9,6 @@ FortifyDialog::FortifyDialog(Country* firstCountry, Country* secondCountry, Main
     int currentArmiesInOriginCountry = firstCountry->getArmies();
     ui->armiesSlider->setMaximum(currentArmiesInOriginCountry-1);
     ui->armiesSlider->setMinimum(0);
-
     this->parent = aParent;
     this->firstCountry = firstCountry;
     this->secondCountry = secondCountry;
