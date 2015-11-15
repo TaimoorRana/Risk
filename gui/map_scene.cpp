@@ -69,6 +69,7 @@ void MapScene::observedUpdated() {
 	presetPlayerColors.push_back(QColor(0, 82, 245));
 	presetPlayerColors.push_back(QColor(255, 206, 10));
 	presetPlayerColors.push_back(QColor(239, 34, 34));
+
 	i=0;
 	for (auto const &ent1 : this->map->getPlayers()) {
 		const Player& player = ent1.second;

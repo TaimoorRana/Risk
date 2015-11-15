@@ -43,6 +43,8 @@ public:
 	void setReinforcements();
 	std::string getCurrentPlayer();
 	void startGame();
+    std::vector<int> getVectorOfIndicesRandomCountryAccess(int nCountries);
+
 private slots:
 	void on_mapEditorAction_triggered();
 	void on_pushButton_clicked();
@@ -65,6 +67,7 @@ private:
 	int currentPlayer = 0;
     int totalPlayers;
 	void initializeMode();
+    Player* playerRoundRobin(int i);
 };
 
 #endif // MAINSCREEN_H

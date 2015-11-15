@@ -36,7 +36,7 @@ public:
 	 * @brief RiskMap default constructor
 	 */
 	RiskMap();
-	~RiskMap();
+    virtual ~RiskMap();
 	/**
 	 * @brief areCountriesAdjacent checks whether the countries are adjacent
 	 * @param country_a

@@ -1,6 +1,7 @@
 #include <functional>
 #include <random>
 #include <time.h>
+#include <set>
 
 #include <QMessageBox>
 #include <QFileInfo>
@@ -13,7 +14,7 @@
 #include "player_view.h"
 #include "playerinfowidget.h"
 #include "gamedriver.h"
-
+#include "debug.h"
 
 MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainScreen)
 {
@@ -88,27 +89,56 @@ bool MainScreen::setupPlayers(){
 	}
 	this->map->notifyObservers();
 
-	std::mt19937::result_type seed = time(0);
-	auto player_rand = std::bind(std::uniform_int_distribution<int>(0, this->map->getPlayers().size()-1), std::mt19937(seed));
-	for (auto const &ent1 : this->map->getCountries()) {
-		// FIXME: We should really just not make these const.
-		const Country& ctmp = ent1.second;
-		Country* country = this->map->getCountry(ctmp.getName());
-		// Set random player
-		auto it = this->map->getPlayers().begin();
-		std::advance(it, player_rand());
-		const Player& ptmp = it->second;
-		Player* player = this->map->getPlayer(ptmp.getName());
-		country->setPlayer(player->getName());
-		// Set 2 armies
-		player->addCountry(country->getName());
-		country->setArmies(2);
-	}
-	setReinforcements();
+
+    std::vector<Country*> vectorOfCountryPointers;
+    for (auto const &ent1 : this->map->getCountries()) {
+        const Country& ctmp = ent1.second;
+        vectorOfCountryPointers.push_back(this->map->getCountry(ctmp.getName()));
+    }
+
+    std::vector<int> x = getVectorOfIndicesRandomCountryAccess(this->map->getCountries().size());
+    std::vector<int>::const_iterator iter = x.begin();
+    int p=0;
+    while (iter != x.end()){
+        Country* country = vectorOfCountryPointers[*iter];
+        Player* player = playerRoundRobin(p++);
+        debug("Setting "+country->getName()+" to "+ player->getName());
+        country->setPlayer(player->getName());
+        player->addCountry(country->getName());
+        country->setArmies(2);
+        iter++;
+    }
+    setReinforcements();
 
 	return true;
 }
 
+
+std::vector<int> MainScreen::getVectorOfIndicesRandomCountryAccess(int nCountries){
+    std::set<int> s;
+    std::vector<int> v;
+
+    std::mt19937::result_type seed = time(0);
+
+    auto countryRand = std::bind(std::uniform_int_distribution<int>(0, nCountries-1), std::mt19937(seed));
+    int nextRand;
+
+    while (s.size() < nCountries){
+        nextRand = countryRand();
+        if (s.find(nextRand) == s.end()){
+            v.push_back(nextRand);
+            s.insert(nextRand);
+        }
+
+    }
+    return v;
+}
+
+Player* MainScreen::playerRoundRobin(int i){
+    std::unordered_map<std::string, Player>::const_iterator iter = this->map->getPlayers().begin();
+    std::advance(iter,i % (this->map->getPlayers().size()));
+    return this->map->getPlayer((*iter).first);
+}
 
 void MainScreen::setReinforcements()
 {
