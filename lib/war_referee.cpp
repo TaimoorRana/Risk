@@ -70,7 +70,6 @@ void WarReferee::calculateLossesHelper(){
 	}
 
 
-
 	// Remove soldiers lost from the battle
 	if (attackerArmy > attackerLosses) {
 		attackerArmy = attackerArmy - attackerLosses;
@@ -82,6 +81,16 @@ void WarReferee::calculateLossesHelper(){
 	}else{
 		std::cout << "Error: Could not remove soldiers from defenderCountry\n";
 	}
+
+	if(defenderArmy == 0){
+		attackerCountry->setArmies(attackerArmy - 1);
+		defenderCountry->setArmies(1);
+		defenderCountry->setPlayer(attackerCountry->getPlayer());
+	}else{
+		attackerCountry->setArmies(attackerArmy);
+		defenderCountry->setArmies(defenderArmy);
+	}
+
 }
 
 
@@ -106,11 +115,13 @@ void WarReferee::allInMode(){
 }
 
 
-void WarReferee::startWar(int& attackerArmy, int& defenderArmy)
+void WarReferee::startWar(Country *attackerCountry, Country *defenderCountry)
 {
 	//setBothPlayers(attackerPlayer, defenderPlayer);
-	this->attackerArmy = attackerArmy;
-	this->defenderArmy = defenderArmy;
+	this->attackerArmy = attackerCountry->getArmies();
+	this->defenderArmy = defenderCountry->getArmies();
+	this->attackerCountry = attackerCountry;
+	this->defenderCountry = defenderCountry;
 	allInMode();
 }
 

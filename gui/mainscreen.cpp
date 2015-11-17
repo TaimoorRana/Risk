@@ -105,7 +105,7 @@ bool MainScreen::setupPlayers(){
         debug("Setting "+country->getName()+" to "+ player->getName());
         country->setPlayer(player->getName());
         player->addCountry(country->getName());
-        country->setArmies(2);
+		country->setArmies(10);
         iter++;
     }
     setReinforcements();

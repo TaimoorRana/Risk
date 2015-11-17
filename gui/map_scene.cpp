@@ -156,16 +156,11 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					secondCountryClicked = item->getCountry();
 					if(firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0){
 						WarReferee warreferee = WarReferee::getInstance();
-						int aArmy = firstCountryClicked->getArmies();
-						int dArmy = secondCountryClicked->getArmies();
-						warreferee.startWar(aArmy, dArmy);
-						firstCountryClicked->setArmies(warreferee.getAttackerArmy());
-						secondCountryClicked->setArmies(warreferee.getDefenderArmy());
+						warreferee.startWar(firstCountryClicked, secondCountryClicked);
 						firstCountryClicked = nullptr;
 						secondCountryClicked = nullptr;
 					}
 				}
-
 			break;
 			case FORTIFICATIONMODE:
 				item = getQGraphicsCountryItemFromEvent(event);

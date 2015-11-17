@@ -22,6 +22,9 @@ private:
 	int defenderDices; ///< Dices used by the defender
 	int attackerDices; ///< Dices used by the attacker
 
+	Country* attackerCountry;
+	Country* defenderCountry;
+
 	/**
 	 * @brief calculateLossesHelper
 	 * This method rolls dices for the attacker and defender. It calculates army lost for each and assignes it to their respective army
@@ -125,7 +128,7 @@ public:
 	 * @param defenderCountry
 	 * @param defenderArmy
 	 */
-	void startWar(int& attackerArmy,int& defenderArmy);
+	void startWar(Country* attackerCountry,Country* defenderCountry);
 
 	/**
 	 * @brief allInMode War between both players until the attacker wins or cannot attack anymore
