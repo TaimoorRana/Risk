@@ -12,6 +12,7 @@
 #include "fortify_dialog.h"
 #include "debug.h"
 #include "mainscreen.h"
+#include "game_error_dialog.h"
 
 class QGraphicsCountryItem;
 
@@ -125,18 +126,29 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	if (!this->editable) {
 		MainScreen* parent = qobject_cast<MainScreen*>(this->parent());
 		std::string currentPLayer = parent->getCurrentPlayer();
+
+
+
+        //Moved out since it is common
+        item = getQGraphicsCountryItemFromEvent(event);
+        if (item == nullptr) { return; }
+
 		switch(parent->getCurrentMode()) {
 			case REINFORCEMENTMODE:
-				item = getQGraphicsCountryItemFromEvent(event);
-				if (item == nullptr) {
-					return;
-				}
-
-				if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0 && currentPLayer.compare(item->getCountry()->getPlayer()) == 0 ) {
-					map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
-					item->getCountry()->addArmies(1);
-				}
+                if(currentPLayer.compare(item->getCountry()->getPlayer()) == 0 ){
+                    if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0) {
+                        map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
+                        item->getCountry()->addArmies(1);
+                    }
+                    else{
+                        GameErrorDialog *outOfReinforcements = new GameErrorDialog(QString::fromStdString("You have 0 reinforcements left."), parent);
+                        outOfReinforcements->show();
+                        return;
+                    }
+                }
 				else {
+                    GameErrorDialog *notYourTurn = new GameErrorDialog(QString::fromStdString("You must choose your own country."), parent);
+                    notYourTurn->show();
 					return;
 				}
 				map->getPlayer(item->getCountry()->getPlayer())->notifyObservers();
@@ -163,52 +175,37 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				}
 			break;
 			case FORTIFICATIONMODE:
-				item = getQGraphicsCountryItemFromEvent(event);
-				if (item == nullptr) {
-					return;
-				}
-				else {
-                    if (currentPLayer.compare(item->getCountry()->getPlayer()) != 0) {
-                        return;
-                    }
-					if (firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0)
+                if (currentPLayer.compare(item->getCountry()->getPlayer()) != 0) {
+                    GameErrorDialog *notYourTurn = new GameErrorDialog(QString::fromStdString("You must choose your own country."), parent);
+                    notYourTurn->show();
+                    return;
+                }
+				if (firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0)
+                {
+					firstCountryClicked = item->getCountry();
+                }
+                else
+                {
+					std::string firstCountryName = firstCountryClicked->getName();
+                    std::string secondCountryName = item->getCountry()->getName();
+
+					FortifyDialog* fortificationDialog = new FortifyDialog(firstCountryClicked, item->getCountry(), parent);
+                    fortificationDialog->setWindowTitle(QString::fromStdString("Transferring Armies"));
+
+                    // check for adjacency
+                    if (map->areCountriesAdjacent(firstCountryName, secondCountryName))
                     {
-						firstCountryClicked = item->getCountry();
-					}
+                        // pop-up the transfer window
+                        fortificationDialog->setOriginCountryName(QString::fromStdString(firstCountryName));
+                        fortificationDialog->setDestinationCountryName(QString::fromStdString(secondCountryName));
+                        fortificationDialog->show();
+                    }
                     else
                     {
-						std::string firstCountryName = firstCountryClicked->getName();
-						std::string secondCountryName = item->getCountry()->getName();
-
-						FortifyDialog* fortificationDialog = new FortifyDialog(firstCountryClicked, item->getCountry(), parent);
-                        fortificationDialog->setWindowTitle(QString::fromStdString("Transferring Armies"));
-
-						// check for adjancency
-                        if (map->areCountriesAdjacent(firstCountryName, secondCountryName))
-                        {
-                            // Countries must belong to same player
-							if (firstCountryClicked->getPlayer().compare(item->getCountry()->getPlayer()) == 0)
-                            {
-								// pop-up the transfer window
-								fortificationDialog->setOriginCountryName(QString::fromStdString(firstCountryName));
-								fortificationDialog->setDestinationCountryName(QString::fromStdString(secondCountryName));
-							}
-                            else
-                            {
-								// pop-up the transfer window
-								fortificationDialog->setOriginCountryName(QString::fromStdString("Different"));
-								fortificationDialog->setDestinationCountryName(QString::fromStdString("players"));
-							}
-						}
-                        else
-                        {
-							// pop-up the transfer window
-							fortificationDialog->setOriginCountryName(QString::fromStdString("Countries not"));
-							fortificationDialog->setDestinationCountryName(QString::fromStdString("adjacent"));
-						}
-						fortificationDialog->show();
-						firstCountryClicked = nullptr;
-					}
+                        GameErrorDialog *selectedNotAdjacent = new GameErrorDialog(QString::fromStdString("Countries are not adjacent."), parent);
+                        selectedNotAdjacent->show();
+                    }
+					firstCountryClicked = nullptr;
 				}
 				break;
 			default:
