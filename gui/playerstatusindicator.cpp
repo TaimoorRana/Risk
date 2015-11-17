@@ -5,8 +5,9 @@ PlayerStatusIndicator::PlayerStatusIndicator(std::string baseColor, QWidget *par
 {
 	ui->setupUi(this);
 	this->baseColor = baseColor;
-	this->setStyleSheet(QString::fromStdString("QWidget{background-color : " + baseColor + ";}"));
-	this->setStyleSheet(QString::fromStdString("QWidget#indicator{background-color : " + this->indicatorColor + ";}"));
+	this->setStyleSheet(QString::fromStdString("background-color : " + baseColor + ";"));
+	this->setPalette(QPalette(qRgb(128,128,0)));
+	//this->setStyleSheet(QString::fromStdString("#indicator{background-color : " + this->indicatorColor + ";}"));
 }
 
 PlayerStatusIndicator::~PlayerStatusIndicator()
@@ -16,10 +17,10 @@ PlayerStatusIndicator::~PlayerStatusIndicator()
 
 void PlayerStatusIndicator::turnOn()
 {
-	this->setStyleSheet(QString::fromStdString("QWidget#indicator{background-color : " + this->indicatorColor + ";}"));
+	//this->setStyleSheet(QString::fromStdString("QWidget#indicator{background-color : " + this->indicatorColor + ";}"));
 }
 
 void PlayerStatusIndicator::turnOff()
 {
-	this->setStyleSheet(QString::fromStdString("QWidget{background-color : " + baseColor + ";}"));
+	//this->setStyleSheet(QString::fromStdString("QWidget{background-color : " + baseColor + ";}"));
 }

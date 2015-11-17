@@ -8,6 +8,7 @@
 #include "qgraphics_country_item.h"
 #include "risk_map.h"
 #include "enum_tooltype.h"
+#include "war_referee.h"
 
 class MapScene: public QGraphicsScene, public Observer
 {
@@ -34,7 +35,8 @@ public:
 
 private:
 	RiskMap* map = 0; ///< This contains a pointer to the observed map.
-	Country* lastCountryClicked = nullptr; ///< This is an auxiliary variable when picking a Country in the Map with the mouse
+	Country* firstCountryClicked = nullptr; ///< This is an auxiliary variable when picking a Country in the Map with the mouse
+	Country* secondCountryClicked = nullptr; ///< This is an auxiliary variable when picking a Country in the Map with the mouse
 	QString lastContinent; ///< To facilitate entry when creating countries, this variable remembers the last continent used, when adding countries consecutively.
 	bool editable = false; ///< This variable controls the difference in behaviour when editing a map and when using the map to play (Then the map is not editable).
 	std::map<const std::string, QColor> continentPalette = std::map<const std::string, QColor>(); ///< This map contains the colours used for colouring the continents.

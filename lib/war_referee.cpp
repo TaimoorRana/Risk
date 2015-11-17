@@ -106,9 +106,9 @@ void WarReferee::allInMode(){
 }
 
 
-void WarReferee::startWar(std::string& attackerPlayer, int& attackerArmy, std::string& defenderPlayer, int& defenderArmy)
+void WarReferee::startWar(int& attackerArmy, int& defenderArmy)
 {
-	setBothPlayers(attackerPlayer, defenderPlayer);
+	//setBothPlayers(attackerPlayer, defenderPlayer);
 	this->attackerArmy = attackerArmy;
 	this->defenderArmy = defenderArmy;
 	allInMode();

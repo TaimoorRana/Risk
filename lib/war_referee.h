@@ -125,7 +125,7 @@ public:
 	 * @param defenderCountry
 	 * @param defenderArmy
 	 */
-	void startWar(std::string& attackerCountry ,int& attackerArmy ,std::string& defenderCountry ,int& defenderArmy);
+	void startWar(int& attackerArmy,int& defenderArmy);
 
 	/**
 	 * @brief allInMode War between both players until the attacker wins or cannot attack anymore

@@ -142,6 +142,31 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				map->getPlayer(item->getCountry()->getPlayer())->notifyObservers();
 				break;
 			case ATTACKMODE:
+				item = getQGraphicsCountryItemFromEvent(event);
+				if (item == nullptr) {
+					return;
+				}
+
+				if (firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0)
+				{
+					firstCountryClicked = item->getCountry();
+				}
+				else
+				{
+					secondCountryClicked = item->getCountry();
+					if(firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0){
+						WarReferee warreferee = WarReferee::getInstance();
+						int aArmy = firstCountryClicked->getArmies();
+						int dArmy = secondCountryClicked->getArmies();
+						warreferee.startWar(aArmy, dArmy);
+						firstCountryClicked->setArmies(warreferee.getAttackerArmy());
+						secondCountryClicked->setArmies(warreferee.getDefenderArmy());
+						firstCountryClicked = nullptr;
+						secondCountryClicked = nullptr;
+					}
+				}
+
+			break;
 			case FORTIFICATIONMODE:
 				item = getQGraphicsCountryItemFromEvent(event);
 				if (item == nullptr) {
@@ -151,23 +176,23 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
                     if (currentPLayer.compare(item->getCountry()->getPlayer()) != 0) {
                         return;
                     }
-                    if (lastCountryClicked == nullptr || lastCountryClicked->getName().compare(item->getCountry()->getName()) == 0)
+					if (firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0)
                     {
-						lastCountryClicked = item->getCountry();
+						firstCountryClicked = item->getCountry();
 					}
                     else
                     {
-						std::string firstCountryName = lastCountryClicked->getName();
+						std::string firstCountryName = firstCountryClicked->getName();
 						std::string secondCountryName = item->getCountry()->getName();
 
-                        FortifyDialog* fortificationDialog = new FortifyDialog(lastCountryClicked, item->getCountry(), parent);
+						FortifyDialog* fortificationDialog = new FortifyDialog(firstCountryClicked, item->getCountry(), parent);
                         fortificationDialog->setWindowTitle(QString::fromStdString("Transferring Armies"));
 
 						// check for adjancency
                         if (map->areCountriesAdjacent(firstCountryName, secondCountryName))
                         {
                             // Countries must belong to same player
-                            if (lastCountryClicked->getPlayer().compare(item->getCountry()->getPlayer()) == 0)
+							if (firstCountryClicked->getPlayer().compare(item->getCountry()->getPlayer()) == 0)
                             {
 								// pop-up the transfer window
 								fortificationDialog->setOriginCountryName(QString::fromStdString(firstCountryName));
@@ -187,7 +212,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 							fortificationDialog->setDestinationCountryName(QString::fromStdString("adjacent"));
 						}
 						fortificationDialog->show();
-						lastCountryClicked = nullptr;
+						firstCountryClicked = nullptr;
 					}
 				}
 				break;
@@ -239,12 +264,12 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				return;
 			}
 
-			if (lastCountryClicked != nullptr) {
-				map->addNeighbour(item->getCountry()->getName(), lastCountryClicked->getName());
-				lastCountryClicked = nullptr;
+			if (firstCountryClicked != nullptr) {
+				map->addNeighbour(item->getCountry()->getName(), firstCountryClicked->getName());
+				firstCountryClicked = nullptr;
 			}
 			else {
-				lastCountryClicked = item->getCountry();
+				firstCountryClicked = item->getCountry();
 			}
 			break;
 
@@ -255,14 +280,14 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				return;
 			}
 
-			if (lastCountryClicked != 0) {
+			if (firstCountryClicked != 0) {
 				debug("Second pick is " + item->getCountry()->getName());
-				map->remNeighbour(item->getCountry()->getName(), lastCountryClicked->getName());
-				lastCountryClicked = 0;
+				map->remNeighbour(item->getCountry()->getName(), firstCountryClicked->getName());
+				firstCountryClicked = 0;
 			}
 			else {
 				debug("First pick is " + item->getCountry()->getName());
-				lastCountryClicked = item->getCountry();
+				firstCountryClicked = item->getCountry();
 			}
 		case OFF:
 			default:
