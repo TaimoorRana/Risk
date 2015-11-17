@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "map_scene.h"
 #include "player.h"
+#include "playerstatusindicator.h"
 
 namespace Ui {
 class PlayerInfoWidget;
@@ -22,6 +23,7 @@ private:
 	Ui::PlayerInfoWidget *ui;
 	Player* player;
 	MapScene* scene;
+	PlayerStatusIndicator* playerStatusIndicator;
 };
 
 #endif // PLAYERINFORWIDGET_H
