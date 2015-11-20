@@ -1,20 +1,21 @@
-//#include <iostream>
 #include <QApplication>
-#include <QGraphicsScene>
-#include <QGraphicsView>
-#include <QGraphicsRectItem>
-#include <QDebug>
-#include <QDate>
-#include <QString>
-#include <QTextStream>
 #include <QSplashScreen>
-#include <QTimer>
+#include <QThread>
 
-#include "risk_map.h"
+#include "game_driver.h"
 #include "mainscreen.h"
-#include "playernamedialog.h"
-#include "country_name_dialog.h"
-#include "gamedriver.h"
+#include "map_scene.h"
+#include "risk_map.h"
+
+void showSplashScreen() {
+	QSplashScreen splash(QPixmap(":/splash.png").scaled(800, 346));
+	splash.show();
+
+	qApp->processEvents();
+	QThread::msleep(1000);
+
+	splash.close();
+}
 
 /**
  * @brief main the main for the gamedriver creates QApplication initializes a GameDriver singleton object
@@ -26,6 +27,14 @@
 int main(int argc, char *argv[]) {
 	QApplication application(argc, argv);
 	GameDriver* driver = GameDriver::getInstance();
-	driver->showSplashScreen();
+	showSplashScreen();
+
+	RiskMap* riskMap = new RiskMap();
+	MainScreen* mainScreen = new MainScreen(riskMap, 0);
+	MapScene* mapScene = new MapScene(riskMap, mainScreen);
+
+	mainScreen->setupPlayers();
+	mainScreen->show();
+
   return application.exec();
 }

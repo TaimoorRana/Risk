@@ -10,7 +10,7 @@ set(GUI_SOURCE_FILES
 	main.cpp
 	mainscreen.cpp mainscreen.h mainscreen.ui
 	gameboardview.cpp gameboardview.h
-	gamedriver.cpp gamedriver.h
+	game_driver.cpp game_driver.h
 	game_modes.h
 	game_error_dialog.cpp game_error_dialog.h game_error_dialog.ui
 	map_editor.cpp map_editor.h map_editor.ui
@@ -26,6 +26,7 @@ set(GUI_SOURCE_FILES
 
 set(GUI_RESOURCE_FILES
 	style_sheet.qss
+	../assets/risk.qrc
 )
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/style_sheet.qss DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
