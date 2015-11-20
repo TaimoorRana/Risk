@@ -148,18 +148,18 @@ void MainScreen::setReinforcements()
 		Player p = ent1.second;
 		Player *player = map->getPlayer(p.getName());
 		player->setTotalArmy(player->getCountriesOwned().size()*2);
-		set<string> continents =player->getContinentsOwned();
-		set<string>::iterator itContinents = continents.begin();
+		std::set<std::string> continents =player->getContinentsOwned();
+		std::set<std::string>::iterator itContinents = continents.begin();
 		int reinforcementArmies=0;
 		//gets the reinforcement armies based if they have more than 9 countries
 
-		if(player->getCountriesOwned().size()>9){
+		if (player->getCountriesOwned().size()>9){
 			reinforcementArmies = player->getCountriesOwned().size()/3;
 		}
-		else{
+		else {
 			reinforcementArmies = 3;
 		}
-		while(itContinents!= continents.end()){
+		while (itContinents!= continents.end()){
 			reinforcementArmies += map->getContinent(*itContinents)->getReinforcementBonus();
 		}
 		player->setReinforcements(reinforcementArmies);
