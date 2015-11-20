@@ -157,18 +157,26 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				if (item == nullptr) {
 					return;
 				}
-
-				if (firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0) {
+				// if (firstCountryClicked = null or firstCountryClicked is the same is Item) && item must belong to current Player
+				if ((firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0)
+						&& item->getCountry()->getPlayer().compare(currentPlayer) == 0) {
 					firstCountryClicked = item->getCountry();
+				}else if(item->getCountry()->getPlayer().compare(currentPlayer) != 0 && firstCountryClicked == nullptr){
+					GameErrorDialog *notYourTurn = new GameErrorDialog(QString::fromStdString("You must choose your own country first."), parent);
+					notYourTurn->show();
+					return;
 				}
 				else {
 					secondCountryClicked = item->getCountry();
-					if (firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0){
+					//if country are adjacent and country owners are different
+					if (map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName()) &&
+							firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0)
+					{
 						WarReferee warreferee = WarReferee::getInstance();
 						warreferee.startWar(firstCountryClicked, secondCountryClicked);
-						firstCountryClicked = nullptr;
-						secondCountryClicked = nullptr;
 					}
+					firstCountryClicked = nullptr;
+					secondCountryClicked = nullptr;
 				}
 			break;
 			case FORTIFICATIONMODE:
