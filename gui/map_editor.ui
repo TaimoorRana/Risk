@@ -178,6 +178,8 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="../assets/risk.qrc"/>
+ </resources>
  <connections/>
 </ui>

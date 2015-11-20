@@ -1,8 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-
 #include <string>
 #include <set>
+
+#include "observable.h"
 
 class Player: public Observable {
 private:
