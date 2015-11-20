@@ -11,6 +11,8 @@
  */
 class GameDriver {
 public:
+	std::string getCurrentPlayerName() const;
+	void setCurrentPlayerName(const std::string& name);
 
 	/**
 	 * @brief calculateReinforcementArmies calculates the reinforcements for the player using the continents and countries
@@ -48,6 +50,7 @@ public:
 
 private:
 	bool canFortify = false;
+	std::string currentPlayerName = "";
 };
 
 #endif // GAMEDRIVER_H

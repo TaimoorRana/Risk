@@ -9,6 +9,7 @@
 #include "map_editor.h"
 #include "map_scene.h"
 #include "qgraphics_country_item.h"
+#include "game_driver.h"
 #include "fortify_dialog.h"
 #include "debug.h"
 #include "mainscreen.h"
@@ -124,7 +125,8 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsCountryItem *item = nullptr;
 	if (!this->editable) {
 		MainScreen* parent = qobject_cast<MainScreen*>(this->parent());
-		std::string currentPLayer = parent->getCurrentPlayer();
+		GameDriver* driver = GameDriver::getInstance();
+		std::string currentPlayer = driver->getCurrentPlayerName();
 
 		//Moved out since it is common
 		item = getQGraphicsCountryItemFromEvent(event);
@@ -132,7 +134,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 		switch (parent->getCurrentMode()) {
 			case REINFORCEMENTMODE:
-				if(currentPLayer.compare(item->getCountry()->getPlayer()) == 0 ){
+				if(currentPlayer.compare(item->getCountry()->getPlayer()) == 0 ){
 					if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0) {
 						map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
 						item->getCountry()->addArmies(1);
@@ -170,7 +172,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				}
 			break;
 			case FORTIFICATIONMODE:
-				if (currentPLayer.compare(item->getCountry()->getPlayer()) != 0) {
+				if (currentPlayer.compare(item->getCountry()->getPlayer()) != 0) {
 					GameErrorDialog *notYourTurn = new GameErrorDialog(QString::fromStdString("You must choose your own country."), parent);
 					notYourTurn->show();
 					return;

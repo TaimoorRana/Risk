@@ -310,7 +310,7 @@ const std::unordered_map<std::string, Continent>& RiskMap::getContinents() const
 const std::unordered_map<std::string, Country>& RiskMap::getCountries() const {
 	return this->countries;
 }
-const std::unordered_map<std::string, Player>& RiskMap::getPlayers() const {
+const std::map<std::string, Player>& RiskMap::getPlayers() const {
 	return this->players;
 }
 

@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <sstream>
 #include <stdio.h>
 #include <sys/stat.h>
@@ -27,7 +28,7 @@ class RiskMap : public Observable
 private:
 	std::unordered_map<std::string, Continent> continents;
 	std::unordered_map<std::string, Country> countries;
-	std::unordered_map<std::string, Player> players;
+	std::map<std::string, Player> players;
 	SubGraphADT mapGraph;
 
 public:
@@ -118,7 +119,7 @@ public:
 	Player* getPlayer(const std::string& playerName);
 	const std::unordered_map<std::string, Continent>& getContinents() const;
 	const std::unordered_map<std::string, Country>& getCountries() const;
-	const std::unordered_map<std::string, Player>& getPlayers() const;
+	const std::map<std::string, Player>& getPlayers() const;
 
 	void consolePrintListOfNeighbours(const std::string& name_country);
 	void consolePrintListOfCountries(const std::string& name_continent);

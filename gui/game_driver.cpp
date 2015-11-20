@@ -9,6 +9,14 @@ GameDriver* GameDriver::getInstance()
 	return instance;
 }
 
+void GameDriver::setCurrentPlayerName(const std::string& name) {
+	this->currentPlayerName = name;
+}
+
+std::string GameDriver::getCurrentPlayerName() const {
+	return this->currentPlayerName;
+}
+
 void GameDriver::attackPhase() {}
 
 void GameDriver::reinforcePhase() {}

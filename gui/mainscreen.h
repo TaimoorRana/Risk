@@ -41,9 +41,8 @@ public:
 
 	void setCurrentPlayer(std::string name);
 	void setReinforcements();
-	std::string getCurrentPlayer();
-	void startGame();
-    std::vector<int> getVectorOfIndicesRandomCountryAccess(int nCountries);
+	void nextTurn();
+	std::vector<int> getVectorOfIndicesRandomCountryAccess(int nCountries);
 
 private slots:
 	void on_mapEditorAction_triggered();
@@ -59,15 +58,8 @@ private:
 	RiskMap *map = nullptr;
 	MapScene *scene = nullptr;
 	Mode currentMode;
-	std::vector<std::string> players;
-	std::string currentPLayerName;
-	bool attackModeCompleted = false;
-	bool reinforceModeCompleted = false;
-	bool fortificationModeCompleted = false;
-	int currentPlayer = 0;
-    int totalPlayers;
 	void initializeMode();
-    Player* playerRoundRobin(int i);
+	Player* playerRoundRobin(int i);
 };
 
 #endif // MAINSCREEN_H
