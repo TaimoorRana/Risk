@@ -11,6 +11,8 @@ set(GUI_SOURCE_FILES
 	mainscreen.cpp mainscreen.h mainscreen.ui
 	gameboardview.cpp gameboardview.h
 	gamedriver.cpp gamedriver.h
+	game_modes.h
+	game_error_dialog.cpp game_error_dialog.h game_error_dialog.ui
 	map_editor.cpp map_editor.h map_editor.ui
 	map_scene.cpp map_scene.h
 	map_renderer.cpp map_renderer.h
@@ -20,8 +22,6 @@ set(GUI_SOURCE_FILES
 	playernamedialog.cpp playernamedialog.h playernamedialog.ui
 	qgraphics_country_item.cpp qgraphics_country_item.h
 	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h
-	game_modes.h
-        game_error_dialog.cpp game_error_dialog.h game_error_dialog.ui
 )
 
 set(GUI_RESOURCE_FILES
