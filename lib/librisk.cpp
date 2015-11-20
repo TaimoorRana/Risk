@@ -27,6 +27,6 @@ std::vector<int> rollDice(int amount)
 		randNumber = (randNumber % 6) + 1;
 		results.push_back(randNumber);
 	}
-    std::sort(results.begin(), results.end());
+	std::sort(results.rbegin(), results.rend());
 	return results;
 }
