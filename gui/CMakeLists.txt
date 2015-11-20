@@ -24,7 +24,7 @@ set(GUI_SOURCE_FILES
 	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h
 	game_modes.h
         game_error_dialog.cpp game_error_dialog.h game_error_dialog.ui
-        stats_selector.ui
+        log_selector.ui log_selector.h log_selector.cpp
 
 
 )

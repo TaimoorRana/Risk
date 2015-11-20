@@ -198,6 +198,19 @@ void MainScreen::on_pushButton_clicked()
 	}
 }
 
+void MainScreen::on_logButton_clicked()
+{
+	if(logSelector !=NULL){
+		this->logSelector->show();
+		this->logSelector->raise();
+	}
+	else{
+		this->logSelector = new LogSelector(this);
+		this->logSelector->show();
+	}
+
+}
+
 void MainScreen::endPhase()
 {
 	on_pushButton_clicked();

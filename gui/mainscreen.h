@@ -7,6 +7,7 @@
 #include <playernamedialog.h>
 #include <risk_map.h>
 #include "map_editor.h"
+#include "log_selector.h"
 #include "ui_mainscreen.h"
 
 #include "game_modes.h"
@@ -47,6 +48,7 @@ public:
 private slots:
 	void on_mapEditorAction_triggered();
 	void on_pushButton_clicked();
+	void on_logButton_clicked();
 
 
 private:
@@ -55,6 +57,7 @@ private:
 	int CPUs = 0;
 	Ui::MainScreen *ui = nullptr;
 	MapEditor *editor = nullptr;
+	LogSelector *logSelector = nullptr;
 	RiskMap *map = nullptr;
 	MapScene *scene = nullptr;
 	Mode currentMode;
