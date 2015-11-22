@@ -26,12 +26,12 @@ void showSplashScreen() {
  */
 int main(int argc, char *argv[]) {
 	QApplication application(argc, argv);
-	GameDriver* driver = GameDriver::getInstance();
+//	GameDriver* driver = GameDriver::getInstance();
 	showSplashScreen();
 
 	RiskMap* riskMap = new RiskMap();
 	MainScreen* mainScreen = new MainScreen(riskMap, 0);
-	MapScene* mapScene = new MapScene(riskMap, mainScreen);
+//	MapScene* mapScene = new MapScene(riskMap, mainScreen);
 
 	mainScreen->setupPlayers();
 	mainScreen->show();

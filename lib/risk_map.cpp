@@ -24,6 +24,17 @@ void RiskMap::addContinent(const Continent& continent){
 	this->notifyObservers();
 }
 
+void RiskMap::renameCountry(const std::string oldname, const std::string newname){
+	auto it = countries.find(oldname);
+	if (it != countries.end()){
+        (it->second).setName(newname);
+		std::swap(countries[newname], it->second);
+        countries.erase(oldname);
+	}
+	mapGraph.renameNode(oldname, newname);
+    this->notifyObservers();
+}
+
 Country* RiskMap::addCountry(const Country& country, const std::string& continentName){
 	if (continents.find(continentName) == continents.end()) {
 		continents[continentName] = Continent(continentName);
@@ -66,7 +77,7 @@ Continent* RiskMap::getContinentOfCountry(const std::string& name_country){
 	return &continents[name_continent];
 }
 
-Continent* RiskMap::getContinent(const std::string& name){
+Continent* RiskMap::getContinentByName(const std::string& name){
 	return &this->continents[name];
 }
 

@@ -96,6 +96,31 @@ bool GraphADT::insertNode(std::string nodename) {
 		return false;
 	}
 
+bool GraphADT::renameNode(std::string oldname, std::string newname){
+    set_of_vertices.erase(oldname);
+    set_of_vertices.insert(newname);
+	auto graph_iter = thegraph.find(oldname);
+	if( graph_iter == thegraph.end()){
+        return false;
+    }
+    else{
+		thegraph[newname] = node_hashmap(graph_iter->second); //copy everything the node had into a new node
+		thegraph.erase(oldname);
+		for (graph_iter = thegraph.begin(); graph_iter != thegraph.end(); *graph_iter++){ //iterate through all the nodes
+			auto node_iter = (graph_iter->second).find(oldname);
+			if (node_iter != (graph_iter->second).end()){
+				std::string save = (node_iter->second).edgename;
+                Edge e;
+                e.edgename = save;
+                e.element = save;
+                (thegraph[graph_iter->first])[newname] = e;
+                (thegraph[graph_iter->first]).erase(oldname);
+			}
+		}
+	}
+    return true;
+}
+
 //12 ;; Remove node v and all its incident edges
 void GraphADT::removeNode(std::string vertexname){
 	if ( set_of_vertices.find(vertexname) != set_of_vertices.end()){
@@ -354,6 +379,19 @@ void GraphADT::printGraph() const {
 
 bool DirectedGraphADT::areAdjacent(std::string v, std::string w) const{
   return false;
+}
+
+bool SubGraphADT::renameNode(std::string oldname, std::string newname){
+    if(!GraphADT::renameNode(oldname, newname))
+        return false;
+    else{
+        std::string continent_name = countries_continents[oldname];
+        allSubgraphs.at(continent_name).erase(oldname);
+        allSubgraphs.at(continent_name).insert(newname);
+        countries_continents.erase(oldname);
+        countries_continents[newname] = continent_name;
+    }
+    return true;
 }
 
 bool SubGraphADT::insertNode(std::string name_of_country, std::string name_of_continent){

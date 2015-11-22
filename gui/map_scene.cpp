@@ -217,19 +217,34 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 	switch (parent->getSelectedTool()) {
 		case ADDCOUNTRY:
-			nameDialog.setLastContinentName(lastContinent);
-			if (nameDialog.exec() == QDialog::Rejected) {
-				return;
+			item = getQGraphicsCountryItemFromEvent(event);
+			if (item == nullptr) {
+				nameDialog.setLastContinentName(lastContinent);
+				if (nameDialog.exec() == QDialog::Rejected) {
+					return;
+				}
+
+				lastContinent = nameDialog.getContinentName();
+				c = map->addCountry(Country(nameDialog.getCountryName().toStdString()), nameDialog.getContinentName().toStdString());
+				if (c == nullptr) {
+					GameErrorDialog *cantAddCountry = new GameErrorDialog(QString::fromStdString("Could not add country."), parent);
+					cantAddCountry->show();
+					return;
+				}
+				c->setPositionX(xpos);
+				c->setPositionY(ypos);
+			}
+			else{
+				nameDialog.setExistingCountryName(QString::fromStdString(item->getCountry()->getName()));
+				nameDialog.setLastContinentName(QString::fromStdString(map->getContinentOfCountry(item->getCountry()->getName())->getName()));
+				nameDialog.disableContinentEntry();
+				if (nameDialog.exec() == QDialog::Rejected) {
+					return;
+				}
+				map->renameCountry(item->getCountry()->getName(), nameDialog.getCountryName().toStdString());
+//                return;
 			}
 
-			lastContinent = nameDialog.getContinentName();
-			c = map->addCountry(Country(nameDialog.getCountryName().toStdString()), nameDialog.getContinentName().toStdString());
-			if (c == nullptr) {
-				// FIXME inform user of error
-				return;
-			}
-			c->setPositionX(xpos);
-			c->setPositionY(ypos);
 			this->map->notifyObservers();
 			break;
 
