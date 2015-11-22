@@ -58,7 +58,7 @@ public:
 	bool areAdjacent(std::string, std::string) const;
 	bool insertNode(std::string);
     bool renameNode(std::string, std::string);
-	void removeNode(std::string);
+	bool removeNode(std::string);
 	void insertEdge(std::string, std::string, std::string);
 	void removeEdge(std::string, std::string);
 	std::string getEdgeElem (std::string) const;
@@ -100,6 +100,7 @@ public:
 	string_set subgraphContents(const std::string&);
 	std::string getSubgraphName(const std::string&);
     bool renameNode(std::string, std::string);
+    bool removeNode(std::string vertexname);
 };
 
 #endif // GRAPHADT_H

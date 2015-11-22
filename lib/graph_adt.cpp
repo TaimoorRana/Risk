@@ -122,7 +122,7 @@ bool GraphADT::renameNode(std::string oldname, std::string newname){
 }
 
 //12 ;; Remove node v and all its incident edges
-void GraphADT::removeNode(std::string vertexname){
+bool GraphADT::removeNode(std::string vertexname){
 	if ( set_of_vertices.find(vertexname) != set_of_vertices.end()){
 		graph_hashmap::const_iterator graphiter = thegraph.begin();
 		while (graphiter != thegraph.end()){
@@ -134,9 +134,12 @@ void GraphADT::removeNode(std::string vertexname){
 		thegraph.erase(vertexname);
 		set_of_vertices.erase(vertexname);
 		number_of_nodes--;
+        return true;
 		}
-	else
-		std::cout<<"ERROR: Named vertex " << vertexname << " does not exist."<<std::endl;
+    else{
+        std::cout<<"ERROR: Named vertex " << vertexname << " does not exist."<<std::endl;
+        return false;
+        }
 	}
 
 void GraphADT::insertEdge(std::string v, std::string w) {
@@ -394,6 +397,22 @@ bool SubGraphADT::renameNode(std::string oldname, std::string newname){
     return true;
 }
 
+bool SubGraphADT::removeNode(std::string node){
+    if(!GraphADT::removeNode(node)){
+        return false;
+    }
+    else{
+        std::string continent_name = countries_continents[node];
+        allSubgraphs.at(continent_name).erase(node);
+        countries_continents.erase(node);
+        if(allSubgraphs.at(continent_name).size() == 0){
+            allSubgraphs.erase(continent_name);
+            return true;
+        }
+        return false;
+    }
+}
+
 bool SubGraphADT::insertNode(std::string name_of_country, std::string name_of_continent){
 	if (!GraphADT::insertNode(name_of_country))
 		return false;
@@ -405,8 +424,12 @@ bool SubGraphADT::insertNode(std::string name_of_country, std::string name_of_co
 }
 
 string_set SubGraphADT::subgraphContents(const std::string& name_continent){
-	string_set setOfCountries(allSubgraphs.at(name_continent));
-	return setOfCountries;
+    if (allSubgraphs.find(name_continent) != allSubgraphs.end()){
+        string_set setOfCountries(allSubgraphs.at(name_continent));
+        return setOfCountries;
+    }
+    else
+        return string_set();
 }
 
 std::string SubGraphADT::getSubgraphName(const std::string& name_country){

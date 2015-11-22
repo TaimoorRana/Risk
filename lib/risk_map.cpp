@@ -49,8 +49,11 @@ Country* RiskMap::addCountry(const Country& country, const std::string& continen
 }
 
 void RiskMap::remCountry(const Country& country){
+    std::string continent = (this->getContinentOfCountry(country.getName()))->getName();
 	countries.erase(country.getName());
-	mapGraph.removeNode(country.getName());
+    if(mapGraph.removeNode(country.getName())){
+        continents.erase(continent);
+    }
 	this->notifyObservers();
 }
 
