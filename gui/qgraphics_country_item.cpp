@@ -17,6 +17,11 @@ Country* QGraphicsCountryItem::getCountry() const {
 	return this->country;
 }
 
+void QGraphicsCountryItem::setCountry(Country *c){
+    this->country = c;
+}
+
+
 QRectF QGraphicsCountryItem::boundingRect() const {
 	return QRectF(-diameter, -diameter, diameter*2, diameter*2);
 }
@@ -49,5 +54,4 @@ void QGraphicsCountryItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsItem::mouseReleaseEvent(event);
 	this->country->setPositionX(event->scenePos().x());
 	this->country->setPositionY(event->scenePos().y());
-	this->country->notifyObservers();
 }

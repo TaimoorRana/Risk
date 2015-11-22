@@ -13,6 +13,17 @@ void Observable::detachObserver(Observer* observer){
   observers.remove(observer);
 };
 
+void Observable::detachAllObservers(){
+    for (Observer* o: observers){
+        if (o != nullptr){
+        observers.remove(o);
+        delete o;
+        o = nullptr;
+        }
+    }
+}
+
+
 void Observable::setNotificationsEnabled(bool enabled){
   this->notifyEnabled = enabled;
 };

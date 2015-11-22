@@ -242,7 +242,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					return;
 				}
 				map->renameCountry(item->getCountry()->getName(), nameDialog.getCountryName().toStdString());
-//                return;
+                item->setCountry(map->getCountry(nameDialog.getCountryName().toStdString()));
 			}
 
 			this->map->notifyObservers();
@@ -297,7 +297,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsScene::mouseReleaseEvent(event);
 	// Re-draws the whole scene, fixing text that gets left behind from dragging QGraphicsCountryItem objects (due to their out of bound text)
-	this->update();
+    this->map->notifyObservers();
 }
 
 QGraphicsCountryItem* MapScene::getQGraphicsCountryItemFromEvent(QGraphicsSceneMouseEvent *event){

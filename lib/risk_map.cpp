@@ -28,11 +28,11 @@ void RiskMap::renameCountry(const std::string oldname, const std::string newname
 	auto it = countries.find(oldname);
 	if (it != countries.end()){
         (it->second).setName(newname);
-		std::swap(countries[newname], it->second);
+        std::swap(countries[newname], it->second);
         countries.erase(oldname);
-	}
-	mapGraph.renameNode(oldname, newname);
-    this->notifyObservers();
+        mapGraph.renameNode(oldname, newname);
+        this->notifyObservers();
+    }
 }
 
 Country* RiskMap::addCountry(const Country& country, const std::string& continentName){

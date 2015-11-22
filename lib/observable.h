@@ -10,6 +10,7 @@ class Observable {
 public:
 	virtual void attachObserver(Observer* observer);
 	virtual void detachObserver(Observer* observer);
+    virtual void detachAllObservers();
 	virtual void setNotificationsEnabled(bool enabled);
 	virtual bool getNotificationsEnabled();
 	virtual void notifyObservers();
