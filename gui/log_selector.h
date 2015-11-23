@@ -1,5 +1,5 @@
-#ifndef STATS_SELECTOR_H
-#define STATS_SELECTOR_H
+#ifndef LOG_SELECTOR_H
+#define LOG_SELECTOR_H
 #include <QDialog>
 #include <string>
 
@@ -11,10 +11,11 @@ class LogSelector: public QDialog
 {
     Q_OBJECT
 public:
-	explicit LogSelector(QWidget *parent = 0);
+	explicit LogSelector(QWidget *parent = 0, int numberOfPlayers=0);
 	~LogSelector();
 	int getSelectedPlayer();
-	int getSelectedPhase();
+	std::string getSelectedPhase();
+	void generatePlayers(int numberOfPlayers);
 
 private:
 	Ui::LogSelector *ui;

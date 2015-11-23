@@ -45,31 +45,11 @@
         </sizepolicy>
        </property>
        <property name="currentText">
-        <string>All Players</string>
+        <string>0</string>
        </property>
        <item>
         <property name="text">
-         <string>All Players</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>1</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>3</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>4</string>
+         <string>0</string>
         </property>
        </item>
       </widget>

@@ -25,6 +25,7 @@ set(GUI_SOURCE_FILES
 	game_modes.h
         game_error_dialog.cpp game_error_dialog.h game_error_dialog.ui
         log_selector.ui log_selector.h log_selector.cpp
+        logscreen.ui logscreen.h logscreen.cpp
 
 
 )

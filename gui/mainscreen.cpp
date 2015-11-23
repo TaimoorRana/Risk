@@ -14,6 +14,7 @@
 #include "player.h"
 #include "player_view.h"
 #include "playerinfowidget.h"
+#include "logscreen.h"
 
 MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainScreen)
 {
@@ -205,8 +206,16 @@ void MainScreen::on_logButton_clicked()
 		this->logSelector->raise();
 	}
 	else{
-		this->logSelector = new LogSelector(this);
+		this->logSelector = new LogSelector(this,(this->map->getPlayers().size()));
 		this->logSelector->show();
+	}
+	bool decision=true;
+	while (decision) {
+		if(this->logSelector->exec()){
+			LogScreen *lScreen = new LogScreen(this);
+			lScreen->show();
+			decision =false;
+		}
 	}
 
 }
@@ -232,6 +241,7 @@ void MainScreen::on_mapEditorAction_triggered() {
 		this->editor = new MapEditor(this);
 		this->editor->show();
 	}
+
 }
 
 void MainScreen::observedUpdated() {
