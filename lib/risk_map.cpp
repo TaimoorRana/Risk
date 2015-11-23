@@ -27,12 +27,12 @@ void RiskMap::addContinent(const Continent& continent){
 void RiskMap::renameCountry(const std::string oldname, const std::string newname){
 	auto it = countries.find(oldname);
 	if (it != countries.end()){
-        (it->second).setName(newname);
-        std::swap(countries[newname], it->second);
-        countries.erase(oldname);
-        mapGraph.renameNode(oldname, newname);
-        this->notifyObservers();
-    }
+		(it->second).setName(newname);
+		std::swap(countries[newname], it->second);
+		countries.erase(oldname);
+		mapGraph.renameNode(oldname, newname);
+		this->notifyObservers();
+	}
 }
 
 Country* RiskMap::addCountry(const Country& country, const std::string& continentName){
@@ -49,11 +49,11 @@ Country* RiskMap::addCountry(const Country& country, const std::string& continen
 }
 
 void RiskMap::remCountry(const Country& country){
-    std::string continent = (this->getContinentOfCountry(country.getName()))->getName();
+	std::string continent = (this->getContinentOfCountry(country.getName()))->getName();
 	countries.erase(country.getName());
-    if(mapGraph.removeNode(country.getName())){
-        continents.erase(continent);
-    }
+	if (mapGraph.removeNode(country.getName())){
+		continents.erase(continent);
+	}
 	this->notifyObservers();
 }
 
@@ -134,8 +134,9 @@ void RiskMap::parse(const std::string& path) {
 		debug_str.append(line);
 		debug(debug_str);
 		// Windows prefers /r/n, but getline() breaks only on \n.
-		if (line[line.size() - 1] == '\r')
-				line.resize(line.size() - 1);
+		if (line[line.size() - 1] == '\r') {
+			line.resize(line.size() - 1);
+		}
 
 		// Set the mode for how we should process lines based on section headers
 		if (line.compare("[Map]") == 0) {
@@ -209,8 +210,9 @@ void RiskMap::parse(const std::string& path) {
 		debug_str.append(line);
 		debug(debug_str);
 		// Windows prefers /r/n, but getline() breaks only on \n.
-		if (line[line.size() - 1] == '\r')
-				line.resize(line.size() - 1);
+		if (line[line.size() - 1] == '\r') {
+			line.resize(line.size() - 1);
+		}
 
 		// Set the mode for how we should process lines based on section headers
 		if (line.compare("[Map]") == 0) {

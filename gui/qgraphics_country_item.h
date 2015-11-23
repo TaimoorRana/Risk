@@ -6,17 +6,18 @@
 
 #include "country.h"
 
-class QGraphicsCountryItem: public QGraphicsItem
+class QGraphicsCountryItem: public QGraphicsItem, public Observer
 {
 	Country *country = 0;
 	const int diameter = 10;
 	const int fontSize = 9;
 public:
 	QGraphicsCountryItem(Country* c);
+	~QGraphicsCountryItem();
 	QRectF boundingRect() const;
 	Country* getCountry() const;
-    void setCountry(Country *c);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	void observedUpdated();
 protected:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 };
