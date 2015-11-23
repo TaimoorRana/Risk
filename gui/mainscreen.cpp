@@ -216,6 +216,9 @@ void MainScreen::on_logButton_clicked()
 			lScreen->show();
 			decision =false;
 		}
+		else if(this->logSelector->close()){
+			decision = false;
+		}
 	}
 
 }
