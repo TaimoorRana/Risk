@@ -84,11 +84,6 @@ void MapScene::observedUpdated() {
 		}
 		playerPalette.insert(std::pair<const std::string, QColor>(player.getName(), color));
 	}
-
-	debug("");
-	for (auto const &ent1 : this->playerPalette) {
-		debug("Player " + ent1.first + " is " + ent1.second.name().toStdString());
-	}
 }
 
 QColor MapScene::getContinentColor(const std::string& countryName) {
@@ -120,6 +115,13 @@ RiskMap* MapScene::getMap() {
 }
 
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
+	/**
+	 * ! IMPORTANT ! IMPORTANT ! IMPORTANT ! IMPORTANT ! IMPORTANT !IMPORTANT !
+	 *
+	 * Remember that if you call ANY function in RiskMap that notifies its
+	 * observers, the scene is entirely re-rendered and all references we hold to
+	 * QGraphicItems past that point will be INVALID.
+	 */
 	QGraphicsScene::mousePressEvent(event);
 
 	QGraphicsCountryItem *item = nullptr;
@@ -128,7 +130,6 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 		GameDriver* driver = GameDriver::getInstance();
 		std::string currentPlayer = driver->getCurrentPlayerName();
 
-		//Moved out since it is common
 		item = getQGraphicsCountryItemFromEvent(event);
 		if (item == nullptr) { return; }
 
@@ -233,6 +234,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				}
 				c->setPositionX(xpos);
 				c->setPositionY(ypos);
+				c->notifyObservers();
 			}
 			else{
 				nameDialog.setExistingCountryName(QString::fromStdString(item->getCountry()->getName()));
@@ -242,10 +244,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					return;
 				}
 				map->renameCountry(item->getCountry()->getName(), nameDialog.getCountryName().toStdString());
-                item->setCountry(map->getCountry(nameDialog.getCountryName().toStdString()));
 			}
-
-			this->map->notifyObservers();
 			break;
 
 		case REMCOUNTRY:
@@ -254,7 +253,6 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				return;
 			}
 			map->remCountry(*item->getCountry());
-			this->map->notifyObservers();
 			break;
 
 			case ADDLINK:
@@ -273,19 +271,16 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			break;
 
 		case REMLINK:
-			qDebug("MAPSCENE: Remove link between countries.");
 			item = getQGraphicsCountryItemFromEvent(event);
 			if (item == nullptr) {
 				return;
 			}
 
 			if (firstCountryClicked != 0) {
-				debug("Second pick is " + item->getCountry()->getName());
 				map->remNeighbour(item->getCountry()->getName(), firstCountryClicked->getName());
 				firstCountryClicked = 0;
 			}
 			else {
-				debug("First pick is " + item->getCountry()->getName());
 				firstCountryClicked = item->getCountry();
 			}
 		case OFF:
@@ -296,8 +291,14 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsScene::mouseReleaseEvent(event);
-	// Re-draws the whole scene, fixing text that gets left behind from dragging QGraphicsCountryItem objects (due to their out of bound text)
-    this->map->notifyObservers();
+
+	if (this->editable) {
+		MapEditor* parent = qobject_cast<MapEditor*>(this->parent());
+		if (parent->getSelectedTool() == OFF) {
+			// Re-draws the whole scene, fixing text that gets left behind from dragging QGraphicsCountryItem objects (due to their out of bound text)
+			this->map->notifyObservers();
+		}
+	}
 }
 
 QGraphicsCountryItem* MapScene::getQGraphicsCountryItemFromEvent(QGraphicsSceneMouseEvent *event){
