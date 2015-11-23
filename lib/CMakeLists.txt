@@ -3,6 +3,7 @@ set(LIBRARY_SOURCE_FILES
 	country.cpp country.h
 	debug.cpp debug.h
 	graph_adt.cpp graph_adt.h
+	game_modes.h
 	game_driver.cpp game_driver.h
 	game_state.cpp game_state.h
 	librisk.cpp librisk.h

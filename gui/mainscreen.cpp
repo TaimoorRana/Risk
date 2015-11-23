@@ -9,6 +9,7 @@
 #include <QFileInfo>
 #include <QString>
 
+#include "debug.h"
 #include "game_driver.h"
 #include "game_state.h"
 #include "mainscreen.h"
@@ -23,19 +24,16 @@ MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(
 	ui->setupUi(this);
 	this->map = map;
 	map->attachObserver(this);
+	GameDriver::getInstance()->attachObserver(this);
 
 	this->scene = new MapScene(map, this);
 	ui->graphicsView->setScene(scene);
-	initializeMode();
-}
-
-void MainScreen::initializeMode(){
 	ui->reinforcementLabel->setEnabled(true);
-	currentMode = REINFORCEMENTMODE;
 }
 
 MainScreen::~MainScreen() {
 	map->detachObserver(this);
+	GameDriver::getInstance()->detachObserver(this);
 	delete editor;
 	delete scene;
 	delete ui;
@@ -72,25 +70,22 @@ bool MainScreen::setupPlayers() {
 
 		valid = true;
 	}
+
+	this->map->setNotificationsEnabled(false);
+
 	int totalPlayers = dialog.getPlayerCount();
-	Player* player = nullptr;
 	for (int x = 0; x < totalPlayers; x++) {
-		player = map->addPlayer(Player("Player " + std::to_string(x+1)));
-		player->setNotificationsEnabled(false);
-		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this, player, this->scene);
-		ui->horizontalLayout_2->addWidget(playerinfo);
-		player->setTotalArmy(22);
-		player->setReinforcements(10);
-		player->setNotificationsEnabled(true);
-		player->notifyObservers();
+		this->map->addPlayer(Player("Player " + std::to_string(x+1)));
 	}
 
 	GameDriver* driver = GameDriver::getInstance();
 	std::string firstPlayerName = (*this->map->getPlayers().begin()).first;
 	driver->setCurrentPlayerName(firstPlayerName);
 
+	this->map->setNotificationsEnabled(true);
 	this->map->notifyObservers();
 
+	// Assign random countries to players in a round-robin fashion
 	std::vector<Country*> vectorOfCountryPointers;
 	for (auto const &ent1 : this->map->getCountries()) {
 		const Country& ctmp = ent1.second;
@@ -109,7 +104,7 @@ bool MainScreen::setupPlayers() {
 		iter++;
 	}
 
-	setReinforcements();
+	this->setReinforcements();
 	return true;
 }
 
@@ -165,49 +160,24 @@ void MainScreen::setReinforcements()
 	}
 }
 
-void MainScreen::addPlayerView(QWidget *pvWidget)
-{
-	ui->verticalLayout_2->addWidget(pvWidget);
-}
-
-void MainScreen::setCurrentMode(Mode newMode)
-{
-	this->currentMode = newMode;
-}
-
-void MainScreen::on_pushButton_clicked()
-{
-	if (ui->reinforcementLabel->isEnabled()) {
-		ui->reinforcementLabel->setEnabled(false);
-		ui->attackLabel->setEnabled(true);
-		ui->fortifyLabel->setEnabled(false);
-
-		currentMode = ATTACKMODE;
-	}
-	else if(ui->attackLabel->isEnabled()) {
-		ui->reinforcementLabel->setEnabled(false);
-		ui->attackLabel->setEnabled(false);
-		ui->fortifyLabel->setEnabled(true);
-
-		currentMode = FORTIFICATIONMODE;
-	}
-	else {
-		ui->reinforcementLabel->setEnabled(true);
-		ui->attackLabel->setEnabled(false);
-		ui->fortifyLabel->setEnabled(false);
-
-		currentMode = REINFORCEMENTMODE;
-		this->nextTurn();
-	}
+void MainScreen::on_endPhasePushButton_clicked() {
+	this->endPhase();
 }
 
 void MainScreen::endPhase()
 {
-	on_pushButton_clicked();
-}
+	GameDriver* driver = GameDriver::getInstance();
 
-Mode MainScreen::getCurrentMode(){
-	return currentMode;
+	Mode currentMode = driver->getCurrentMode();
+	if (currentMode == REINFORCEMENTMODE) {
+		driver->setCurrentMode(ATTACKMODE);
+	}
+	else if (currentMode == ATTACKMODE) {
+		driver->setCurrentMode(FORTIFICATIONMODE);
+	}
+	else {
+		this->nextTurn();
+	}
 }
 
 void MainScreen::on_loadAction_triggered() {
@@ -239,13 +209,41 @@ void MainScreen::on_mapEditorAction_triggered() {
 
 void MainScreen::observedUpdated() {
 	MapRenderer::updateScene(this->map, this->scene, this->mapPath, false);
+
+	// Handle observe notify event from map: clear existing player info widgets
+	QLayoutItem *layoutItem;
+	while (ui->horizontalLayout_2->count() > 0) {
+		layoutItem = ui->horizontalLayout_2->takeAt(0);
+		delete layoutItem->widget();
+		delete layoutItem;
+	}
+	// Instantiate new player info widgets for active each player
+	for (auto const &ent1: map->getPlayers()) {
+		Player p = ent1.second;
+		Player *player = map->getPlayer(p.getName());
+
+		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this, player, this->scene);
+		ui->horizontalLayout_2->addWidget(playerinfo);
+	}
+
+	// Handle observe notify event from GameDriver: setup current game mode
+	GameDriver* driver = GameDriver::getInstance();
+	Mode mode = driver->getCurrentMode();
+	ui->reinforcementLabel->setEnabled(mode == REINFORCEMENTMODE);
+	ui->attackLabel->setEnabled(mode == ATTACKMODE);
+	ui->fortifyLabel->setEnabled(mode == FORTIFICATIONMODE);
 }
 
 void MainScreen::nextTurn()
 {
 	GameDriver* driver = GameDriver::getInstance();
 	auto iterator = this->map->getPlayers().find(driver->getCurrentPlayerName());
+	auto end = this->map->getPlayers().end();
 	std::advance(iterator, 1);
+	if (iterator == end) {
+		iterator = this->map->getPlayers().begin();
+	}
 	driver->setCurrentPlayerName((*iterator).first);
+	driver->setCurrentMode(REINFORCEMENTMODE);
 }
 

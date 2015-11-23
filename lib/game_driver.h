@@ -3,6 +3,8 @@
 #include <string>
 #include <cereal/types/string.hpp>
 
+#include "game_modes.h"
+#include "observable.h"
 #include "player.h"
 
 /**
@@ -10,10 +12,13 @@
  * Handles the ordering of the game  the players turn the number of reinforcements
  * calculating the number of armies placed and allowed to place
  */
-class GameDriver {
+class GameDriver: public Observable {
 public:
 	std::string getCurrentPlayerName() const;
 	void setCurrentPlayerName(const std::string& name);
+
+	Mode getCurrentMode() const;
+	void setCurrentMode(const Mode& mode);
 
 	/**
 	 * @brief calculateReinforcementArmies calculates the reinforcements for the player using the continents and countries
@@ -51,11 +56,12 @@ public:
 
 	template<class Archive>
 	void serialize(Archive& archive) {
-		archive(cereal::make_nvp("currentPlayerName", this->currentPlayerName));
+		archive(cereal::make_nvp("currentPlayerName", this->currentPlayerName), cereal::make_nvp("currentMode", this->currentMode));
 	}
 
 private:
 	std::string currentPlayerName = "";
+	Mode currentMode = REINFORCEMENTMODE;
 };
 
 #endif // GAMEDRIVER_H

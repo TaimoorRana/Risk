@@ -10,13 +10,11 @@ set(GUI_SOURCE_FILES
 	main.cpp
 	mainscreen.cpp mainscreen.h mainscreen.ui
 	gameboardview.cpp gameboardview.h
-	game_modes.h
 	game_error_dialog.cpp game_error_dialog.h game_error_dialog.ui
 	map_editor.cpp map_editor.h map_editor.ui
 	map_scene.cpp map_scene.h
 	map_renderer.cpp map_renderer.h
 	playerinfowidget.cpp playerinfowidget.h playerinfowidget.ui
-	playerstatusindicator.cpp playerstatusindicator.h playerstatusindicator.ui
 	fortify_dialog.cpp fortify_dialog.h fortify_dialog.ui
 	playernamedialog.cpp playernamedialog.h playernamedialog.ui
 	qgraphics_country_item.cpp qgraphics_country_item.h
