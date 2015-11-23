@@ -47,7 +47,7 @@ public:
 private slots:
 	void on_mapEditorAction_triggered();
 	void on_pushButton_clicked();
-
+	void on_loggingOptionsPushButton_clicked();
 
 private:
 	std::string playerName = "";
