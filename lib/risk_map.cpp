@@ -382,4 +382,3 @@ bool RiskMap::isConnectedGraph(const std::string& limit_to) {
 
 	return true;
 }
-

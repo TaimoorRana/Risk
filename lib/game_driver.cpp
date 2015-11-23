@@ -23,7 +23,6 @@ void GameDriver::reinforcePhase() {}
 
 void GameDriver::fortificationPhase()
 {
-	this->canFortify = true;
 	// click on country to add to set
 	// click again to remove
 	// if array is full pop up the fortification dialog

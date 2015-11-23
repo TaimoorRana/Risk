@@ -3,11 +3,14 @@
 #include <time.h>
 #include <set>
 
+#include <QDir>
 #include <QMessageBox>
+#include <QFileDialog>
 #include <QFileInfo>
 #include <QString>
 
 #include "game_driver.h"
+#include "game_state.h"
 #include "mainscreen.h"
 #include "map_scene.h"
 #include "map_renderer.h"
@@ -207,9 +210,22 @@ Mode MainScreen::getCurrentMode(){
 	return currentMode;
 }
 
-/**
- * Callback to handle user selecting File > Map Editor.
- */
+void MainScreen::on_loadAction_triggered() {
+	QString filename(QFileDialog::getOpenFileName(this, tr("Open saved game"), QDir::currentPath(), tr("Risk game state (*.risksave)")));
+	this->raise();
+	if (filename.length() > 0) {
+		GameState::load(filename.toStdString(), GameDriver::getInstance(), this->map);
+	}
+}
+
+void MainScreen::on_saveAction_triggered() {
+	QString filename(QFileDialog::getSaveFileName(this, tr("Save game"), QDir::currentPath(), tr("Risk game state (*.risksave)")));
+	this->raise();
+	if (filename.length() > 0) {
+		GameState::save(filename.toStdString(), GameDriver::getInstance(), this->map);
+	}
+}
+
 void MainScreen::on_mapEditorAction_triggered() {
 	if (editor != NULL) {
 		this->editor->show();

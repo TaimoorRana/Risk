@@ -3,6 +3,9 @@
 #include <string>
 #include <set>
 
+#include <cereal/types/string.hpp>
+#include <cereal/types/set.hpp>
+
 #include "observable.h"
 
 class Player: public Observable {
@@ -130,6 +133,11 @@ public:
 	 * @brief setTotalArmy
 	 * @param totalArmy
 	 */
-		void setTotalArmy(const int& totalArmy);
+	void setTotalArmy(const int& totalArmy);
+
+	template<class Archive>
+	void serialize(Archive& archive) {
+		archive(cereal::make_nvp("name", this->name), cereal::make_nvp("reinforcements", this->reinforcements), cereal::make_nvp("battleWon", this->battleWon), cereal::make_nvp("totalArmy", this->totalArmy), cereal::make_nvp("namesOfCountriesOwned", this->namesOfCountriesOwned), cereal::make_nvp("namesOfContinentsOwned", this->namesOfContinentsOwned));
+	}
 };
 #endif // PLAYER_H

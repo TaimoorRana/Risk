@@ -28,6 +28,11 @@ if(DOXYGEN_FOUND)
 	)
 endif(DOXYGEN_FOUND)
 
+find_package(cereal REQUIRED)
+if(CEREAL_FOUND)
+	include_directories(${CEREAL_INCLUDE_DIRS})
+endif(CEREAL_FOUND)
+
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 

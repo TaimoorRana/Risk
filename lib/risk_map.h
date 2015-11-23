@@ -9,6 +9,10 @@
 #include <sys/stat.h>
 #include <unordered_map>
 
+#include <cereal/types/string.hpp>
+#include <cereal/types/unordered_map.hpp>
+#include <cereal/types/map.hpp>
+
 #include "country.h"
 #include "continent.h"
 #include "graph_adt.h"
@@ -146,6 +150,11 @@ public:
 
 	void isConnectedGraphHelper(std::unordered_map<const Country*, bool>& visited, Country* country, const std::string& limit_to);
 	bool isConnectedGraph(const std::string& limit_to);
+
+	template<class Archive>
+	void serialize(Archive& archive) {
+		archive(cereal::make_nvp("continents", this->continents), cereal::make_nvp("countries", this->countries), cereal::make_nvp("players", this->players));
+	}
 };
 
 #endif

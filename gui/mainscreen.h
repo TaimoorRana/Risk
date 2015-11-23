@@ -45,6 +45,17 @@ public:
 	std::vector<int> getVectorOfIndicesRandomCountryAccess(int nCountries);
 
 private slots:
+	/**
+	 * @brief Callback to handle user selecting File > Load.
+	 */
+	void on_loadAction_triggered();
+	/**
+	 * @brief Callback to handle user selecting File > Save.
+	 */
+	void on_saveAction_triggered();
+	/**
+	 * @brief Callback to handle user selecting File > Map Editor.
+	 */
 	void on_mapEditorAction_triggered();
 	void on_pushButton_clicked();
 

@@ -56,6 +56,7 @@ void MapEditor::on_filenameLineEdit_textChanged(QString text) {
 
 void MapEditor::on_browsePushButton_clicked() {
 	QString filename(QFileDialog::getOpenFileName(this, tr("Open map"), QDir::currentPath(), tr("Risk map files (*.map)")));
+	this->raise();
 	ui->filenameLineEdit->setText(filename);
 }
 

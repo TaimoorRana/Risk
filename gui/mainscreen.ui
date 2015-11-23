@@ -121,6 +121,9 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="loadAction"/>
+    <addaction name="saveAction"/>
+    <addaction name="separator"/>
     <addaction name="mapEditorAction"/>
    </widget>
    <addaction name="fileMenu"/>
@@ -134,13 +137,26 @@
     <string>Ctrl+E</string>
    </property>
   </action>
+  <action name="saveAction">
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="loadAction">
+   <property name="text">
+    <string>Load</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
  <slots>
   <slot>on_pushButton_clicked()</slot>
  </slots>
- <buttongroups>
-  <buttongroup name="buttonGroup"/>
- </buttongroups>
 </ui>

@@ -1,5 +1,4 @@
 #include "country.h"
-#include "debug.h"
 
 Country::Country(const std::string& name) {
 	this->name = name;
@@ -9,6 +8,8 @@ Country::Country(Country const& country) {
 	this->name = country.name;
 	this->armies = country.armies;
 	this->player = country.player;
+	this->x = country.x;
+	this->y = country.y;
 }
 
 std::string Country::getName() const {

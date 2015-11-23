@@ -1,6 +1,7 @@
 #ifndef GAMEDRIVER_H
 #define GAMEDRIVER_H
 #include <string>
+#include <cereal/types/string.hpp>
 
 #include "player.h"
 
@@ -48,8 +49,12 @@ public:
 	 */
 	static GameDriver* getInstance();
 
+	template<class Archive>
+	void serialize(Archive& archive) {
+		archive(cereal::make_nvp("currentPlayerName", this->currentPlayerName));
+	}
+
 private:
-	bool canFortify = false;
 	std::string currentPlayerName = "";
 };
 
