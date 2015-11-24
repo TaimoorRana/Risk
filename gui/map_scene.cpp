@@ -171,7 +171,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					secondCountryClicked = item->getCountry();
 					if (firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0 && map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())){
 						WarReferee warreferee = WarReferee::getInstance();
-						warreferee.startWar(firstCountryClicked, secondCountryClicked);
+						warreferee.startWar(firstCountryClicked, secondCountryClicked,map->getPlayer(firstCountryClicked->getPlayer()), map->getPlayer(secondCountryClicked->getPlayer()));
 
 					}else if(!map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())){
 						GameErrorDialog *notYourTurn = new GameErrorDialog(QString::fromStdString("You can only attack adjacent countries."), parent);
@@ -180,6 +180,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					}
 					firstCountryClicked = nullptr;
 					secondCountryClicked = nullptr;
+
 				}
 			break;
 			case FORTIFICATIONMODE:

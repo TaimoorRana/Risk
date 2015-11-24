@@ -12,8 +12,8 @@ class WarReferee{
 private:
 	WarReferee();
 	static const int MAX_DICES = 3; ///< Max dices the WarReferee can use
-	std::string attackerPlayer; ///< The Attacking player's name
-	std::string defenderPlayer; ///< The Defending player's name
+	Player* attackerPlayer; ///< The Attacking player
+	Player* defenderPlayer; ///< The Defending player
 
 	// players armies
 	int attackerArmy; ///< Attacking player's army
@@ -46,33 +46,33 @@ public:
 
 	/**
 	 * @brief setAttackerPlayer
-	 * @param name
+	 * @param player
 	 */
-	void setAttackerPlayer(std::string& name);
+	void setAttackerPlayer(Player* player);
 
 	/**
 	 * @brief setDefenderPlayer
-	 * @param name
+	 * @param player
 	 */
-	void setDefenderPlayer(std::string& name);
+	void setDefenderPlayer(Player* player);
 	/**
 	 * @brief setBothPlayers
 	 * @param attackerName
 	 * @param defenderName
 	 */
-	void setBothPlayers(std::string& attackerName , std::string& defenderName);
+	void setBothPlayers(Player* attacker , Player* defender);
 
 	/**
 	 * @brief getAttackerPlayer
-	 * @return attacker player name
+	 * @return attacker player
 	 */
-	std::string getAttackerPlayer();
+	Player* getAttackerPlayer();
 
 	/**
 	 * @brief getDefenderPlayer
-	 * @return defender player name
+	 * @return defender player
 	 */
-	std::string getDefenderPlayer();
+	Player* getDefenderPlayer();
 
 	/*
 	 Player Army related methods
@@ -128,7 +128,7 @@ public:
 	 * @param defenderCountry
 	 * @param defenderArmy
 	 */
-	void startWar(Country* attackerCountry,Country* defenderCountry);
+	void startWar(Country* attackerCountry,Country* defenderCountry,Player* attacker, Player* defender);
 
 	/**
 	 * @brief allInMode War between both players until the attacker wins or cannot attack anymore

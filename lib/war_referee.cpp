@@ -4,7 +4,7 @@
 #include "librisk.h"
 #include "war_referee.h"
 
-WarReferee::WarReferee() {};
+WarReferee::WarReferee() {}
 
 /**
  * Calculates the loses each country occurs after the dice roll- if dices are specified
@@ -86,6 +86,8 @@ void WarReferee::calculateLossesHelper(){
 		attackerCountry->setArmies(attackerArmy - 1);
 		defenderCountry->setArmies(1);
 		defenderCountry->setPlayer(attackerCountry->getPlayer());
+		attackerPlayer->addCountry(defenderCountry->getName());
+		defenderPlayer->removeCountry(defenderCountry->getName());
 	}else{
 		attackerCountry->setArmies(attackerArmy);
 		defenderCountry->setArmies(defenderArmy);
@@ -115,9 +117,9 @@ void WarReferee::allInMode(){
 }
 
 
-void WarReferee::startWar(Country *attackerCountry, Country *defenderCountry)
+void WarReferee::startWar(Country *attackerCountry, Country *defenderCountry, Player *attacker, Player *defender)
 {
-	//setBothPlayers(attackerPlayer, defenderPlayer);
+	setBothPlayers(attacker, defender);
 	this->attackerArmy = attackerCountry->getArmies();
 	this->defenderArmy = defenderCountry->getArmies();
 	this->attackerCountry = attackerCountry;
@@ -134,20 +136,20 @@ WarReferee& WarReferee::getInstance()
 	return *instance;
 }
 
-void WarReferee::setBothPlayers(std::string& attackerPlayer, std::string& defenderPlayer){
-	this->attackerPlayer = attackerPlayer;
-	this->defenderPlayer = defenderPlayer;
+void WarReferee::setBothPlayers(Player *attacker, Player *defender){
+	this->attackerPlayer = attacker;
+	this->defenderPlayer = defender;
 }
 
 
-void WarReferee::setAttackerPlayer(std::string& name)
+void WarReferee::setAttackerPlayer(Player* player)
 {
-	attackerPlayer = name;
+	attackerPlayer = player;
 }
 
-void WarReferee::setDefenderPlayer(std::string & name)
+void WarReferee::setDefenderPlayer(Player* player)
 {
-	defenderPlayer = name;
+	defenderPlayer = player;
 }
 
 void WarReferee::setDefenderArmy(int &army)
@@ -168,12 +170,12 @@ void WarReferee::setBothArmies(int &attackerArmy, int &defenderArmy)
 
 
 
-std::string WarReferee::getAttackerPlayer()
+Player *WarReferee::getAttackerPlayer()
 {
 	return attackerPlayer;
 }
 
-std::string WarReferee::getDefenderPlayer()
+Player *WarReferee::getDefenderPlayer()
 {
 	return defenderPlayer;
 }
