@@ -7,6 +7,8 @@
 #include <QFileInfo>
 #include <QString>
 
+#include "debug.h"
+
 #include "game_driver.h"
 #include "mainscreen.h"
 #include "map_scene.h"
@@ -195,7 +197,16 @@ void MainScreen::on_pushButton_clicked()
 		ui->fortifyLabel->setEnabled(false);
 
 		currentMode = REINFORCEMENTMODE;
+		this->map->getPlayer(this->playerName)->addReinforcements(3);
 		this->nextTurn();
+	}
+	debug("End Phase");
+
+	for(auto const &ent1: map->getPlayers()){
+		Player p = ent1.second;
+		Player *player = map->getPlayer(p.getName());
+		player->notifyObservers();
+		debug(""+player->getName()+" owns "+ std::to_string(player->getCountriesOwned().size())+ " countries and "+ std::to_string(player->getTotalArmy())+ " armies.");
 	}
 }
 

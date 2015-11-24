@@ -32,7 +32,7 @@ bool Observable::getNotificationsEnabled(){
   return this->notifyEnabled;
 };
 
-void Observable::notifyObservers(){
+void Observable::notifyObservers() const{
 	if (!this->notifyEnabled) {
 		return;
 	}

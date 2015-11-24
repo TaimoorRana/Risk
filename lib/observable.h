@@ -13,7 +13,7 @@ public:
     virtual void detachAllObservers();
 	virtual void setNotificationsEnabled(bool enabled);
 	virtual bool getNotificationsEnabled();
-	virtual void notifyObservers();
+	virtual void notifyObservers() const;
 	Observable();
 protected:
 	bool notifyEnabled = true;

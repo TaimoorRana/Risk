@@ -151,7 +151,6 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					notYourTurn->show();
 					return;
 				}
-				map->getPlayer(item->getCountry()->getPlayer())->notifyObservers();
 				break;
 			case ATTACKMODE:
 				item = getQGraphicsCountryItemFromEvent(event);
@@ -205,6 +204,8 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			default:
 				break;
 		}
+//		map->getPlayer(item->getCountry()->getPlayer())->notifyObservers();
+		map->notifyObservers();
 		return;
 	}
 
