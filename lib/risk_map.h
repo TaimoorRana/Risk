@@ -55,6 +55,14 @@ public:
 	 * @param continentName
 	 * @return
 	 */
+
+	/**
+	 * @brief renameCountry
+	 * @param newname
+	 * This will rename a given country
+	 */
+	void renameCountry(const std::string oldname, const std::string newname);
+
 	Country* addCountry(const Country& country, const std::string& continentName);
 	/**
 	 * @brief addContinent adds a continet with the reinforcement bonus
@@ -104,7 +112,7 @@ public:
 	 * @param name
 	 * @return
 	 */
-	Continent* getContinent(const std::string& name);
+	Continent* getContinentByName(const std::string& name);
 	/**
 	 * @brief getCountry gets the country pointer with the string name of the country
 	 * @param name_country

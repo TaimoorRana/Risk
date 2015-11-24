@@ -11,10 +11,20 @@ class MapScene;
 
 QGraphicsCountryItem::QGraphicsCountryItem(Country* c) {
 	this->country = c;
+	this->country->attachObserver(this);
+}
+
+QGraphicsCountryItem::~QGraphicsCountryItem() {
+	this->country->detachObserver(this);
 }
 
 Country* QGraphicsCountryItem::getCountry() const {
 	return this->country;
+}
+
+void QGraphicsCountryItem::observedUpdated() {
+	this->setPos(country->getPositionX(), country->getPositionY());
+	this->update();
 }
 
 QRectF QGraphicsCountryItem::boundingRect() const {
@@ -37,17 +47,16 @@ void QGraphicsCountryItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
 	painter->setBrush(QBrush(parent->getPlayerColor(this->country->getPlayer())));
 	painter->drawEllipse(QPointF(0, 0), this->diameter/2, this->diameter/2);
 
-    QFont font = QFont("Open Sans", this->fontSize);
+	QFont font = QFont("Open Sans", this->fontSize);
 	QFontMetrics metrics(font);
 	painter->setFont(font);
 	std::string label = country->getName() + " (" + std::to_string(country->getArmies()) + ")";
 	int textWidth = metrics.width(QString::fromStdString(label))/2;
-    painter->drawText(QPointF(-textWidth, 19), QString::fromStdString(label));
+		painter->drawText(QPointF(-textWidth, 19), QString::fromStdString(label));
 }
 
 void QGraphicsCountryItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsItem::mouseReleaseEvent(event);
 	this->country->setPositionX(event->scenePos().x());
 	this->country->setPositionY(event->scenePos().y());
-	this->country->notifyObservers();
 }

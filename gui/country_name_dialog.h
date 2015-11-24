@@ -22,8 +22,9 @@ public:
     QString getText();
     QString getContinentName();
     QString getCountryName();
+	void setExistingCountryName(const QString& existingCountry);
     void setLastContinentName(const QString& lastContinent);
-
+	void disableContinentEntry();
 private:
     Ui::CountryNameDialog *ui;
 };

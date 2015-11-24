@@ -27,3 +27,10 @@ void CountryNameDialog::setLastContinentName(const QString& lastContinent){
     ui->ContinentNameLineEdit->setText(lastContinent);
 }
 
+void CountryNameDialog::setExistingCountryName(const QString& existingCountry){
+	ui->CountryNameLineEdit->setText(existingCountry);
+}
+
+void CountryNameDialog::disableContinentEntry(){
+	ui->ContinentNameLineEdit->setDisabled(true);
+}

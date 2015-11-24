@@ -19,6 +19,7 @@ set(GUI_SOURCE_FILES
 	playernamedialog.cpp playernamedialog.h playernamedialog.ui
 	qgraphics_country_item.cpp qgraphics_country_item.h
 	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h
+	logging_dialog.cpp logging_dialog.h logging_dialog.ui
 )
 
 set(GUI_RESOURCE_FILES

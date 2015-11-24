@@ -9,7 +9,7 @@
 #include "observable.h"
 
 class Player: public Observable {
-private:
+protected:
 	int reinforcements = 0; ///< This player total reinforcement bonus
 	int battleWon = 0; ///< battle won
 	int totalArmy = 0; ///< Total armies from all countries belonging to this player
@@ -20,7 +20,7 @@ private:
 public:
 	Player() {}
 	Player(std::string name);
-		//Player(const Player& other);
+	//Player(const Player& other);
 	/**
 	 * @brief getName
 	 * @return name of the player
@@ -43,11 +43,12 @@ public:
 	 */
 	void setBattlesWon(const int &battleWon);
 
+
 	/**
 	 * @brief getBattlesWon
 	 * @return total battles won
 	 */
-		int getBattlesWon() const;
+	int getBattlesWon() const;
 
 
 	/**
