@@ -158,17 +158,27 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					return;
 				}
 
-				if (firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0) {
+				if ((firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0)
+						&& item->getCountry()->getPlayer().compare(currentPlayer) == 0) {
 					firstCountryClicked = item->getCountry();
+				} else if(item->getCountry()->getPlayer().compare(currentPlayer) != 0 && firstCountryClicked == nullptr){
+					GameErrorDialog *notYourTurn = new GameErrorDialog(QString::fromStdString("You must choose your own country."), parent);
+					notYourTurn->show();
+					return;
 				}
 				else {
 					secondCountryClicked = item->getCountry();
-					if (firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0){
+					if (firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0 && map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())){
 						WarReferee warreferee = WarReferee::getInstance();
 						warreferee.startWar(firstCountryClicked, secondCountryClicked);
-						firstCountryClicked = nullptr;
-						secondCountryClicked = nullptr;
+
+					}else if(!map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())){
+						GameErrorDialog *notYourTurn = new GameErrorDialog(QString::fromStdString("You can only attack adjacent countries."), parent);
+						notYourTurn->show();
+						return;
 					}
+					firstCountryClicked = nullptr;
+					secondCountryClicked = nullptr;
 				}
 			break;
 			case FORTIFICATIONMODE:
