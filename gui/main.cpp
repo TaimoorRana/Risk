@@ -5,7 +5,9 @@
 #include "game_driver.h"
 #include "mainscreen.h"
 #include "map_scene.h"
+
 #include "risk_map.h"
+
 
 void showSplashScreen() {
 	QSplashScreen splash(QPixmap(":/splash.png").scaled(800, 346));
