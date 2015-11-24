@@ -37,7 +37,7 @@ IF (APPLE)
 ENDIF (APPLE)
 
 # Basic info about project
-project(risk-a3 VERSION 0.0.1)
+project(risk VERSION 0.0.1)
 
 # Set additional project information
 set(COMPANY "COMP345")

@@ -8,6 +8,8 @@ Thumbs.db
 
 # IDEs
 *.sublime-*
+*.swp
+
 # Qt Creator
 /*.creator
 /*.creator.user*
