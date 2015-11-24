@@ -147,5 +147,21 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>armiesSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>numArmies</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>175</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>302</x>
+     <y>51</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>

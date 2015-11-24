@@ -87,12 +87,23 @@
             </property>
            </spacer>
           </item>
+          <item>
+           <widget class="QPushButton" name="loggingOptionsPushButton">
+            <property name="text">
+             <string>Logging...</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
        </layout>
       </item>
       <item>
-       <widget class="QGraphicsView" name="graphicsView"/>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QGraphicsView" name="graphicsView"/>
+        </item>
+       </layout>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -140,7 +151,4 @@
  <slots>
   <slot>on_pushButton_clicked()</slot>
  </slots>
- <buttongroups>
-  <buttongroup name="buttonGroup"/>
- </buttongroups>
 </ui>

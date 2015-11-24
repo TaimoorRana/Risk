@@ -7,6 +7,8 @@
 #include <QFileInfo>
 #include <QString>
 
+#include "debug.h"
+
 #include "game_driver.h"
 #include "mainscreen.h"
 #include "map_scene.h"
@@ -14,6 +16,7 @@
 #include "player.h"
 #include "player_view.h"
 #include "playerinfowidget.h"
+#include "logging_dialog.h"
 
 MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainScreen)
 {
@@ -194,9 +197,24 @@ void MainScreen::on_pushButton_clicked()
 		ui->fortifyLabel->setEnabled(false);
 
 		currentMode = REINFORCEMENTMODE;
+		this->map->getPlayer(this->playerName)->addReinforcements(3);
 		this->nextTurn();
 	}
+	debug("End Phase");
+
+	for(auto const &ent1: map->getPlayers()){
+		Player p = ent1.second;
+		Player *player = map->getPlayer(p.getName());
+		player->notifyObservers();
+		debug(""+player->getName()+" owns "+ std::to_string(player->getCountriesOwned().size())+ " countries and "+ std::to_string(player->getTotalArmy())+ " armies.");
+	}
 }
+
+void MainScreen::on_loggingOptionsPushButton_clicked(){
+	LoggingDialog *logDialog = new LoggingDialog(this->map->getPlayers(), this);
+	logDialog->exec();
+}
+
 
 void MainScreen::endPhase()
 {
