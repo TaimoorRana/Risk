@@ -207,10 +207,11 @@ void MainScreen::on_logButton_clicked()
 	while (decision) {
 
 		LogScreen *lScreen = new LogScreen(this);
-		lScreen->setPlayers(logSelector->getSelectedPlayer());
-		lScreen->setState(logSelector->getSelectedPhase());
-		if(this->logSelector->exec()){
 
+		if(this->logSelector->exec()){
+			lScreen->setPlayers(logSelector->getSelectedPlayer());
+			lScreen->setState(logSelector->getSelectedPhase());
+			lScreen->update();
 			lScreen->show();
 
 			decision =false;

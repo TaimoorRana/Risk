@@ -8,7 +8,7 @@ LogScreen::LogScreen(QWidget *parent): QMainWindow(parent),ui(new Ui::LogScreen)
 {
 
 	ui->setupUi(this);
-	update();
+	//update();
 
 }
 
