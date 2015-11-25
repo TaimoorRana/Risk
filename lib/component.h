@@ -3,7 +3,9 @@
 
 #endif // COMPONENT
 
-class Component: public AbstractDecorator{
+class Component {
+protected:
+	virtual void log()=0;
 
 };
 

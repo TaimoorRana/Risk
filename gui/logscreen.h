@@ -16,11 +16,15 @@ class LogScreen : public QMainWindow
 public:
 	explicit LogScreen(QWidget *parent=0);
 	~LogScreen();
-	void setPlayers(int nPlayes);
-	void setState(std::string state);
+	void setPlayers(int nPlayers);
+	void setState(std::string stateSelected);
+	int getPlayers();
+	std::string getState();
+	void update();
 private:
 	Ui::LogScreen *ui=nullptr;
-	int players;
+	int players=55;
+	std::string states;
 
 };
 

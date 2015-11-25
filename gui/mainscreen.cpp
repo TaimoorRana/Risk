@@ -205,9 +205,14 @@ void MainScreen::on_logButton_clicked()
 	}
 	bool decision=true;
 	while (decision) {
+
+		LogScreen *lScreen = new LogScreen(this);
+		lScreen->setPlayers(logSelector->getSelectedPlayer());
+		lScreen->setState(logSelector->getSelectedPhase());
 		if(this->logSelector->exec()){
-			LogScreen *lScreen = new LogScreen(this);
+
 			lScreen->show();
+
 			decision =false;
 		}
 		else if(this->logSelector->close()){

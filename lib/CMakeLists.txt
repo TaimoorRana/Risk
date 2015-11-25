@@ -18,8 +18,8 @@ set(LIBRARY_SOURCE_FILES
         random.h random.cpp
         computer_player.h computer_player.cpp
 
-        abstract_decorator.h
-        component.h
+
+        component.h decorator.h decorator.cpp
 
 )
 

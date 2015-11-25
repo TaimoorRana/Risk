@@ -2,6 +2,9 @@
 #include "ui_log_selector.h"
 #include <string>
 #include <QString>
+#include <iostream>
+#include <QDebug>
+using namespace std;
 
 LogSelector::LogSelector(QWidget *parent, int numberOfPlayers): QDialog(parent), ui(new Ui::LogSelector){
 	ui->setupUi(this);
@@ -15,12 +18,16 @@ LogSelector::~LogSelector(){
 
 int LogSelector::getSelectedPlayer()
 {
+	qDebug("%d",ui->PlayersCombo->currentText().toInt());
 	return ui->PlayersCombo->currentText().toInt();
+
 }
 
 std::string LogSelector::getSelectedPhase()
 {
+	qDebug("%s",ui->PhasesCombo->currentText().toStdString());
 	return ui->PhasesCombo->currentText().toStdString();
+
 }
 
 void LogSelector::generatePlayers(int numberOfPlayers)
