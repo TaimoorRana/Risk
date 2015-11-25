@@ -1,6 +1,7 @@
 #ifndef COUNTRY_H
 #define COUNTRY_H
 #include <string>
+#include <cereal/types/string.hpp>
 #include "observable.h"
 
 /**
@@ -16,6 +17,7 @@ private:
 	int armies = 0;
 	int x = 0;
 	int y = 0;
+
 public:
 	/**
 	 * @brief Country
@@ -85,5 +87,10 @@ public:
 	 * @param y
 	 */
 	void setPositionY(int y);
+
+	template<class Archive>
+	void serialize(Archive& archive) {
+		archive(cereal::make_nvp("name", this->name), cereal::make_nvp("x", this->x), cereal::make_nvp("y", this->y), cereal::make_nvp("armies", this->armies), cereal::make_nvp("player", this->player));
+	}
 };
 #endif // COUNTRY_H

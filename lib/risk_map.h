@@ -9,6 +9,10 @@
 #include <sys/stat.h>
 #include <unordered_map>
 
+#include <cereal/types/string.hpp>
+#include <cereal/types/unordered_map.hpp>
+#include <cereal/types/map.hpp>
+
 #include "country.h"
 #include "continent.h"
 #include "graph_adt.h"
@@ -51,6 +55,14 @@ public:
 	 * @param continentName
 	 * @return
 	 */
+
+	/**
+	 * @brief renameCountry
+	 * @param newname
+	 * This will rename a given country
+	 */
+	void renameCountry(const std::string oldname, const std::string newname);
+
 	Country* addCountry(const Country& country, const std::string& continentName);
 	/**
 	 * @brief addContinent adds a continet with the reinforcement bonus
@@ -100,7 +112,7 @@ public:
 	 * @param name
 	 * @return
 	 */
-	Continent* getContinent(const std::string& name);
+	Continent* getContinentByName(const std::string& name);
 	/**
 	 * @brief getCountry gets the country pointer with the string name of the country
 	 * @param name_country
@@ -146,6 +158,11 @@ public:
 
 	void isConnectedGraphHelper(std::unordered_map<const Country*, bool>& visited, Country* country, const std::string& limit_to);
 	bool isConnectedGraph(const std::string& limit_to);
+
+	template<class Archive>
+	void serialize(Archive& archive) {
+		archive(cereal::make_nvp("continents", this->continents), cereal::make_nvp("countries", this->countries), cereal::make_nvp("players", this->players));
+	}
 };
 
 #endif

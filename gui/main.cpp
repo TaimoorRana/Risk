@@ -5,7 +5,9 @@
 #include "game_driver.h"
 #include "mainscreen.h"
 #include "map_scene.h"
+
 #include "risk_map.h"
+
 
 void showSplashScreen() {
 	QSplashScreen splash(QPixmap(":/splash.png").scaled(800, 346));
@@ -26,12 +28,10 @@ void showSplashScreen() {
  */
 int main(int argc, char *argv[]) {
 	QApplication application(argc, argv);
-	GameDriver* driver = GameDriver::getInstance();
 	showSplashScreen();
 
 	RiskMap* riskMap = new RiskMap();
 	MainScreen* mainScreen = new MainScreen(riskMap, 0);
-	MapScene* mapScene = new MapScene(riskMap, mainScreen);
 
 	mainScreen->setupPlayers();
 	mainScreen->show();

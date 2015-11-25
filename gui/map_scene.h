@@ -1,5 +1,8 @@
 #ifndef MAP_SCENE_H
 #define MAP_SCENE_H
+#include <functional>
+#include <random>
+#include <vector>
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
@@ -40,7 +43,9 @@ private:
 	QString lastContinent; ///< To facilitate entry when creating countries, this variable remembers the last continent used, when adding countries consecutively.
 	bool editable = false; ///< This variable controls the difference in behaviour when editing a map and when using the map to play (Then the map is not editable).
 	std::map<const std::string, QColor> continentPalette = std::map<const std::string, QColor>(); ///< This map contains the colours used for colouring the continents.
-	std::map<const std::string, QColor> playerPalette = std::map<const std::string, QColor>(); ///< This map containst the colours used for colouring the players
+	std::vector<QColor> playerPalette = std::vector<QColor>(); ///< This map containst the colours used for colouring the players
+	std::uniform_int_distribution<int> randomDistribution = std::uniform_int_distribution<int>(0, 255);
+	std::mt19937 randomGenerator = std::mt19937(8);
 
 	/**
 	 * @brief getQGraphicsCountryItemFromEvent

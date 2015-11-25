@@ -11,10 +11,20 @@ GameDriver* GameDriver::getInstance()
 
 void GameDriver::setCurrentPlayerName(const std::string& name) {
 	this->currentPlayerName = name;
+	this->notifyObservers();
 }
 
 std::string GameDriver::getCurrentPlayerName() const {
 	return this->currentPlayerName;
+}
+
+Mode GameDriver::getCurrentMode() const {
+	return this->currentMode;
+}
+
+void GameDriver::setCurrentMode(const Mode& mode) {
+	this->currentMode = mode;
+	this->notifyObservers();
 }
 
 void GameDriver::attackPhase() {}
@@ -23,7 +33,6 @@ void GameDriver::reinforcePhase() {}
 
 void GameDriver::fortificationPhase()
 {
-	this->canFortify = true;
 	// click on country to add to set
 	// click again to remove
 	// if array is full pop up the fortification dialog

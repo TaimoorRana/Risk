@@ -28,6 +28,11 @@ if(DOXYGEN_FOUND)
 	)
 endif(DOXYGEN_FOUND)
 
+find_package(cereal REQUIRED)
+if(CEREAL_FOUND)
+	include_directories(${CEREAL_INCLUDE_DIRS})
+endif(CEREAL_FOUND)
+
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -37,7 +42,7 @@ IF (APPLE)
 ENDIF (APPLE)
 
 # Basic info about project
-project(risk-a3 VERSION 0.0.1)
+project(risk VERSION 0.0.1)
 
 # Set additional project information
 set(COMPANY "COMP345")

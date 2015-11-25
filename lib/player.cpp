@@ -106,6 +106,3 @@ void Player::setBattlesWon(const int &battleWon) {
 int Player::getBattlesWon() const {
 	return battleWon;
 }
-
-
-

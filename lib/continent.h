@@ -2,6 +2,8 @@
 #define CONTINENT_H
 
 #include <string>
+#include <cereal/types/string.hpp>
+
 /**
  * @brief The Continent class holds the name and the number of reinforcement of a continent
  */
@@ -44,5 +46,10 @@ public:
 	 * @param bonus
 	 */
 	void setReinforcementBonus(int bonus);
+
+	template<class Archive>
+	void serialize(Archive& archive) {
+		archive(cereal::make_nvp("name", this->name), cereal::make_nvp("reinforcementBonus", this->reinforcementBonus));
+	}
 };
 #endif // CONTINENT_H

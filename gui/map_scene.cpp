@@ -2,10 +2,6 @@
 #include <QDebug>
 #include <QString>
 
-#include <functional>
-#include <random>
-#include <vector>
-
 #include "map_editor.h"
 #include "map_scene.h"
 #include "qgraphics_country_item.h"
@@ -21,6 +17,13 @@ MapScene::MapScene(RiskMap* map, QWidget *parent){
 	this->setParent(parent);
 	this->map = map;
 	this->map->attachObserver(this);
+
+	this->playerPalette.push_back(QColor(0, 219, 0));
+	this->playerPalette.push_back(QColor(255, 102, 236));
+	this->playerPalette.push_back(QColor(255, 124, 36));
+	this->playerPalette.push_back(QColor(0, 82, 245));
+	this->playerPalette.push_back(QColor(255, 206, 10));
+	this->playerPalette.push_back(QColor(239, 34, 34));
 }
 
 MapScene::~MapScene() {
@@ -28,8 +31,6 @@ MapScene::~MapScene() {
 }
 
 void MapScene::observedUpdated() {
-	std::mt19937::result_type seed = 4;
-	auto color_rand = std::bind(std::uniform_int_distribution<int>(0, 255), std::mt19937(seed));
 	this->continentPalette.clear();
 
 	std::vector<QColor> presetContinentColors;
@@ -45,6 +46,7 @@ void MapScene::observedUpdated() {
 	presetContinentColors.push_back(QColor(255, 155, 119));
 
 	int i=0;
+	auto color_rand = std::bind(randomDistribution, randomGenerator);
 	QColor color;
 	for (auto const &ent1 : this->map->getContinents()) {
 		const Continent& continent = ent1.second;
@@ -58,37 +60,6 @@ void MapScene::observedUpdated() {
 		}
 		continentPalette.insert(std::pair<const std::string, QColor>(continent.getName(), color));
 	}
-
-	seed = 8;
-	color_rand = std::bind(std::uniform_int_distribution<int>(0, 255), std::mt19937(seed));
-
-	this->playerPalette.clear();
-	std::vector<QColor> presetPlayerColors;
-	presetPlayerColors.push_back(QColor(0, 219, 0));
-	presetPlayerColors.push_back(QColor(255, 102, 236));
-	presetPlayerColors.push_back(QColor(255, 124, 36));
-	presetPlayerColors.push_back(QColor(0, 82, 245));
-	presetPlayerColors.push_back(QColor(255, 206, 10));
-	presetPlayerColors.push_back(QColor(239, 34, 34));
-
-	i=0;
-	for (auto const &ent1 : this->map->getPlayers()) {
-		const Player& player = ent1.second;
-		// Use random colors if we've exhausted the preset ones
-		if (i < presetPlayerColors.size()) {
-			color = presetPlayerColors[i];
-			i++;
-		}
-		else {
-			color = QColor(color_rand(), color_rand(), color_rand());
-		}
-		playerPalette.insert(std::pair<const std::string, QColor>(player.getName(), color));
-	}
-
-	debug("");
-	for (auto const &ent1 : this->playerPalette) {
-		debug("Player " + ent1.first + " is " + ent1.second.name().toStdString());
-	}
 }
 
 QColor MapScene::getContinentColor(const std::string& countryName) {
@@ -97,14 +68,18 @@ QColor MapScene::getContinentColor(const std::string& countryName) {
 }
 
 QColor MapScene::getPlayerColor(const std::string& playerName) {
-	QColor color;
 	if (this->editable) {
-		color = QColor(204, 204, 204);
+		return QColor(204, 204, 204);
+	}
+
+	auto color_rand = std::bind(randomDistribution, randomGenerator);
+	int index = std::distance(this->map->getPlayers().begin(), this->map->getPlayers().find(playerName));
+	if (index < this->playerPalette.size()) {
+		return this->playerPalette[index];
 	}
 	else {
-		color = this->playerPalette.at(playerName);
+		return QColor(color_rand(), color_rand(), color_rand());
 	}
-	return color;
 }
 
 bool MapScene::getEditable() const {
@@ -120,6 +95,13 @@ RiskMap* MapScene::getMap() {
 }
 
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
+	/**
+	 * ! IMPORTANT ! IMPORTANT ! IMPORTANT ! IMPORTANT ! IMPORTANT !IMPORTANT !
+	 *
+	 * Remember that if you call ANY function in RiskMap that notifies its
+	 * observers, the scene is entirely re-rendered and all references we hold to
+	 * QGraphicItems past that point will be INVALID.
+	 */
 	QGraphicsScene::mousePressEvent(event);
 
 	QGraphicsCountryItem *item = nullptr;
@@ -128,11 +110,10 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 		GameDriver* driver = GameDriver::getInstance();
 		std::string currentPlayer = driver->getCurrentPlayerName();
 
-		//Moved out since it is common
 		item = getQGraphicsCountryItemFromEvent(event);
 		if (item == nullptr) { return; }
 
-		switch (parent->getCurrentMode()) {
+		switch (GameDriver::getInstance()->getCurrentMode()) {
 			case REINFORCEMENTMODE:
 				if(currentPlayer.compare(item->getCountry()->getPlayer()) == 0 ){
 					if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0) {
@@ -150,7 +131,6 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					notYourTurn->show();
 					return;
 				}
-				map->getPlayer(item->getCountry()->getPlayer())->notifyObservers();
 				break;
 			case ATTACKMODE:
 				item = getQGraphicsCountryItemFromEvent(event);
@@ -158,17 +138,27 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					return;
 				}
 
-				if (firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0) {
+				if ((firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0)
+						&& item->getCountry()->getPlayer().compare(currentPlayer) == 0) {
 					firstCountryClicked = item->getCountry();
+				} else if(item->getCountry()->getPlayer().compare(currentPlayer) != 0 && firstCountryClicked == nullptr){
+					GameErrorDialog *notYourTurn = new GameErrorDialog(QString::fromStdString("You must choose your own country."), parent);
+					notYourTurn->show();
+					return;
 				}
 				else {
 					secondCountryClicked = item->getCountry();
-					if (firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0){
+					if (firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0 && map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())){
 						WarReferee warreferee = WarReferee::getInstance();
 						warreferee.startWar(firstCountryClicked, secondCountryClicked);
-						firstCountryClicked = nullptr;
-						secondCountryClicked = nullptr;
+
+					}else if(!map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())){
+						GameErrorDialog *notYourTurn = new GameErrorDialog(QString::fromStdString("You can only attack adjacent countries."), parent);
+						notYourTurn->show();
+						return;
 					}
+					firstCountryClicked = nullptr;
+					secondCountryClicked = nullptr;
 				}
 			break;
 			case FORTIFICATIONMODE:
@@ -204,6 +194,8 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			default:
 				break;
 		}
+//		map->getPlayer(item->getCountry()->getPlayer())->notifyObservers();
+		map->notifyObservers();
 		return;
 	}
 
@@ -217,20 +209,33 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 	switch (parent->getSelectedTool()) {
 		case ADDCOUNTRY:
-			nameDialog.setLastContinentName(lastContinent);
-			if (nameDialog.exec() == QDialog::Rejected) {
-				return;
-			}
+			item = getQGraphicsCountryItemFromEvent(event);
+			if (item == nullptr) {
+				nameDialog.setLastContinentName(lastContinent);
+				if (nameDialog.exec() == QDialog::Rejected) {
+					return;
+				}
 
-			lastContinent = nameDialog.getContinentName();
-			c = map->addCountry(Country(nameDialog.getCountryName().toStdString()), nameDialog.getContinentName().toStdString());
-			if (c == nullptr) {
-				// FIXME inform user of error
-				return;
+				lastContinent = nameDialog.getContinentName();
+				c = map->addCountry(Country(nameDialog.getCountryName().toStdString()), nameDialog.getContinentName().toStdString());
+				if (c == nullptr) {
+					GameErrorDialog *cantAddCountry = new GameErrorDialog(QString::fromStdString("Could not add country."), parent);
+					cantAddCountry->show();
+					return;
+				}
+				c->setPositionX(xpos);
+				c->setPositionY(ypos);
+				c->notifyObservers();
 			}
-			c->setPositionX(xpos);
-			c->setPositionY(ypos);
-			this->map->notifyObservers();
+			else{
+				nameDialog.setExistingCountryName(QString::fromStdString(item->getCountry()->getName()));
+				nameDialog.setLastContinentName(QString::fromStdString(map->getContinentOfCountry(item->getCountry()->getName())->getName()));
+				nameDialog.disableContinentEntry();
+				if (nameDialog.exec() == QDialog::Rejected) {
+					return;
+				}
+				map->renameCountry(item->getCountry()->getName(), nameDialog.getCountryName().toStdString());
+			}
 			break;
 
 		case REMCOUNTRY:
@@ -239,7 +244,6 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				return;
 			}
 			map->remCountry(*item->getCountry());
-			this->map->notifyObservers();
 			break;
 
 			case ADDLINK:
@@ -258,19 +262,16 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			break;
 
 		case REMLINK:
-			qDebug("MAPSCENE: Remove link between countries.");
 			item = getQGraphicsCountryItemFromEvent(event);
 			if (item == nullptr) {
 				return;
 			}
 
 			if (firstCountryClicked != 0) {
-				debug("Second pick is " + item->getCountry()->getName());
 				map->remNeighbour(item->getCountry()->getName(), firstCountryClicked->getName());
 				firstCountryClicked = 0;
 			}
 			else {
-				debug("First pick is " + item->getCountry()->getName());
 				firstCountryClicked = item->getCountry();
 			}
 		case OFF:
@@ -281,8 +282,14 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsScene::mouseReleaseEvent(event);
-	// Re-draws the whole scene, fixing text that gets left behind from dragging QGraphicsCountryItem objects (due to their out of bound text)
-	this->update();
+
+	if (this->editable) {
+		MapEditor* parent = qobject_cast<MapEditor*>(this->parent());
+		if (parent->getSelectedTool() == OFF) {
+			// Re-draws the whole scene, fixing text that gets left behind from dragging QGraphicsCountryItem objects (due to their out of bound text)
+			this->map->notifyObservers();
+		}
+	}
 }
 
 QGraphicsCountryItem* MapScene::getQGraphicsCountryItemFromEvent(QGraphicsSceneMouseEvent *event){
