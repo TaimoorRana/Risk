@@ -9,6 +9,8 @@ set(LIBRARY_SOURCE_FILES
 	player_view.cpp player_view.h
 	risk_map.cpp risk_map.h
 	war_referee.cpp war_referee.h
+        abstract_decorator.h
+        component.h
 )
 
 add_library(lib${PROJECT_NAME} STATIC ${LIBRARY_SOURCE_FILES})
