@@ -7,10 +7,8 @@
 #include <sstream>
 #include <stdio.h>
 #include <sys/stat.h>
-#include <unordered_map>
 
 #include <cereal/types/string.hpp>
-#include <cereal/types/unordered_map.hpp>
 #include <cereal/types/map.hpp>
 
 #include "country.h"
@@ -30,8 +28,8 @@
 class RiskMap : public Observable
 {
 private:
-	std::unordered_map<std::string, Continent> continents;
-	std::unordered_map<std::string, Country> countries;
+	std::map<std::string, Continent> continents;
+	std::map<std::string, Country> countries;
 	std::map<std::string, Player> players;
 	SubGraphADT mapGraph;
 
@@ -129,8 +127,8 @@ public:
 	string_set getCountriesInContinent(const std::string& name_continent);
 	string_set getNeighbours(const std::string& name_country);
 	Player* getPlayer(const std::string& playerName);
-	const std::unordered_map<std::string, Continent>& getContinents() const;
-	const std::unordered_map<std::string, Country>& getCountries() const;
+	const std::map<std::string, Continent>& getContinents() const;
+	const std::map<std::string, Country>& getCountries() const;
 	const std::map<std::string, Player>& getPlayers() const;
 
 	void consolePrintListOfNeighbours(const std::string& name_country);
@@ -156,7 +154,7 @@ public:
 	 */
 	bool validate();
 
-	void isConnectedGraphHelper(std::unordered_map<const Country*, bool>& visited, Country* country, const std::string& limit_to);
+	void isConnectedGraphHelper(std::map<const Country*, bool>& visited, Country* country, const std::string& limit_to);
 	bool isConnectedGraph(const std::string& limit_to);
 
 	template<class Archive>

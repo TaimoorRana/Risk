@@ -320,10 +320,10 @@ void RiskMap::clear() {
 	this->notifyObservers();
 }
 
-const std::unordered_map<std::string, Continent>& RiskMap::getContinents() const {
+const std::map<std::string, Continent>& RiskMap::getContinents() const {
 	return this->continents;
 }
-const std::unordered_map<std::string, Country>& RiskMap::getCountries() const {
+const std::map<std::string, Country>& RiskMap::getCountries() const {
 	return this->countries;
 }
 const std::map<std::string, Player>& RiskMap::getPlayers() const {
@@ -351,7 +351,7 @@ bool RiskMap::validate() {
 	return true;
 }
 
-void RiskMap::isConnectedGraphHelper(std::unordered_map<const Country*, bool>& visited, Country* country, const std::string& limit_to) {
+void RiskMap::isConnectedGraphHelper(std::map<const Country*, bool>& visited, Country* country, const std::string& limit_to) {
 	if (limit_to.size() > 0 && this->getContinentOfCountry(country->getName())->getName().compare(limit_to) != 0) {
 		return;
 	}
@@ -368,7 +368,7 @@ void RiskMap::isConnectedGraphHelper(std::unordered_map<const Country*, bool>& v
 }
 
 bool RiskMap::isConnectedGraph(const std::string& limit_to) {
-	std::unordered_map<const Country*, bool> visited = std::unordered_map<const Country*, bool>();
+	std::map<const Country*, bool> visited = std::map<const Country*, bool>();
 	for (auto const &ent1 : this->countries) {
 		const Country& country = ent1.second;
 
