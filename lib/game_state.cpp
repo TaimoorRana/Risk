@@ -14,7 +14,8 @@
 /**
  * Simplified version of the buildMap() and buildGameDriver() that uses the
  * serialization to actually serialize the RiskMap itself, eliminating the need
- * for a builder pattern altogether. The actual map is just loaded back as-is.
+ * for an elaborate builder pattern altogether. The actual map's is entirely
+ * encapsulated, so the "builder" only needs one line to read it back.
  *
  * This approach will be used for our project.
  */
@@ -50,9 +51,11 @@ bool GameState::save(std::string path, GameDriver* driver, RiskMap* map) {
  */
 
 /**
- * Builds a RiskMap object after reading information back from a savestate.
+ * Builds a RiskMap object using its API after reading information back from a
+ * savestate.
  *
- * This approach is included to demonstrate the Builder pattern for A3.
+ * This approach is included to demonstrate a more elaborate Builder pattern for
+ * grading purposes in A3.
  */
 RiskMap* buildMap(std::string path) {
 	// Prepare local variables. We'll use these to build the new object.
@@ -100,7 +103,8 @@ RiskMap* buildMap(std::string path) {
  * Obtains the Singleton reference to the application's GameDriver and builds it
  * based on the save state.
  *
- * This approach is included to demonstrate the Builder pattern for A3.
+ * This approach is included to demonstrate a more elaborate Builder pattern for
+ * grading purposes in A3.
  */
 GameDriver* buildGameDriver(std::string path) {
 	// Prepare local variables. We'll use these to build the new object.
@@ -125,7 +129,8 @@ GameDriver* buildGameDriver(std::string path) {
  * Serializes information to a savestate. Can be read later to re-construct game
  * state using a builder pattern.
  *
- * This approach is included to demonstrate the Builder pattern for A3.
+ * This approach is included to demonstrate a more elaborate Builder pattern for
+ * grading purposes in A3.
  */
 bool buildSaveFile(std::string path, GameDriver* driver, RiskMap* map) {
 	std::ofstream outfile(path);
