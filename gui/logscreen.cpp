@@ -42,10 +42,8 @@ void LogScreen::setCurrentMode(Mode mode)
 }
 
 void LogScreen::update()
-{	//ui->textEdit->setE
-	ui->textEdit->insertPlainText("Hello Good day\n");
-	ui->textEdit->insertPlainText("Boker");
-	ui->textEdit->insertPlainText(QString::fromStdString(states));
+{
+	ui->textEdit->insertPlainText("Hello Good day your logging has begun please select go to next phase to see logging effets\n");
 	ui->textEdit->insertPlainText(QString("Players :%1").arg(players));
 	qDebug("%d",players);
 }
