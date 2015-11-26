@@ -8,11 +8,12 @@ class ConcreteAttack : public Decorator
 {
 public:
 	ConcreteAttack(Component *comp);
+	~ConcreteAttack();
 	void log();
 	void setLog(string s);
 	string getLog();
 
 private:
-	string attacking = "attacking phase";
+	string attack = "attacking phase\n";
 };
 #endif // CONCRETEATTACK_H

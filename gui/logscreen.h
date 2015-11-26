@@ -4,6 +4,7 @@
 #include <string>
 #include "observer.h"
 #include "game_modes.h"
+#include "component.h"
 
 namespace Ui{
 class LogScreen;
@@ -30,6 +31,7 @@ private:
 	int players=55;
 	std::string states;
 	Mode currentMode;
+	Component *component = nullptr;
 
 };
 

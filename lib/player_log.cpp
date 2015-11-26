@@ -1,8 +1,8 @@
 #include "player_log.h"
 
-PlayerLog::PlayerLog()
+PlayerLog::PlayerLog(string s)
 {
-
+	playerName=s;
 }
 
 void PlayerLog::setCurrentPlayer(string s)
@@ -17,6 +17,6 @@ void PlayerLog::log()
 
 string PlayerLog::getLog()
 {
-    return "current player is :" + playerName;
+	return "<b>current player is :" + playerName + "<b>";
 }
 

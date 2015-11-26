@@ -2,15 +2,15 @@
 #define CONCRETEREINFORCE_H
 
 #include "decorator.h"
-class ConcreteReinforce : public decorator
+class ConcreteReinforce : public Decorator
 {
 public:
-	ConcreteReinforce();
+	ConcreteReinforce(Component *c);
 	void log();
-
+	~ConcreteReinforce();
 	string getLog();
 private:
-	string reinforce = "reinforce phase";
+	string reinforce = "\nreinforce phase\n";
 };
 
 #endif // CONCRETEREINFORCE_H

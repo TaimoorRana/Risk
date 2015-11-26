@@ -6,10 +6,12 @@ using namespace std;
 class ConcreteFortify : public Decorator
 {
 public:
-	ConcreteFortify();
+	ConcreteFortify(Component *c);
+	~ConcreteFortify();
 	void log();
+	string getLog();
 private :
-	string fortify = "fortify phase";
+	string fortify = "fortify phase\n";
 
 };
 

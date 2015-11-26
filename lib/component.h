@@ -7,9 +7,10 @@ using namespace std;
 
 class Component {
 public:
-	virtual void log();
-	virtual void setLog(string s);
-	//virtual string getLog();
+	virtual void log()=0;
+	//virtual void setLog(string s)=0;
+	virtual string getLog()=0;
+	//virtual void setCurrentPlayer(string s)=0;
 protected:
 	string logString;
 };

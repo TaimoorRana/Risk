@@ -8,11 +8,12 @@ class Decorator : public Component
 {
 public:
 	Decorator();
+	~Decorator();
 	virtual void log();
-	string getLog();
+	virtual string getLog();
 protected:
 	Component *component = nullptr ;
-	string logging;
+	string logging = "";
 };
 
 #endif // DECORATOR_H

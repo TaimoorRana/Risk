@@ -8,13 +8,13 @@ using namespace std;
 class PlayerLog : public Component
 {
 public:
-    PlayerLog();
+	PlayerLog(string s);
     void setCurrentPlayer(string s);
     void log();
     string getLog();
 private:
     string playerName;
-    string logString;
+	//string logString;
 };
 
 #endif // PLAYERLOG_H
