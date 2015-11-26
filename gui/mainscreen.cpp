@@ -100,9 +100,14 @@ bool MainScreen::setupPlayers() {
 		Country* country = vectorOfCountryPointers[*iter];
 		Player* player = playerRoundRobin(p++);
 		country->setPlayer(player->getName());
+		country->setArmies(1);
 		player->addCountry(country->getName());
-		country->setArmies(10);
 		iter++;
+	}
+
+	//distribute the rest of the armies
+	for(auto const &iter : map->getPlayers()){
+	this->allocateArmiesByNumberOfPlayers(iter.first);
 	}
 
 	this->setReinforcements();
@@ -139,7 +144,7 @@ void MainScreen::setReinforcements()
 	for(auto const &ent1: map->getPlayers()){
 		Player p = ent1.second;
 		Player *player = map->getPlayer(p.getName());
-		player->setTotalArmy(player->getCountriesOwned().size()*2);
+//		player->setTotalArmy(player->getCountriesOwned().size()*2);
 		std::set<std::string> continents =player->getContinentsOwned();
 		std::set<std::string>::iterator itContinents = continents.begin();
 		int reinforcementArmies = 0;
@@ -160,6 +165,38 @@ void MainScreen::setReinforcements()
 
 	}
 }
+
+void MainScreen::allocateArmiesByNumberOfPlayers(const std::string p){
+	const int armiesByNumPlayers[] = {40, 35, 30, 25, 20};
+	int totalArmies = armiesByNumPlayers[map->getPlayers().size()-2];
+
+	std::vector<Country*> vectorOfCountryPointers;
+	for (auto const &ent1 : this->map->getPlayer(p)->getCountriesOwned()) {
+		vectorOfCountryPointers.push_back(this->map->getCountry(ent1));
+	}
+
+	totalArmies -= this->map->getPlayer(p)->getCountriesOwned().size();
+
+	Player* player = this->map->getPlayer(p);
+
+	std::vector<int> x = getVectorOfIndicesRandomCountryAccess(player->getCountriesOwned().size());
+	std::vector<int>::const_iterator iter = x.begin();
+
+	while (totalArmies > 0){
+		Country* country = vectorOfCountryPointers[*iter];
+		country->addArmies(1);
+		totalArmies--;
+		if (++iter == x.end())
+			iter = x.begin();
+	}
+
+}
+
+//void MainScreen::calculateIndividualReinforcements(const std::string p){
+//	Player *player = map->getPlayer(p);
+
+
+//}
 
 void MainScreen::on_endPhasePushButton_clicked() {
 	this->endPhase();
@@ -257,6 +294,7 @@ void MainScreen::nextTurn()
 	if (iterator == end) {
 		iterator = this->map->getPlayers().begin();
 	}
+//	map->getPlayer((*iterator).first)->addReinforcements();
 	driver->setCurrentPlayerName((*iterator).first);
 	driver->setCurrentMode(REINFORCEMENTMODE);
 }

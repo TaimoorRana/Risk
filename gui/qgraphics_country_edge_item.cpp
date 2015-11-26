@@ -7,7 +7,7 @@ QGraphicsCountryEdgeItem::QGraphicsCountryEdgeItem(Country* c1, Country* c2) {
 	this->country1->attachObserver(this);
 	this->country2->attachObserver(this);
 	QGraphicsLineItem::QGraphicsLineItem(c1->getPositionX(), c1->getPositionY(), c2->getPositionX(), c2->getPositionY());
-	QPen pen(QColor(0xFF, 0, 0, 0x40));
+	QPen pen(QColor(255, 0, 0, 30));
 	pen.setWidth(1);
 	this->setPen(pen);
 	this->setLine(c1->getPositionX(), c1->getPositionY(), c2->getPositionX(), c2->getPositionY());

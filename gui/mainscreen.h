@@ -14,6 +14,7 @@ namespace Ui {
 	class MainScreen;
 }
 
+
 class MainScreen : public QMainWindow, public Observer
 {
 	Q_OBJECT
@@ -31,6 +32,7 @@ public:
 	void setReinforcements();
 	void nextTurn();
 	std::vector<int> getVectorOfIndicesRandomCountryAccess(int nCountries);
+	void allocateArmiesByNumberOfPlayers(const std::string p);
 
 private slots:
 	/**

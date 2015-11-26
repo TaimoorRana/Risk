@@ -45,7 +45,7 @@ void MapRenderer::updateScene(RiskMap* map, QGraphicsScene* scene, std::string m
 }
 
 void MapRenderer::connectNeighboursVisit(RiskMap* map, QGraphicsScene* scene, std::map<const std::string, bool>& visited, Country* country) {
-	QPen pen(QColor(0xFF, 0, 0, 0x40));
+	QPen pen(QColor(0, 255, 0, 0));
 	pen.setWidth(1);
 
 	bool& was_visited = visited.at(country->getName());
