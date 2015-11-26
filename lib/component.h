@@ -1,11 +1,19 @@
 #ifndef COMPONENT
 #define COMPONENT
 
-#endif // COMPONENT
+
+#include <string>
+using namespace std;
 
 class Component {
+public:
+	virtual void log();
+	virtual void setLog(string s);
+	//virtual string getLog();
 protected:
-	virtual void log()=0;
-
+	string logString;
 };
+
+#endif // COMPONENT
+
 

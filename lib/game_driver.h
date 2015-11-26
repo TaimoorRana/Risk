@@ -62,6 +62,7 @@ public:
 private:
 	std::string currentPlayerName = "";
 	Mode currentMode = REINFORCEMENTMODE;
+
 };
 
 #endif // GAMEDRIVER_H

@@ -8,9 +8,11 @@ using namespace std;
 
 LogSelector::LogSelector(QWidget *parent, int numberOfPlayers): QDialog(parent), ui(new Ui::LogSelector){
 	ui->setupUi(this);
+	this->numberOfPlayers = numberOfPlayers;
 	generatePlayers(numberOfPlayers);
 
 }
+
 
 LogSelector::~LogSelector(){
 	delete ui;
@@ -30,10 +32,13 @@ std::string LogSelector::getSelectedPhase()
 
 }
 
+void LogSelector::setNumberPlayers(int players)
+{
+	numberOfPlayers = players;
+}
+
 void LogSelector::generatePlayers(int numberOfPlayers)
 {
-	//ui->PlayersCombo->addItem("boker");
-
 	for(int i=0;i<numberOfPlayers;i++){
 
 

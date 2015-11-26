@@ -213,6 +213,7 @@ void MainScreen::on_logButton_clicked()
 			lScreen->setState(logSelector->getSelectedPhase());
 			lScreen->update();
 			lScreen->show();
+			GameDriver::getInstance()->attachObserver(lScreen);
 
 			decision =false;
 		}

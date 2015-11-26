@@ -20,6 +20,10 @@ set(LIBRARY_SOURCE_FILES
 
 
         component.h decorator.h decorator.cpp
+        concrete_reinforce.h concrete_reinforce.h
+        concrete_attack.h concrete_attack.cpp
+        concrete_fortify.h concrete_fortify.cpp
+        player_log.h player_log.cpp
 
 )
 
