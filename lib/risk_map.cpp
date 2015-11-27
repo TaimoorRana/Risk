@@ -24,13 +24,13 @@ void RiskMap::addContinent(const Continent& continent){
 	this->notifyObservers();
 }
 
-void RiskMap::renameCountry(const std::string oldname, const std::string newname){
+void RiskMap::renameCountry(const std::string oldname, const std::string newName){
 	auto it = countries.find(oldname);
 	if (it != countries.end()){
-		(it->second).setName(newname);
-		std::swap(countries[newname], it->second);
+		(it->second).setName(newName);
+		std::swap(countries[newName], it->second);
 		countries.erase(oldname);
-		mapGraph.renameNode(oldname, newname);
+		mapGraph.renameNode(oldname, newName);
 		this->notifyObservers();
 	}
 }
@@ -48,7 +48,7 @@ Country* RiskMap::addCountry(const Country& country, const std::string& continen
 	return &this->countries[country.getName()];
 }
 
-void RiskMap::remCountry(const Country& country){
+void RiskMap::removeCountry(const Country& country){
 	std::string continent = (this->getContinentOfCountry(country.getName()))->getName();
 	countries.erase(country.getName());
 	if (mapGraph.removeNode(country.getName())){
@@ -57,13 +57,13 @@ void RiskMap::remCountry(const Country& country){
 	this->notifyObservers();
 }
 
-void RiskMap::addNeighbour(const std::string& country_a, const std::string& country_b){
-	mapGraph.insertEdge(country_a, country_b);
+void RiskMap::addNeighbour(const std::string& country1, const std::string& country2){
+	mapGraph.insertEdge(country1, country2);
 	this->notifyObservers();
 }
 
-void RiskMap::remNeighbour(const std::string& country_a, const std::string& country_b){
-	mapGraph.removeEdge(country_a, country_b);
+void RiskMap::removeNeighbour(const std::string& country1, const std::string& country2){
+	mapGraph.removeEdge(country1, country2);
 	this->notifyObservers();
 }
 
@@ -75,9 +75,9 @@ Player* RiskMap::addPlayer(const Player& player) {
 	return &this->players[player.getName()];
 }
 
-Continent* RiskMap::getContinentOfCountry(const std::string& name_country){
-	std::string name_continent(mapGraph.getSubgraphName(name_country));
-	return &continents[name_continent];
+Continent* RiskMap::getContinentOfCountry(const std::string& countryName){
+	std::string continentName(mapGraph.getSubgraphName(countryName));
+	return &continents[continentName];
 }
 
 Continent* RiskMap::getContinentByName(const std::string& name){
@@ -88,8 +88,8 @@ Country* RiskMap::getCountry(const std::string& name_country){
 	return &this->countries[name_country];
 }
 
-string_set RiskMap::getCountriesInContinent(const std::string& name_continent){
-	return mapGraph.subgraphContents(name_continent);
+string_set RiskMap::getCountriesInContinent(const std::string& continentName){
+	return mapGraph.subgraphContents(continentName);
 }
 
 string_set RiskMap::getNeighbours(const std::string& name_country){

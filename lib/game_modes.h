@@ -4,7 +4,7 @@
 /**
  * @brief The Mode enum the modes of reinforcing, attacking and modifying.
  */
-enum Mode{REINFORCEMENTMODE,ATTACKMODE,FORTIFICATIONMODE};
+enum Mode{REINFORCEMENT,ATTACK,FORTIFICATION};
 
 #endif // GAME_MODES
 

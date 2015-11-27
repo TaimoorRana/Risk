@@ -3,6 +3,9 @@
 #include "librisk.h"
 #include "game_driver.h"
 
+/**
+ * @brief Returns the singleton instance of the GameDriver
+ */
 GameDriver* GameDriver::getInstance()
 {
 	static GameDriver* instance = nullptr;
@@ -12,29 +15,48 @@ GameDriver* GameDriver::getInstance()
 	return instance;
 }
 
+/**
+ * @brief Sets the name of the player whose turn is active
+ */
 void GameDriver::setCurrentPlayerName(const std::string& name) {
 	this->currentPlayerName = name;
 	this->notifyObservers();
 }
 
+/**
+ * @brief Gets the name of the player whose turn is active
+ */
 std::string GameDriver::getCurrentPlayerName() const {
 	return this->currentPlayerName;
 }
 
+/**
+ * @brief Sets the current game phase
+ */
 Mode GameDriver::getCurrentMode() const {
 	return this->currentMode;
 }
 
+/**
+ * @brief Sets the current game phase
+ */
 void GameDriver::setCurrentMode(const Mode& mode) {
 	this->currentMode = mode;
 	this->notifyObservers();
 }
 
-void GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountry) {
+/**
+ * @brief Perform an attack move on a country
+ */
+bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountry) {
 	int attackerArmy = attackerCountry->getArmies();
 	int defenderArmy = defenderCountry->getArmies();
 	int attackerDiceCount = 0;
 	int defenderDiceCount = 0;
+
+	if (attackerArmy == 1 || attackerCountry->getPlayer() == defenderCountry->getPlayer()) {
+		return false;
+	}
 
 	while (attackerArmy > 1 && defenderArmy > 0) {
 		attackerDiceCount = attackerArmy > 3 ? 3 : attackerArmy - 1;
@@ -78,29 +100,32 @@ void GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 		attackerCountry->setArmies(attackerArmy);
 		defenderCountry->setArmies(defenderArmy);
 	}
+	return true;
 }
 
-void GameDriver::attackPhase() {}
-
-void GameDriver::reinforcePhase() {}
-
-void GameDriver::fortificationPhase()
-{
-	// click on country to add to set
-	// click again to remove
-	// if array is full pop up the fortification dialog
-	// display names of selected countries
-	//fortificationDialog = fortificationDialog(c1);
+/**
+ * @brief Perform an fortify move on a country
+ */
+bool GameDriver::fortifyCountry(Country* originCountry, Country* destinationCountry, int armies) {
+	if (originCountry->getArmies() - armies <= 1) {
+		return false;
+	}
+	originCountry->removeArmies(armies);
+	destinationCountry->addArmies(armies);
+	return true;
 }
 
-void GameDriver::calculateReinforcementArmies(Player *p)
+/**
+ * @brief Calculates the number of reinforcements a player should receive.
+ */
+void GameDriver::calculateReinforcementArmies(Player* player)
 {
-	// std::set<std::string> continents =p->getContinentsOwned();
+	// std::set<std::string> continents = player->getContinentsOwned();
 	// std::set<std::string>::iterator itContinents = continents.begin();
 	// int reinforcementArmies=0;
-	// reinforcementArmies = p->getCountriesOwned().size()/3;
+	// reinforcementArmies = player->getCountriesOwned().size()/3;
 	// while(itContinents!= continents.end()){
 	// 	reinforcementArmies += riskMap->getContinent(*itContinents)->getReinforcementBonus();
 	// }
-	// p->setReinforcements(reinforcementArmies);
+	// player->setReinforcements(reinforcementArmies);
 }

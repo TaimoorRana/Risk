@@ -42,11 +42,11 @@ public:
     virtual ~RiskMap();
 	/**
 	 * @brief areCountriesAdjacent checks whether the countries are adjacent
-	 * @param country_a
-	 * @param country_b
+	 * @param country1
+	 * @param country2
 	 * @return
 	 */
-	bool areCountriesAdjacent(const std::string& country_a, const std::string& country_b);
+	bool areCountriesAdjacent(const std::string& country1, const std::string& country2);
 	/**
 	 * @brief addCountry adds a country as a Country Object
 	 * @param country
@@ -77,19 +77,15 @@ public:
 	 * @brief remCountry removes a country
 	 * @param country
 	 */
-	void remCountry(const Country& country);
+	void removeCountry(const Country& country);
 	/**
 	 * @brief addNeighbour adds a neighbour to a country
-	 * @param country_a
-	 * @param country_b
 	 */
-	void addNeighbour(const std::string& country_a, const std::string& country_b);
+	void addNeighbour(const std::string& country1, const std::string& country2);
 	/**
-	 * @brief remNeighbour removes a neighbour
-	 * @param country_a
-	 * @param country_b
+	 * @brief removeNeighbour removes a neighbour
 	 */
-	void remNeighbour(const std::string& country_a, const std::string& country_b);
+	void removeNeighbour(const std::string& country1, const std::string& country2);
 	/**
 	 * @brief addPlayer adds a plyer
 	 * @param player

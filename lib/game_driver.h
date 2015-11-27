@@ -15,50 +15,17 @@
  */
 class GameDriver: public Observable {
 public:
+	static GameDriver* getInstance();
+
 	std::string getCurrentPlayerName() const;
 	void setCurrentPlayerName(const std::string& name);
-
 	Mode getCurrentMode() const;
 	void setCurrentMode(const Mode& mode);
 
-	/**
-	 * @brief Perform an attack move on a country.
-	 */
-	void attackCountry(Country* attackerCountry, Country* defenderCountry);
+	bool attackCountry(Country* attackerCountry, Country* defenderCountry);
+	bool fortifyCountry(Country* originCountry, Country* destinationCountry, int armies);
 
-	/**
-	 * @brief calculateReinforcementArmies calculates the reinforcements for the player using the continents and countries
-	 * that the player owns.
-	 * @param p the player pointer
-	 *
-	 */
-	void calculateReinforcementArmies(Player *p);
-
-	/**
-	 * @brief attackPhase
-	 */
-	void attackPhase();
-
-	/**
-	 * @brief implements reinforcePhase
-	 */
-	void reinforcePhase();
-
-	/**
-	 * @brief implements fortificationPhase
-	 */
-	void fortificationPhase();
-
-	/**
-	 * @brief implements endTurn
-	 */
-	void endTurn();
-
-	/**
-	 * @brief getInstance gets the singleton instance of the gamedriver
-	 * @return
-	 */
-	static GameDriver* getInstance();
+	void calculateReinforcementArmies(Player *player);
 
 	template<class Archive>
 	void serialize(Archive& archive) {
@@ -67,7 +34,7 @@ public:
 
 private:
 	std::string currentPlayerName = "";
-	Mode currentMode = REINFORCEMENTMODE;
+	Mode currentMode = REINFORCEMENT;
 };
 
 #endif // GAMEDRIVER_H

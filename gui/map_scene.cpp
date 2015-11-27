@@ -116,7 +116,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 		if (item == nullptr) { return; }
 
 		switch (GameDriver::getInstance()->getCurrentMode()) {
-			case REINFORCEMENTMODE:
+			case REINFORCEMENT:
 				if (currentPlayer.compare(item->getCountry()->getPlayer()) == 0) {
 					if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0) {
 						map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
@@ -138,7 +138,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					return;
 				}
 				break;
-			case ATTACKMODE:
+			case ATTACK:
 				item = getQGraphicsCountryItemFromEvent(event);
 				if (item == nullptr) {
 					return;
@@ -171,7 +171,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					secondCountryClicked = nullptr;
 				}
 				break;
-			case FORTIFICATIONMODE:
+			case FORTIFICATION:
 				if (currentPlayer.compare(item->getCountry()->getPlayer()) != 0) {
 					QMessageBox errorDialog(parent);
 					errorDialog.setWindowTitle("Invalid move");
@@ -183,18 +183,12 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					firstCountryClicked = item->getCountry();
 				}
 				else {
-					std::string firstCountryName = firstCountryClicked->getName();
-					std::string secondCountryName = item->getCountry()->getName();
-
-					FortifyDialog* fortificationDialog = new FortifyDialog(firstCountryClicked, item->getCountry(), parent);
-					fortificationDialog->setWindowTitle(QString::fromStdString("Transferring Armies"));
-
 					// check for adjacency
-					if (map->areCountriesAdjacent(firstCountryName, secondCountryName)) {
-						// pop-up the transfer window
-						fortificationDialog->setOriginCountryName(QString::fromStdString(firstCountryName));
-						fortificationDialog->setDestinationCountryName(QString::fromStdString(secondCountryName));
-						fortificationDialog->show();
+					secondCountryClicked = item->getCountry();
+					if (map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())) {
+						FortifyDialog* fortificationDialog = new FortifyDialog(firstCountryClicked, secondCountryClicked, parent);
+						fortificationDialog->exec();
+						parent->endPhase();
 					}
 					else {
 						QMessageBox errorDialog(parent);
@@ -221,7 +215,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	Country* c = nullptr;
 
 	switch (parent->getSelectedTool()) {
-		case ADDCOUNTRY:
+		case ADD_COUNTRY:
 			item = getQGraphicsCountryItemFromEvent(event);
 			if (item == nullptr) {
 				nameDialog.setLastContinentName(lastContinent);
@@ -253,15 +247,15 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			}
 			break;
 
-		case REMCOUNTRY:
+		case REMOVE_COUNTRY:
 			item = getQGraphicsCountryItemFromEvent(event);
 			if (item == nullptr) {
 				return;
 			}
-			map->remCountry(*item->getCountry());
+			map->removeCountry(*item->getCountry());
 			break;
 
-			case ADDLINK:
+			case ADD_LINK:
 			item = getQGraphicsCountryItemFromEvent(event);
 			if (item == nullptr) {
 				return;
@@ -276,14 +270,14 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			}
 			break;
 
-		case REMLINK:
+		case REMOVE_LINK:
 			item = getQGraphicsCountryItemFromEvent(event);
 			if (item == nullptr) {
 				return;
 			}
 
 			if (firstCountryClicked != 0) {
-				map->remNeighbour(item->getCountry()->getName(), firstCountryClicked->getName());
+				map->removeNeighbour(item->getCountry()->getName(), firstCountryClicked->getName());
 				firstCountryClicked = 0;
 			}
 			else {

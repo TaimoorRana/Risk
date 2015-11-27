@@ -166,11 +166,11 @@ void MainScreen::endPhase()
 	GameDriver* driver = GameDriver::getInstance();
 
 	Mode currentMode = driver->getCurrentMode();
-	if (currentMode == REINFORCEMENTMODE) {
-		driver->setCurrentMode(ATTACKMODE);
+	if (currentMode == REINFORCEMENT) {
+		driver->setCurrentMode(ATTACK);
 	}
-	else if (currentMode == ATTACKMODE) {
-		driver->setCurrentMode(FORTIFICATIONMODE);
+	else if (currentMode == ATTACK) {
+		driver->setCurrentMode(FORTIFICATION);
 	}
 	else {
 		this->nextTurn();
@@ -239,9 +239,9 @@ void MainScreen::observedUpdated() {
 	// Handle observe notify event from GameDriver: setup current game mode
 	GameDriver* driver = GameDriver::getInstance();
 	Mode mode = driver->getCurrentMode();
-	ui->reinforcementLabel->setEnabled(mode == REINFORCEMENTMODE);
-	ui->attackLabel->setEnabled(mode == ATTACKMODE);
-	ui->fortifyLabel->setEnabled(mode == FORTIFICATIONMODE);
+	ui->reinforcementLabel->setEnabled(mode == REINFORCEMENT);
+	ui->attackLabel->setEnabled(mode == ATTACK);
+	ui->fortifyLabel->setEnabled(mode == FORTIFICATION);
 }
 
 void MainScreen::nextTurn()
@@ -254,6 +254,6 @@ void MainScreen::nextTurn()
 		iterator = this->map->getPlayers().begin();
 	}
 	driver->setCurrentPlayerName((*iterator).first);
-	driver->setCurrentMode(REINFORCEMENTMODE);
+	driver->setCurrentMode(REINFORCEMENT);
 }
 

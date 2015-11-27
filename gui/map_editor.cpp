@@ -103,28 +103,28 @@ void MapEditor::on_addCountryPushButton_clicked(){
 	bool checked = ui->addCountryPushButton->isChecked();
 	this->resetToolbar();
 	ui->addCountryPushButton->setChecked(checked);
-	this->tool = checked ? ADDCOUNTRY : OFF;
+	this->tool = checked ? ADD_COUNTRY : OFF;
 }
 
 void MapEditor::on_removeCountryPushButton_clicked(){
 	bool checked = ui->removeCountryPushButton->isChecked();
 	this->resetToolbar();
 	ui->removeCountryPushButton->setChecked(checked);
-	this->tool = checked ? REMCOUNTRY : OFF;
+	this->tool = checked ? REMOVE_COUNTRY : OFF;
 }
 
 void MapEditor::on_addNeighbourPushButton_clicked(){
 	bool checked = ui->addNeighbourPushButton->isChecked();
 	this->resetToolbar();
 	ui->addNeighbourPushButton->setChecked(checked);
-	this->tool = checked ? ADDLINK : OFF;
+	this->tool = checked ? ADD_LINK : OFF;
 }
 
 void MapEditor::on_removeNeighbourPushButton_clicked(){
 	bool checked = ui->removeNeighbourPushButton->isChecked();
 	this->resetToolbar();
 	ui->removeNeighbourPushButton->setChecked(checked);
-	this->tool = checked ? REMLINK : OFF;
+	this->tool = checked ? REMOVE_LINK : OFF;
 }
 
 void MapEditor::observedUpdated() {
