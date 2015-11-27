@@ -14,6 +14,10 @@ class GameState {
 public:
 	static bool load(std::string path, GameDriver* driver, RiskMap* map);
 	static bool save(std::string path, GameDriver* driver, RiskMap* map);
+
+	static RiskMap* buildMap(std::string path);
+	static GameDriver* buildGameDriver(std::string path);
+	static bool buildSaveFile(std::string path, GameDriver* driver, RiskMap* map);
 };
 
 #endif // GAMESTATE_H
