@@ -1,5 +1,6 @@
 #include <QColor>
 #include <QFileInfo>
+#include <QMessageBox>
 #include <QPixmap>
 #include <QString>
 
@@ -7,9 +8,7 @@
 #include "map_scene.h"
 
 #include "game_driver.h"
-#include "game_error_dialog.h"
 #include "fortify_dialog.h"
-#include "debug.h"
 #include "mainscreen.h"
 #include "qgraphics_country_item.h"
 #include "qgraphics_country_edge_item.h"
@@ -118,20 +117,24 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 		switch (GameDriver::getInstance()->getCurrentMode()) {
 			case REINFORCEMENTMODE:
-				if(currentPlayer.compare(item->getCountry()->getPlayer()) == 0 ){
+				if (currentPlayer.compare(item->getCountry()->getPlayer()) == 0) {
 					if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0) {
 						map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
 						item->getCountry()->addArmies(1);
 					}
 					else {
-						GameErrorDialog *outOfReinforcements = new GameErrorDialog(QString::fromStdString("You have 0 reinforcements left."), parent);
-						outOfReinforcements->show();
+						QMessageBox errorDialog(parent);
+						errorDialog.setWindowTitle("Invalid move");
+						errorDialog.setText("You have no more reinforcements left.");
+						errorDialog.exec();
 						return;
 					}
 				}
 				else {
-					GameErrorDialog *notYourTurn = new GameErrorDialog(QString::fromStdString("You must choose your own country."), parent);
-					notYourTurn->show();
+					QMessageBox errorDialog(parent);
+					errorDialog.setWindowTitle("Invalid move");
+					errorDialog.setText("You must choose your own country.");
+					errorDialog.exec();
 					return;
 				}
 				break;
@@ -144,9 +147,12 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				if ((firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0)
 						&& item->getCountry()->getPlayer().compare(currentPlayer) == 0) {
 					firstCountryClicked = item->getCountry();
-				} else if(item->getCountry()->getPlayer().compare(currentPlayer) != 0 && firstCountryClicked == nullptr){
-					GameErrorDialog *notYourTurn = new GameErrorDialog(QString::fromStdString("You must choose your own country."), parent);
-					notYourTurn->show();
+				}
+				else if (item->getCountry()->getPlayer().compare(currentPlayer) != 0 && firstCountryClicked == nullptr) {
+					QMessageBox errorDialog(parent);
+					errorDialog.setWindowTitle("Invalid move");
+					errorDialog.setText("You must choose your own country.");
+					errorDialog.exec();
 					return;
 				}
 				else {
@@ -154,20 +160,24 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					if (firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0 && map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())){
 						WarReferee warreferee = WarReferee::getInstance();
 						warreferee.startWar(firstCountryClicked, secondCountryClicked);
-
-					}else if(!map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())){
-						GameErrorDialog *notYourTurn = new GameErrorDialog(QString::fromStdString("You can only attack adjacent countries."), parent);
-						notYourTurn->show();
+					}
+					else if (!map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())) {
+						QMessageBox errorDialog(parent);
+						errorDialog.setWindowTitle("Invalid move");
+						errorDialog.setText("You can only attack adjacent countries.");
+						errorDialog.exec();
 						return;
 					}
 					firstCountryClicked = nullptr;
 					secondCountryClicked = nullptr;
 				}
-			break;
+				break;
 			case FORTIFICATIONMODE:
 				if (currentPlayer.compare(item->getCountry()->getPlayer()) != 0) {
-					GameErrorDialog *notYourTurn = new GameErrorDialog(QString::fromStdString("You must choose your own country."), parent);
-					notYourTurn->show();
+					QMessageBox errorDialog(parent);
+					errorDialog.setWindowTitle("Invalid move");
+					errorDialog.setText("You must choose your own country.");
+					errorDialog.exec();
 					return;
 				}
 				if (firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0) {
@@ -188,8 +198,10 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 						fortificationDialog->show();
 					}
 					else {
-						GameErrorDialog *selectedNotAdjacent = new GameErrorDialog(QString::fromStdString("Countries are not adjacent."), parent);
-						selectedNotAdjacent->show();
+						QMessageBox errorDialog(parent);
+						errorDialog.setWindowTitle("Invalid move");
+						errorDialog.setText("Countries are not adjacent.");
+						errorDialog.exec();
 					}
 					firstCountryClicked = nullptr;
 				}
@@ -197,7 +209,6 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			default:
 				break;
 		}
-//		map->getPlayer(item->getCountry()->getPlayer())->notifyObservers();
 		map->notifyObservers();
 		return;
 	}
@@ -222,8 +233,10 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				lastContinent = nameDialog.getContinentName();
 				c = map->addCountry(Country(nameDialog.getCountryName().toStdString()), nameDialog.getContinentName().toStdString());
 				if (c == nullptr) {
-					GameErrorDialog *cantAddCountry = new GameErrorDialog(QString::fromStdString("Could not add country."), parent);
-					cantAddCountry->show();
+					QMessageBox errorDialog(parent);
+					errorDialog.setWindowTitle("Error adding country");
+					errorDialog.setText("Could not add country: ensure that a country by that name doesn't already exist.");
+					errorDialog.exec();
 					return;
 				}
 				c->setPositionX(xpos);
@@ -305,7 +318,6 @@ QGraphicsCountryItem* MapScene::getQGraphicsCountryItemFromEvent(QGraphicsSceneM
 
 void MapScene::repopulate(std::string mapPath) {
 	this->clear();
-	debug("render event");
 
 	QFileInfo mapFile(QString::fromStdString(mapPath));
 	QFileInfo bmpFile(mapFile.path() + "/" + mapFile.baseName() + ".bmp");

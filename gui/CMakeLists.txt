@@ -12,7 +12,6 @@ set(GUI_SOURCE_FILES
 	map_editor.cpp map_editor.h map_editor.ui
 	map_scene.cpp map_scene.h
 	fortify_dialog.cpp fortify_dialog.h fortify_dialog.ui
-	game_error_dialog.cpp game_error_dialog.h game_error_dialog.ui
 	playernamedialog.cpp playernamedialog.h playernamedialog.ui
 	playerinfowidget.cpp playerinfowidget.h playerinfowidget.ui
 	qgraphics_country_item.cpp qgraphics_country_item.h

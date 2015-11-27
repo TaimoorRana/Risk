@@ -86,8 +86,7 @@ void MapEditor::on_saveMapPushButton_clicked(){
 	else{
 		QMessageBox errorDialog(this);
 		errorDialog.setWindowTitle("Error!");
-		errorDialog.setText("Invalid map");
-		errorDialog.setDetailedText("The map did not validate. Please ensure that the set of all of countries are a connected graph, and countries in each continent are also connected subgraphs.");
+		errorDialog.setText("Invalid map: The map did not validate. Please ensure that the set of all of countries are a connected graph, and countries in each continent are also connected subgraphs.");
 		errorDialog.exec();
 		return;
 	}

@@ -51,8 +51,7 @@ bool MainScreen::setupPlayers() {
 		if (!mapFile.exists()) {
 			QMessageBox errorDialog(this);
 			errorDialog.setWindowTitle("Error!");
-			errorDialog.setText("File not found");
-			errorDialog.setDetailedText("Please choose a file that exists, with the .map and .bmp files named the same and in the same folder.");
+			errorDialog.setText("File not found. Please choose a file that exists, with the .map and .bmp files named the same and in the same folder.");
 			errorDialog.exec();
 			continue;
 		}
@@ -61,8 +60,7 @@ bool MainScreen::setupPlayers() {
 		if (!this->map->validate()) {
 			QMessageBox errorDialog(this);
 			errorDialog.setWindowTitle("Error!");
-			errorDialog.setText("Invalid map");
-			errorDialog.setDetailedText("The map did not validate. Please contact its author.");
+			errorDialog.setText("Invalid map: the map did not validate. Please contact its author.");
 			errorDialog.exec();
 			continue;
 		}
