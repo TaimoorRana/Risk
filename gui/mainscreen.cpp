@@ -148,7 +148,7 @@ void MainScreen::setReinforcements()
 			reinforcementArmies = 3;
 		}
 		while (itContinents!= continents.end()){
-			reinforcementArmies += map->getContinentByName(*itContinents)->getReinforcementBonus();
+			reinforcementArmies += map->getContinent(*itContinents)->getReinforcementBonus();
 		}
 		player->setReinforcements(reinforcementArmies);
 

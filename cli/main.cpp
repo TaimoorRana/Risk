@@ -21,9 +21,6 @@ int main() {
     c = Country("Russia");
     map.addCountry(c, "Europe");
 
-    map.consolePrintListOfCountries("Asia");
-    map.consolePrintListOfCountries("Europe");
-
     map.addNeighbour("Arabia","Russia");
     map.addNeighbour("Arabia","India");
     map.addNeighbour("India","Persia");
@@ -41,8 +38,6 @@ int main() {
         std::cout<<"Countries are adjacent"<<std::endl;
     else
         std::cout<<"Countries are NOT adjacent."<<std::endl;
-
-    map.consolePrintListOfNeighbours("India");
 
     std::cout<<"Owner of Arabia: " << map.getCountry("Arabia")->getPlayer() << std::endl;
     map.getCountry("Arabia")->setPlayer("Adrianna");

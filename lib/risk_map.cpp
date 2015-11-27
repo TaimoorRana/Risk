@@ -3,38 +3,47 @@
 #include "risk_map.h"
 #include "debug.h"
 
-RiskMap::RiskMap(){}
 RiskMap::~RiskMap(){
 	this->clear();
 }
 
-bool RiskMap::areCountriesAdjacent(const std::string& country_a, const std::string& country_b){
-	return mapGraph.areAdjacent(country_a, country_b);
+const std::map<std::string, Continent>& RiskMap::getContinents() const {
+	return this->continents;
+}
+const std::map<std::string, Country>& RiskMap::getCountries() const {
+	return this->countries;
+}
+const std::map<std::string, Player>& RiskMap::getPlayers() const {
+	return this->players;
 }
 
-void RiskMap::addContinent(const std::string& name, int reinforcementBonus){
-	if (continents.find(name) == continents.end()) {
-		continents[name] = Continent(name);
-	}
-	this->notifyObservers();
-}
-
+/**
+ * @brief Adds the provided continent to the map.
+ * Countries must be added separately via addCountry().
+ */
 void RiskMap::addContinent(const Continent& continent){
 	continents[continent.getName()] = continent;
 	this->notifyObservers();
 }
 
-void RiskMap::renameCountry(const std::string oldname, const std::string newName){
-	auto it = countries.find(oldname);
-	if (it != countries.end()){
-		(it->second).setName(newName);
-		std::swap(countries[newName], it->second);
-		countries.erase(oldname);
-		mapGraph.renameNode(oldname, newName);
-		this->notifyObservers();
-	}
+/**
+ * @brief Gets a pointer to the continent given its name
+ */
+Continent* RiskMap::getContinent(const std::string& name){
+	return &this->continents[name];
 }
 
+/**
+ * @brief Gets a set of country names that belong to a continent
+ */
+string_set RiskMap::getCountriesInContinent(const std::string& continentName){
+	return mapGraph.subgraphContents(continentName);
+}
+
+/**
+ * @brief Adds a country to the map belonging to the given continent.
+ * The continent will be created if it does not yet exist.
+ */
 Country* RiskMap::addCountry(const Country& country, const std::string& continentName){
 	if (continents.find(continentName) == continents.end()) {
 		continents[continentName] = Continent(continentName);
@@ -48,25 +57,81 @@ Country* RiskMap::addCountry(const Country& country, const std::string& continen
 	return &this->countries[country.getName()];
 }
 
+/**
+ * @brief Gets a pointer to the country given its name
+ */
+Country* RiskMap::getCountry(const std::string& countryName){
+	return &this->countries[countryName];
+}
+
+/**
+ * @brief Removes a country from the map.
+ */
 void RiskMap::removeCountry(const Country& country){
 	std::string continent = (this->getContinentOfCountry(country.getName()))->getName();
 	countries.erase(country.getName());
 	if (mapGraph.removeNode(country.getName())){
 		continents.erase(continent);
 	}
+	// FIXME we need to account for the fact that the country may have been owned
+	// by a player
 	this->notifyObservers();
 }
 
+/**
+ * @brief Renames a country in the map
+ */
+void RiskMap::renameCountry(const std::string oldName, const std::string newName){
+	auto it = countries.find(oldName);
+	if (it != countries.end()){
+		(it->second).setName(newName);
+		std::swap(countries[newName], it->second);
+		countries.erase(oldName);
+		mapGraph.renameNode(oldName, newName);
+		this->notifyObservers();
+	}
+}
+
+/**
+ * @brief Marks two countries as neighboring.
+ * Makes countries attackable from one another.
+ */
 void RiskMap::addNeighbour(const std::string& country1, const std::string& country2){
 	mapGraph.insertEdge(country1, country2);
 	this->notifyObservers();
 }
 
+string_set RiskMap::getNeighbours(const std::string& countryName){
+	return mapGraph.incidentEdges(countryName);
+}
+
+/**
+ * @brief Verifies if two countries are adjacent/neighbors.
+ */
+bool RiskMap::areCountriesAdjacent(const std::string& country1, const std::string& country2){
+	return mapGraph.areAdjacent(country1, country2);
+}
+
+/**
+ * @brief Unmarks two countries as neighboring.
+ * Makes countries unattackable from one another.
+ */
 void RiskMap::removeNeighbour(const std::string& country1, const std::string& country2){
 	mapGraph.removeEdge(country1, country2);
 	this->notifyObservers();
 }
 
+/**
+ * @brief Gets a pointer to the continent a country belongs to
+ */
+Continent* RiskMap::getContinentOfCountry(const std::string& countryName){
+	std::string continentName(mapGraph.getSubgraphName(countryName));
+	return &continents[continentName];
+}
+
+/**
+ * @brief Adds a player to the map
+ */
 Player* RiskMap::addPlayer(const Player& player) {
 	if (this->players.find(player.getName()) == this->players.end()) {
 		this->players[player.getName()] = player;
@@ -75,51 +140,16 @@ Player* RiskMap::addPlayer(const Player& player) {
 	return &this->players[player.getName()];
 }
 
-Continent* RiskMap::getContinentOfCountry(const std::string& countryName){
-	std::string continentName(mapGraph.getSubgraphName(countryName));
-	return &continents[continentName];
-}
-
-Continent* RiskMap::getContinentByName(const std::string& name){
-	return &this->continents[name];
-}
-
-Country* RiskMap::getCountry(const std::string& name_country){
-	return &this->countries[name_country];
-}
-
-string_set RiskMap::getCountriesInContinent(const std::string& continentName){
-	return mapGraph.subgraphContents(continentName);
-}
-
-string_set RiskMap::getNeighbours(const std::string& name_country){
-	return mapGraph.incidentEdges(name_country);
-}
-
+/**
+ * @brief Gets a player by their name
+ */
 Player* RiskMap::getPlayer(const std::string& playerName){
 	return &this->players[playerName];
 }
 
-void RiskMap::consolePrintListOfNeighbours(const std::string& name_country){
-	std::cout<<"Neighbours of: "<<name_country<<std::endl;
-	string_set neighbours(getNeighbours(name_country));
-	string_set::const_iterator c_iter = neighbours.begin();
-	while (c_iter != neighbours.end()) {
-		std::cout<<"\t\t\t"<<*c_iter<<std::endl;
-		c_iter++;
-	}
-}
-
-void RiskMap::consolePrintListOfCountries(const std::string& name_continent){
-	std::cout<<"Countries in: "<<name_continent<<std::endl;
-	string_set countriesInside(mapGraph.subgraphContents(name_continent));
-	string_set::const_iterator c_iter = countriesInside.begin();
-	while (c_iter != countriesInside.end() ){
-		std::cout<<"\t\t"<< *c_iter<<std::endl;
-		c_iter++;
-	}
-}
-
+/**
+ * @brief Parses the map file in the path indicated to populate the instance
+ */
 void RiskMap::parse(const std::string& path) {
 	this->setNotificationsEnabled(false);
 	this->clear();
@@ -268,6 +298,9 @@ void RiskMap::parse(const std::string& path) {
 	this->setNotificationsEnabled(true);
 }
 
+/**
+ * @brief Given path to a Conquest map file, build a new RiskMap object
+ */
 RiskMap* RiskMap::load(const std::string& path) {
 	struct stat buffer;
 	bool exists = (stat (path.c_str(), &buffer) == 0);
@@ -281,6 +314,9 @@ RiskMap* RiskMap::load(const std::string& path) {
 	return map;
 }
 
+/**
+ * @brief Serialize the map data into a new Conquest map data file at the given path
+ */
 bool RiskMap::save(const std::string& path) {
 	std::string debug_str("Saving map file to ");
 	debug_str.append(path);
@@ -313,6 +349,9 @@ bool RiskMap::save(const std::string& path) {
 	return true;
 }
 
+/**
+ * @brief Erases all data about the map.
+ */
 void RiskMap::clear() {
 	this->continents.clear();
 	this->countries.clear();
@@ -320,16 +359,9 @@ void RiskMap::clear() {
 	this->notifyObservers();
 }
 
-const std::map<std::string, Continent>& RiskMap::getContinents() const {
-	return this->continents;
-}
-const std::map<std::string, Country>& RiskMap::getCountries() const {
-	return this->countries;
-}
-const std::map<std::string, Player>& RiskMap::getPlayers() const {
-	return this->players;
-}
-
+/**
+ * @brief validate validates the map is valid.
+ */
 bool RiskMap::validate() {
 	bool result;
 
@@ -351,8 +383,11 @@ bool RiskMap::validate() {
 	return true;
 }
 
-void RiskMap::isConnectedGraphHelper(std::map<const Country*, bool>& visited, Country* country, const std::string& limit_to) {
-	if (limit_to.size() > 0 && this->getContinentOfCountry(country->getName())->getName().compare(limit_to) != 0) {
+/**
+ * @brief Helper method for isConnectedGraph().
+ */
+void RiskMap::isConnectedGraphHelper(std::map<const Country*, bool>& visited, Country* country, const std::string& limitTo) {
+	if (limitTo.size() > 0 && this->getContinentOfCountry(country->getName())->getName().compare(limitTo) != 0) {
 		return;
 	}
 	bool& was_visited = visited.at(country);
@@ -363,16 +398,20 @@ void RiskMap::isConnectedGraphHelper(std::map<const Country*, bool>& visited, Co
 
 	for (auto const &neighbourName : this->getNeighbours(country->getName())) {
 		Country* neighbour = this->getCountry(neighbourName);
-		this->isConnectedGraphHelper(visited, neighbour, limit_to);
+		this->isConnectedGraphHelper(visited, neighbour, limitTo);
 	}
 }
 
-bool RiskMap::isConnectedGraph(const std::string& limit_to) {
+/**
+ * @brief Determines if the countries on the map are a connected graph.
+ * @param limitTo Limits the search to the given continent (by string name)
+ */
+bool RiskMap::isConnectedGraph(const std::string& limitTo) {
 	std::map<const Country*, bool> visited = std::map<const Country*, bool>();
 	for (auto const &ent1 : this->countries) {
 		const Country& country = ent1.second;
 
-		if (limit_to.size() > 0 && this->getContinentOfCountry(country.getName())->getName().compare(limit_to) != 0) {
+		if (limitTo.size() > 0 && this->getContinentOfCountry(country.getName())->getName().compare(limitTo) != 0) {
 			continue;
 		}
 
@@ -380,13 +419,13 @@ bool RiskMap::isConnectedGraph(const std::string& limit_to) {
 	}
 
 	Country* country = NULL;
-	if (limit_to.size() > 0) {
-		country = this->getCountry(*this->getCountriesInContinent(limit_to).begin());
+	if (limitTo.size() > 0) {
+		country = this->getCountry(*this->getCountriesInContinent(limitTo).begin());
 	}
 	else {
 		country = &this->countries.begin()->second;
 	}
-	this->isConnectedGraphHelper(visited, country, limit_to);
+	this->isConnectedGraphHelper(visited, country, limitTo);
 
 	for (auto const &ent1 : visited) {
 		if (!ent1.second) {

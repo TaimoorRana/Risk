@@ -32,6 +32,10 @@ MapScene::~MapScene() {
 	this->map->detachObserver(this);
 }
 
+/**
+ * @brief Observer notification to re-renders the scene
+ * Uses the observer design pattern to tell the map to update
+ */
 void MapScene::observedUpdated() {
 	this->continentPalette.clear();
 
@@ -64,11 +68,17 @@ void MapScene::observedUpdated() {
 	}
 }
 
+/**
+ * @brief Gets the QColor object for a given country
+ */
 QColor MapScene::getContinentColor(const std::string& countryName) {
 	Continent* continent = this->map->RiskMap::getContinentOfCountry(countryName);
 	return this->continentPalette.at(continent->getName());
 }
 
+/**
+ * @brief Gets the QColor object for a given player
+ */
 QColor MapScene::getPlayerColor(const std::string& playerName) {
 	if (this->editable) {
 		return QColor(204, 204, 204);
@@ -84,18 +94,23 @@ QColor MapScene::getPlayerColor(const std::string& playerName) {
 	}
 }
 
+/**
+ * @brief Gets the editable status of the scene
+ */
 bool MapScene::getEditable() const {
 	return this->editable;
 }
 
+/**
+ * @brief Sets the editable status of the scene
+ */
 void MapScene::setEditable(bool editable) {
 	this->editable = editable;
 }
 
-RiskMap* MapScene::getMap() {
-	return this->map;
-}
-
+/**
+ * @brief Handles mouse presses on the graphics scene GUI widget
+ */
 void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	/**
 	 * ! IMPORTANT ! IMPORTANT ! IMPORTANT ! IMPORTANT ! IMPORTANT !IMPORTANT !
@@ -289,6 +304,9 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	}
 }
 
+/**
+ * @brief Handles mouse releases on the graphics scene GUI widget
+ */
 void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsScene::mouseReleaseEvent(event);
 
@@ -301,6 +319,11 @@ void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 	}
 }
 
+/**
+ * @brief Returns the QGraphicsCountryItem clicked on (if any).
+ * Auxiliary method to retrieve the QCountryGraphicsObject when clicking on the map
+ * @param event The scene's click event details
+ */
 QGraphicsCountryItem* MapScene::getQGraphicsCountryItemFromEvent(QGraphicsSceneMouseEvent *event){
 	QGraphicsItem *itemAt = nullptr;
 	QGraphicsCountryItem *item = nullptr;
@@ -309,6 +332,9 @@ QGraphicsCountryItem* MapScene::getQGraphicsCountryItemFromEvent(QGraphicsSceneM
 	return item;
 }
 
+/**
+ * @brief Clears a scene and repopulates it with QGraphicItems based on the state of the observed RiskMap
+ */
 void MapScene::repopulate(std::string mapPath) {
 	this->clear();
 
@@ -345,6 +371,9 @@ void MapScene::repopulate(std::string mapPath) {
 	}
 }
 
+/**
+ * @brief Helper method of repopulate() that implements DFS on the RiskMap's countries.
+ */
 void MapScene::connectNeighboursVisit(std::map<const std::string, bool>& visited, Country* country) {
 	QPen pen(QColor(0xFF, 0, 0, 0x40));
 	pen.setWidth(1);
