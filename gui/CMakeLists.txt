@@ -9,14 +9,12 @@ set(GUI_SOURCE_FILES
 	country_name_dialog.cpp country_name_dialog.h country_name_dialog.ui
 	main.cpp
 	mainscreen.cpp mainscreen.h mainscreen.ui
-	gameboardview.cpp gameboardview.h
-	game_error_dialog.cpp game_error_dialog.h game_error_dialog.ui
 	map_editor.cpp map_editor.h map_editor.ui
 	map_scene.cpp map_scene.h
-	map_renderer.cpp map_renderer.h
-	playerinfowidget.cpp playerinfowidget.h playerinfowidget.ui
 	fortify_dialog.cpp fortify_dialog.h fortify_dialog.ui
+	game_error_dialog.cpp game_error_dialog.h game_error_dialog.ui
 	playernamedialog.cpp playernamedialog.h playernamedialog.ui
+	playerinfowidget.cpp playerinfowidget.h playerinfowidget.ui
 	qgraphics_country_item.cpp qgraphics_country_item.h
 	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h
 	logging_dialog.cpp logging_dialog.h logging_dialog.ui

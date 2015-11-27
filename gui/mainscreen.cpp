@@ -14,9 +14,7 @@
 #include "game_state.h"
 #include "mainscreen.h"
 #include "map_scene.h"
-#include "map_renderer.h"
 #include "player.h"
-#include "player_view.h"
 #include "playerinfowidget.h"
 #include "logging_dialog.h"
 
@@ -222,7 +220,7 @@ void MainScreen::on_mapEditorAction_triggered() {
 }
 
 void MainScreen::observedUpdated() {
-	MapRenderer::updateScene(this->map, this->scene, this->mapPath, false);
+	this->scene->repopulate(this->mapPath);
 
 	// Handle observe notify event from map: clear existing player info widgets
 	QLayoutItem *layoutItem;

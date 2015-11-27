@@ -1,15 +1,18 @@
 #include <QColor>
-#include <QDebug>
+#include <QFileInfo>
+#include <QPixmap>
 #include <QString>
 
 #include "map_editor.h"
 #include "map_scene.h"
-#include "qgraphics_country_item.h"
+
 #include "game_driver.h"
+#include "game_error_dialog.h"
 #include "fortify_dialog.h"
 #include "debug.h"
 #include "mainscreen.h"
-#include "game_error_dialog.h"
+#include "qgraphics_country_item.h"
+#include "qgraphics_country_edge_item.h"
 
 class QGraphicsCountryItem;
 
@@ -298,4 +301,65 @@ QGraphicsCountryItem* MapScene::getQGraphicsCountryItemFromEvent(QGraphicsSceneM
 	itemAt = this->itemAt(event->scenePos(), QTransform());
 	item = dynamic_cast<QGraphicsCountryItem*>(itemAt);
 	return item;
+}
+
+void MapScene::repopulate(std::string mapPath) {
+	this->clear();
+	debug("render event");
+
+	QFileInfo mapFile(QString::fromStdString(mapPath));
+	QFileInfo bmpFile(mapFile.path() + "/" + mapFile.baseName() + ".bmp");
+	QPixmap bg(bmpFile.absoluteFilePath());
+	this->addPixmap(bg);
+
+	for (auto const &ent1 : this->map->getCountries()) {
+		const Country& country = ent1.second;
+		QGraphicsCountryItem* item = new QGraphicsCountryItem(this->map->getCountry(country.getName()));
+		if (this->editable) {
+			item->setFlag(QGraphicsItem::ItemIsMovable);
+		}
+		item->setPos(country.getPositionX(), country.getPositionY());
+		this->addItem(item);
+		item->setZValue(10);
+	}
+
+	std::map<const std::string, bool> visited = std::map<const std::string, bool>();
+	for (auto const &ent1 : this->map->getCountries()) {
+		const Country& country = ent1.second;
+		visited.insert(std::pair<const std::string, bool>(country.getName(), false));
+	}
+
+	if (this->map->getCountries().size() == 0) {
+		return;
+	}
+
+	for (auto const &ent1 : this->map->getCountries()) {
+		const Country& tmpCountry = ent1.second;
+		Country* country = this->map->getCountry(tmpCountry.getName());
+		connectNeighboursVisit(visited, country);
+	}
+}
+
+void MapScene::connectNeighboursVisit(std::map<const std::string, bool>& visited, Country* country) {
+	QPen pen(QColor(0xFF, 0, 0, 0x40));
+	pen.setWidth(1);
+
+	bool& was_visited = visited.at(country->getName());
+	if (was_visited) {
+		return;
+	}
+	was_visited = true;
+
+	for (auto const &neighbour_str : map->getNeighbours(country->getName())) {
+		Country* neighbour = map->getCountry(neighbour_str);
+		if (visited.at(neighbour->getName())) {
+			// We already have a line from neighbour -> country , so no need for
+			// another one from country -> neighbour.
+			continue;
+		}
+		QGraphicsCountryEdgeItem* line = new QGraphicsCountryEdgeItem(country, neighbour);
+		this->addItem(line);
+		line->setZValue(1);
+		connectNeighboursVisit(visited, neighbour);
+	}
 }

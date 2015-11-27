@@ -9,14 +9,13 @@ set(LIBRARY_SOURCE_FILES
 	librisk.cpp librisk.h
 	observable.cpp observable.h observer.h
 	player.cpp player.h
-	player_view.cpp player_view.h
 	risk_map.cpp risk_map.h
 	war_referee.cpp war_referee.h
-        strategy.h strategy.cpp
-        aggressive.h aggressive.cpp
-        defensive.h defensive.cpp
-        random.h random.cpp
-        computer_player.h computer_player.cpp
+	strategy.h strategy.cpp
+	aggressive.h aggressive.cpp
+	defensive.h defensive.cpp
+	random.h random.cpp
+	computer_player.h computer_player.cpp
 )
 
 add_library(lib${PROJECT_NAME} STATIC ${LIBRARY_SOURCE_FILES})

@@ -8,7 +8,6 @@
 
 #include "debug.h"
 #include "map_editor.h"
-#include "map_renderer.h"
 #include "qgraphics_country_item.h"
 #include "qgraphics_country_edge_item.h"
 
@@ -130,5 +129,5 @@ void MapEditor::on_removeNeighbourPushButton_clicked(){
 }
 
 void MapEditor::observedUpdated() {
-	MapRenderer::updateScene(this->observedMap, this->scene, this->mapPath, true);
+	this->scene->repopulate(this->mapPath);
 }

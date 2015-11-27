@@ -36,6 +36,8 @@ public:
 	QColor getContinentColor(const std::string& countryName);
 	QColor getPlayerColor(const std::string& playerName);
 
+	void repopulate(std::string mapPath);
+
 private:
 	RiskMap* map = 0; ///< This contains a pointer to the observed map.
 	Country* firstCountryClicked = nullptr; ///< This is an auxiliary variable when picking a Country in the Map with the mouse
@@ -54,6 +56,7 @@ private:
 	 * @return
 	 */
 	QGraphicsCountryItem* getQGraphicsCountryItemFromEvent(QGraphicsSceneMouseEvent *event);
+	void connectNeighboursVisit(std::map<const std::string, bool>& visited, Country* country);
 };
 
 #endif // MAP_SCENE_H
