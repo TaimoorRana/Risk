@@ -11,7 +11,6 @@
 #include "qgraphics_country_item.h"
 #include "risk_map.h"
 #include "enum_tooltype.h"
-#include "war_referee.h"
 
 class MapScene: public QGraphicsScene, public Observer
 {

@@ -14,7 +14,6 @@ set(LIBRARY_SOURCE_FILES
 	observable.cpp observable.h observer.h
 	player.cpp player.h
 	risk_map.cpp risk_map.h
-	war_referee.cpp war_referee.h
 	computer_player.h computer_player.cpp
 )
 

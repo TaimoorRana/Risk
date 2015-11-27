@@ -3,6 +3,7 @@
 #include <string>
 #include <cereal/types/string.hpp>
 
+#include "country.h"
 #include "game_modes.h"
 #include "observable.h"
 #include "player.h"
@@ -19,6 +20,11 @@ public:
 
 	Mode getCurrentMode() const;
 	void setCurrentMode(const Mode& mode);
+
+	/**
+	 * @brief Perform an attack move on a country.
+	 */
+	void attackCountry(Country* attackerCountry, Country* defenderCountry);
 
 	/**
 	 * @brief calculateReinforcementArmies calculates the reinforcements for the player using the continents and countries

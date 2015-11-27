@@ -158,8 +158,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				else {
 					secondCountryClicked = item->getCountry();
 					if (firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0 && map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())){
-						WarReferee warreferee = WarReferee::getInstance();
-						warreferee.startWar(firstCountryClicked, secondCountryClicked);
+						driver->attackCountry(firstCountryClicked, secondCountryClicked);
 					}
 					else if (!map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())) {
 						QMessageBox errorDialog(parent);
