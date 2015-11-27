@@ -1,10 +1,5 @@
 #include "computer_player.h"
-#include "strategy.h"
-#include "random.h"
-#include "aggressive.h"
-#include <string>
-
-
+#include "ai/random.h"
 
 ComputerPlayer::ComputerPlayer():Player()
 {
@@ -20,30 +15,7 @@ void ComputerPlayer::setStrategy(Strategy* strategyP)
     this->strategy = strategyP;
 }
 
-void ComputerPlayer::setAttackFrom(string countryName, int numberOfArmies)
+void ComputerPlayer::setAttackFrom(std::string countryName, int numberOfArmies)
 {
     strategy->setAttackFrom(countryName,numberOfArmies);
-
-
-
 }
-
-void ComputerPlayer::registerObserver(Observable *)
-{
-
-}
-
-void ComputerPlayer::unregisterObserver(Observable *)
-{
-
-}
-
-void ComputerPlayer::notifyObserver()
-{
-
-}
-
-
-
-
-

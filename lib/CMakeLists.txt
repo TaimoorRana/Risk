@@ -1,4 +1,8 @@
 set(LIBRARY_SOURCE_FILES
+	ai/strategy.h ai/strategy.cpp
+	ai/aggressive.h ai/aggressive.cpp
+	ai/defensive.h ai/defensive.cpp
+	ai/random.h ai/random.cpp
 	continent.cpp continent.h
 	country.cpp country.h
 	debug.cpp debug.h
@@ -11,10 +15,6 @@ set(LIBRARY_SOURCE_FILES
 	player.cpp player.h
 	risk_map.cpp risk_map.h
 	war_referee.cpp war_referee.h
-	strategy.h strategy.cpp
-	aggressive.h aggressive.cpp
-	defensive.h defensive.cpp
-	random.h random.cpp
 	computer_player.h computer_player.cpp
 )
 

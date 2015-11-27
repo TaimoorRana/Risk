@@ -42,8 +42,8 @@ void GameDriver::fortificationPhase()
 
 void GameDriver::calculateReinforcementArmies(Player *p)
 {
-	// std::set<string> continents =p->getContinentsOwned();
-	// std::set<string>::iterator itContinents = continents.begin();
+	// std::set<std::string> continents =p->getContinentsOwned();
+	// std::set<std::string>::iterator itContinents = continents.begin();
 	// int reinforcementArmies=0;
 	// reinforcementArmies = p->getCountriesOwned().size()/3;
 	// while(itContinents!= continents.end()){
