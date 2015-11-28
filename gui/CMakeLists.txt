@@ -13,6 +13,9 @@ set(GUI_SOURCE_FILES
 	game_driver.cpp game_driver.h
 	game_modes.h
 	game_error_dialog.cpp game_error_dialog.h game_error_dialog.ui
+	iattribute.h
+	iinfo_widget.h
+	info_widget.cpp info_widget.h
 	map_editor.cpp map_editor.h map_editor.ui
 	map_scene.cpp map_scene.h
 	map_renderer.cpp map_renderer.h
@@ -23,6 +26,7 @@ set(GUI_SOURCE_FILES
 	qgraphics_country_item.cpp qgraphics_country_item.h
 	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h
 	logging_dialog.cpp logging_dialog.h logging_dialog.ui
+	reinforcement_attribute.cpp reinforcement_attribute.h
 )
 
 set(GUI_RESOURCE_FILES
