@@ -18,7 +18,8 @@ MapEditor::MapEditor(QWidget *parent) : QMainWindow(parent) {
 	observedMap = new RiskMap();
 	observedMap->attachObserver(this);
 
-	scene = new MapScene(observedMap, this);
+	dummyDriver = new GameDriver(observedMap);
+	scene = new MapScene(dummyDriver, this);
 	scene->setEditable(true);
 	ui->graphicsView->setScene(scene);
 
@@ -27,6 +28,7 @@ MapEditor::MapEditor(QWidget *parent) : QMainWindow(parent) {
 
 MapEditor::~MapEditor() {
 	scene->clear();
+	delete dummyDriver;
 	delete observedMap;
 	delete scene;
 	delete ui;

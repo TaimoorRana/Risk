@@ -47,12 +47,14 @@ public:
 	void renameCountry(const std::string oldName, const std::string newName);
 	void addNeighbour(const std::string& country1, const std::string& country2);
 	string_set getNeighbours(const std::string& countryName);
-	bool areCountriesAdjacent(const std::string& country1, const std::string& country2);
+	bool areCountriesNeighbours(const std::string& country1, const std::string& country2);
 	void removeNeighbour(const std::string& country1, const std::string& country2);
 	Continent* getContinentOfCountry(const std::string& countryName);
 
 	Player* addPlayer(const Player& player);
 	Player* getPlayer(const std::string& playerName);
+	string_set getCountriesOwnedByPlayer(const std::string& playerName);
+	string_set getContinentsOwnedByPlayer(const std::string& playerName);
 
 	const std::map<std::string, Continent>& getContinents() const;
 	const std::map<std::string, Country>& getCountries() const;

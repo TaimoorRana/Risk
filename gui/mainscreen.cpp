@@ -18,29 +18,29 @@
 #include "playerinfowidget.h"
 #include "logging_dialog.h"
 
-MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainScreen)
+MainScreen::MainScreen(GameDriver* driver, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainScreen)
 {
 	ui->setupUi(this);
-	this->map = map;
-	map->attachObserver(this);
-	GameDriver::getInstance()->attachObserver(this);
+	this->driver = driver;
+	this->driver->attachObserver(this);
+	this->driver->getRiskMap()->attachObserver(this);
 
-	this->scene = new MapScene(map, this);
+	this->scene = new MapScene(this->driver, this);
 	ui->graphicsView->setScene(scene);
 	ui->reinforcementLabel->setEnabled(true);
 }
 
 MainScreen::~MainScreen() {
-	map->detachObserver(this);
-	GameDriver::getInstance()->detachObserver(this);
+	this->driver->detachObserver(this);
+	this->driver->getRiskMap()->detachObserver(this);
 	delete editor;
 	delete scene;
 	delete ui;
 }
 
 bool MainScreen::setupPlayers() {
+	RiskMap* map = this->driver->getRiskMap();
 	PlayerNameDialog dialog(this);
-
 	bool valid = false;
 	while (!valid) {
 		if (dialog.exec() == QDialog::Rejected) {
@@ -56,8 +56,8 @@ bool MainScreen::setupPlayers() {
 			continue;
 		}
 
-		this->map->parse(this->mapPath);
-		if (!this->map->validate()) {
+		map->parse(this->mapPath);
+		if (!map->validate()) {
 			QMessageBox errorDialog(this);
 			errorDialog.setWindowTitle("Error!");
 			errorDialog.setText("Invalid map: the map did not validate. Please contact its author.");
@@ -68,28 +68,27 @@ bool MainScreen::setupPlayers() {
 		valid = true;
 	}
 
-	this->map->setNotificationsEnabled(false);
+	map->setNotificationsEnabled(false);
 
 	int totalPlayers = dialog.getPlayerCount();
 	for (int x = 0; x < totalPlayers; x++) {
-		this->map->addPlayer(Player("Player " + std::to_string(x+1)));
+		map->addPlayer(Player("Player " + std::to_string(x+1)));
 	}
 
-	GameDriver* driver = GameDriver::getInstance();
-	std::string firstPlayerName = (*this->map->getPlayers().begin()).first;
-	driver->setCurrentPlayerName(firstPlayerName);
+	std::string firstPlayerName = (*map->getPlayers().begin()).first;
+	this->driver->setCurrentPlayerName(firstPlayerName);
 
-	this->map->setNotificationsEnabled(true);
-	this->map->notifyObservers();
+	map->setNotificationsEnabled(true);
+	map->notifyObservers();
 
 	// Assign random countries to players in a round-robin fashion
 	std::vector<Country*> vectorOfCountryPointers;
-	for (auto const &ent1 : this->map->getCountries()) {
+	for (auto const &ent1 : map->getCountries()) {
 		const Country& ctmp = ent1.second;
-		vectorOfCountryPointers.push_back(this->map->getCountry(ctmp.getName()));
+		vectorOfCountryPointers.push_back(map->getCountry(ctmp.getName()));
 	}
 
-	std::vector<int> x = getVectorOfIndicesRandomCountryAccess(this->map->getCountries().size());
+	std::vector<int> x = getVectorOfIndicesRandomCountryAccess(this->driver->getRiskMap()->getCountries().size());
 	std::vector<int>::const_iterator iter = x.begin();
 	int p=0;
 	while (iter != x.end()){
@@ -100,8 +99,8 @@ bool MainScreen::setupPlayers() {
 		country->setArmies(10);
 		iter++;
 	}
+	this->driver->recalculateReinforcements();
 
-	this->setReinforcements();
 	return true;
 }
 
@@ -125,36 +124,10 @@ std::vector<int> MainScreen::getVectorOfIndicesRandomCountryAccess(int nCountrie
 }
 
 Player* MainScreen::playerRoundRobin(int i){
-	auto iter = this->map->getPlayers().begin();
-	std::advance(iter, i % (this->map->getPlayers().size()));
-	return this->map->getPlayer((*iter).first);
-}
-
-void MainScreen::setReinforcements()
-{
-	for(auto const &ent1: map->getPlayers()){
-		Player p = ent1.second;
-		Player *player = map->getPlayer(p.getName());
-		player->setTotalArmy(player->getCountriesOwned().size()*2);
-		std::set<std::string> continents =player->getContinentsOwned();
-		std::set<std::string>::iterator itContinents = continents.begin();
-		int reinforcementArmies = 0;
-		//gets the reinforcement armies based if they have more than 9 countries
-
-		if (player->getCountriesOwned().size()>9){
-			reinforcementArmies = player->getCountriesOwned().size()/3;
-		}
-		else {
-			reinforcementArmies = 3;
-		}
-		while (itContinents!= continents.end()){
-			reinforcementArmies += map->getContinent(*itContinents)->getReinforcementBonus();
-		}
-		player->setReinforcements(reinforcementArmies);
-
-		player->notifyObservers();
-
-	}
+	RiskMap* map = this->driver->getRiskMap();
+	auto iter = map->getPlayers().begin();
+	std::advance(iter, i % (map->getPlayers().size()));
+	return map->getPlayer((*iter).first);
 }
 
 void MainScreen::on_endPhasePushButton_clicked() {
@@ -163,9 +136,7 @@ void MainScreen::on_endPhasePushButton_clicked() {
 
 void MainScreen::endPhase()
 {
-	GameDriver* driver = GameDriver::getInstance();
-
-	Mode currentMode = driver->getCurrentMode();
+	Mode currentMode = this->driver->getCurrentMode();
 	if (currentMode == REINFORCEMENT) {
 		driver->setCurrentMode(ATTACK);
 	}
@@ -175,26 +146,18 @@ void MainScreen::endPhase()
 	else {
 		this->nextTurn();
 	}
-	debug("End Phase");
-
-	for(auto const &ent1: map->getPlayers()){
-		Player p = ent1.second;
-		Player *player = map->getPlayer(p.getName());
-		player->notifyObservers();
-		debug(""+player->getName()+" owns "+ std::to_string(player->getCountriesOwned().size())+ " countries and "+ std::to_string(player->getTotalArmy())+ " armies.");
-	}
 }
 
 void MainScreen::on_loadAction_triggered() {
 	QString filename(QFileDialog::getOpenFileName(this, tr("Open saved game"), QDir::currentPath(), tr("Risk game state (*.risksave)")));
 	this->raise();
 	if (filename.length() > 0) {
-		GameState::load(filename.toStdString(), GameDriver::getInstance(), this->map);
+		GameState::load(filename.toStdString(), this->driver);
 	}
 }
 
 void MainScreen::on_loggingOptionsPushButton_clicked(){
-	LoggingDialog *logDialog = new LoggingDialog(this->map->getPlayers(), this);
+	LoggingDialog *logDialog = new LoggingDialog(this->driver->getRiskMap()->getPlayers(), this);
 	logDialog->exec();
 }
 
@@ -202,12 +165,12 @@ void MainScreen::on_saveAction_triggered() {
 	QString filename(QFileDialog::getSaveFileName(this, tr("Save game"), QDir::currentPath(), tr("Risk game state (*.risksave)")));
 	this->raise();
 	if (filename.length() > 0) {
-		GameState::save(filename.toStdString(), GameDriver::getInstance(), this->map);
+		GameState::save(filename.toStdString(), this->driver);
 	}
 }
 
 void MainScreen::on_mapEditorAction_triggered() {
-	if (editor != NULL) {
+	if (editor != nullptr) {
 		this->editor->show();
 		this->editor->raise();
 	}
@@ -218,6 +181,7 @@ void MainScreen::on_mapEditorAction_triggered() {
 }
 
 void MainScreen::observedUpdated() {
+	RiskMap* map = this->driver->getRiskMap();
 	this->scene->repopulate(this->mapPath);
 
 	// Handle observe notify event from map: clear existing player info widgets
@@ -232,13 +196,12 @@ void MainScreen::observedUpdated() {
 		Player p = ent1.second;
 		Player *player = map->getPlayer(p.getName());
 
-		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this, player, this->scene);
+		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this->driver, player, this->scene->getPlayerColor(player->getName()), this);
 		ui->horizontalLayout_2->addWidget(playerinfo);
 	}
 
 	// Handle observe notify event from GameDriver: setup current game mode
-	GameDriver* driver = GameDriver::getInstance();
-	Mode mode = driver->getCurrentMode();
+	Mode mode = this->driver->getCurrentMode();
 	ui->reinforcementLabel->setEnabled(mode == REINFORCEMENT);
 	ui->attackLabel->setEnabled(mode == ATTACK);
 	ui->fortifyLabel->setEnabled(mode == FORTIFICATION);
@@ -246,14 +209,13 @@ void MainScreen::observedUpdated() {
 
 void MainScreen::nextTurn()
 {
-	GameDriver* driver = GameDriver::getInstance();
-	auto iterator = this->map->getPlayers().find(driver->getCurrentPlayerName());
-	auto end = this->map->getPlayers().end();
+	RiskMap* map = this->driver->getRiskMap();
+	auto iterator = map->getPlayers().find(this->driver->getCurrentPlayerName());
+	auto end = map->getPlayers().end();
 	std::advance(iterator, 1);
 	if (iterator == end) {
-		iterator = this->map->getPlayers().begin();
+		iterator = map->getPlayers().begin();
 	}
-	driver->setCurrentPlayerName((*iterator).first);
-	driver->setCurrentMode(REINFORCEMENT);
+	this->driver->setCurrentPlayerName((*iterator).first);
+	this->driver->setCurrentMode(REINFORCEMENT);
 }
-

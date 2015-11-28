@@ -19,7 +19,7 @@ class MainScreen : public QMainWindow, public Observer
 	Q_OBJECT
 
 public:
-	explicit MainScreen(RiskMap* map, QWidget *parent = 0);
+	explicit MainScreen(GameDriver* driver, QWidget *parent = 0);
 	~MainScreen();
 	bool setupPlayers();
 	void observedUpdated();
@@ -28,7 +28,6 @@ public:
 	 * @brief endPhase This function simulates the click of the end phase button and switches to next player's turn
 	 */
 	void endPhase();
-	void setReinforcements();
 	void nextTurn();
 	std::vector<int> getVectorOfIndicesRandomCountryAccess(int nCountries);
 
@@ -58,10 +57,10 @@ private slots:
 private:
 	std::string playerName = "";
 	std::string mapPath = "";
-	Ui::MainScreen *ui = nullptr;
-	MapEditor *editor = nullptr;
-	RiskMap *map = nullptr;
-	MapScene *scene = nullptr;
+	Ui::MainScreen* ui = nullptr;
+	MapEditor* editor = nullptr;
+	GameDriver* driver = nullptr;
+	MapScene* scene = nullptr;
 	void initializeMode();
 	Player* playerRoundRobin(int i);
 };

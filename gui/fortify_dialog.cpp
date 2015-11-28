@@ -5,11 +5,12 @@
 /**
  * @brief Pop-up dialog to configure a fortification move
  */
-FortifyDialog::FortifyDialog(Country* originCountry, Country* destinationCountry, QWidget *parent) :QDialog(parent), ui(new Ui::FortifyDialog)
+FortifyDialog::FortifyDialog(GameDriver* driver, Country* originCountry, Country* destinationCountry, QWidget *parent) :QDialog(parent), ui(new Ui::FortifyDialog)
 {
 	ui->setupUi(this);
 	ui->armiesSlider->setMaximum(originCountry->getArmies() - 1);
 	ui->armiesSlider->setMinimum(0);
+	this->driver = driver;
 	this->setOriginCountry(originCountry);
 	this->setDestinationCountry(destinationCountry);
 }
@@ -45,8 +46,7 @@ void FortifyDialog::setDestinationCountry(Country* country)
 void FortifyDialog::accept()
 {
 	int armies = ui->armiesSlider->value();
-	GameDriver* driver = GameDriver::getInstance();
-	driver->fortifyCountry(this->originCountry, this->destinationCountry, armies);
+	this->driver->fortifyCountry(this->originCountry, this->destinationCountry, armies);
 	this->close();
 	// TODO: error validation
 }

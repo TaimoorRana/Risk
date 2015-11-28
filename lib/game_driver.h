@@ -7,6 +7,7 @@
 #include "game_modes.h"
 #include "observable.h"
 #include "player.h"
+#include "risk_map.h"
 
 /**
  * @brief The GameDriver class
@@ -15,7 +16,8 @@
  */
 class GameDriver: public Observable {
 public:
-	static GameDriver* getInstance();
+	GameDriver(RiskMap* map);
+	RiskMap* getRiskMap();
 
 	std::string getCurrentPlayerName() const;
 	void setCurrentPlayerName(const std::string& name);
@@ -25,7 +27,7 @@ public:
 	bool attackCountry(Country* attackerCountry, Country* defenderCountry);
 	bool fortifyCountry(Country* originCountry, Country* destinationCountry, int armies);
 
-	void calculateReinforcementArmies(Player *player);
+	void recalculateReinforcements();
 
 	template<class Archive>
 	void serialize(Archive& archive) {
@@ -33,6 +35,7 @@ public:
 	}
 
 private:
+	RiskMap* map = nullptr;
 	std::string currentPlayerName = "";
 	Mode currentMode = REINFORCEMENT;
 };

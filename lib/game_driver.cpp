@@ -3,16 +3,15 @@
 #include "librisk.h"
 #include "game_driver.h"
 
+GameDriver::GameDriver(RiskMap* map) {
+	this->map = map;
+}
+
 /**
- * @brief Returns the singleton instance of the GameDriver
+ * @brief Gets the map associated to this instance.
  */
-GameDriver* GameDriver::getInstance()
-{
-	static GameDriver* instance = nullptr;
-	if (instance == nullptr) {
-		instance = new GameDriver();
-	}
-	return instance;
+RiskMap* GameDriver::getRiskMap() {
+	return this->map;
 }
 
 /**
@@ -93,6 +92,7 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 		attackerCountry->setArmies(attackerArmy - 1);
 		defenderCountry->setArmies(1);
 		defenderCountry->setPlayer(attackerCountry->getPlayer());
+		this->recalculateReinforcements();
 	}
 	else {
 		// Defender victorious: reconfigure armies
@@ -116,16 +116,21 @@ bool GameDriver::fortifyCountry(Country* originCountry, Country* destinationCoun
 }
 
 /**
- * @brief Calculates the number of reinforcements a player should receive.
+ * @brief Adjusts each player's reinforcement count
  */
-void GameDriver::calculateReinforcementArmies(Player* player)
-{
-	// std::set<std::string> continents = player->getContinentsOwned();
-	// std::set<std::string>::iterator itContinents = continents.begin();
-	// int reinforcementArmies=0;
-	// reinforcementArmies = player->getCountriesOwned().size()/3;
-	// while(itContinents!= continents.end()){
-	// 	reinforcementArmies += riskMap->getContinent(*itContinents)->getReinforcementBonus();
-	// }
-	// player->setReinforcements(reinforcementArmies);
+void GameDriver::recalculateReinforcements() {
+	for (auto const &ent1: this->map->getPlayers()) {
+		Player* player = this->map->getPlayer(ent1.first);
+		// Players get reinfocements equal to their countries/3 (discard fractions),
+		// down to a minimum of three reinforcements.
+		int countryBonus = player->getCountriesOwned().size() / 3;
+		int reinforcements = std::max(3, countryBonus);
+
+		// Check for continent bonuses
+		for (auto &continentName : this->map->getContinentsOwnedByPlayer(player->getName())) {
+			Continent* continent = this->map->getContinent(continentName);
+			reinforcements += continent->getReinforcementBonus();
+		}
+		player->setReinforcements(reinforcements);
+	}
 }

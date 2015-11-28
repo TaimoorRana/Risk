@@ -8,6 +8,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QString>
 
+#include "game_driver.h"
 #include "qgraphics_country_item.h"
 #include "risk_map.h"
 #include "enum_tooltype.h"
@@ -19,7 +20,7 @@
 class MapScene: public QGraphicsScene, public Observer
 {
 public:
-	MapScene(RiskMap* map, QWidget *parent = 0);
+	MapScene(GameDriver* driver, QWidget *parent = 0);
 	~MapScene();
 
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -35,7 +36,7 @@ public:
 	void repopulate(std::string mapPath);
 
 private:
-	RiskMap* map = 0; ///< Pointer to the observed map the scene is rendering.
+	GameDriver* driver = nullptr; ///< Pointer to the observed map the scene is rendering.
 	Country* firstCountryClicked = nullptr; ///< Auxiliary variable when picking a Country in the Map with the mouse
 	Country* secondCountryClicked = nullptr; ///< Auxiliary variable when picking a Country in the Map with the mouse
 	QString lastContinent; ///< To facilitate entry when creating countries, this variable remembers the last continent used, when adding countries consecutively.

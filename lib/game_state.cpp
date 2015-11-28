@@ -19,13 +19,14 @@
  *
  * This approach will be used for our project.
  */
-bool GameState::load(std::string path, GameDriver* driver, RiskMap* map) {
+bool GameState::load(std::string path, GameDriver* driver) {
+	RiskMap* map = driver->getRiskMap();
 	map->setNotificationsEnabled(false);
 
 	std::ifstream infile(path);
 	cereal::XMLInputArchive input(infile);
 	input(cereal::make_nvp("driver", *driver));
-	input(cereal::make_nvp("map", *map));
+	input(cereal::make_nvp("map", *driver->getRiskMap()));
 
 	map->setNotificationsEnabled(true);
 	map->notifyObservers();
@@ -38,11 +39,11 @@ bool GameState::load(std::string path, GameDriver* driver, RiskMap* map) {
  *
  * This approach will be used for our project.
  */
-bool GameState::save(std::string path, GameDriver* driver, RiskMap* map) {
+bool GameState::save(std::string path, GameDriver* driver) {
 	std::ofstream outfile(path);
 	cereal::XMLOutputArchive output(outfile);
 	output(cereal::make_nvp("driver", *driver));
-	output(cereal::make_nvp("map", *map));
+	output(cereal::make_nvp("map", *driver->getRiskMap()));
 	return true;
 }
 
@@ -57,7 +58,7 @@ bool GameState::save(std::string path, GameDriver* driver, RiskMap* map) {
  * This approach is included to demonstrate a more elaborate Builder pattern for
  * grading purposes in A3.
  */
-RiskMap* buildMap(std::string path) {
+GameDriver* buildGame(std::string path) {
 	// Prepare local variables. We'll use these to build the new object.
 	std::map<std::string, Continent> continents;
 	std::map<std::string, Country> countries;
@@ -95,31 +96,14 @@ RiskMap* buildMap(std::string path) {
 	}
 
 	// The map is now ready to go, and it's internal state reflects the serialized
-	// data read in from the savestate file.
-	return map;
-}
-
-/**
- * Obtains the Singleton reference to the application's GameDriver and builds it
- * based on the save state.
- *
- * This approach is included to demonstrate a more elaborate Builder pattern for
- * grading purposes in A3.
- */
-GameDriver* buildGameDriver(std::string path) {
-	// Prepare local variables. We'll use these to build the new object.
+	// data read in from the savestate file. On to the driver:
 	Mode currentMode;
 	std::string currentPlayer;
 
-	// Read state from file into some local variables
-	std::ifstream infile(path);
-	cereal::XMLInputArchive input(infile);
 	input(cereal::make_nvp("currentMode", currentMode));
 	input(cereal::make_nvp("currentPlayer", currentPlayer));
 
-	// Because GameDriver is a singleton, we won't construct a new one - we'll
-	// just get the global instance to work on.
-	GameDriver* driver = GameDriver::getInstance();
+	GameDriver* driver = new GameDriver(map);
 	driver->setCurrentPlayerName(currentPlayer);
 	driver->setCurrentMode(currentMode);
 	return driver;
@@ -132,7 +116,9 @@ GameDriver* buildGameDriver(std::string path) {
  * This approach is included to demonstrate a more elaborate Builder pattern for
  * grading purposes in A3.
  */
-bool buildSaveFile(std::string path, GameDriver* driver, RiskMap* map) {
+bool buildSaveFile(std::string path, GameDriver* driver) {
+	RiskMap* map = driver->getRiskMap();
+
 	std::ofstream outfile(path);
 	cereal::XMLOutputArchive output(outfile);
 	output(cereal::make_nvp("continents", map->getContinents()));

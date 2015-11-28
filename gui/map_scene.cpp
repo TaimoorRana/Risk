@@ -15,10 +15,10 @@
 
 class QGraphicsCountryItem;
 
-MapScene::MapScene(RiskMap* map, QWidget *parent){
+MapScene::MapScene(GameDriver* driver, QWidget *parent){
 	this->setParent(parent);
-	this->map = map;
-	this->map->attachObserver(this);
+	this->driver = driver;
+	this->driver->getRiskMap()->attachObserver(this);
 
 	this->playerPalette.push_back(QColor(0, 219, 0));
 	this->playerPalette.push_back(QColor(255, 102, 236));
@@ -29,7 +29,7 @@ MapScene::MapScene(RiskMap* map, QWidget *parent){
 }
 
 MapScene::~MapScene() {
-	this->map->detachObserver(this);
+	this->driver->getRiskMap()->detachObserver(this);
 }
 
 /**
@@ -54,7 +54,7 @@ void MapScene::observedUpdated() {
 	int i=0;
 	auto color_rand = std::bind(randomDistribution, randomGenerator);
 	QColor color;
-	for (auto const &ent1 : this->map->getContinents()) {
+	for (auto const &ent1 : this->driver->getRiskMap()->getContinents()) {
 		const Continent& continent = ent1.second;
 		// Use random colors if we've exhausted the preset ones
 		if (i < presetContinentColors.size()) {
@@ -72,7 +72,7 @@ void MapScene::observedUpdated() {
  * @brief Gets the QColor object for a given country
  */
 QColor MapScene::getContinentColor(const std::string& countryName) {
-	Continent* continent = this->map->RiskMap::getContinentOfCountry(countryName);
+	Continent* continent = this->driver->getRiskMap()->getContinentOfCountry(countryName);
 	return this->continentPalette.at(continent->getName());
 }
 
@@ -83,9 +83,10 @@ QColor MapScene::getPlayerColor(const std::string& playerName) {
 	if (this->editable) {
 		return QColor(204, 204, 204);
 	}
+	RiskMap* map = this->driver->getRiskMap();
 
 	auto color_rand = std::bind(randomDistribution, randomGenerator);
-	int index = std::distance(this->map->getPlayers().begin(), this->map->getPlayers().find(playerName));
+	int index = std::distance(map->getPlayers().begin(), map->getPlayers().find(playerName));
 	if (index < this->playerPalette.size()) {
 		return this->playerPalette[index];
 	}
@@ -121,16 +122,16 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 	 */
 	QGraphicsScene::mousePressEvent(event);
 
+	RiskMap* map = this->driver->getRiskMap();
 	QGraphicsCountryItem *item = nullptr;
 	if (!this->editable) {
 		MainScreen* parent = qobject_cast<MainScreen*>(this->parent());
-		GameDriver* driver = GameDriver::getInstance();
-		std::string currentPlayer = driver->getCurrentPlayerName();
+		std::string currentPlayer = this->driver->getCurrentPlayerName();
 
 		item = getQGraphicsCountryItemFromEvent(event);
 		if (item == nullptr) { return; }
 
-		switch (GameDriver::getInstance()->getCurrentMode()) {
+		switch (this->driver->getCurrentMode()) {
 			case REINFORCEMENT:
 				if (currentPlayer.compare(item->getCountry()->getPlayer()) == 0) {
 					if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0) {
@@ -172,10 +173,10 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				}
 				else {
 					secondCountryClicked = item->getCountry();
-					if (firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0 && map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())){
-						driver->attackCountry(firstCountryClicked, secondCountryClicked);
+					if (firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0 && map->areCountriesNeighbours(firstCountryClicked->getName(), secondCountryClicked->getName())){
+						this->driver->attackCountry(firstCountryClicked, secondCountryClicked);
 					}
-					else if (!map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())) {
+					else if (!map->areCountriesNeighbours(firstCountryClicked->getName(), secondCountryClicked->getName())) {
 						QMessageBox errorDialog(parent);
 						errorDialog.setWindowTitle("Invalid move");
 						errorDialog.setText("You can only attack adjacent countries.");
@@ -200,8 +201,8 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				else {
 					// check for adjacency
 					secondCountryClicked = item->getCountry();
-					if (map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())) {
-						FortifyDialog* fortificationDialog = new FortifyDialog(firstCountryClicked, secondCountryClicked, parent);
+					if (map->areCountriesNeighbours(firstCountryClicked->getName(), secondCountryClicked->getName())) {
+						FortifyDialog* fortificationDialog = new FortifyDialog(this->driver, firstCountryClicked, secondCountryClicked, parent);
 						if (fortificationDialog->exec() == QDialog::Accepted) {
 							parent->endPhase();
 						}
@@ -315,7 +316,7 @@ void MapScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 		MapEditor* parent = qobject_cast<MapEditor*>(this->parent());
 		if (parent->getSelectedTool() == OFF) {
 			// Re-draws the whole scene, fixing text that gets left behind from dragging QGraphicsCountryItem objects (due to their out of bound text)
-			this->map->notifyObservers();
+			this->driver->getRiskMap()->notifyObservers();
 		}
 	}
 }
@@ -344,9 +345,10 @@ void MapScene::repopulate(std::string mapPath) {
 	QPixmap bg(bmpFile.absoluteFilePath());
 	this->addPixmap(bg);
 
-	for (auto const &ent1 : this->map->getCountries()) {
+	RiskMap* map = this->driver->getRiskMap();
+	for (auto const &ent1 : map->getCountries()) {
 		const Country& country = ent1.second;
-		QGraphicsCountryItem* item = new QGraphicsCountryItem(this->map->getCountry(country.getName()));
+		QGraphicsCountryItem* item = new QGraphicsCountryItem(map->getCountry(country.getName()));
 		if (this->editable) {
 			item->setFlag(QGraphicsItem::ItemIsMovable);
 		}
@@ -356,18 +358,18 @@ void MapScene::repopulate(std::string mapPath) {
 	}
 
 	std::map<const std::string, bool> visited = std::map<const std::string, bool>();
-	for (auto const &ent1 : this->map->getCountries()) {
+	for (auto const &ent1 : map->getCountries()) {
 		const Country& country = ent1.second;
 		visited.insert(std::pair<const std::string, bool>(country.getName(), false));
 	}
 
-	if (this->map->getCountries().size() == 0) {
+	if (map->getCountries().size() == 0) {
 		return;
 	}
 
-	for (auto const &ent1 : this->map->getCountries()) {
+	for (auto const &ent1 : map->getCountries()) {
 		const Country& tmpCountry = ent1.second;
-		Country* country = this->map->getCountry(tmpCountry.getName());
+		Country* country = map->getCountry(tmpCountry.getName());
 		connectNeighboursVisit(visited, country);
 	}
 }
@@ -385,6 +387,7 @@ void MapScene::connectNeighboursVisit(std::map<const std::string, bool>& visited
 	}
 	was_visited = true;
 
+	RiskMap* map = this->driver->getRiskMap();
 	for (auto const &neighbour_str : map->getNeighbours(country->getName())) {
 		Country* neighbour = map->getCountry(neighbour_str);
 		if (visited.at(neighbour->getName())) {

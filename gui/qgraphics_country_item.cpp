@@ -52,7 +52,7 @@ void QGraphicsCountryItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
 	painter->setFont(font);
 	std::string label = country->getName() + " (" + std::to_string(country->getArmies()) + ")";
 	int textWidth = metrics.width(QString::fromStdString(label))/2;
-		painter->drawText(QPointF(-textWidth, 19), QString::fromStdString(label));
+	painter->drawText(QPointF(-textWidth, 19), QString::fromStdString(label));
 }
 
 void QGraphicsCountryItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){

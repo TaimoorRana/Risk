@@ -38,6 +38,7 @@ private:
 	Ui::MapEditor* ui = nullptr;
 	MapScene* scene = nullptr;
 	RiskMap* observedMap = nullptr;
+	GameDriver* dummyDriver = nullptr;
 	ToolMode tool = OFF;
 
 	bool validateFilename(const QString& text);

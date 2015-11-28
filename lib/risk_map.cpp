@@ -36,7 +36,7 @@ Continent* RiskMap::getContinent(const std::string& name){
 /**
  * @brief Gets a set of country names that belong to a continent
  */
-string_set RiskMap::getCountriesInContinent(const std::string& continentName){
+string_set RiskMap::getCountriesInContinent(const std::string& continentName) {
 	return mapGraph.subgraphContents(continentName);
 }
 
@@ -108,7 +108,7 @@ string_set RiskMap::getNeighbours(const std::string& countryName){
 /**
  * @brief Verifies if two countries are adjacent/neighbors.
  */
-bool RiskMap::areCountriesAdjacent(const std::string& country1, const std::string& country2){
+bool RiskMap::areCountriesNeighbours(const std::string& country1, const std::string& country2) {
 	return mapGraph.areAdjacent(country1, country2);
 }
 
@@ -145,6 +145,45 @@ Player* RiskMap::addPlayer(const Player& player) {
  */
 Player* RiskMap::getPlayer(const std::string& playerName){
 	return &this->players[playerName];
+}
+
+/**
+ * @brief Gets a list of country names owned by a player
+ */
+string_set RiskMap::getCountriesOwnedByPlayer(const std::string& playerName)  {
+	string_set countriesOwned;
+	for (auto &ent1: this->countries) {
+		Country& country = ent1.second;
+		if (country.getPlayer() == playerName) {
+			countriesOwned.insert(country.getName());
+		}
+	}
+	return countriesOwned;
+}
+
+/**
+ * @brief Gets a list of continent names owned by a player
+ */
+string_set RiskMap::getContinentsOwnedByPlayer(const std::string& playerName) {
+	string_set continentsOwned;
+	for (auto &ent1: this->continents) {
+		std::string continentName = ent1.first;
+		string_set countriesInContent = this->getCountriesInContinent(continentName);
+
+		bool totalOwnership = true;
+		for (auto &countryName: countriesInContent) {
+			Country* country = this->getCountry(countryName);
+			if (country->getPlayer() != playerName) {
+				totalOwnership = false;
+				break;
+			}
+		}
+
+		if (totalOwnership) {
+			continentsOwned.insert(continentName);
+		}
+	}
+	return continentsOwned;
 }
 
 /**
@@ -418,7 +457,7 @@ bool RiskMap::isConnectedGraph(const std::string& limitTo) {
 		visited.insert(std::pair<const Country*, bool>(&country, false));
 	}
 
-	Country* country = NULL;
+	Country* country = nullptr;
 	if (limitTo.size() > 0) {
 		country = this->getCountry(*this->getCountriesInContinent(limitTo).begin());
 	}

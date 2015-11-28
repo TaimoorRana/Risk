@@ -29,12 +29,12 @@ int main() {
     map.addNeighbour("China","Persia");
     map.addNeighbour("India","China");
 
-    if(map.areCountriesAdjacent("India", "Russia"))
+    if(map.areCountriesNeighbours("India", "Russia"))
         std::cout<<"Countries are adjacent"<<std::endl;
     else
         std::cout<<"Countries are NOT adjacent."<<std::endl;
 
-    if(map.areCountriesAdjacent("China", "Persia"))
+    if(map.areCountriesNeighbours("China", "Persia"))
         std::cout<<"Countries are adjacent"<<std::endl;
     else
         std::cout<<"Countries are NOT adjacent."<<std::endl;
