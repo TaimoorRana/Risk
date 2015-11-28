@@ -202,8 +202,9 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					secondCountryClicked = item->getCountry();
 					if (map->areCountriesAdjacent(firstCountryClicked->getName(), secondCountryClicked->getName())) {
 						FortifyDialog* fortificationDialog = new FortifyDialog(firstCountryClicked, secondCountryClicked, parent);
-						fortificationDialog->exec();
-						parent->endPhase();
+						if (fortificationDialog->exec() == QDialog::Accepted) {
+							parent->endPhase();
+						}
 					}
 					else {
 						QMessageBox errorDialog(parent);
