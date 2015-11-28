@@ -6,6 +6,9 @@
 #include "game_modes.h"
 #include "component.h"
 
+/**
+ * The namespace used for linking with .ui file widget.
+ */
 namespace Ui{
 class LogScreen;
 }
@@ -21,13 +24,13 @@ class LogScreen : public QMainWindow, public Observer
 public:
 	/**
 	 * @brief LogScreen
-	 * @param parent
+	 * @param parent - the parent widget
 	 */
 	explicit LogScreen(QWidget *parent=0);
 
 	~LogScreen();
 	/**
-	 * @brief setPlayers
+	 * @brief setPlayers sets the number of players
 	 * @param nPlayers
 	 */
 	void setPlayers(int nPlayers);
@@ -57,6 +60,9 @@ public:
 	 * @return
 	 */
 	std::string getState();
+	/**
+	 * @brief update not the observer update but used as an update for initiaition of the class.
+	 */
 	void update();
 	/**
 	 * @brief observedUpdated

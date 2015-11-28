@@ -15,6 +15,11 @@ class LogSelector: public QDialog
 {
 	Q_OBJECT
 public:
+	/**
+	 * @brief LogSelector
+	 * @param parent the mainwindow
+	 * @param numberOfPlayers gets the number of players in the game and provides this as an option
+	 */
 	explicit LogSelector(QWidget *parent = 0, int numberOfPlayers=0);
 	~LogSelector();
 	/**

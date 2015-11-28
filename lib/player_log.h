@@ -5,16 +5,16 @@
 
 using namespace std;
 /**
- * @brief The PlayerLog class which extends Component and will be used to be decorated
+ * @brief The PlayerLog class which extends Component and will be used to be decorated as a component
  */
 class PlayerLog : public Component
 {
 public:
 	/**
 	 * @brief PlayerLog
-	 * @param s
+	 * @param s the player name
 	 */
-	PlayerLog(string s);
+	PlayerLog(string name);
 	/**
 	 * @brief setCurrentPlayer
 	 * @param s
