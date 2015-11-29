@@ -83,7 +83,7 @@ void LogScreen::observedUpdated()
 	//playerLog.setName(), going to have to do garbage collection or end of round delete the player
 	//and make a new one
 	if (driver->getCurrentMode() == FORTIFICATION) {
-		component = nullptr;
 		delete component;
+		component = nullptr;
 	}
 }
