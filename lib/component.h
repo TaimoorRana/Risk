@@ -1,5 +1,5 @@
-#ifndef COMPONENT
-#define COMPONENT
+#ifndef COMPONENT_H
+#define COMPONENT_H
 
 
 #include <string>
@@ -12,6 +12,7 @@ using namespace std;
  */
 class Component {
 public:
+	virtual ~Component() {};
 	/**
 	 * @brief log
 	 * the log of string to display which in subclasses combines with the string of other Component
@@ -29,6 +30,4 @@ protected:
 	string logString;
 };
 
-#endif // COMPONENT
-
-
+#endif // COMPONENT_H
