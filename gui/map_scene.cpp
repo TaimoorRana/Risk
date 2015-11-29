@@ -135,7 +135,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 			case REINFORCEMENT:
 				if (currentPlayer.compare(item->getCountry()->getPlayer()) == 0) {
 					if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0) {
-						map->getPlayer(item->getCountry()->getPlayer())->removeReinforcements(1);
+						map->getPlayer(item->getCountry()->getPlayer())->adjustReinforcements(-1);
 						item->getCountry()->addArmies(1);
 					}
 					else {

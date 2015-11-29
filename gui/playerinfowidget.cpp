@@ -1,6 +1,6 @@
 #include <QString>
-
 #include "playerinfowidget.h"
+#include "risk_map.h"
 #include "ui_playerinfowidget.h"
 
 PlayerInfoWidget::PlayerInfoWidget(GameDriver* driver, Player *subject, QColor playerColor, QWidget *parent) : QWidget(parent),ui(new Ui::PlayerInfoWidget)
@@ -25,6 +25,7 @@ PlayerInfoWidget::~PlayerInfoWidget()
 
 void PlayerInfoWidget::observedUpdated()
 {
+	RiskMap* map = this->driver->getRiskMap();
 	std::string hexColor = this->playerColor.name().toStdString();
 	ui->colorLabel->setStyleSheet(QString::fromStdString("QLabel { background-color : " + hexColor + "; }"));
 	if (this->driver->getCurrentPlayerName() == this->player->getName()) {
@@ -33,9 +34,17 @@ void PlayerInfoWidget::observedUpdated()
 	else {
 		ui->nameValueLabel->setText(QString::fromStdString(this->player->getName()));
 	}
-	ui->countriesValueLabel->setText(QString::number(this->player->getCountriesOwned().size()));
-	ui->continentsValueLabel->setText(QString::number(this->player->getContinentsOwned().size()));
-	ui->armiesValueLabel->setText(QString::number(this->player->getTotalArmy()));
+
+	int totalArmy = 0;
+	string_set countriesOwned = map->getCountriesOwnedByPlayer(this->player->getName());
+	for (auto &countryName : countriesOwned) {
+		Country* country = map->getCountry(countryName);
+		totalArmy += country->getArmies();
+	}
+
+	ui->countriesValueLabel->setText(QString::number(countriesOwned.size()));
+	ui->continentsValueLabel->setText(QString::number(map->getContinentsOwnedByPlayer(this->player->getName()).size()));
+	ui->armiesValueLabel->setText(QString::number(totalArmy));
 	ui->reinforcementValue->setText(QString::number(this->player->getReinforcements()));
 	this->repaint();
 }

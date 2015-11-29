@@ -89,6 +89,12 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 	if (defenderArmy <= 0) {
 		// Attacker victorious: hand over ownership to the attacking player
 		debug("Attacker won!");
+		Player* winner = this->map->getPlayer(attackerCountry->getPlayer());
+		winner->adjustBattlesWon(1);
+
+		Player* loser = this->map->getPlayer(attackerCountry->getPlayer());
+		loser->adjustBattlesLost(1);
+
 		attackerCountry->setArmies(attackerArmy - 1);
 		defenderCountry->setArmies(1);
 		defenderCountry->setPlayer(attackerCountry->getPlayer());
@@ -97,6 +103,13 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 	else {
 		// Defender victorious: reconfigure armies
 		debug("Defender won!");
+		Player* winner = this->map->getPlayer(defenderCountry->getPlayer());
+		winner->adjustBattlesWon(1);
+
+		Player* loser = this->map->getPlayer(attackerCountry->getPlayer());
+		loser->adjustBattlesLost(1);
+
+		attackerCountry->setArmies(attackerArmy - 1);
 		attackerCountry->setArmies(attackerArmy);
 		defenderCountry->setArmies(defenderArmy);
 	}
@@ -123,7 +136,7 @@ void GameDriver::recalculateReinforcements() {
 		Player* player = this->map->getPlayer(ent1.first);
 		// Players get reinfocements equal to their countries/3 (discard fractions),
 		// down to a minimum of three reinforcements.
-		int countryBonus = player->getCountriesOwned().size() / 3;
+		int countryBonus = this->map->getCountriesOwnedByPlayer(player->getName()).size() / 3;
 		int reinforcements = std::max(3, countryBonus);
 
 		// Check for continent bonuses

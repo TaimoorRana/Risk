@@ -17,6 +17,7 @@
 class GameDriver: public Observable {
 public:
 	GameDriver(RiskMap* map);
+	virtual ~GameDriver() {};
 	RiskMap* getRiskMap();
 
 	std::string getCurrentPlayerName() const;

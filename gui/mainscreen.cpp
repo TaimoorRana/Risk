@@ -98,7 +98,6 @@ bool MainScreen::setupPlayers() {
 		Country* country = vectorOfCountryPointers[*iter];
 		Player* player = playerRoundRobin(p++);
 		country->setPlayer(player->getName());
-		player->addCountry(country->getName());
 		country->setArmies(10);
 		iter++;
 	}
