@@ -18,6 +18,7 @@
 #include "playerinfowidget.h"
 #include "logging_dialog.h"
 #include "info_widget.h"
+#include "reinforcement_info_widget.h"
 
 MainScreen::MainScreen(RiskMap *map, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainScreen)
 {
@@ -78,7 +79,7 @@ bool MainScreen::setupPlayers() {
 	for (int x = 0; x < totalPlayers; x++) {
 		player = map->addPlayer(Player("Player " + std::to_string(x+1)));
 		player->setNotificationsEnabled(false);
-		InfoWidget* playerinfo = new InfoWidget(player, this->scene);
+		IInfoWidget* playerinfo = new ReinforcementInfoWidget(new InfoWidget(player, this->scene));
 		ui->horizontalLayout_2->addWidget(playerinfo);
 		player->setTotalArmy(22);
 		player->setReinforcements(10);

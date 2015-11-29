@@ -7,6 +7,7 @@ fix_project_version()
 set(GUI_SOURCE_FILES
 	enum_tooltype.h
 	country_name_dialog.cpp country_name_dialog.h country_name_dialog.ui
+	decorator_info_widget.h
 	main.cpp
 	mainscreen.cpp mainscreen.h mainscreen.ui
 	gameboardview.cpp gameboardview.h
@@ -27,6 +28,7 @@ set(GUI_SOURCE_FILES
 	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h
 	logging_dialog.cpp logging_dialog.h logging_dialog.ui
 	reinforcement_attribute.cpp reinforcement_attribute.h
+	reinforcement_info_widget.cpp reinforcement_info_widget.h
 )
 
 set(GUI_RESOURCE_FILES

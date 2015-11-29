@@ -18,6 +18,7 @@ protected:
 	QVBoxLayout *nameLayout = new QVBoxLayout;
 	QVBoxLayout *valueLayout = new QVBoxLayout;
 	QSpacerItem *spacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+public:
 	virtual void addAttribute(IAttribute* attribute);
 	virtual std::vector<IAttribute*> getAttributes();
 	virtual void draw();
