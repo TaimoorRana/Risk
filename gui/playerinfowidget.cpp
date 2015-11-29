@@ -46,6 +46,7 @@ void PlayerInfoWidget::observedUpdated()
 	ui->continentsValueLabel->setText(QString::number(map->getContinentsOwnedByPlayer(this->player->getName()).size()));
 	ui->armiesValueLabel->setText(QString::number(totalArmy));
 	ui->reinforcementValue->setText(QString::number(this->player->getReinforcements()));
+	ui->battleWonLostValue->setText(QString("%1 / %2").arg(QString::number(this->player->getBattlesWon()), QString::number(this->player->getBattlesLost())));
 	this->repaint();
 }
 

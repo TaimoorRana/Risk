@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>271</width>
-    <height>118</height>
+    <height>124</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -71,6 +71,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QLabel" name="battleWonLostLabel">
+         <property name="text">
+          <string>Battles won/lost:</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item>
@@ -110,6 +117,13 @@
         <widget class="QLabel" name="reinforcementValue">
          <property name="text">
           <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="battleWonLostValue">
+         <property name="text">
+          <string>0/0</string>
          </property>
         </widget>
        </item>

@@ -93,7 +93,7 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 		Player* winner = this->map->getPlayer(attackerCountry->getPlayer());
 		winner->adjustBattlesWon(1);
 
-		Player* loser = this->map->getPlayer(attackerCountry->getPlayer());
+		Player* loser = this->map->getPlayer(defenderCountry->getPlayer());
 		loser->adjustBattlesLost(1);
 
 		attackerCountry->setArmies(attackerArmy - 1);
