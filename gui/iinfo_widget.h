@@ -2,23 +2,22 @@
 #define IINFO_WIDGET
 #include <QWidget>
 #include <vector>
-#include <QWidget>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include "map_scene.h"
 #include "player.h"
 #include "observer.h"
 #include "iattribute.h"
-class IInfoWidget: public QWidget, public Observer{
-protected:
-	std::vector<IAttribute*> attributes;
+class IInfoWidget{
 
 public:
-	virtual void addAttribute(IAttribute* attribute);
-	virtual std::vector<IAttribute*> getAttributes();
-	virtual void draw();
-	virtual void observedUpdated();
-	virtual Player* getPlayer();
-	virtual MapScene* getScene();
-	virtual QWidget* getParent();
+	virtual void addAttribute(IAttribute* attribute) = 0;
+	virtual std::vector<IAttribute*> getAttributes() = 0;
+	virtual void draw() = 0;
+	virtual void observedUpdated() = 0;
+	virtual Player* getPlayer() = 0;
+	virtual MapScene* getScene() = 0;
+	virtual QWidget* getParent() = 0;
 };
 
 #endif // IINFO_WIDGET
