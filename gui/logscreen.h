@@ -10,7 +10,7 @@
  * The namespace used for linking with .ui file widget.
  */
 namespace Ui{
-class LogScreen;
+	class LogScreen;
 }
 /**
  * @brief The LogScreen class the display of the LogScreen Observer
@@ -49,7 +49,7 @@ public:
 	 * @param mode
 	 */
 
-	void setCurrentMode ( Mode mode);
+	void setCurrentMode (Mode mode);
 	/**
 	 * @brief getCurrentMode
 	 * @return

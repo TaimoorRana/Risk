@@ -4,8 +4,7 @@
 #include <string>
 
 namespace Ui {
-class LogSelector;
-
+	class LogSelector;
 }
 /**
  * @brief The LogSelector class allows you to select how many players
