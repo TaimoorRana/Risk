@@ -7,9 +7,7 @@ ReinforcementInfoWidget::ReinforcementInfoWidget(IInfoWidget *infoWiget)
 	this->scene = infoWiget->getScene();
 	player->attachObserver(this);
 	ReinforcementAttribute* r = new ReinforcementAttribute(player);
-	ReinforcementAttribute* r2 = new ReinforcementAttribute(player);
 	addAttribute(r);
-	addAttribute(r2);
 	draw();
 }
 

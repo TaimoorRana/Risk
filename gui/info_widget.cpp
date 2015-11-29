@@ -1,14 +1,12 @@
 #include "info_widget.h"
-#include "reinforcement_attribute.h"
+#include "army_attribute.h"
 InfoWidget::InfoWidget(Player *subject, MapScene *scene, QWidget *parent)
 {
 	this->player = subject;
 	this->scene = scene;
 	player->attachObserver(this);
-	ReinforcementAttribute* r = new ReinforcementAttribute(subject);
-	ReinforcementAttribute* r2 = new ReinforcementAttribute(subject);
+	ArmyAttribute* r = new ArmyAttribute(subject);
 	addAttribute(r);
-	addAttribute(r2);
 	draw();
 }
 

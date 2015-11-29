@@ -13,14 +13,3 @@ void ReinforcementAttribute::observedUpdated()
 {
 	this->value->setText(QString::number(player->getReinforcements()));
 }
-
-QLabel* ReinforcementAttribute::getName()
-{
-	return name;
-}
-
-QLabel* ReinforcementAttribute::getValue()
-{
-	observedUpdated();
-	return value;
-}
