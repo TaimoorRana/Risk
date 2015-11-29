@@ -6,8 +6,11 @@
 
 #include "game_modes.h"
 #include "map_editor.h"
+#include "log_selector.h"
+
 #include "playernamedialog.h"
 #include "risk_map.h"
+
 #include "ui_mainscreen.h"
 
 namespace Ui {
@@ -46,21 +49,29 @@ private slots:
 	 * @brief Callback to handle user selecting File > Map Editor.
 	 */
 	void on_mapEditorAction_triggered();
+	void on_logButton_clicked();
 
 	/**
 	 * @brief Callback to end the current phase, or advance to the next turn.
 	 */
 	void on_endPhasePushButton_clicked();
 
-	void on_loggingOptionsPushButton_clicked();
+
 
 private:
 	std::string playerName = "";
 	std::string mapPath = "";
+
 	Ui::MainScreen* ui = nullptr;
 	MapEditor* editor = nullptr;
 	GameDriver* driver = nullptr;
 	MapScene* scene = nullptr;
+
+
+	LogSelector *logSelector = nullptr;
+
+
+
 	void initializeMode();
 	Player* playerRoundRobin(int i);
 };

@@ -16,7 +16,10 @@
 #include "map_scene.h"
 #include "player.h"
 #include "playerinfowidget.h"
-#include "logging_dialog.h"
+
+#include "logscreen.h"
+
+
 
 MainScreen::MainScreen(GameDriver* driver, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainScreen)
 {
@@ -148,6 +151,39 @@ void MainScreen::endPhase()
 	}
 }
 
+
+void MainScreen::on_logButton_clicked()
+{
+	if(logSelector !=NULL){
+		this->logSelector->show();
+		this->logSelector->raise();
+	}
+	else{
+		this->logSelector = new LogSelector(this,(driver->getRiskMap()->getPlayers().size()));
+		this->logSelector->show();
+	}
+	bool decision=true;
+	while (decision) {
+
+		LogScreen *lScreen = new LogScreen(this,driver);
+
+		if(this->logSelector->exec()){
+			lScreen->setPlayers(logSelector->getSelectedPlayer());
+			lScreen->setState(logSelector->getSelectedPhase());
+			lScreen->update();
+			lScreen->show();
+			driver->attachObserver(lScreen);
+
+			decision =false;
+		}
+		else if(this->logSelector->close()){
+			decision = false;
+		}
+	}
+
+}
+
+
 void MainScreen::on_loadAction_triggered() {
 	QString filename(QFileDialog::getOpenFileName(this, tr("Open saved game"), QDir::currentPath(), tr("Risk game state (*.risksave)")));
 	this->raise();
@@ -156,10 +192,10 @@ void MainScreen::on_loadAction_triggered() {
 	}
 }
 
-void MainScreen::on_loggingOptionsPushButton_clicked(){
-	LoggingDialog *logDialog = new LoggingDialog(this->driver->getRiskMap()->getPlayers(), this);
-	logDialog->exec();
-}
+
+
+
+
 
 void MainScreen::on_saveAction_triggered() {
 	QString filename(QFileDialog::getSaveFileName(this, tr("Save game"), QDir::currentPath(), tr("Risk game state (*.risksave)")));
@@ -178,6 +214,7 @@ void MainScreen::on_mapEditorAction_triggered() {
 		this->editor = new MapEditor(this);
 		this->editor->show();
 	}
+
 }
 
 void MainScreen::observedUpdated() {

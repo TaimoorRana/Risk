@@ -14,7 +14,16 @@ set(LIBRARY_SOURCE_FILES
 	observable.cpp observable.h observer.h
 	player.cpp player.h
 	risk_map.cpp risk_map.h
-	computer_player.h computer_player.cpp
+
+        computer_player.h computer_player.cpp
+
+        component.h decorator.h decorator.cpp
+        concrete_reinforce.h concrete_reinforce.cpp
+        concrete_attack.h concrete_attack.cpp
+        concrete_fortify.h concrete_fortify.cpp
+        player_log.h player_log.cpp
+
+
 )
 
 add_library(lib${PROJECT_NAME} STATIC ${LIBRARY_SOURCE_FILES})

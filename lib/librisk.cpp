@@ -3,7 +3,7 @@
 #include <time.h>
 #include <vector>
 #include <algorithm>
-
+#include <functional>
 #include "librisk.h"
 
 /**

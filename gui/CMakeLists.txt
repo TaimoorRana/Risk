@@ -16,7 +16,10 @@ set(GUI_SOURCE_FILES
 	playerinfowidget.cpp playerinfowidget.h playerinfowidget.ui
 	qgraphics_country_item.cpp qgraphics_country_item.h
 	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h
-	logging_dialog.cpp logging_dialog.h logging_dialog.ui
+
+        log_selector.ui log_selector.h log_selector.cpp
+        logscreen.ui logscreen.h logscreen.cpp
+
 )
 
 set(GUI_RESOURCE_FILES

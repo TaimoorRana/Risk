@@ -37,7 +37,9 @@ public:
 private:
 	RiskMap* map = nullptr;
 	std::string currentPlayerName = "";
+
 	Mode currentMode = REINFORCEMENT;
+
 };
 
 #endif // GAMEDRIVER_H
