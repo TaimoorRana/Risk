@@ -2,6 +2,7 @@
 
 std::string Defensive::decideAttackingCountry(RiskMap *map)
 {
+
     attack = false;
 	listOfAttackCountries = map->getNeighbours(getCountryAttackFrom());
     auto c_iter = listOfAttackCountries.begin();
@@ -11,7 +12,7 @@ std::string Defensive::decideAttackingCountry(RiskMap *map)
             countryToAttack = *c_iter;
         }
         else {
-            countryToAttack = "";
+			countryToAttack = " ";
             return countryToAttack;
         }
         c_iter++;

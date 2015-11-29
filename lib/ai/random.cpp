@@ -4,7 +4,7 @@
 
 std::string Random::decideAttackingCountry(RiskMap *map)
 {
-	countryToAttack = "";
+	countryToAttack = " ";
 	attack = false;
 	listOfAttackCountries =map->getNeighbours(getCountryAttackFrom());
 	int borderCountries = listOfAttackCountries.size();

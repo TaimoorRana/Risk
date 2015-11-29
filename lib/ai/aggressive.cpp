@@ -3,7 +3,7 @@
 #include "aggressive.h"
 
 std::string Aggressive::decideAttackingCountry(RiskMap *map)
-{
+{	countryToAttack = " ";
 	attack = false;
 	int differenceInArmies=0;
 	listOfAttackCountries = map->getNeighbours(getCountryAttackFrom());

@@ -125,7 +125,7 @@ void GameDriver::recalculateReinforcements() {
 		// down to a minimum of three reinforcements.
 		int countryBonus = player->getCountriesOwned().size() / 3;
 		int reinforcements = std::max(3, countryBonus);
-
+		debug("player adding armied");
 		// Check for continent bonuses
 		for (auto &continentName : this->map->getContinentsOwnedByPlayer(player->getName())) {
 			Continent* continent = this->map->getContinent(continentName);

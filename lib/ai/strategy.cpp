@@ -11,6 +11,24 @@ void Strategy::setAttackFrom(std::string countryName, int numberOfArmiesOnTerrit
 	this->currentCountry = countryName;
 }
 
+void Strategy::whereToAttackFrom(RiskMap *map)
+{
+	listOfPlayerCountries= map->getCountriesOwnedByPlayer(getPlayer());
+	auto l_iter = listOfAttackCountries.begin();
+	while (l_iter != listOfPlayerCountries.end()) {
+		setAttackFrom(*l_iter,map->getCountry(*l_iter)->getArmies());
+		if (decideAttackingCountry(map)==" " ) {
+			l_iter++;
+		}
+		else{
+			break;
+		}
+
+	}
+
+
+}
+
 std::string Strategy::getCountryAttackFrom()
 {
 	return currentCountry;
@@ -24,6 +42,11 @@ bool Strategy::isSameOwner(std::string countryOwner1, std::string countryOwner2)
 int Strategy::getNumberOfArmies()
 {
 	return numberOfArmiesOnTerritory;
+}
+
+std::string Strategy::getPlayer()
+{
+	return nameOfPlayer;
 }
 
 void Strategy::setAttack(bool attack)
