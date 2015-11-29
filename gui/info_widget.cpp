@@ -23,7 +23,12 @@ std::vector<IAttribute *> InfoWidget::getAttributes()
 
 void InfoWidget::draw()
 {
+	QColor playerColor = this->scene->getPlayerColor(this->player->getName());
+	std::string hexColor = playerColor.name().toStdString();
+	QLabel *colorLabel = new QLabel();
+	colorLabel->setStyleSheet(QString::fromStdString("QLabel { background-color : " + hexColor + "; }"));
 	mainLayout->addLayout(subMainLayout);
+	subMainLayout->addWidget(colorLabel);
 	subMainLayout->addLayout(nameLayout);
 	subMainLayout->addLayout(valueLayout);
 	subMainLayout->addItem(spacer);
