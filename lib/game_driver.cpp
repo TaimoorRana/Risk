@@ -19,6 +19,7 @@ RiskMap* GameDriver::getRiskMap() {
  */
 void GameDriver::setCurrentPlayerName(const std::string& name) {
 	this->currentPlayerName = name;
+	this->recalculateReinforcements();
 	this->notifyObservers();
 }
 
