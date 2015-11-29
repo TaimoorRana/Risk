@@ -120,7 +120,7 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
  * @brief Perform an fortify move on a country
  */
 bool GameDriver::fortifyCountry(Country* originCountry, Country* destinationCountry, int armies) {
-	if (originCountry->getArmies() - armies <= 1) {
+	if (originCountry->getArmies() - armies <= 0) {
 		return false;
 	}
 	originCountry->removeArmies(armies);
