@@ -7,6 +7,8 @@ fix_project_version()
 set(GUI_SOURCE_FILES
 	army_attribute.cpp army_attribute.h
 	enum_tooltype.h
+	card_attribute.cpp card_attribute.h
+	country_attribute.cpp country_attribute.h
 	country_name_dialog.cpp country_name_dialog.h country_name_dialog.ui
 	decorator_info_widget.h
 	main.cpp

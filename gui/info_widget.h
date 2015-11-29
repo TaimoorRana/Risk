@@ -1,7 +1,9 @@
 #ifndef INFO_WIDGET
 #define INFO_WIDGET
 #include "iinfo_widget.h"
-#include <QSpacerItem>
+#include "country_attribute.h"
+#include "card_attribute.h"
+#include "army_attribute.h"
 class InfoWidget:public IInfoWidget, public Observer{
 
 

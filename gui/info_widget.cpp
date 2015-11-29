@@ -1,12 +1,15 @@
 #include "info_widget.h"
-#include "army_attribute.h"
 InfoWidget::InfoWidget(Player *subject, MapScene *scene, QWidget *parent)
 {
 	this->player = subject;
 	this->scene = scene;
 	player->attachObserver(this);
-	ArmyAttribute* r = new ArmyAttribute(subject);
-	addAttribute(r);
+	ArmyAttribute* army = new ArmyAttribute(subject);
+	CardAttribute* card =  new CardAttribute(subject);
+	CountryAttribute* country = new CountryAttribute(subject);
+	addAttribute(army);
+	addAttribute(card);
+	addAttribute(country);
 	draw();
 }
 
