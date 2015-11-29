@@ -18,13 +18,13 @@ protected:
 	QVBoxLayout *nameLayout = new QVBoxLayout;
 	QVBoxLayout *valueLayout = new QVBoxLayout;
 	QSpacerItem *spacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-	virtual void addAttribute(IAttribute* attribute) = 0;
-	virtual std::vector<IAttribute*> getAttributes() = 0;
-	void draw();
-	virtual void observedUpdated() = 0;
-	virtual Player* getPlayer() = 0;
-	virtual MapScene* getScene() = 0;
-	virtual QWidget* getParent() = 0;
+	virtual void addAttribute(IAttribute* attribute);
+	virtual std::vector<IAttribute*> getAttributes();
+	virtual void draw();
+	virtual void observedUpdated();
+	virtual Player* getPlayer();
+	virtual MapScene* getScene();
+	virtual QWidget* getParent();
 };
 
 #endif // IINFO_WIDGET

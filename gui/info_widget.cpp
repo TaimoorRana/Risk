@@ -11,17 +11,6 @@ InfoWidget::InfoWidget(Player *subject, MapScene *scene, QWidget *parent)
 	addAttribute(r2);
 	draw();
 }
-void InfoWidget::addAttribute(IAttribute *attribute)
-{
-	attributes.push_back(attribute);
-}
-
-std::vector<IAttribute *> InfoWidget::getAttributes()
-{
-	return this->attributes;
-}
-
-
 
 void InfoWidget::observedUpdated()
 {
@@ -33,17 +22,3 @@ void InfoWidget::observedUpdated()
 	}
 }
 
-Player *InfoWidget::getPlayer()
-{
-	return this->player;
-}
-
-MapScene *InfoWidget::getScene()
-{
-	return this->scene;
-}
-
-QWidget *InfoWidget::getParent()
-{
-	return this->getParent();
-}

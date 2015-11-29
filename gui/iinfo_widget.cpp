@@ -19,3 +19,40 @@ void IInfoWidget::draw()
 	}
 	this->setLayout(mainLayout);
 }
+
+void IInfoWidget::addAttribute(IAttribute *attribute)
+{
+	attributes.push_back(attribute);
+}
+
+std::vector<IAttribute *> IInfoWidget::getAttributes()
+{
+	return this->attributes;
+}
+
+
+
+void IInfoWidget::observedUpdated()
+{
+	std::vector<IAttribute*>::iterator it;
+	foreach (QWidget * w, valueLayout->findChildren<QWidget*>()) delete w;
+	for(it = attributes.begin(); it != attributes.end(); it++)
+	{
+		valueLayout->addWidget((*it)->getValue());
+	}
+}
+
+Player *IInfoWidget::getPlayer()
+{
+	return this->player;
+}
+
+MapScene *IInfoWidget::getScene()
+{
+	return this->scene;
+}
+
+QWidget *IInfoWidget::getParent()
+{
+	return this->getParent();
+}
