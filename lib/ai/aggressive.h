@@ -19,7 +19,7 @@ public:
 	 * Ovewrites parent method and decides using the aggressive strategy which country to attack
 	 * @return
 	 */
-	std::string decideAttackingCountry(RiskMap map);
+	std::string decideAttackingCountry(RiskMap *map);
 };
 
 #endif // AI_AGGRESSIVE_H

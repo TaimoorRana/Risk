@@ -34,12 +34,12 @@ bool Strategy::isAttack(){
 	return attack;
 }
 
-std::string Strategy::decideAttackingCountry(RiskMap map)
+std::string Strategy::decideAttackingCountry(RiskMap *map)
 {
-	listOfAttackCountries = map.getNeighbours(getCountryAttackFrom());
+	listOfAttackCountries = map->getNeighbours(getCountryAttackFrom());
 	auto c_iter = listOfAttackCountries.begin();
 	while (c_iter != listOfAttackCountries.end()) {
-		if (map.getCountry(*c_iter)->getArmies() > 3 && !isSameOwner(*c_iter, nameOfPlayer)) {
+		if (map->getCountry(*c_iter)->getArmies() > 3 && !isSameOwner(*c_iter, nameOfPlayer)) {
 		}
 		c_iter++;
 	}

@@ -77,7 +77,7 @@ public:
 	 * Then decides which territory to attack and returns it.
 	 * @return
 	 */
-	virtual std::string decideAttackingCountry(RiskMap map);
+	virtual std::string decideAttackingCountry(RiskMap *map);
 protected:
 	//need list of bordering countreis
 	std::string nameOfPlayer;

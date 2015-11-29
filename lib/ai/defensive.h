@@ -19,7 +19,7 @@ public:
 	 * and then returns it.
 	 * @return
 	 */
-	std::string decideAttackingCountry(RiskMap map);
+	std::string decideAttackingCountry(RiskMap *map);
 
 private:
 	// needs to have atleast 4 armies

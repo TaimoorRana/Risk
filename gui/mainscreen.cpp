@@ -16,6 +16,7 @@
 #include "map_scene.h"
 #include "player.h"
 #include "playerinfowidget.h"
+#include "computer_player.h"
 
 #include "logscreen.h"
 
@@ -74,9 +75,10 @@ bool MainScreen::setupPlayers() {
 	map->setNotificationsEnabled(false);
 
 	int totalPlayers = dialog.getPlayerCount();
-	for (int x = 0; x < totalPlayers; x++) {
+	for (int x = 0; x < totalPlayers-1; x++) {
 		map->addPlayer(Player("Player " + std::to_string(x+1)));
 	}
+	map->addPlayer(ComputerPlayer("Player " + std::to_string(totalPlayers)));
 
 	std::string firstPlayerName = (*map->getPlayers().begin()).first;
 	this->driver->setCurrentPlayerName(firstPlayerName);
