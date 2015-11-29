@@ -78,7 +78,7 @@ bool MainScreen::setupPlayers() {
 	for (int x = 0; x < totalPlayers; x++) {
 		player = map->addPlayer(Player("Player " + std::to_string(x+1)));
 		player->setNotificationsEnabled(false);
-		InfoWidget* playerinfo = new InfoWidget(this, player, this->scene);
+		InfoWidget* playerinfo = new InfoWidget(player, this->scene);
 		ui->horizontalLayout_2->addWidget(playerinfo);
 		player->setTotalArmy(22);
 		player->setReinforcements(10);

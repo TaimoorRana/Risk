@@ -2,22 +2,13 @@
 #define INFO_WIDGET
 #include "iinfo_widget.h"
 #include <QSpacerItem>
-class InfoWidget:public QWidget, public Observer{
-private:
-	Player* player;
-	MapScene* scene;
-	std::vector<IAttribute*> attributes;
-	QVBoxLayout *mainLayout = new QVBoxLayout;
-	QHBoxLayout *subMainLayout = new QHBoxLayout;
-	QVBoxLayout *nameLayout = new QVBoxLayout;
-	QVBoxLayout *valueLayout = new QVBoxLayout;
-	QSpacerItem *spacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+class InfoWidget:public IInfoWidget, public Observer{
+
 
 public:
-	InfoWidget(QWidget *parent, Player *subject, MapScene* scene);
+	InfoWidget( Player *subject, MapScene* scene,QWidget *parent = 0);
 	void addAttribute(IAttribute* attribute);
 	std::vector<IAttribute*> getAttributes();
-	void draw();
 	void observedUpdated();
 	Player* getPlayer();
 	MapScene* getScene();

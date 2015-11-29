@@ -8,12 +8,19 @@
 #include "player.h"
 #include "observer.h"
 #include "iattribute.h"
-class IInfoWidget{
-
-public:
+class IInfoWidget: public QWidget{
+protected:
+	Player* player;
+	MapScene* scene;
+	std::vector<IAttribute*> attributes;
+	QVBoxLayout *mainLayout = new QVBoxLayout;
+	QHBoxLayout *subMainLayout = new QHBoxLayout;
+	QVBoxLayout *nameLayout = new QVBoxLayout;
+	QVBoxLayout *valueLayout = new QVBoxLayout;
+	QSpacerItem *spacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 	virtual void addAttribute(IAttribute* attribute) = 0;
 	virtual std::vector<IAttribute*> getAttributes() = 0;
-	virtual void draw() = 0;
+	void draw();
 	virtual void observedUpdated() = 0;
 	virtual Player* getPlayer() = 0;
 	virtual MapScene* getScene() = 0;

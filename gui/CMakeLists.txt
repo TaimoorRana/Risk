@@ -14,7 +14,7 @@ set(GUI_SOURCE_FILES
 	game_modes.h
 	game_error_dialog.cpp game_error_dialog.h game_error_dialog.ui
 	iattribute.h
-	iinfo_widget.h
+	iinfo_widget.cpp iinfo_widget.h
 	info_widget.cpp info_widget.h
 	map_editor.cpp map_editor.h map_editor.ui
 	map_scene.cpp map_scene.h
