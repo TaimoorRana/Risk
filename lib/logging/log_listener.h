@@ -13,7 +13,7 @@
 class LogListener {
 public:
 	LogListener();
-	~LogListener();
+	virtual ~LogListener();
 	void messageLogged(std::string playerName, Mode mode, std::string message);
 	virtual bool filter(std::string playerName, Mode mode);
 	void attachHandler(LogHandler* handler);
