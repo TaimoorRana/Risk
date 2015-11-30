@@ -3,7 +3,7 @@
 ContinentAttribute::ContinentAttribute(Player *player)
 {
 	this->player = player;
-	this->name = new QLabel(QString::fromStdString("Battles Won:"));
+	this->name = new QLabel(QString::fromStdString("Continents:"));
 	this->value = new QLabel(QString::number(player->getContinentsOwned().size()));
 	this->value->setAlignment(Qt::AlignRight);
 }
