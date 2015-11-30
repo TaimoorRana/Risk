@@ -10,8 +10,10 @@ set(GUI_SOURCE_FILES
 	card_attribute.cpp card_attribute.h
 	country_attribute.cpp country_attribute.h
 	country_name_dialog.cpp country_name_dialog.h country_name_dialog.ui
+	continent_attribute.cpp continent_attribute.h
+	continent_info_widget.cpp continent_info_widget.h
 	battle_won_attribute.cpp battle_won_attribute.h
-	decorator_info_widget.h
+	decorator_info_widget.cpp decorator_info_widget.h
 	main.cpp
 	mainscreen.cpp mainscreen.h mainscreen.ui
 	gameboardview.cpp gameboardview.h
