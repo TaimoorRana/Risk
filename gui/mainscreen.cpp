@@ -9,8 +9,9 @@
 #include <QFileInfo>
 #include <QString>
 
-#include "continent_info_widget.h"
-#include "info_widget.h"
+#include "info_widgets/continent_info_widget.h"
+#include "info_widgets/info_widget.h"
+#include "info_widgets/reinforcement_info_widget.h"
 #include "game_driver.h"
 #include "game_state.h"
 #include "log_selector.h"
@@ -18,8 +19,6 @@
 #include "map_scene.h"
 #include "player.h"
 #include "playernamedialog.h"
-#include "playerinfowidget.h"
-#include "reinforcement_info_widget.h"
 
 
 
@@ -219,7 +218,7 @@ void MainScreen::observedUpdated() {
 		Player p = ent1.second;
 		Player *player = map->getPlayer(p.getName());
 
-		IInfoWidget* playerinfo = new InfoWidget(player, this->scene);
+		IInfoWidget* playerinfo = new InfoWidget(player, this->scene, ui->horizontalLayout_2->widget());
 		ui->horizontalLayout_2->addWidget(playerinfo);
 	}
 

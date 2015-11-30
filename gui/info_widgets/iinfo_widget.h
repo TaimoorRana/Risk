@@ -8,7 +8,8 @@
 #include "player.h"
 #include "observer.h"
 #include "iattribute.h"
-class IInfoWidget: public QWidget{
+
+class IInfoWidget: public QWidget, public Observer {
 protected:
 	Player* player;
 	MapScene* scene;

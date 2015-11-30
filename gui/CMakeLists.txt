@@ -5,19 +5,21 @@ include(QtCommon)
 fix_project_version()
 
 set(GUI_SOURCE_FILES
-	army_attribute.cpp army_attribute.h
-	battle_won_attribute.cpp battle_won_attribute.h
-	card_attribute.cpp card_attribute.h
-	country_attribute.cpp country_attribute.h
 	country_name_dialog.cpp country_name_dialog.h country_name_dialog.ui
-	continent_attribute.cpp continent_attribute.h
-	continent_info_widget.cpp continent_info_widget.h
-	decorator_info_widget.cpp decorator_info_widget.h
 	enum_tooltype.h
 	fortify_dialog.cpp fortify_dialog.h fortify_dialog.ui
-	iattribute.cpp iattribute.h
-	iinfo_widget.cpp iinfo_widget.h
-	info_widget.cpp info_widget.h
+	info_widgets/army_attribute.cpp info_widgets/army_attribute.h
+	info_widgets/battles_attribute.cpp info_widgets/battles_attribute.h
+	info_widgets/card_attribute.cpp info_widgets/card_attribute.h
+	info_widgets/continent_attribute.cpp info_widgets/continent_attribute.h
+	info_widgets/continent_info_widget.cpp info_widgets/continent_info_widget.h
+	info_widgets/country_attribute.cpp info_widgets/country_attribute.h
+	info_widgets/decorator_info_widget.cpp info_widgets/decorator_info_widget.h
+	info_widgets/iattribute.cpp info_widgets/iattribute.h
+	info_widgets/iinfo_widget.cpp info_widgets/iinfo_widget.h
+	info_widgets/info_widget.cpp info_widgets/info_widget.h
+	info_widgets/reinforcement_attribute.cpp info_widgets/reinforcement_attribute.h
+	info_widgets/reinforcement_info_widget.cpp info_widgets/reinforcement_info_widget.h
 	log_selector.ui log_selector.h log_selector.cpp
 	logscreen.ui logscreen.h logscreen.cpp
 	main.cpp
@@ -25,11 +27,8 @@ set(GUI_SOURCE_FILES
 	map_editor.cpp map_editor.h map_editor.ui
 	map_scene.cpp map_scene.h
 	playernamedialog.cpp playernamedialog.h playernamedialog.ui
-	playerinfowidget.cpp playerinfowidget.h playerinfowidget.ui
 	qgraphics_country_item.cpp qgraphics_country_item.h
 	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h
-	reinforcement_attribute.cpp reinforcement_attribute.h
-	reinforcement_info_widget.cpp reinforcement_info_widget.h
 )
 
 set(GUI_RESOURCE_FILES

@@ -1,7 +1,7 @@
 #ifndef DECORATOR_INFO_WIDGET
 #define DECORATOR_INFO_WIDGET
 #include "iinfo_widget.h"
-class DecoratorInfoWidget: public IInfoWidget, public Observer{
+class DecoratorInfoWidget: public IInfoWidget {
 protected:
 	IInfoWidget* baseInfoWidget;
 public:

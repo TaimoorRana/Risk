@@ -6,37 +6,36 @@ LogScreen::LogScreen(GameDriver* driver, std::string logPhase, std::string logPl
 	this->driver = driver;
 
 	// Create a new listener (message sink)
-	logListener = new LogListener();
+	this->logListener = new LogListener();
 
 	// Decorate it
 	if (logPhase == "All phases") {
-		logListener = new PhaseLogFilter(logListener, REINFORCEMENT);
-		logListener = new PhaseLogFilter(logListener, ATTACK);
-		logListener = new PhaseLogFilter(logListener, FORTIFICATION);
+		this->logListener = new PhaseLogFilter(this->logListener, REINFORCEMENT);
+		this->logListener = new PhaseLogFilter(this->logListener, ATTACK);
+		this->logListener = new PhaseLogFilter(this->logListener, FORTIFICATION);
 	}
 	else if (logPhase == "Reinforcement") {
-		logListener = new PhaseLogFilter(logListener, REINFORCEMENT);
+		this->logListener = new PhaseLogFilter(this->logListener, REINFORCEMENT);
 	}
 	else if (logPhase == "Attack") {
-		logListener = new PhaseLogFilter(logListener, ATTACK);
+		this->logListener = new PhaseLogFilter(this->logListener, ATTACK);
 	}
 	else if (logPhase == "Fortification") {
-		logListener = new PhaseLogFilter(logListener, FORTIFICATION);
+		this->logListener = new PhaseLogFilter(this->logListener, FORTIFICATION);
 	}
 	if (logPlayer == "All players") {
 		for (auto &ent1 : this->driver->getRiskMap()->getPlayers()) {
 			std::string playerName = ent1.first;
-			logListener = new PlayerLogFilter(logListener, playerName);
+			this->logListener = new PlayerLogFilter(this->logListener, playerName);
 		}
 	}
 	else {
-		logListener = new PlayerLogFilter(logListener, logPlayer);
+		this->logListener = new PlayerLogFilter(this->logListener, logPlayer);
 	}
 
 	// Connect it to the logger (message source)
-	Logger::getInstance()->attachListener(logListener);
+	Logger::getInstance()->attachListener(this->logListener);
 
-	this->logListener = logListener;
 	this->logListener->attachHandler(this);
 	ui->setupUi(this);
 	ui->textEdit->insertPlainText("Decorated logging started...\n");
