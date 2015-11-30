@@ -392,11 +392,6 @@ void MapScene::connectNeighboursVisit(std::map<const std::string, bool>& visited
 	RiskMap* map = this->driver->getRiskMap();
 	for (auto const &neighbour_str : map->getNeighbours(country->getName())) {
 		Country* neighbour = map->getCountry(neighbour_str);
-		if (visited.at(neighbour->getName())) {
-			// We already have a line from neighbour -> country , so no need for
-			// another one from country -> neighbour.
-			continue;
-		}
 		QGraphicsCountryEdgeItem* line = new QGraphicsCountryEdgeItem(country, neighbour);
 		this->addItem(line);
 		line->setZValue(1);
