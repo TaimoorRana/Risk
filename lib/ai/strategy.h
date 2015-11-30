@@ -27,6 +27,8 @@ public:
 	 * sets where is the country to attack from and the number of armies.
 	 */
 	void setAttackFrom(std::string countryName, int numberOfArmiesOnTerritory);
+	std::string getCurrentCountry();
+	std::string getCountryToAttack();
 
 	void whereToAttackFrom(RiskMap *map);
 	/**

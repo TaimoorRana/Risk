@@ -11,16 +11,28 @@ void Strategy::setAttackFrom(std::string countryName, int numberOfArmiesOnTerrit
 	this->currentCountry = countryName;
 }
 
+std::string Strategy::getCurrentCountry()
+{
+	return currentCountry;
+}
+
+std::string Strategy::getCountryToAttack()
+{
+	return countryToAttack;
+}
+
 void Strategy::whereToAttackFrom(RiskMap *map)
 {
 	listOfPlayerCountries= map->getCountriesOwnedByPlayer(getPlayer());
 	auto l_iter = listOfAttackCountries.begin();
 	while (l_iter != listOfPlayerCountries.end()) {
 		setAttackFrom(*l_iter,map->getCountry(*l_iter)->getArmies());
-		if (decideAttackingCountry(map)==" " ) {
+		if (decideAttackingCountry(map) == " " ) {
 			l_iter++;
 		}
 		else{
+			currentCountry = *l_iter;
+			countryToAttack = decideAttackingCountry(map);
 			break;
 		}
 
