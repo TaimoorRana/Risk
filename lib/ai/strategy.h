@@ -10,6 +10,7 @@
  * An abstract class which implements the stragety design pattern for allowing the player to
  * decide which enemy to attack
  */
+
 class Strategy
 {
 public:

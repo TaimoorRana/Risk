@@ -1,11 +1,15 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <string>
-
+#include "ai/strategy.h"
 #include <cereal/types/string.hpp>
 #include <cereal/types/set.hpp>
 
+class Strategy;
+
 #include "observable.h"
+
+
 
 class Player: public Observable {
 protected:
@@ -13,6 +17,7 @@ protected:
 	int battleWon = 0; ///< Number of battles the user has won (either attacking or defending)
 	int battleLost = 0; ///< Number of battles the user has lost (either attacking or defending)
 	std::string name = "";
+	bool isHuman;
 
 public:
 	Player() {}
@@ -76,6 +81,7 @@ public:
 	 * @brief getReinforcements
 	 */
 	int getReinforcements() const;
+	void setStrategy(Strategy *strategy);
 
 	template<class Archive>
 	void serialize(Archive& archive) {
