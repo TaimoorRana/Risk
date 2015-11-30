@@ -6,66 +6,49 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>408</width>
-    <height>164</height>
+    <width>467</width>
+    <height>188</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Setup - Risk</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Select which filters to decorate the logger with. Note that the filters are additive (OR joined); for example, selecting a specific phase will have no effect if &quot;All Players&quot; is selected.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
     <widget class="QLabel" name="label">
      <property name="enabled">
       <bool>true</bool>
      </property>
      <property name="text">
-      <string>Select Phases</string>
+      <string>Phases:</string>
      </property>
     </widget>
-   </item>
-   <item row="2" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QComboBox" name="PlayersCombo">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="currentText">
-        <string>0</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>0</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
    </item>
    <item row="1" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout"/>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Players:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
     <widget class="QComboBox" name="PhasesCombo">
      <item>
       <property name="text">
-       <string>All Phases</string>
+       <string>None</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Fortify</string>
+       <string>All phases</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Fortification</string>
       </property>
      </item>
      <item>
@@ -75,12 +58,42 @@
      </item>
      <item>
       <property name="text">
-       <string>Reinforce</string>
+       <string>Reinforcement</string>
       </property>
      </item>
     </widget>
    </item>
-   <item row="4" column="0" colspan="2">
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Players:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="PlayersCombo">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentText">
+      <string>None</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>None</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>All players</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="4" column="1">
     <widget class="QDialogButtonBox" name="SubmitStats">
      <property name="enabled">
       <bool>true</bool>
@@ -93,15 +106,15 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <spacer name="horizontalSpacer">
+   <item row="3" column="0" colspan="2">
+    <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>40</width>
-       <height>20</height>
+       <width>20</width>
+       <height>40</height>
       </size>
      </property>
     </spacer>

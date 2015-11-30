@@ -7,6 +7,8 @@ fix_project_version()
 set(GUI_SOURCE_FILES
 	enum_tooltype.h
 	country_name_dialog.cpp country_name_dialog.h country_name_dialog.ui
+	log_selector.ui log_selector.h log_selector.cpp
+	logscreen.ui logscreen.h logscreen.cpp
 	main.cpp
 	mainscreen.cpp mainscreen.h mainscreen.ui
 	map_editor.cpp map_editor.h map_editor.ui
@@ -16,10 +18,6 @@ set(GUI_SOURCE_FILES
 	playerinfowidget.cpp playerinfowidget.h playerinfowidget.ui
 	qgraphics_country_item.cpp qgraphics_country_item.h
 	qgraphics_country_edge_item.cpp qgraphics_country_edge_item.h
-
-        log_selector.ui log_selector.h log_selector.cpp
-        logscreen.ui logscreen.h logscreen.cpp
-
 )
 
 set(GUI_RESOURCE_FILES

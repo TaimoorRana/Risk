@@ -6,37 +6,34 @@ Observable::Observable() {
 }
 
 void Observable::attachObserver(Observer* observer){
-  observers.push_back(observer);
+	observers.push_back(observer);
 };
 
 void Observable::detachObserver(Observer* observer){
-  observers.remove(observer);
+	observers.remove(observer);
 };
 
 void Observable::detachAllObservers(){
-    for (Observer* o: observers){
-        if (o != nullptr){
-        observers.remove(o);
-        delete o;
-        o = nullptr;
-        }
-    }
+	for (Observer* o: observers){
+		if (o != nullptr) {
+			observers.remove(o);
+		}
+	}
 }
 
-
 void Observable::setNotificationsEnabled(bool enabled){
-  this->notifyEnabled = enabled;
+	this->notifyEnabled = enabled;
 };
 
 bool Observable::getNotificationsEnabled(){
-  return this->notifyEnabled;
+	return this->notifyEnabled;
 };
 
 void Observable::notifyObservers() const{
 	if (!this->notifyEnabled) {
 		return;
 	}
-  for (Observer* observer : observers) {
+	for (Observer* observer : observers) {
 		observer->observedUpdated();
-  }
+	}
 };

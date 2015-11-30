@@ -1,6 +1,7 @@
 #include <algorithm>
 #include "debug.h"
 #include "librisk.h"
+#include "logging/logger.h"
 #include "game_driver.h"
 
 GameDriver::GameDriver(RiskMap* map) {
@@ -18,7 +19,9 @@ RiskMap* GameDriver::getRiskMap() {
  * @brief Sets the name of the player whose turn is active
  */
 void GameDriver::setCurrentPlayerName(const std::string& name) {
+	Logger::getInstance()->logMessage(this->currentPlayerName, this->getCurrentMode(), "turn ended");
 	this->currentPlayerName = name;
+	Logger::getInstance()->logMessage(this->currentPlayerName, this->getCurrentMode(), "turn started");
 	this->recalculateReinforcements();
 	this->notifyObservers();
 }
@@ -41,7 +44,9 @@ Mode GameDriver::getCurrentMode() const {
  * @brief Sets the current game phase
  */
 void GameDriver::setCurrentMode(const Mode& mode) {
+	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->currentMode, "phase ended");
 	this->currentMode = mode;
+	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->currentMode, "phase started");
 	this->notifyObservers();
 }
 
@@ -49,6 +54,7 @@ void GameDriver::setCurrentMode(const Mode& mode) {
  * @brief Perform an attack move on a country
  */
 bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountry) {
+	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "Starting attack on " + defenderCountry->getName() + "[owned by " + defenderCountry->getPlayer() + "] from " + attackerCountry->getName());
 	int attackerArmy = attackerCountry->getArmies();
 	int defenderArmy = defenderCountry->getArmies();
 	int attackerDiceCount = 0;

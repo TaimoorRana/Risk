@@ -1,16 +1,9 @@
 #ifndef MAINSCREEN_H
 #define MAINSCREEN_H
 #include <QMainWindow>
-#include <QMouseEvent>
 #include <QString>
-
-#include "game_modes.h"
+#include "logscreen.h"
 #include "map_editor.h"
-#include "log_selector.h"
-
-#include "playernamedialog.h"
-#include "risk_map.h"
-
 #include "ui_mainscreen.h"
 
 namespace Ui {
@@ -56,21 +49,15 @@ private slots:
 	 */
 	void on_endPhasePushButton_clicked();
 
-
-
 private:
 	std::string playerName = "";
 	std::string mapPath = "";
 
 	Ui::MainScreen* ui = nullptr;
 	MapEditor* editor = nullptr;
+	LogScreen* logScreen = nullptr;
 	GameDriver* driver = nullptr;
 	MapScene* scene = nullptr;
-
-
-	LogSelector *logSelector = nullptr;
-
-
 
 	void initializeMode();
 	Player* playerRoundRobin(int i);

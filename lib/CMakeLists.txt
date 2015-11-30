@@ -4,6 +4,7 @@ set(LIBRARY_SOURCE_FILES
 	ai/defensive.h ai/defensive.cpp
 	ai/random.h ai/random.cpp
 	continent.cpp continent.h
+	computer_player.h computer_player.cpp
 	country.cpp country.h
 	debug.cpp debug.h
 	graph_adt.cpp graph_adt.h
@@ -11,19 +12,14 @@ set(LIBRARY_SOURCE_FILES
 	game_driver.cpp game_driver.h
 	game_state.cpp game_state.h
 	librisk.cpp librisk.h
+	logging/log_handler.h
+	logging/log_listener.cpp logging/log_listener.h
+	logging/logger.cpp logging/logger.h
+	logging/phase_log_filter.cpp logging/phase_log_filter.h
+	logging/player_log_filter.cpp logging/player_log_filter.h
 	observable.cpp observable.h observer.h
 	player.cpp player.h
 	risk_map.cpp risk_map.h
-
-        computer_player.h computer_player.cpp
-
-        component.h decorator.h decorator.cpp
-        concrete_reinforce.h concrete_reinforce.cpp
-        concrete_attack.h concrete_attack.cpp
-        concrete_fortify.h concrete_fortify.cpp
-        player_log.h player_log.cpp
-
-
 )
 
 add_library(lib${PROJECT_NAME} STATIC ${LIBRARY_SOURCE_FILES})

@@ -12,14 +12,12 @@
 #include "debug.h"
 #include "game_driver.h"
 #include "game_state.h"
+#include "log_selector.h"
 #include "mainscreen.h"
 #include "map_scene.h"
 #include "player.h"
+#include "playernamedialog.h"
 #include "playerinfowidget.h"
-
-#include "logscreen.h"
-
-
 
 MainScreen::MainScreen(GameDriver* driver, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainScreen)
 {
@@ -150,38 +148,25 @@ void MainScreen::endPhase()
 	}
 }
 
-
 void MainScreen::on_logButton_clicked()
 {
-	if(logSelector !=NULL){
-		this->logSelector->show();
-		this->logSelector->raise();
+	std::vector<std::string> playerNames = std::vector<std::string>();
+	for (auto &ent1 : this->driver->getRiskMap()->getPlayers()) {
+		std::string playerName = ent1.first;
+		playerNames.push_back(playerName);
 	}
-	else{
-		this->logSelector = new LogSelector(this,(driver->getRiskMap()->getPlayers().size()));
-		this->logSelector->show();
-	}
-	bool decision=true;
-	while (decision) {
-
-		LogScreen *lScreen = new LogScreen(this,driver);
-
-		if(this->logSelector->exec()){
-			lScreen->setPlayers(logSelector->getSelectedPlayer());
-			lScreen->setState(logSelector->getSelectedPhase());
-			lScreen->update();
-			lScreen->show();
-			driver->attachObserver(lScreen);
-
-			decision =false;
+	LogSelector* logSelector = new LogSelector(playerNames, this);
+	if (logSelector->exec() == QDialog::Accepted) {
+		std::string logPhase = logSelector->getSelectedPhase();
+		std::string logPlayer = logSelector->getSelectedPlayer();
+		if (this->logScreen != nullptr) {
+			delete logScreen;
 		}
-		else if(this->logSelector->close()){
-			decision = false;
-		}
+		this->logScreen = new LogScreen(this->driver, logPhase, logPlayer, this);
+		this->logScreen->show();
 	}
-
+	delete logSelector;
 }
-
 
 void MainScreen::on_loadAction_triggered() {
 	QString filename(QFileDialog::getOpenFileName(this, tr("Open saved game"), QDir::currentPath(), tr("Risk game state (*.risksave)")));
@@ -190,11 +175,6 @@ void MainScreen::on_loadAction_triggered() {
 		GameState::load(filename.toStdString(), this->driver);
 	}
 }
-
-
-
-
-
 
 void MainScreen::on_saveAction_triggered() {
 	QString filename(QFileDialog::getSaveFileName(this, tr("Save game"), QDir::currentPath(), tr("Risk game state (*.risksave)")));
@@ -213,7 +193,6 @@ void MainScreen::on_mapEditorAction_triggered() {
 		this->editor = new MapEditor(this);
 		this->editor->show();
 	}
-
 }
 
 void MainScreen::observedUpdated() {

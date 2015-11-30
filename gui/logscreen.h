@@ -2,82 +2,39 @@
 #define LOGSCREEN_H
 #include <QMainWindow>
 #include <string>
-#include "observer.h"
-#include "game_modes.h"
-#include "component.h"
 #include "game_driver.h"
+#include "logging/logger.h"
+#include "logging/log_handler.h"
+#include "logging/log_listener.h"
+#include "logging/phase_log_filter.h"
+#include "logging/player_log_filter.h"
+
 /**
  * The namespace used for linking with .ui file widget.
  */
-namespace Ui{
+namespace Ui {
 	class LogScreen;
 }
-/**
- * @brief The LogScreen class the display of the LogScreen Observer
- *
- */
-class LogScreen : public QMainWindow, public Observer
 
-{
+/**
+ * @brief An implementation of a log handler that displays log messages to the GUI
+ */
+class LogScreen : public QMainWindow, public LogHandler {
 	Q_OBJECT
 
 public:
-	/**
-	 * @brief LogScreen
-	 * @param parent - the parent widget
-	 */
-	explicit LogScreen(QWidget *parent=0, GameDriver* driver=nullptr);
-
+	explicit LogScreen(GameDriver* driver, std::string logPhase, std::string logPlayer, QWidget *parent=0);
 	~LogScreen();
-	/**
-	 * @brief setPlayers sets the number of players
-	 * @param nPlayers
-	 */
-	void setPlayers(int nPlayers);
-	/**
-	 * @brief setState
-	 * @param stateSelected
-	 */
-	void setState(std::string stateSelected);
-	/**
-	 * @brief getPlayers
-	 * @return
-	 */
-	int getPlayers();
-	/**
-	 * @brief setCurrentMode
-	 * @param mode
-	 */
 
-	void setCurrentMode (Mode mode);
 	/**
-	 * @brief getCurrentMode
-	 * @return
+	 * @brief Observer notification indicating there is a new message to be logged
 	 */
-	Mode getCurrentMode();
-	/**
-	 * @brief getState
-	 * @return
-	 */
-	std::string getState();
-	/**
-	 * @brief update not the observer update but used as an update for initiaition of the class.
-	 */
-	void update();
-	/**
-	 * @brief observedUpdated
-	 * called each time the observer class changes to update the view
-	 * it checks if we are in the correct state and have the correct player and then it will then update the view accordingly
-	 */
-	virtual void observedUpdated();
+	virtual void messageLogged(std::string message);
+
 private:
-	Ui::LogScreen *ui=nullptr;
-	int players=-1;
-	std::string states;
-	Mode currentMode;
-	Component *component = nullptr;
-	GameDriver* driver =nullptr;
-
+	Ui::LogScreen *ui;
+	LogListener* logListener = nullptr;
+	GameDriver* driver = nullptr;
 };
 
 #endif // LOGSCREEN_H

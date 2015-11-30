@@ -2,6 +2,7 @@
 #define LOG_SELECTOR_H
 #include <QDialog>
 #include <string>
+#include <vector>
 
 namespace Ui {
 	class LogSelector;
@@ -19,32 +20,23 @@ public:
 	 * @param parent the mainwindow
 	 * @param numberOfPlayers gets the number of players in the game and provides this as an option
 	 */
-	explicit LogSelector(QWidget *parent = 0, int numberOfPlayers=0);
+	explicit LogSelector(std::vector<std::string> playerNames, QWidget *parent = 0);
 	~LogSelector();
+
 	/**
 	 * @brief getSelectedPlayer
 	 * @return
 	 */
-	int getSelectedPlayer();
+	std::string getSelectedPlayer();
+
 	/**
 	 * @brief getSelectedPhase
 	 * @return
 	 */
 	std::string getSelectedPhase();
-	/**
-	 * @brief setNumberPlayers
-	 * @param players
-	 */
-	void setNumberPlayers(int players);
-	/**
-	 * @brief generatePlayers
-	 * @param numberOfPlayers
-	 */
-	void generatePlayers(int numberOfPlayers);
 
 private:
 	Ui::LogSelector *ui;
-	int numberOfPlayers;
 };
 
 #endif // STATS_SELECTOR_H
