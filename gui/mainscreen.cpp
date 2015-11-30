@@ -163,6 +163,11 @@ void MainScreen::allocateArmiesByNumberOfPlayers(const std::string p){
 			iter = x.begin();
 		}
 	}
+	
+	for(auto &ent1: map->getPlayers()){
+		map->getPlayer(ent1.first)->notifyObservers();
+	}
+	
 }
 
 void MainScreen::on_endPhasePushButton_clicked() {
