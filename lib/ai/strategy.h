@@ -27,7 +27,10 @@ public:
 	 * sets where is the country to attack from and the number of armies.
 	 */
 	void setAttackFrom(std::string countryName, int numberOfArmiesOnTerritory);
+	std::string getCurrentCountry();
+	std::string getCountryToAttack();
 
+	void whereToAttackFrom(RiskMap *map);
 	/**
 	 * @brief isAttack
 	 * is there the possibility of currently attacking
@@ -41,7 +44,7 @@ public:
 	 * @param map
 	 * gets the map does not copy it
 	 */
-	void getMap(RiskMap map);
+	void getMap(RiskMap *map);
 
 	/**
 	 * @brief setCountryAttackFrom
@@ -67,6 +70,7 @@ public:
 	 */
 	bool isSameOwner(std::string countryOwner1, std::string countryOwner2);
 	int getNumberOfArmies();
+	std::string getPlayer();
 	void setAttack(bool attack);
 
 	//may just use map and call internally
@@ -77,11 +81,12 @@ public:
 	 * Then decides which territory to attack and returns it.
 	 * @return
 	 */
-	virtual std::string decideAttackingCountry(RiskMap map);
+	virtual std::string decideAttackingCountry(RiskMap *map);
 protected:
 	//need list of bordering countreis
 	std::string nameOfPlayer;
 	std::set<std::string> listOfAttackCountries; //should be a set
+	std::set<std::string> listOfPlayerCountries;
 	Country *attacker; //see if right or string
 	Country *defender;
 	//int numberofArmies on territory may need to specify optimal

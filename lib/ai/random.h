@@ -18,7 +18,7 @@ public:
 	 * Ovewrites parent method and decides using the defensive strategy which country to attack
 	 * @return
 	 */
-	std::string decideAttackingCountry(RiskMap map);
+	std::string decideAttackingCountry(RiskMap* map);
 };
 
 #endif // AI_RANDOM_H
