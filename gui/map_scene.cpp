@@ -156,6 +156,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				break;
 			case ATTACK:
 				item = getQGraphicsCountryItemFromEvent(event);
+
 				if (item == nullptr) {
 					return;
 				}
@@ -185,6 +186,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					}
 					firstCountryClicked = nullptr;
 					secondCountryClicked = nullptr;
+
 				}
 				break;
 			case FORTIFICATION:

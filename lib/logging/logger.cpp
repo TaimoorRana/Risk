@@ -1,5 +1,4 @@
 #include "logger.h"
-#include "debug.h"
 
 Logger::Logger() {
 	this->listeners = std::list<LogListener*>();
@@ -14,8 +13,6 @@ Logger* Logger::getInstance() {
 }
 
 void Logger::logMessage(std::string playerName, Mode mode, std::string message) {
-	debug("log event");
-
 	std::string phase = "Unknown";
 	if (mode == REINFORCEMENT) {
 		phase = "reinforcement";

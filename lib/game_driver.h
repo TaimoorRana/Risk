@@ -16,9 +16,10 @@
  */
 class GameDriver: public Observable {
 public:
-	GameDriver(RiskMap* map);
 	virtual ~GameDriver() {};
+	static GameDriver* getInstance();
 	RiskMap* getRiskMap();
+	void setRiskMap(RiskMap* map);
 
 	std::string getCurrentPlayerName() const;
 	void setCurrentPlayerName(const std::string& name);
@@ -36,6 +37,7 @@ public:
 	}
 
 private:
+	GameDriver() {}
 	RiskMap* map = nullptr;
 	std::string currentPlayerName = "";
 

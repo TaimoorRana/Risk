@@ -9,7 +9,8 @@
 #include <QFileInfo>
 #include <QString>
 
-#include "debug.h"
+#include "continent_info_widget.h"
+#include "info_widget.h"
 #include "game_driver.h"
 #include "game_state.h"
 #include "log_selector.h"
@@ -18,6 +19,9 @@
 #include "player.h"
 #include "playernamedialog.h"
 #include "playerinfowidget.h"
+#include "reinforcement_info_widget.h"
+
+
 
 MainScreen::MainScreen(GameDriver* driver, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainScreen)
 {
@@ -73,7 +77,11 @@ bool MainScreen::setupPlayers() {
 
 	int totalPlayers = dialog.getPlayerCount();
 	for (int x = 0; x < totalPlayers; x++) {
-		map->addPlayer(Player("Player " + std::to_string(x+1)));
+		Player *player = map->addPlayer(Player("Player " + std::to_string(x+1)));
+		player->setNotificationsEnabled(false);
+		player->setReinforcements(10);
+		player->setNotificationsEnabled(true);
+		player->notifyObservers();
 	}
 
 	std::string firstPlayerName = (*map->getPlayers().begin()).first;
@@ -211,7 +219,7 @@ void MainScreen::observedUpdated() {
 		Player p = ent1.second;
 		Player *player = map->getPlayer(p.getName());
 
-		PlayerInfoWidget* playerinfo = new PlayerInfoWidget(this->driver, player, this->scene->getPlayerColor(player->getName()), this);
+		IInfoWidget* playerinfo = new InfoWidget(player, this->scene);
 		ui->horizontalLayout_2->addWidget(playerinfo);
 	}
 

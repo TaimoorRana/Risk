@@ -31,7 +31,8 @@ int main(int argc, char *argv[]) {
 	showSplashScreen();
 
 	RiskMap* riskMap = new RiskMap();
-	GameDriver* driver = new GameDriver(riskMap);
+	GameDriver* driver = GameDriver::getInstance();
+	driver->setRiskMap(riskMap);
 	MainScreen* mainScreen = new MainScreen(driver);
 
 	mainScreen->setupPlayers();
