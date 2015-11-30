@@ -32,6 +32,9 @@
         <property name="toolTip">
          <string>Click to browse our computer to find a map to load into the map editor.</string>
         </property>
+        <property name="toolTipDuration">
+         <number>3</number>
+        </property>
         <property name="text">
          <string>Browse...</string>
         </property>
@@ -51,7 +54,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="newPushButton">
+       <widget class="QPushButton" name="clearMapPushButton">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -64,7 +67,27 @@
        </widget>
       </item>
       <item>
+       <widget class="QComboBox" name="saveComboBox">
+        <property name="toolTip">
+         <string>Set format for saving the map file.</string>
+        </property>
+        <item>
+         <property name="text">
+          <string extracomment="The format implemented from the website. A variant of CSV.">.map</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string extracomment="XML format automatically derived from the Cereal library">.xml</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="saveMapPushButton">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="toolTip">
          <string>Click to save the map file into the build folder.</string>
         </property>

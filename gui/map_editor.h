@@ -8,10 +8,12 @@
 #include "observer.h"
 #include "risk_map.h"
 #include "ui_map_editor.h"
+#include "enum_savetype.h"
 
 namespace Ui {
 	class MapEditor;
 }
+
 
 class MapEditor : public QMainWindow, public Observer {
 	Q_OBJECT
@@ -20,18 +22,20 @@ public:
 	~MapEditor();
 	ToolMode getSelectedTool();
 	void observedUpdated();
+	bool hasEnding(std::string const &fullString, std::string const &ending);
 
 private slots:
 	void on_filenameLineEdit_textChanged(QString text);
 	void on_browsePushButton_clicked();
 	void on_loadPushButton_clicked();
-	void on_newPushButton_clicked();
+	void on_clearMapPushButton_clicked();
 
 	void on_saveMapPushButton_clicked();
 	void on_addCountryPushButton_clicked();
 	void on_removeCountryPushButton_clicked();
 	void on_addNeighbourPushButton_clicked();
 	void on_removeNeighbourPushButton_clicked();
+
 
 private:
 	std::string mapPath = "";
@@ -40,6 +44,7 @@ private:
 	RiskMap* observedMap = nullptr;
 	GameDriver* dummyDriver = nullptr;
 	ToolMode tool = OFF;
+	SaveType saveMode = MAP;
 
 	bool validateFilename(const QString& text);
 	void resetToolbar();

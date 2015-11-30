@@ -2,6 +2,8 @@
 #define CONTINENT_H
 
 #include <string>
+
+#include <cereal/cereal.hpp>
 #include <cereal/types/string.hpp>
 
 /**

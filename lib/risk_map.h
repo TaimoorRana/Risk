@@ -10,12 +10,14 @@
 
 #include <cereal/types/string.hpp>
 #include <cereal/types/map.hpp>
+#include <cereal/archives/xml.hpp>
 
 #include "country.h"
 #include "continent.h"
 #include "graph_adt.h"
 #include "player.h"
 #include "observable.h"
+#include "../gui/enum_savetype.h"
 
 #define MAP_PARSE_MODE_MAP 1
 #define MAP_PARSE_MODE_CONTINENTS 2
@@ -32,11 +34,14 @@ private:
 	std::map<std::string, Country> countries;
 	std::map<std::string, Player> players;
 	SubGraphADT mapGraph;
-
 public:
 	bool disableNotify = false;
-  virtual ~RiskMap();
-
+	/**
+	 * @brief RiskMap default constructor
+	 */
+	RiskMap();
+	virtual ~RiskMap();
+	bool areCountriesAdjacent(const std::string& country_a, const std::string& country_b);
 	void addContinent(const Continent& continent);
 	Continent* getContinent(const std::string& name);
 	string_set getCountriesInContinent(const std::string& continentName);
@@ -60,9 +65,13 @@ public:
 	const std::map<std::string, Country>& getCountries() const;
 	const std::map<std::string, Player>& getPlayers() const;
 
-	void parse(const std::string& path);
-	static RiskMap* load(const std::string& path);
-	bool save(const std::string& path);
+	void load(const std::string& path);
+	void loadMap(const std::string& path);
+	void loadXML(const std::string& path);
+	bool save(SaveType t, std::string path);
+	bool saveMap(const std::string& path);
+	bool saveXML(const std::string& path);
+
 	void clear();
 	bool validate();
 
@@ -71,7 +80,7 @@ public:
 
 	template<class Archive>
 	void serialize(Archive& archive) {
-		archive(cereal::make_nvp("continents", this->continents), cereal::make_nvp("countries", this->countries), cereal::make_nvp("players", this->players));
+		archive(cereal::make_nvp("continents", this->continents), cereal::make_nvp("countries", this->countries), cereal::make_nvp("graph", this->mapGraph),cereal::make_nvp("players", this->players));
 	}
 };
 

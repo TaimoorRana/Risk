@@ -80,13 +80,8 @@
         </sizepolicy>
        </property>
        <property name="currentText">
-        <string>3</string>
+        <string>2</string>
        </property>
-       <item>
-        <property name="text">
-         <string>1</string>
-        </property>
-       </item>
        <item>
         <property name="text">
          <string>2</string>
@@ -100,6 +95,16 @@
        <item>
         <property name="text">
          <string>4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>5</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>6</string>
         </property>
        </item>
       </widget>

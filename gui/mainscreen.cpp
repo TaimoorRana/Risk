@@ -20,8 +20,6 @@
 #include "player.h"
 #include "playernamedialog.h"
 
-
-
 MainScreen::MainScreen(GameDriver* driver, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainScreen)
 {
 	ui->setupUi(this);
@@ -60,7 +58,7 @@ bool MainScreen::setupPlayers() {
 			continue;
 		}
 
-		map->parse(this->mapPath);
+		map->load(this->mapPath);
 		if (!map->validate()) {
 			QMessageBox errorDialog(this);
 			errorDialog.setWindowTitle("Error!");
@@ -103,10 +101,15 @@ bool MainScreen::setupPlayers() {
 		Country* country = vectorOfCountryPointers[*iter];
 		Player* player = playerRoundRobin(p++);
 		country->setPlayer(player->getName());
-		country->setArmies(10);
+		country->setArmies(1);
 		iter++;
 	}
 	this->driver->recalculateReinforcements();
+
+	// distribute the rest of the armies
+	for(auto const &iter : map->getPlayers()){
+		this->allocateArmiesByNumberOfPlayers(iter.first);
+	}
 
 	return true;
 }
@@ -135,6 +138,31 @@ Player* MainScreen::playerRoundRobin(int i){
 	auto iter = map->getPlayers().begin();
 	std::advance(iter, i % (map->getPlayers().size()));
 	return map->getPlayer((*iter).first);
+}
+
+void MainScreen::allocateArmiesByNumberOfPlayers(const std::string p){
+	RiskMap* map = this->driver->getRiskMap();
+	const int armiesByNumPlayers[] = {40, 35, 30, 25, 20};
+	int totalArmies = armiesByNumPlayers[map->getPlayers().size()-2];
+
+	std::vector<Country*> vectorOfCountryPointers;
+	for (auto const &ent1 : map->getCountriesOwnedByPlayer(p)) {
+		vectorOfCountryPointers.push_back(map->getCountry(ent1));
+	}
+
+	totalArmies -= map->getCountriesOwnedByPlayer(p).size();
+
+	std::vector<int> x = getVectorOfIndicesRandomCountryAccess(map->getCountriesOwnedByPlayer(p).size());
+	std::vector<int>::const_iterator iter = x.begin();
+
+	while (totalArmies > 0){
+		Country* country = vectorOfCountryPointers[*iter];
+		country->addArmies(1);
+		totalArmies--;
+		if (++iter == x.end()) {
+			iter = x.begin();
+		}
+	}
 }
 
 void MainScreen::on_endPhasePushButton_clicked() {

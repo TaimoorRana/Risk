@@ -1,5 +1,6 @@
 #include "graph_adt.h"
 
+
 //02 ;; Return the set of all the vertices of the graph.
 std::set<std::string> GraphADT::nodes() const{
 	std::set<std::string> export_nodes(set_of_vertices);
@@ -13,7 +14,7 @@ std::set<std::string> GraphADT::edges() const{
 	}
 
 //04 ;; Return the number of vertices currently present in the graph.
-int GraphADT::countAllNodes() const {return number_of_nodes; }
+int GraphADT::countAllNodes() const {return number_of_vertices; }
 
 //05 ;; Return the number of edges currently present in the graph.
 int GraphADT::countAllEdges() const {return number_of_edges; }
@@ -87,7 +88,7 @@ bool GraphADT::insertNode(std::string nodename) {
 	if (thegraph.find(nodename) == thegraph.end()){
 		//  node_hashmap x;
 		thegraph[nodename]= node_hashmap(); //x
-		number_of_nodes++;
+		number_of_vertices++;
 		set_of_vertices.insert(nodename);
 		return true;
 		}
@@ -133,7 +134,7 @@ bool GraphADT::removeNode(std::string vertexname){
 			*graphiter++;}
 		thegraph.erase(vertexname);
 		set_of_vertices.erase(vertexname);
-		number_of_nodes--;
+		number_of_vertices--;
         return true;
 		}
     else{
@@ -238,7 +239,7 @@ GraphADT::GraphADT(const GraphADT& other) {
 	set_of_vertices = string_set(other.set_of_vertices);
 	set_of_edges = string_set(other.set_of_edges);
 	number_of_edges= other.number_of_edges;
-	number_of_nodes= other.number_of_nodes;
+	number_of_vertices= other.number_of_vertices;
 	}
 
 
@@ -272,7 +273,7 @@ bool GraphADT::isEqual(const GraphADT& graph2) const {
 }
 
 bool GraphADT::emptyGraph() {
-	return (number_of_nodes==0);
+	return (number_of_vertices==0);
 }
 
 GraphADT GraphADT::graph_intersection(const GraphADT& g2) const {
@@ -326,7 +327,7 @@ GraphADT GraphADT::copyGraph() const {
 	output.set_of_vertices = string_set(set_of_vertices);
 	output.set_of_edges = string_set(set_of_edges);
 	output.number_of_edges= number_of_edges;
-	output.number_of_nodes= number_of_nodes;
+	output.number_of_vertices= number_of_vertices;
 	return output;
 }
 
@@ -379,6 +380,9 @@ void GraphADT::printGraph() const {
 		}
 	std::cout<<"\n\n"<<std::endl;
 	}
+
+
+
 
 bool DirectedGraphADT::areAdjacent(std::string v, std::string w) const{
   return false;

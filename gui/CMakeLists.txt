@@ -7,6 +7,7 @@ fix_project_version()
 set(GUI_SOURCE_FILES
 	country_name_dialog.cpp country_name_dialog.h country_name_dialog.ui
 	enum_tooltype.h
+	enum_savetype.h
 	fortify_dialog.cpp fortify_dialog.h fortify_dialog.ui
 	info_widgets/army_attribute.cpp info_widgets/army_attribute.h
 	info_widgets/battles_attribute.cpp info_widgets/battles_attribute.h

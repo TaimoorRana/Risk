@@ -1,0 +1,50 @@
+[Continents]
+Asia=7
+Oceania=2
+Africa=3
+South America=2
+Europe=5
+North America=5
+
+[Territories]
+Italia,636,312,Europe,Arabia,Egypt,Germania,Hispania,Russia,Sahara
+Russia,706,163,Europe,Arabia,Germania,Italia,Persia,Scandinavia,Ural
+Japan,1089,271,Asia,Bering,Mongolia
+Ulanbaatar,957,173,Asia,Bering,Mongolia,Siberia,Yakutia
+Greenland,415,36,North America,Iceland,Ontario,Quebec
+Mongolia,966,259,Asia,Bering,China,Japan,Siberia,Ulanbaatar
+Appalacchia,261,272,North America,Mexico,Nova Hispania,Ontario,Quebec
+Amazonia,381,488,South America,Amazonia,Andes,Colombia,Patagonia,Sahara
+China,968,336,Asia,China,India,Mongolia,Persia,Siam,Siberia,Ural
+Yukon,224,106,North America
+Madagascar,767,668,Africa,Kalahari,Somalia
+Mexico,191,319,North America,Appalacchia,Colombia,Nova Hispania
+Bering,1084,63,Asia,Japan,Mongolia,Ulanbaatar,Yakutia
+Yakutia,974,88,Asia,Bering,Siberia,Ulanbaatar
+Scandinavia,591,143,Europe,Britannia,Germania,Iceland,Russia
+Ontario,277,182,North America,Appalacchia,Greenland,Nova Hispania,Quebec
+Britannia,502,235,Europe,Germania,Hispania,Iceland,Scandinavia
+Hispania,510,325,Europe,Britannia,Germania,Italia,Sahara
+Arabia,745,379,Asia,Egypt,India,Italia,Persia,Russia,Somalia
+Patagonia,315,595,South America,Amazonia,Andes
+Persia,808,281,Asia,Arabia,China,India,Russia,Ural
+Congo,657,562,Africa,Kalahari,Sahara,Somalia
+Siam,972,414,Asia,China,India,Indonesia,New Guinea,Siam
+Indonesia,987,546,Oceania,New Guinea,Queensland,Siam
+Victoria,1142,660,Oceania,New Guinea,Queensland
+Iceland,521,130,Europe,Britannia,Greenland,Scandinavia
+Andes,320,520,South America,Amazonia,Andes,Colombia,Patagonia
+Kalahari,662,671,Africa,Congo,Madagascar,Somalia
+Egypt,660,432,Africa,Arabia,Italia,Sahara,Somalia
+Quebec,350,174,North America,Appalacchia,Greenland,Ontario
+Somalia,717,518,Africa,Arabia,Congo,Egypt,Kalahari,Madagascar,Sahara
+Queensland,1040,657,Oceania,Indonesia,Victoria
+Germania,605,239,Europe,Britannia,Hispania,Italia,Russia,Scandinavia
+India,871,383,Asia,Arabia,China,India,Persia,Siam
+New Guinea,1097,523,Oceania,Indonesia,Siam,Victoria
+Colombia,296,408,South America,Amazonia,Andes,Colombia,Mexico
+Nova Hispania,181,238,North America,Appalacchia,Mexico,Ontario
+Sahara,556,479,Africa,Amazonia,Congo,Egypt,Hispania,Italia,Somalia
+Ural,825,152,Asia,China,Persia,Russia,Siberia
+Siberia,884,124,Asia,China,Mongolia,Ulanbaatar,Ural,Yakutia
+

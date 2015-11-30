@@ -1,8 +1,10 @@
+#include <algorithm>
 #include <vector>
 
 #include "risk_map.h"
 #include "debug.h"
 
+RiskMap::RiskMap(){}
 RiskMap::~RiskMap(){
 	this->clear();
 }
@@ -10,6 +12,7 @@ RiskMap::~RiskMap(){
 const std::map<std::string, Continent>& RiskMap::getContinents() const {
 	return this->continents;
 }
+
 const std::map<std::string, Country>& RiskMap::getCountries() const {
 	return this->countries;
 }
@@ -53,6 +56,7 @@ Country* RiskMap::addCountry(const Country& country, const std::string& continen
 	}
 	if (!mapGraph.insertNode(country.getName(), continentName))
 		return nullptr;
+
 	this->notifyObservers();
 	return &this->countries[country.getName()];
 }
@@ -187,9 +191,41 @@ string_set RiskMap::getContinentsOwnedByPlayer(const std::string& playerName) {
 }
 
 /**
+ * @brief Given path to a Conquest map file, build a new RiskMap object
+ */
+void RiskMap::load(const std::string& path) {
+	struct stat buffer;
+	bool exists = (stat (path.c_str(), &buffer) == 0);
+
+	if (!exists) {
+		return;
+	}
+
+	std::string extension = path.substr(path.size() - 3, 3);
+	std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+	debug("Extension: " + extension);
+
+	if (extension == "map") {
+		this->loadMap(path);
+	}
+	else if (extension == "xml") {
+		this->loadXML(path);
+	}
+}
+
+void RiskMap::loadXML(const std::string& path) {
+	this->setNotificationsEnabled(false);
+	std::ifstream infile(path);
+	cereal::XMLInputArchive input(infile);
+	input(cereal::make_nvp("maprisk", *this));
+	this->setNotificationsEnabled(true);
+	this->notifyObservers();
+}
+
+/**
  * @brief Parses the map file in the path indicated to populate the instance
  */
-void RiskMap::parse(const std::string& path) {
+void RiskMap::loadMap(const std::string& path) {
 	this->setNotificationsEnabled(false);
 	this->clear();
 
@@ -337,29 +373,34 @@ void RiskMap::parse(const std::string& path) {
 	this->setNotificationsEnabled(true);
 }
 
-/**
- * @brief Given path to a Conquest map file, build a new RiskMap object
- */
-RiskMap* RiskMap::load(const std::string& path) {
-	struct stat buffer;
-	bool exists = (stat (path.c_str(), &buffer) == 0);
-
-	if (!exists) {
-		return NULL;
+bool RiskMap::save(SaveType saveType, std::string path) {
+	std::string extension = "";
+	bool success = false;
+	switch (saveType) {
+		case MAP:
+			extension = ".map";
+			path.append(extension);
+			success = this->saveMap(path);
+			break;
+		case XML:
+			extension = ".xml";
+			path.append(extension);
+			success = this->saveXML(path);
+			break;
+		default:
+			return false;
 	}
+	std::string debug_str("Saved map file to ");
+	debug_str.append(path);
+	debug(debug_str);
 
-	RiskMap* map = new RiskMap();
-	map->parse(path);
-	return map;
+	return success;
 }
 
 /**
  * @brief Serialize the map data into a new Conquest map data file at the given path
  */
-bool RiskMap::save(const std::string& path) {
-	std::string debug_str("Saving map file to ");
-	debug_str.append(path);
-	debug(debug_str);
+bool RiskMap::saveMap(const std::string& path) {
 	std::ofstream outfile(path, std::ios::out);
 	if (!outfile.is_open()) {
 		return false;
@@ -391,6 +432,18 @@ bool RiskMap::save(const std::string& path) {
 /**
  * @brief Erases all data about the map.
  */
+bool RiskMap::saveXML(const std::string& path) {
+	std::ofstream outfile(path, std::ios::out);
+	if (!outfile.is_open()) {
+		return false;
+	}
+
+	cereal::XMLOutputArchive archive( outfile );
+	archive(cereal::make_nvp("maprisk",*this));
+
+	return true;
+}
+
 void RiskMap::clear() {
 	this->continents.clear();
 	this->countries.clear();

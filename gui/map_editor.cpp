@@ -18,7 +18,7 @@ MapEditor::MapEditor(QWidget *parent) : QMainWindow(parent) {
 	observedMap = new RiskMap();
 	observedMap->attachObserver(this);
 
-	dummyDriver = GameDriver::getInstance();
+	dummyDriver = new GameDriver();
 	dummyDriver->setRiskMap(observedMap);
 	scene = new MapScene(dummyDriver, this);
 	scene->setEditable(true);
@@ -48,23 +48,24 @@ bool MapEditor::validateFilename(const QString& text) {
 void MapEditor::on_filenameLineEdit_textChanged(QString text) {
 	if (this->validateFilename(text)) {
 		ui->loadPushButton->setEnabled(true);
-		ui->newPushButton->setEnabled(true);
 	}
 	else {
 		ui->loadPushButton->setEnabled(false);
-		ui->newPushButton->setEnabled(false);
+		ui->clearMapPushButton->setEnabled(false);
 	}
 }
 
 void MapEditor::on_browsePushButton_clicked() {
-	QString filename(QFileDialog::getOpenFileName(this, tr("Open map"), QDir::currentPath(), tr("Risk map files (*.map)")));
+	QString filename(QFileDialog::getOpenFileName(this, tr("Open map"), QDir::currentPath(), tr("Risk Map Files (*.xml *.map)")));
 	this->raise();
 	ui->filenameLineEdit->setText(filename);
 }
 
 void MapEditor::on_loadPushButton_clicked() {
+	ui->clearMapPushButton->setEnabled(true);
 	this->mapPath = ui->filenameLineEdit->text().toStdString();
-	observedMap->parse(this->mapPath);
+	observedMap->load(this->mapPath);
+
 	if(!observedMap->validate()){
 		QMessageBox errorDialog(this);
 		errorDialog.setWindowTitle("Error!");
@@ -76,17 +77,39 @@ void MapEditor::on_loadPushButton_clicked() {
 	this->observedMap->notifyObservers();
 }
 
-void MapEditor::on_newPushButton_clicked() {
+void MapEditor::on_clearMapPushButton_clicked() {
 	observedMap->clear();
 	debug("Loading new map");
+	ui->clearMapPushButton->setEnabled(false);
+	ui->saveMapPushButton->setEnabled(false);
 }
 
+
 void MapEditor::on_saveMapPushButton_clicked(){
-		debug("Save Button clicked\n");
-	if(observedMap->validate()){
-		observedMap->save("riskmap_test0.map");
+	debug("Save Button clicked\n");
+
+	//Removes fatal bug.
+	if (this->observedMap->getCountries().size() == 0) {
+		debug("Can't save an empty map.");
+		this->ui->saveMapPushButton->setDisabled(true);
+		return;
 	}
-	else{
+
+	if (QString::compare((ui->saveComboBox->currentText()), QString::fromStdString(".map"), Qt::CaseInsensitive) == 0) {
+		this->saveMode = MAP;
+		debug("MAP File format selected.");
+	}
+	else {
+		this->saveMode = XML;
+		debug("XML File format selected.");
+	}
+
+	if (observedMap->validate()) {
+		QString filename(QFileDialog::getSaveFileName(this, tr("Save game"), QDir::currentPath(), tr("Risk map")));
+		this->raise();
+		observedMap->save(saveMode, filename.toStdString());
+	}
+	else {
 		QMessageBox errorDialog(this);
 		errorDialog.setWindowTitle("Error!");
 		errorDialog.setText("Invalid map: The map did not validate. Please ensure that the set of all of countries are a connected graph, and countries in each continent are also connected subgraphs.");
@@ -100,6 +123,14 @@ void MapEditor::resetToolbar() {
 	ui->removeCountryPushButton->setChecked(false);
 	ui->addNeighbourPushButton->setChecked(false);
 	ui->removeNeighbourPushButton->setChecked(false);
+	if (this->observedMap->getCountries().size() == 0) {
+		this->ui->saveMapPushButton->setDisabled(true);
+		this->ui->clearMapPushButton->setDisabled(true);
+	}
+	else {
+		this->ui->saveMapPushButton->setEnabled(true);
+		this->ui->clearMapPushButton->setEnabled(true);
+	}
 }
 
 void MapEditor::on_addCountryPushButton_clicked(){
