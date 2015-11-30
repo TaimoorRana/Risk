@@ -11,6 +11,8 @@ void IInfoWidget::draw()
 	subMainLayout->addLayout(nameLayout);
 	subMainLayout->addLayout(valueLayout);
 	subMainLayout->addItem(spacer);
+	mainLayout->setSpacing(2);
+	mainLayout->setContentsMargins(0,0,0,0);
 	std::vector<IAttribute*>::iterator it;
 	for(it = attributes.begin(); it != attributes.end(); it++)
 	{

@@ -19,6 +19,7 @@ set(GUI_SOURCE_FILES
 	info_widgets/iattribute.cpp info_widgets/iattribute.h
 	info_widgets/iinfo_widget.cpp info_widgets/iinfo_widget.h
 	info_widgets/info_widget.cpp info_widgets/info_widget.h
+	info_widgets/name_attribute.cpp info_widgets/name_attribute.h
 	info_widgets/reinforcement_attribute.cpp info_widgets/reinforcement_attribute.h
 	info_widgets/reinforcement_info_widget.cpp info_widgets/reinforcement_info_widget.h
 	log_selector.ui log_selector.h log_selector.cpp
