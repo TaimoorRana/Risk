@@ -28,6 +28,11 @@ if(DOXYGEN_FOUND)
 	)
 endif(DOXYGEN_FOUND)
 
+find_package(cereal REQUIRED)
+if(CEREAL_FOUND)
+	include_directories(${CEREAL_INCLUDE_DIRS})
+endif(CEREAL_FOUND)
+
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -46,5 +51,4 @@ set(IDENTIFIER "github.taimoorrana1.risk")
 
 # Process subdirectories
 add_subdirectory(lib)
-add_subdirectory(cli)
 add_subdirectory(gui)

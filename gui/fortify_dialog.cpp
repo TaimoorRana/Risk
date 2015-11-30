@@ -1,50 +1,52 @@
 #include "fortify_dialog.h"
+#include "game_driver.h"
 #include "ui_fortify_dialog.h"
-#include "debug.h"
 
-
-FortifyDialog::FortifyDialog(Country* firstCountry, Country* secondCountry, MainScreen* aParent, QWidget *parent) :QDialog(parent), ui(new Ui::FortifyDialog)
+/**
+ * @brief Pop-up dialog to configure a fortification move
+ */
+FortifyDialog::FortifyDialog(GameDriver* driver, Country* originCountry, Country* destinationCountry, QWidget *parent) :QDialog(parent), ui(new Ui::FortifyDialog)
 {
-    ui->setupUi(this);
-    int currentArmiesInOriginCountry = firstCountry->getArmies();
-    ui->armiesSlider->setMaximum(currentArmiesInOriginCountry-1);
-    ui->armiesSlider->setMinimum(0);
-
-    this->parent = aParent;
-    this->firstCountry = firstCountry;
-    this->secondCountry = secondCountry;
+	ui->setupUi(this);
+	ui->armiesSlider->setMaximum(originCountry->getArmies() - 1);
+	ui->armiesSlider->setMinimum(0);
+	this->driver = driver;
+	this->setOriginCountry(originCountry);
+	this->setDestinationCountry(destinationCountry);
 }
 
 FortifyDialog::~FortifyDialog()
 {
-    delete ui;
+	delete ui;
 }
 
-void FortifyDialog::setOriginCountryName(QString countryName)
+/**
+ * @brief Sets the name of the origin country from which the player will be moving armies
+ * @param countryName The name of the country of origin
+ */
+void FortifyDialog::setOriginCountry(Country* country)
 {
-    ui->originCountry->setText(countryName);
+	this->originCountry = country;
+	ui->originCountry->setText(QString::fromStdString(country->getName()));
 }
 
-void FortifyDialog::setDestinationCountryName(QString countryName)
+/**
+ * @brief FortifyDialog::setDestinationCountryName This method sets the name of the destination country to which the player will be moving armies
+ * @param countryName The name of the destination country
+ */
+void FortifyDialog::setDestinationCountry(Country* country)
 {
-    ui->destinationCountry->setText(countryName);
+	this->destinationCountry = country;
+	ui->destinationCountry->setText(QString::fromStdString(country->getName()));
 }
 
-QString FortifyDialog::getFortificationNumber()
-{
-    return ui->numArmies->text();
-}
-
+/**
+ * @brief Slot implementation start the fortification action.
+ */
 void FortifyDialog::accept()
 {
-    int armies = ui->armiesSlider->value();
-    if(firstCountry->getArmies() - armies >= 1)
-    {
-        firstCountry->removeArmies(armies);
-        secondCountry->addArmies(armies);
-        this->close();
-        this->parent->endPhase();
-    }
-    
-
+	int armies = ui->armiesSlider->value();
+	this->driver->fortifyCountry(this->originCountry, this->destinationCountry, armies);
+	this->close();
+	// TODO: error validation
 }

@@ -16,24 +16,6 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <widget class="QLabel" name="label">
-      <property name="font">
-       <font>
-        <family>Avenir Next</family>
-        <pointsize>36</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>RISK</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="bottomMargin">
        <number>0</number>
@@ -47,6 +29,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="browsePushButton">
+        <property name="toolTip">
+         <string>Click to browse our computer to find a map to load into the map editor.</string>
+        </property>
         <property name="text">
          <string>Browse...</string>
         </property>
@@ -56,6 +41,9 @@
        <widget class="QPushButton" name="loadPushButton">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="toolTip">
+         <string>Clicking on this button will load a bitmap with it's associated map file.</string>
         </property>
         <property name="text">
          <string>Load Map</string>
@@ -67,13 +55,19 @@
         <property name="enabled">
          <bool>false</bool>
         </property>
+        <property name="toolTip">
+         <string>This will clear the map, while leaving the bitmap to create your own map on top.</string>
+        </property>
         <property name="text">
-         <string>New Map</string>
+         <string>Clear Map</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="saveMapPushButton">
+        <property name="toolTip">
+         <string>Click to save the map file into the build folder.</string>
+        </property>
         <property name="text">
          <string>Save Map</string>
         </property>
@@ -100,8 +94,11 @@
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QToolButton" name="addCountryPushButton">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Add country to the map. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;Click on an empty spot in the map to add a new country. Clicking on an existing country will allow you to change its name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
           <property name="text">
-           <string>+ Country</string>
+           <string>+ Country </string>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -110,6 +107,9 @@
         </item>
         <item>
          <widget class="QToolButton" name="removeCountryPushButton">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remove a country from the map.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;If there are no more countries left in the continent to which it belonged, the continent will also be removed from the map.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
           <property name="text">
            <string>- Country </string>
           </property>
@@ -120,8 +120,11 @@
         </item>
         <item>
          <widget class="QToolButton" name="addNeighbourPushButton">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Add Link between to existing countries. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;Click on two countries you would like to connect.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
           <property name="text">
-           <string>+ Link    </string>
+           <string>+ Link       </string>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -130,8 +133,11 @@
         </item>
         <item>
          <widget class="QToolButton" name="removeNeighbourPushButton">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remove a Link between two countries.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Select the two countries you want to break apart by clicking on them in any order.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
           <property name="text">
-           <string>-  Link    </string>
+           <string>-  Link      </string>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -154,7 +160,11 @@
        </layout>
       </item>
       <item>
-       <widget class="QGraphicsView" name="graphicsView"/>
+       <widget class="QGraphicsView" name="graphicsView">
+        <property name="toolTip">
+         <string>When no tool is selected, you can click and drag to move countries around.</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

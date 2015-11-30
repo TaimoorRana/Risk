@@ -1,5 +1,7 @@
+#include <cereal/types/string.hpp>
+
 #include "continent.h"
-#include "debug.h"
+
 
 Continent::Continent(const std::string& name) {
 	this->name = name;

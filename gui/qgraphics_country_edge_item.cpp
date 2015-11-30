@@ -1,5 +1,3 @@
-#include <QDebug>
-
 #include "qgraphics_country_edge_item.h"
 
 QGraphicsCountryEdgeItem::QGraphicsCountryEdgeItem(Country* c1, Country* c2) {

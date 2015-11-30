@@ -3,7 +3,7 @@
 #include <time.h>
 #include <vector>
 #include <algorithm>
-
+#include <functional>
 #include "librisk.h"
 
 /**
@@ -27,6 +27,6 @@ std::vector<int> rollDice(int amount)
 		randNumber = (randNumber % 6) + 1;
 		results.push_back(randNumber);
 	}
-    std::sort(results.begin(), results.end());
+	std::sort(results.begin(), results.end(), std::greater<int>());
 	return results;
 }

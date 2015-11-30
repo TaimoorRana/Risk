@@ -1,0 +1,14 @@
+[Map]
+author=Adrianna Diaz
+image=SuperMap.bmp
+wrap=no
+scroll=horizontal
+warn=yes
+
+[Continents]
+North America=5
+
+[Territories]
+Quebec,350,174,North America,Appalacchia
+Appalacchia,261,272,North America,Mexico,Quebec
+Mexico,191,319,North America,Appalacchia

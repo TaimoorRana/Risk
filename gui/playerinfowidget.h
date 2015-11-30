@@ -3,26 +3,27 @@
 
 #include <QWidget>
 #include "map_scene.h"
+#include "game_driver.h"
 #include "player.h"
-#include"player_observer.h"
 
 namespace Ui {
 class PlayerInfoWidget;
 }
 
-class PlayerInfoWidget : public QWidget, public PlayerObserver
+class PlayerInfoWidget : public QWidget, public Observer
 {
 	Q_OBJECT
 
 public:
-	explicit PlayerInfoWidget(QWidget *parent = 0, Player* subject = 0, MapScene *scene = 0);
+	explicit PlayerInfoWidget(GameDriver* driver, Player* subject, QColor color, QWidget *parent = 0);
 	~PlayerInfoWidget();
-	void update();
+	void observedUpdated();
 
 private:
 	Ui::PlayerInfoWidget *ui;
-	Player* player;
-	MapScene* scene;
+	GameDriver* driver = nullptr;
+	Player* player = nullptr;
+	QColor playerColor;
 };
 
 #endif // PLAYERINFORWIDGET_H

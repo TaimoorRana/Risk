@@ -4,13 +4,14 @@
 #include <QMouseEvent>
 #include <QString>
 
-#include <playernamedialog.h>
-#include <risk_map.h>
-#include "map_editor.h"
-#include "ui_mainscreen.h"
-
 #include "game_modes.h"
+#include "map_editor.h"
+#include "log_selector.h"
 
+#include "playernamedialog.h"
+#include "risk_map.h"
+
+#include "ui_mainscreen.h"
 
 namespace Ui {
 	class MainScreen;
@@ -21,51 +22,58 @@ class MainScreen : public QMainWindow, public Observer
 	Q_OBJECT
 
 public:
-	explicit MainScreen(RiskMap* map, QWidget *parent = 0);
+	explicit MainScreen(GameDriver* driver, QWidget *parent = 0);
 	~MainScreen();
-	void addPlayerView(QWidget* pvWidget);
-
-    /**
-     * @brief setCPUs
-     * @param total Number of non-human players
-     */
-	void setCPUs(int total);
-	void setPlayerName(std::string name);
 	bool setupPlayers();
 	void observedUpdated();
 
-    /**
-     * @brief getCurrentMode
-     * @return The current game mode (REINFORCEMENTMODE, ATTACKMODE, FORTIFICATIONMODE)
-     */
-	Mode getCurrentMode();
-    void setCurrentMode(Mode newMode);
-
-    /**
-     * @brief endPhase This function simulates the click of the end phase button and switches to next player's turn
-     */
-    void endPhase();
-
-	void setCurrentPlayer(std::string name);
-	std::string getCurrentPlayer();
+	/**
+	 * @brief endPhase This function simulates the click of the end phase button and switches to next player's turn
+	 */
+	void endPhase();
+	void nextTurn();
+	std::vector<int> getVectorOfIndicesRandomCountryAccess(int nCountries);
 
 private slots:
+	/**
+	 * @brief Callback to handle user selecting File > Load.
+	 */
+	void on_loadAction_triggered();
+
+	/**
+	 * @brief Callback to handle user selecting File > Save.
+	 */
+	void on_saveAction_triggered();
+
+	/**
+	 * @brief Callback to handle user selecting File > Map Editor.
+	 */
 	void on_mapEditorAction_triggered();
-    void on_pushButton_clicked();
+	void on_logButton_clicked();
+
+	/**
+	 * @brief Callback to end the current phase, or advance to the next turn.
+	 */
+	void on_endPhasePushButton_clicked();
+
 
 
 private:
 	std::string playerName = "";
 	std::string mapPath = "";
-	int CPUs = 0;
-	Ui::MainScreen *ui = nullptr;
-	MapEditor *editor = nullptr;
-	RiskMap *map = nullptr;
-	MapScene *scene = nullptr;
-	Mode currentMode;
-	std::string currentPLayerName;
-	void setupPlayer();
-	void setupCPUs();
+
+	Ui::MainScreen* ui = nullptr;
+	MapEditor* editor = nullptr;
+	GameDriver* driver = nullptr;
+	MapScene* scene = nullptr;
+
+
+	LogSelector *logSelector = nullptr;
+
+
+
+	void initializeMode();
+	Player* playerRoundRobin(int i);
 };
 
 #endif // MAINSCREEN_H
