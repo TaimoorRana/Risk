@@ -103,7 +103,8 @@ GameDriver* buildGame(std::string path) {
 	input(cereal::make_nvp("currentMode", currentMode));
 	input(cereal::make_nvp("currentPlayer", currentPlayer));
 
-	GameDriver* driver = new GameDriver(map);
+	GameDriver* driver = GameDriver::getInstance();
+	driver->setRiskMap(map);
 	driver->setCurrentPlayerName(currentPlayer);
 	driver->setCurrentMode(currentMode);
 	return driver;

@@ -186,6 +186,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					}
 					firstCountryClicked = nullptr;
 					secondCountryClicked = nullptr;
+
 				}
 				break;
 			case FORTIFICATION:

@@ -18,7 +18,8 @@ MapEditor::MapEditor(QWidget *parent) : QMainWindow(parent) {
 	observedMap = new RiskMap();
 	observedMap->attachObserver(this);
 
-	dummyDriver = new GameDriver(observedMap);
+	dummyDriver = GameDriver::getInstance();
+	dummyDriver->setRiskMap(observedMap);
 	scene = new MapScene(dummyDriver, this);
 	scene->setEditable(true);
 	ui->graphicsView->setScene(scene);

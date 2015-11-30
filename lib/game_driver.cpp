@@ -3,8 +3,12 @@
 #include "librisk.h"
 #include "game_driver.h"
 
-GameDriver::GameDriver(RiskMap* map) {
-	this->map = map;
+GameDriver* GameDriver::getInstance() {
+	static GameDriver* instance = nullptr;
+	if (instance == nullptr) {
+		instance = new GameDriver();
+	}
+	return instance;
 }
 
 /**
@@ -12,6 +16,13 @@ GameDriver::GameDriver(RiskMap* map) {
  */
 RiskMap* GameDriver::getRiskMap() {
 	return this->map;
+}
+
+/**
+ * @brief Sets the map associated to this instance.
+ */
+void GameDriver::setRiskMap(RiskMap* map) {
+	this->map = map;
 }
 
 /**
