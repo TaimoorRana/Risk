@@ -6,6 +6,7 @@ fix_project_version()
 
 set(GUI_SOURCE_FILES
 	enum_tooltype.h
+        enum_savetype.h
 	country_name_dialog.cpp country_name_dialog.h country_name_dialog.ui
 	main.cpp
 	mainscreen.cpp mainscreen.h mainscreen.ui

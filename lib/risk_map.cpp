@@ -3,9 +3,13 @@
 #include "risk_map.h"
 #include "debug.h"
 
-RiskMap::RiskMap(){}
+RiskMap::RiskMap():numberOfCountries(0){}
 RiskMap::~RiskMap(){
 	this->clear();
+}
+
+bool RiskMap::isEmpty(){
+	return (this->numberOfCountries == 0);
 }
 
 bool RiskMap::areCountriesAdjacent(const std::string& country_a, const std::string& country_b){
@@ -44,6 +48,10 @@ Country* RiskMap::addCountry(const Country& country, const std::string& continen
 	}
 	if (!mapGraph.insertNode(country.getName(), continentName))
 		return nullptr;
+
+	numberOfCountries++;
+	debug("Number of countries: "+std::to_string(this->numberOfCountries));
+
 	this->notifyObservers();
 	return &this->countries[country.getName()];
 }
@@ -54,6 +62,10 @@ void RiskMap::remCountry(const Country& country){
 	if (mapGraph.removeNode(country.getName())){
 		continents.erase(continent);
 	}
+
+	numberOfCountries--;
+	debug("Number of countries: "+std::to_string(this->numberOfCountries));
+
 	this->notifyObservers();
 }
 
@@ -281,10 +293,45 @@ RiskMap* RiskMap::load(const std::string& path) {
 	return map;
 }
 
-bool RiskMap::save(const std::string& path) {
+RiskMap* RiskMap::loadXML(std::string& path){
+	RiskMap *newMap = new RiskMap();
+	
+	newMap->setNotificationsEnabled(false);
+
+	std::ifstream infile(path);
+	cereal::XMLInputArchive input(infile);
+	input(cereal::make_nvp("maprisk", *newMap));
+//	input(cereal::make_nvp("continents",this->continents));
+//	input(cereal::make_nvp("countries",this->countries));
+//	input(cereal::make_nvp("graph",this->mapGraph));
+	newMap->setNotificationsEnabled(true);
+	newMap->notifyObservers();
+	return newMap;
+}
+
+
+bool RiskMap::save(SaveType saveType) {
+	std::string path = "riskmap_test0";
+	switch (saveType){
+		case MAP:
+			return this->saveMAP(path);
+			break;
+		case XML:
+			return this->saveXML(path);
+			break;
+		default:
+			return false;
+	}
+	return false;
+}
+
+bool RiskMap::saveMAP(std::string& path) {
+	path.append(".map");
+
 	std::string debug_str("Saving map file to ");
 	debug_str.append(path);
 	debug(debug_str);
+
 	std::ofstream outfile(path, std::ios::out);
 	if (!outfile.is_open()) {
 		return false;
@@ -313,10 +360,33 @@ bool RiskMap::save(const std::string& path) {
 	return true;
 }
 
+
+bool RiskMap::saveXML(std::string& path) {
+	path.append(".xml");
+
+	std::string debug_str("Saving map file to ");
+	debug_str.append(path);
+	debug(debug_str);
+
+	std::ofstream outfile(path, std::ios::out);
+	if (!outfile.is_open()) {
+		return false;
+	}
+
+	cereal::XMLOutputArchive archive( outfile );
+//	archive(cereal::make_nvp("continents",this->continents));
+//	archive(cereal::make_nvp("countries",this->countries));
+//	archive(cereal::make_nvp("graph",this->mapGraph));
+	archive(cereal::make_nvp("maprisk",*this));
+
+	return true;
+}
+
 void RiskMap::clear() {
 	this->continents.clear();
 	this->countries.clear();
 	this->mapGraph = SubGraphADT();
+	this->numberOfCountries = 0;
 	this->notifyObservers();
 }
 

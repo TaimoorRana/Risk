@@ -9,15 +9,17 @@
 #include <sys/stat.h>
 #include <unordered_map>
 
-#include <cereal/types/string.hpp>
-#include <cereal/types/unordered_map.hpp>
-#include <cereal/types/map.hpp>
-
 #include "country.h"
 #include "continent.h"
 #include "graph_adt.h"
 #include "player.h"
 #include "observable.h"
+#include "../gui/enum_savetype.h"
+
+#include <cereal/types/string.hpp>
+#include <cereal/types/unordered_map.hpp>
+#include <cereal/types/map.hpp>
+#include <cereal/archives/xml.hpp>
 
 #define MAP_PARSE_MODE_MAP 1
 #define MAP_PARSE_MODE_CONTINENTS 2
@@ -34,14 +36,14 @@ private:
 	std::unordered_map<std::string, Country> countries;
 	std::map<std::string, Player> players;
 	SubGraphADT mapGraph;
-
+	int numberOfCountries;
 public:
 	bool disableNotify = false;
 	/**
 	 * @brief RiskMap default constructor
 	 */
 	RiskMap();
-    virtual ~RiskMap();
+	virtual ~RiskMap();
 	/**
 	 * @brief areCountriesAdjacent checks whether the countries are adjacent
 	 * @param country_a
@@ -148,7 +150,13 @@ public:
 	 * @param path
 	 * @return
 	 */
-	bool save(const std::string& path);
+
+	static RiskMap* loadXML(std::string& path);
+	bool save(SaveType t);
+	bool saveMAP(std::string& path);
+	bool saveXML(std::string& path);
+
+	bool isEmpty();
 	void clear();
 	/**
 	 * @brief validate validates the map based on the specififed rules
@@ -161,7 +169,7 @@ public:
 
 	template<class Archive>
 	void serialize(Archive& archive) {
-		archive(cereal::make_nvp("continents", this->continents), cereal::make_nvp("countries", this->countries), cereal::make_nvp("players", this->players));
+		archive(cereal::make_nvp("continents", this->continents), cereal::make_nvp("countries", this->countries), cereal::make_nvp("graph", this->mapGraph),cereal::make_nvp("players", this->players));
 	}
 };
 

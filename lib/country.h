@@ -1,7 +1,10 @@
 #ifndef COUNTRY_H
 #define COUNTRY_H
 #include <string>
+
+#include <cereal/cereal.hpp>
 #include <cereal/types/string.hpp>
+
 #include "observable.h"
 
 /**

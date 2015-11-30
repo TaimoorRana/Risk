@@ -46,23 +46,55 @@ bool MapEditor::validateFilename(const QString& text) {
 void MapEditor::on_filenameLineEdit_textChanged(QString text) {
 	if (this->validateFilename(text)) {
 		ui->loadPushButton->setEnabled(true);
-		ui->newPushButton->setEnabled(true);
 	}
 	else {
 		ui->loadPushButton->setEnabled(false);
-		ui->newPushButton->setEnabled(false);
+		ui->clearMapPushButton->setEnabled(false);
 	}
 }
 
 void MapEditor::on_browsePushButton_clicked() {
-	QString filename(QFileDialog::getOpenFileName(this, tr("Open map"), QDir::currentPath(), tr("Risk map files (*.map)")));
+	QString filename(QFileDialog::getOpenFileName(this, tr("Open map"), QDir::currentPath(), tr("Risk Map Files (*.xml *.map)")));
 	this->raise();
 	ui->filenameLineEdit->setText(filename);
 }
 
+bool MapEditor::hasEnding (std::string const &fullString, std::string const &ending) {
+	if (fullString.length() >= ending.length()) {
+		return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
+	} else {
+		return false;
+	}
+}
+
+bool MapEditor::loadXML(std::string path, RiskMap* map) {
+	map->setNotificationsEnabled(false);
+
+	std::ifstream infile(path);
+	cereal::XMLInputArchive input(infile);
+//	input(cereal::make_nvp("driver", *driver));
+	input(cereal::make_nvp("maprisk", *map));
+
+	map->setNotificationsEnabled(true);
+//	map->notifyObservers();
+	return true;
+}
+
+
 void MapEditor::on_loadPushButton_clicked() {
+	ui->clearMapPushButton->setEnabled(true);
 	this->mapPath = ui->filenameLineEdit->text().toStdString();
-	observedMap->parse(this->mapPath);
+	if(MapEditor::hasEnding(this->mapPath,"map")){
+		debug("Loading MAP file");
+		observedMap->parse(this->mapPath);
+	}
+	else{
+		debug("Loading XML file");
+		/* parsing XML file*/
+		loadXML(mapPath, observedMap);
+	}
+
+
 	if(!observedMap->validate()){
 		QMessageBox errorDialog(this);
 		errorDialog.setWindowTitle("Error!");
@@ -74,15 +106,37 @@ void MapEditor::on_loadPushButton_clicked() {
 	this->observedMap->notifyObservers();
 }
 
-void MapEditor::on_newPushButton_clicked() {
+void MapEditor::on_clearMapPushButton_clicked() {
 	observedMap->clear();
 	debug("Loading new map");
+	ui->clearMapPushButton->setEnabled(false);
+	ui->saveMapPushButton->setEnabled(false);
 }
 
+
 void MapEditor::on_saveMapPushButton_clicked(){
-		debug("Save Button clicked\n");
-	if(observedMap->validate()){
-		observedMap->save("riskmap_test0.map");
+	debug("Save Button clicked\n");
+
+	//Removes fatal bug.
+	if(this->observedMap->isEmpty()){
+		debug("Can't save an empty map.");
+		this->ui->saveMapPushButton->setDisabled(true);
+		return;
+	}
+
+	if(QString::compare((ui->saveComboBox->currentText()), QString::fromStdString(".map"), Qt::CaseInsensitive) == 0)
+	{
+		this->saveMode = MAP;
+		debug("MAP File format selected.");
+	}
+	else
+	{
+		this->saveMode = XML;
+		debug("XML File format selected.");
+	}
+
+	if(true){//observedMap->validate()){
+		observedMap->save(saveMode);
 	}
 	else{
 		QMessageBox errorDialog(this);
@@ -99,6 +153,14 @@ void MapEditor::resetToolbar() {
 	ui->removeCountryPushButton->setChecked(false);
 	ui->addNeighbourPushButton->setChecked(false);
 	ui->removeNeighbourPushButton->setChecked(false);
+	if(this->observedMap->isEmpty()){
+		this->ui->saveMapPushButton->setDisabled(true);
+		this->ui->clearMapPushButton->setDisabled(true);
+	}
+	else{
+		this->ui->saveMapPushButton->setEnabled(true);
+		this->ui->clearMapPushButton->setEnabled(true);
+	}
 }
 
 void MapEditor::on_addCountryPushButton_clicked(){
