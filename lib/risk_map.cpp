@@ -239,7 +239,7 @@ void RiskMap::loadMap(const std::string& path) {
 		debug_str.append(line);
 		debug(debug_str);
 		// Windows prefers /r/n, but getline() breaks only on \n.
-		if (line[line.size() - 1] == '\r') {
+		if (line.size() > 0 && line[line.size() - 1] == '\r') {
 			line.resize(line.size() - 1);
 		}
 
