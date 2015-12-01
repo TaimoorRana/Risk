@@ -225,30 +225,26 @@ void RiskMap::load(const std::string& path) {
 	std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
 	debug("Extension: " + extension);
 
+	this->setNotificationsEnabled(false);
 	if (extension == "map") {
 		this->loadMap(path);
 	}
 	else if (extension == "xml") {
 		this->loadXML(path);
 	}
+	this->setNotificationsEnabled(true);
 }
 
 void RiskMap::loadXML(const std::string& path) {
-	this->setNotificationsEnabled(false);
 	std::ifstream infile(path);
 	cereal::XMLInputArchive input(infile);
 	input(cereal::make_nvp("maprisk", *this));
-	this->setNotificationsEnabled(true);
-	this->notifyObservers();
 }
 
 /**
  * @brief Parses the map file in the path indicated to populate the instance
  */
 void RiskMap::loadMap(const std::string& path) {
-	this->setNotificationsEnabled(false);
-	this->clear();
-
 	std::ifstream infile(path);
 	std::string line;
 	int mode = 0;
@@ -259,7 +255,7 @@ void RiskMap::loadMap(const std::string& path) {
 		debug_str.append(line);
 		debug(debug_str);
 		// Windows prefers /r/n, but getline() breaks only on \n.
-		if (line[line.size() - 1] == '\r') {
+		if (line.size() > 0 && line[line.size() - 1] == '\r') {
 			line.resize(line.size() - 1);
 		}
 
@@ -335,7 +331,7 @@ void RiskMap::loadMap(const std::string& path) {
 		debug_str.append(line);
 		debug(debug_str);
 		// Windows prefers /r/n, but getline() breaks only on \n.
-		if (line[line.size() - 1] == '\r') {
+		if (line.size() > 0 && line[line.size() - 1] == '\r') {
 			line.resize(line.size() - 1);
 		}
 
@@ -390,7 +386,6 @@ void RiskMap::loadMap(const std::string& path) {
 	}
 
 	debug("Finished parsing: " + path);
-	this->setNotificationsEnabled(true);
 }
 
 bool RiskMap::save(SaveType saveType, std::string path) {

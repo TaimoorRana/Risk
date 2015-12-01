@@ -8,7 +8,7 @@
 #include "observable.h"
 #include "player.h"
 #include "risk_map.h"
-
+#include "ai/strategy.h"
 /**
  * @brief The GameDriver class
  * Handles the ordering of the game  the players turn the number of reinforcements
@@ -33,6 +33,7 @@ public:
 	bool fortifyCountry(Country* originCountry, Country* destinationCountry, int armies);
 
 	void recalculateReinforcements();
+	bool hasWon(std::string playerName);
 
     void addCardsTradeReinforcements(int numArmies);
 
@@ -47,7 +48,9 @@ public:
 private:
 	RiskMap* map = nullptr;
 	std::string currentPlayerName = "";
-    Mode currentMode = REINFORCEMENT;
+
+	Strategy *strategy;
+	Mode currentMode = REINFORCEMENT;
 
 };
 

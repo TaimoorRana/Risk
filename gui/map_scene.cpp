@@ -140,18 +140,11 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 		switch (this->driver->getCurrentMode()) {
 			case REINFORCEMENT:
-				if (currentPlayer.compare(item->getCountry()->getPlayer()) == 0) {
-
-					if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0) {
-						map->getPlayer(item->getCountry()->getPlayer())->adjustReinforcements(-1);
-						item->getCountry()->addArmies(1);
-					}
-					else {
-						QMessageBox errorDialog(parent);
-						errorDialog.setWindowTitle("Invalid move");
-						errorDialog.setText("You have no more reinforcements left.");
-						errorDialog.exec();
-						return;
+				if (currentPlayer == item->getCountry()->getPlayer()) {
+					map->getPlayer(item->getCountry()->getPlayer())->adjustReinforcements(-1);
+					item->getCountry()->addArmies(1);
+					if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() <= 0) {
+						parent->endPhase();
 					}
 				}
 				else {
@@ -169,11 +162,10 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					return;
 				}
 
-				if ((firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0)
-						&& item->getCountry()->getPlayer().compare(currentPlayer) == 0) {
+				if ((firstCountryClicked == nullptr || firstCountryClicked->getName() == item->getCountry()->getName()) && item->getCountry()->getPlayer() == currentPlayer) {
 					firstCountryClicked = item->getCountry();
 				}
-				else if (item->getCountry()->getPlayer().compare(currentPlayer) != 0 && firstCountryClicked == nullptr) {
+				else if (item->getCountry()->getPlayer() != currentPlayer && firstCountryClicked == nullptr) {
 					QMessageBox errorDialog(parent);
 					errorDialog.setWindowTitle("Invalid move");
 					errorDialog.setText("You must choose your own country.");
@@ -182,7 +174,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				}
 				else {
 					secondCountryClicked = item->getCountry();
-					if (firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0 && map->areCountriesNeighbours(firstCountryClicked->getName(), secondCountryClicked->getName())){
+					if (firstCountryClicked->getPlayer() != secondCountryClicked->getPlayer() && map->areCountriesNeighbours(firstCountryClicked->getName(), secondCountryClicked->getName())){
 						this->driver->attackCountry(firstCountryClicked, secondCountryClicked);
 					}
 					else if (!map->areCountriesNeighbours(firstCountryClicked->getName(), secondCountryClicked->getName())) {
@@ -198,14 +190,14 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				}
 				break;
 			case FORTIFICATION:
-				if (currentPlayer.compare(item->getCountry()->getPlayer()) != 0) {
+				if (currentPlayer != item->getCountry()->getPlayer()) {
 					QMessageBox errorDialog(parent);
 					errorDialog.setWindowTitle("Invalid move");
 					errorDialog.setText("You must choose your own country.");
 					errorDialog.exec();
 					return;
 				}
-				if (firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0) {
+				if (firstCountryClicked == nullptr || firstCountryClicked->getName() == item->getCountry()->getName()) {
 					firstCountryClicked = item->getCountry();
 				}
 				else {
@@ -216,6 +208,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 						if (fortificationDialog->exec() == QDialog::Accepted) {
 							parent->endPhase();
 						}
+						delete fortificationDialog;
 					}
 					else {
 						QMessageBox errorDialog(parent);

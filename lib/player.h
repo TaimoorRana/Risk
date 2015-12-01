@@ -15,6 +15,7 @@ protected:
 	std::string name = "";
     int cards = 0;
     bool didWinCountry;
+	bool human;
 
 public:
 	Player() {}
@@ -100,6 +101,8 @@ public:
 	 * @brief getReinforcements
 	 */
 	int getReinforcements() const;
+	bool isHuman();
+	void setHuman(bool human);
 
 	template<class Archive>
 	void serialize(Archive& archive) {

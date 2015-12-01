@@ -1,8 +1,10 @@
+#include <algorithm>
 #include <functional>
 #include <random>
 #include <time.h>
 #include <set>
 
+#include <QDialog>
 #include <QDir>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -73,15 +75,24 @@ bool MainScreen::setupPlayers() {
 
 	map->setNotificationsEnabled(false);
 
-	int totalPlayers = dialog.getPlayerCount();
-	for (int x = 0; x < totalPlayers; x++) {
-		Player *player = map->addPlayer(Player("Player " + std::to_string(x+1)));
+	// Setup the number of selected human players
+	int humanPlayers = dialog.getPlayerCount();
+	for (int x = 1; x <= humanPlayers; x++) {
+		Player *player = map->addPlayer(Player("Player " + std::to_string(x)));
+		player->notifyObservers();
+	}
+
+	// Future improvement: make this selectable from the UI
+	int cpuPlayers = 1;
+	for (int x = 1; x <= cpuPlayers; x++) {
+		Player *player = map->addPlayer(Player("Computer " + std::to_string(x)));
 		player->setNotificationsEnabled(false);
-		player->setReinforcements(10);
+		player->setHuman(false);
 		player->setNotificationsEnabled(true);
 		player->notifyObservers();
 	}
 
+	// Determine the player who starts the game
 	std::string firstPlayerName = (*map->getPlayers().begin()).first;
 	this->driver->setCurrentPlayerName(firstPlayerName);
 
@@ -89,86 +100,70 @@ bool MainScreen::setupPlayers() {
 	map->notifyObservers();
 
 	// Assign random countries to players in a round-robin fashion
-	std::vector<Country*> vectorOfCountryPointers;
+	std::vector<Country*> availableCountries;
 	for (auto const &ent1 : map->getCountries()) {
 		const Country& ctmp = ent1.second;
-		vectorOfCountryPointers.push_back(map->getCountry(ctmp.getName()));
+		availableCountries.push_back(map->getCountry(ctmp.getName()));
 	}
 
-	std::vector<int> x = getVectorOfIndicesRandomCountryAccess(this->driver->getRiskMap()->getCountries().size());
-	std::vector<int>::const_iterator iter = x.begin();
-	int p=0;
-	while (iter != x.end()){
-		Country* country = vectorOfCountryPointers[*iter];
-		Player* player = playerRoundRobin(p++);
-		country->setPlayer(player->getName());
-		country->setArmies(1);
-		iter++;
+	// Randomize order of country pointer list
+	auto engine = std::default_random_engine{};
+	std::shuffle(std::begin(availableCountries), std::end(availableCountries), engine);
+
+	// Assign countries round-robin
+	auto playerIter = map->getPlayers().begin();
+	for (Country* country : availableCountries) {
+		const Player& player = (*playerIter).second;
+		country->setPlayer(player.getName());
+
+		std::advance(playerIter, 1);
+		if (playerIter == map->getPlayers().end()) {
+			playerIter = map->getPlayers().begin();
+		}
 	}
+	
+	// Calculate player reinforcements now that countries are assigned
 	this->driver->recalculateReinforcements();
 
-	// distribute the rest of the armies
-	for(auto const &iter : map->getPlayers()){
+	// Distribute the other armies
+	for (auto const &iter : map->getPlayers()){
 		this->allocateArmiesByNumberOfPlayers(iter.first);
 	}
 
 	return true;
 }
 
-std::vector<int> MainScreen::getVectorOfIndicesRandomCountryAccess(int nCountries){
-	std::set<int> s;
-	std::vector<int> v;
-
-	std::mt19937::result_type seed = time(0);
-
-	auto countryRand = std::bind(std::uniform_int_distribution<int>(0, nCountries-1), std::mt19937(seed));
-	int nextRand;
-
-	while (s.size() < nCountries){
-		nextRand = countryRand();
-		if (s.find(nextRand) == s.end()){
-			v.push_back(nextRand);
-			s.insert(nextRand);
-		}
-	}
-	return v;
-}
-
-Player* MainScreen::playerRoundRobin(int i){
-	RiskMap* map = this->driver->getRiskMap();
-	auto iter = map->getPlayers().begin();
-	std::advance(iter, i % (map->getPlayers().size()));
-	return map->getPlayer((*iter).first);
-}
-
-void MainScreen::allocateArmiesByNumberOfPlayers(const std::string p){
+void MainScreen::allocateArmiesByNumberOfPlayers(const std::string playerName){
 	RiskMap* map = this->driver->getRiskMap();
 	const int armiesByNumPlayers[] = {40, 35, 30, 25, 20};
 	int totalArmies = armiesByNumPlayers[map->getPlayers().size()-2];
-
-	std::vector<Country*> vectorOfCountryPointers;
-	for (auto const &ent1 : map->getCountriesOwnedByPlayer(p)) {
-		vectorOfCountryPointers.push_back(map->getCountry(ent1));
+	
+	// Create a vector of country pointers for countries the player owns
+	std::vector<Country*> playerCountries;
+	for (auto const &countryName : map->getCountriesOwnedByPlayer(playerName)) {
+		playerCountries.push_back(map->getCountry(countryName));
 	}
+	
+	// Randomize order of country pointer list
+	auto engine = std::default_random_engine{};
+	std::shuffle(std::begin(playerCountries), std::end(playerCountries), engine);
 
-	totalArmies -= map->getCountriesOwnedByPlayer(p).size();
-
-	std::vector<int> x = getVectorOfIndicesRandomCountryAccess(map->getCountriesOwnedByPlayer(p).size());
-	std::vector<int>::const_iterator iter = x.begin();
-
-	while (totalArmies > 0){
-		Country* country = vectorOfCountryPointers[*iter];
+	auto playerCountriesIter = playerCountries.begin();
+	while (totalArmies > 0) {
+		Country* country = *playerCountriesIter;
 		country->addArmies(1);
 		totalArmies--;
-		if (++iter == x.end()) {
-			iter = x.begin();
+		std::advance(playerCountriesIter, 1);
+		if (playerCountriesIter == playerCountries.end()) {
+			playerCountriesIter = playerCountries.begin();
 		}
 	}
-	
-	for(auto &ent1: map->getPlayers()){
+
+	// Signal to update the info widgets.
+	for (auto &ent1: map->getPlayers()){
 		map->getPlayer(ent1.first)->notifyObservers();
 	}
-	
+
 }
 
 void MainScreen::on_endPhasePushButton_clicked() {
@@ -256,6 +251,17 @@ void MainScreen::on_mapEditorAction_triggered() {
 
 void MainScreen::observedUpdated() {
 	RiskMap* map = this->driver->getRiskMap();
+	std::string currentPlayerName = this->driver->getCurrentPlayerName();
+
+	// Verify victory conditions
+	if (this->driver->hasWon(currentPlayerName)) {
+		QMessageBox winnerDialog(this);
+		winnerDialog.setWindowTitle("Game has concluded");
+		winnerDialog.setText(QString("%1 has won the game!").arg(QString::fromStdString(currentPlayerName)));
+		winnerDialog.exec();
+		this->close();
+	}
+
 	this->scene->repopulate(this->mapPath);
 
 	// Handle observe notify event from map: clear existing player info widgets

@@ -26,8 +26,6 @@ public:
 	 */
 	void endPhase();
 	void nextTurn();
-	std::vector<int> getVectorOfIndicesRandomCountryAccess(int nCountries);
-	void allocateArmiesByNumberOfPlayers(const std::string p);
 
 private slots:
 	/**
@@ -63,7 +61,7 @@ private:
 	MapScene* scene = nullptr;
 
 	void initializeMode();
-	Player* playerRoundRobin(int i);
+	void allocateArmiesByNumberOfPlayers(const std::string p);
 };
 
 #endif // MAINSCREEN_H

@@ -13,6 +13,8 @@
 class Strategy
 {
 public:
+	virtual ~Strategy() {};
+
 	/**
 	 * @brief setPlayer
 	 * @param nameOfPlayer
@@ -30,7 +32,7 @@ public:
 	std::string getCurrentCountry();
 	std::string getCountryToAttack();
 
-	void whereToAttackFrom(RiskMap *map);
+	virtual void whereToAttackFrom(RiskMap *map);
 	/**
 	 * @brief isAttack
 	 * is there the possibility of currently attacking

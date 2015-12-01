@@ -14,7 +14,6 @@ class PlayerNameDialog : public QDialog
 public:
 	explicit PlayerNameDialog(QWidget *parent = 0);
 	~PlayerNameDialog();
-	std::string getPlayerName();
 	std::string getMapPath();
 	int getPlayerCount();
 
