@@ -86,9 +86,7 @@ void MapEditor::on_clearMapPushButton_clicked() {
 
 
 void MapEditor::on_saveMapPushButton_clicked(){
-	debug("Save Button clicked\n");
-
-	//Removes fatal bug.
+	// Removes fatal bug.
 	if (this->observedMap->getCountries().size() == 0) {
 		debug("Can't save an empty map.");
 		this->ui->saveMapPushButton->setDisabled(true);
@@ -106,6 +104,11 @@ void MapEditor::on_saveMapPushButton_clicked(){
 
 	if (observedMap->validate()) {
 		QString filename(QFileDialog::getSaveFileName(this, tr("Save game"), QDir::currentPath(), tr("Risk map")));
+		QFileInfo existingMapFile(QString::fromStdString(this->mapPath));
+		QString bmp = existingMapFile.path() + "/" + existingMapFile.baseName() + ".bmp";
+		QString newBmp = filename + ".bmp";
+		QFile::copy(bmp, newBmp);
+
 		this->raise();
 		observedMap->save(saveMode, filename.toStdString());
 	}
