@@ -208,6 +208,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 						if (fortificationDialog->exec() == QDialog::Accepted) {
 							parent->endPhase();
 						}
+						delete fortificationDialog;
 					}
 					else {
 						QMessageBox errorDialog(parent);

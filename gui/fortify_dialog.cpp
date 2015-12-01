@@ -48,5 +48,6 @@ void FortifyDialog::accept()
 	int armies = ui->armiesSlider->value();
 	this->driver->fortifyCountry(this->originCountry, this->destinationCountry, armies);
 	this->close();
+	this->setResult(QDialog::Accepted);
 	// TODO: error validation
 }
