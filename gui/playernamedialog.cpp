@@ -13,10 +13,6 @@ PlayerNameDialog::~PlayerNameDialog() {
   delete ui;
 }
 
-std::string PlayerNameDialog::getPlayerName() {
-	return ui->playerNameLineEdit->text().toStdString();
-}
-
 std::string PlayerNameDialog::getMapPath() {
 	return ui->mapPathLineEdit->text().toStdString();
 }
