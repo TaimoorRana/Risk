@@ -110,7 +110,6 @@ bool MainScreen::setupPlayers() {
 	std::shuffle(std::begin(availableCountries), std::end(availableCountries), engine);
 
 	// Assign countries round-robin
-	auto countryIter = availableCountries.begin();
 	auto playerIter = map->getPlayers().begin();
 	for (Country* country : availableCountries) {
 		const Player& player = (*playerIter).second;
@@ -126,7 +125,7 @@ bool MainScreen::setupPlayers() {
 	this->driver->recalculateReinforcements();
 
 	// Distribute the other armies
-	for(auto const &iter : map->getPlayers()){
+	for (auto const &iter : map->getPlayers()){
 		this->allocateArmiesByNumberOfPlayers(iter.first);
 	}
 
