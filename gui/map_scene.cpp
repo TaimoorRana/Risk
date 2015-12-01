@@ -155,11 +155,10 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					return;
 				}
 
-				if ((firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0)
-						&& item->getCountry()->getPlayer().compare(currentPlayer) == 0) {
+				if ((firstCountryClicked == nullptr || firstCountryClicked->getName() == item->getCountry()->getName()) && item->getCountry()->getPlayer() == currentPlayer) {
 					firstCountryClicked = item->getCountry();
 				}
-				else if (item->getCountry()->getPlayer().compare(currentPlayer) != 0 && firstCountryClicked == nullptr) {
+				else if (item->getCountry()->getPlayer() != currentPlayer && firstCountryClicked == nullptr) {
 					QMessageBox errorDialog(parent);
 					errorDialog.setWindowTitle("Invalid move");
 					errorDialog.setText("You must choose your own country.");
@@ -168,7 +167,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				}
 				else {
 					secondCountryClicked = item->getCountry();
-					if (firstCountryClicked->getPlayer().compare(secondCountryClicked->getPlayer()) != 0 && map->areCountriesNeighbours(firstCountryClicked->getName(), secondCountryClicked->getName())){
+					if (firstCountryClicked->getPlayer() != secondCountryClicked->getPlayer() && map->areCountriesNeighbours(firstCountryClicked->getName(), secondCountryClicked->getName())){
 						this->driver->attackCountry(firstCountryClicked, secondCountryClicked);
 					}
 					else if (!map->areCountriesNeighbours(firstCountryClicked->getName(), secondCountryClicked->getName())) {
@@ -184,14 +183,14 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 				}
 				break;
 			case FORTIFICATION:
-				if (currentPlayer.compare(item->getCountry()->getPlayer()) != 0) {
+				if (currentPlayer != item->getCountry()->getPlayer()) {
 					QMessageBox errorDialog(parent);
 					errorDialog.setWindowTitle("Invalid move");
 					errorDialog.setText("You must choose your own country.");
 					errorDialog.exec();
 					return;
 				}
-				if (firstCountryClicked == nullptr || firstCountryClicked->getName().compare(item->getCountry()->getName()) == 0) {
+				if (firstCountryClicked == nullptr || firstCountryClicked->getName() == item->getCountry()->getName()) {
 					firstCountryClicked = item->getCountry();
 				}
 				else {
