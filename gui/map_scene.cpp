@@ -133,17 +133,11 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 		switch (this->driver->getCurrentMode()) {
 			case REINFORCEMENT:
-				if (currentPlayer.compare(item->getCountry()->getPlayer()) == 0) {
-					if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0) {
-						map->getPlayer(item->getCountry()->getPlayer())->adjustReinforcements(-1);
-						item->getCountry()->addArmies(1);
-					}
-					else {
-						QMessageBox errorDialog(parent);
-						errorDialog.setWindowTitle("Invalid move");
-						errorDialog.setText("You have no more reinforcements left.");
-						errorDialog.exec();
-						return;
+				if (currentPlayer == item->getCountry()->getPlayer()) {
+					map->getPlayer(item->getCountry()->getPlayer())->adjustReinforcements(-1);
+					item->getCountry()->addArmies(1);
+					if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() <= 0) {
+						parent->endPhase();
 					}
 				}
 				else {
