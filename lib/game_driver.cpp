@@ -56,9 +56,37 @@ Mode GameDriver::getCurrentMode() const {
  */
 void GameDriver::setCurrentMode(const Mode& mode) {
 	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->currentMode, "phase ended");
-	this->currentMode = mode;
+
+    // Hand a card to the attacker at the end of Attack mode
+    if (mode == FORTIFICATION)
+    {
+        handACardToWinner();
+    }
+
+    this->currentMode = mode;
 	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->currentMode, "phase started");
 	this->notifyObservers();
+}
+
+/**
+ * @brief GameDriver::handACardToWinner
+ * @param mode
+ */
+void GameDriver::handACardToWinner()
+{
+    Player* player = map->getPlayer(currentPlayerName);
+    if (player->getDidWinCountry() == true) // player must have won a country in their turn
+    {
+        if (map->getCards() > 0)
+        {
+            map->updateCards(-1);
+            player->updateCards(+1);
+        } else
+        {
+            std::cout << "No more cards left" << std::endl;
+        }
+        player->setDidWinCountry(false); // reset the value for upcoming turn
+    }
 }
 
 /**
@@ -109,7 +137,7 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 		debug("Attacker won!");
 		Player* winner = this->map->getPlayer(attackerCountry->getPlayer());
 		winner->adjustBattlesWon(1);
-
+        winner->setDidWinCountry(true); // Temp value that indicates that the player has won a country
 		Player* loser = this->map->getPlayer(defenderCountry->getPlayer());
 		loser->adjustBattlesLost(1);
 
@@ -117,6 +145,15 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 		defenderCountry->setArmies(1);
 		defenderCountry->setPlayer(attackerCountry->getPlayer());
 		this->recalculateReinforcements();
+
+        // check if defender lost all territories
+        if (map->getCountriesOwnedByPlayer(loser->getName()).size() == 0)
+        {
+            // Winner takes all the loser's cards
+            int loserCards = loser->getCards();
+            winner->updateCards(loserCards);
+            loser->updateCards(-loserCards);
+        }
 	}
 	else {
 		// Defender victorious: reconfigure armies
@@ -144,6 +181,19 @@ bool GameDriver::fortifyCountry(Country* originCountry, Country* destinationCoun
 	originCountry->removeArmies(armies);
 	destinationCountry->addArmies(armies);
 	return true;
+}
+
+void GameDriver::addCardsTradeReinforcements(int numArmies)
+{
+    Player* player = this->map->getPlayer(currentPlayerName);
+    player->setReinforcements(player->getReinforcements()+numArmies);
+}
+
+void GameDriver::updatePlayerCards(int numCards)
+{
+    Player* player = this->map->getPlayer(currentPlayerName);
+    player->updateCards(numCards);
+    player->notifyObservers();
 }
 
 /**

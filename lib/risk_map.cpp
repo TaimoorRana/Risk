@@ -53,6 +53,7 @@ Country* RiskMap::addCountry(const Country& country, const std::string& continen
 	}
 	if (countries.find(country.getName()) == countries.end()) {
 		countries[country.getName()] = country;
+        cards++;
 	}
 	if (!mapGraph.insertNode(country.getName(), continentName))
 		return nullptr;
@@ -188,6 +189,25 @@ string_set RiskMap::getContinentsOwnedByPlayer(const std::string& playerName) {
 		}
 	}
 	return continentsOwned;
+}
+
+/**
+ * @brief RiskMap::getCards returns the total number of cards available
+ * @return
+ */
+int RiskMap::getCards()
+{
+    return cards;
+}
+
+/**
+ * @brief RiskMap::takeCards Removes a number of cards from the deck
+ * @param numberOfCards The number of cards to take from the available deck
+ */
+int RiskMap::updateCards(int numberOfCards)
+{
+    cards += numberOfCards;
+    return cards;
 }
 
 /**

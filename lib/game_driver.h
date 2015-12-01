@@ -27,10 +27,17 @@ public:
 	Mode getCurrentMode() const;
 	void setCurrentMode(const Mode& mode);
 
+    void handACardToWinner();
+
 	bool attackCountry(Country* attackerCountry, Country* defenderCountry);
 	bool fortifyCountry(Country* originCountry, Country* destinationCountry, int armies);
 
 	void recalculateReinforcements();
+
+    void addCardsTradeReinforcements(int numArmies);
+
+    // ads the number of cards to those of the current player
+    void updatePlayerCards(int numCards);
 
 	template<class Archive>
 	void serialize(Archive& archive) {
@@ -40,8 +47,7 @@ public:
 private:
 	RiskMap* map = nullptr;
 	std::string currentPlayerName = "";
-
-	Mode currentMode = REINFORCEMENT;
+    Mode currentMode = REINFORCEMENT;
 
 };
 

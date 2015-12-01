@@ -109,6 +109,13 @@ void MapScene::setEditable(bool editable) {
 	this->editable = editable;
 }
 
+void MapScene::launchCardsTradeDialog()
+{
+//    MainScreen* parent = qobject_cast<MainScreen*>(this->parent());
+//    CardsTradeDialog* cardsTradeDialog = new CardsTradeDialog(this->driver, parent);
+//    cardsTradeDialog->exec();
+}
+
 /**
  * @brief Handles mouse presses on the graphics scene GUI widget
  */
@@ -134,6 +141,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 		switch (this->driver->getCurrentMode()) {
 			case REINFORCEMENT:
 				if (currentPlayer.compare(item->getCountry()->getPlayer()) == 0) {
+
 					if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() > 0) {
 						map->getPlayer(item->getCountry()->getPlayer())->adjustReinforcements(-1);
 						item->getCountry()->addArmies(1);
