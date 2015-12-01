@@ -25,3 +25,22 @@ std::string Aggressive::decideAttackingCountry(RiskMap *map)
 	}
 	return countryToAttack;
 }
+
+void Aggressive::whereToAttackFrom(RiskMap *map)
+{
+	listOfPlayerCountries= map->getCountriesOwnedByPlayer(getPlayer());
+	auto l_iter = listOfPlayerCountries.begin();
+	while (l_iter != listOfPlayerCountries.end()) {
+		setAttackFrom(*l_iter,map->getCountry(*l_iter)->getArmies());
+		if (decideAttackingCountry(map) == " " ) {
+			l_iter++;
+		}
+		else{
+			currentCountry = map->getCountry(*l_iter)->getName();
+			countryToAttack = decideAttackingCountry(map);
+			break;
+		}
+
+	}
+}
+

@@ -73,7 +73,7 @@ bool MainScreen::setupPlayers() {
 	map->setNotificationsEnabled(false);
 
 	int totalPlayers = dialog.getPlayerCount();
-	for (int x = 0; x < totalPlayers; x++) {
+	for (int x = 0; x < totalPlayers-1; x++) {
 		Player *player = map->addPlayer(Player("Player " + std::to_string(x+1)));
 		player->setNotificationsEnabled(false);
 		player->setReinforcements(10);
@@ -81,6 +81,12 @@ bool MainScreen::setupPlayers() {
 		player->notifyObservers();
 	}
 
+	Player *player = map->addPlayer((Player("Player machine" )));
+	player->setNotificationsEnabled(false);
+	player->setHuman(false);
+	player->setReinforcements(10);
+	player->setNotificationsEnabled(true);
+	player->notifyObservers();
 	std::string firstPlayerName = (*map->getPlayers().begin()).first;
 	this->driver->setCurrentPlayerName(firstPlayerName);
 

@@ -13,6 +13,7 @@ protected:
 	int battleWon = 0; ///< Number of battles the user has won (either attacking or defending)
 	int battleLost = 0; ///< Number of battles the user has lost (either attacking or defending)
 	std::string name = "";
+	bool human;
 
 public:
 	Player() {}
@@ -76,6 +77,8 @@ public:
 	 * @brief getReinforcements
 	 */
 	int getReinforcements() const;
+	bool isHuman();
+	void setHuman(bool human);
 
 	template<class Archive>
 	void serialize(Archive& archive) {

@@ -31,7 +31,7 @@ void Strategy::whereToAttackFrom(RiskMap *map)
 			l_iter++;
 		}
 		else{
-			currentCountry = *l_iter;
+			currentCountry = map->getCountry(*l_iter)->getName();
 			countryToAttack = decideAttackingCountry(map);
 			break;
 		}

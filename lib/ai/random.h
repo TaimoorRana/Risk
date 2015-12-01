@@ -19,6 +19,7 @@ public:
 	 * @return
 	 */
 	std::string decideAttackingCountry(RiskMap* map);
+	virtual void whereToAttackFrom(RiskMap *map);
 };
 
 #endif // AI_RANDOM_H

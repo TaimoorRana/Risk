@@ -24,6 +24,14 @@ int Player::getReinforcements() const {
 	return this->reinforcements;
 }
 
+void Player::setHuman(bool human)
+{
+	this->human = human;
+}
+bool Player::isHuman(){
+	return human;
+}
+
 void Player::setBattlesWon(const int &amount) {
 	this->battleWon = amount;
 	this->notifyObservers();

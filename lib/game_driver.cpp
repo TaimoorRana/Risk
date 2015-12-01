@@ -3,6 +3,11 @@
 #include "librisk.h"
 #include "logging/logger.h"
 #include "game_driver.h"
+#include "ai/random.h"
+#include "ai/aggressive.h"
+#include "ai/defensive.h"
+#include <random>
+
 
 GameDriver* GameDriver::getInstance() {
 	static GameDriver* instance = nullptr;
@@ -59,11 +64,46 @@ void GameDriver::setCurrentMode(const Mode& mode) {
 	this->currentMode = mode;
 	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->currentMode, "phase started");
 	this->notifyObservers();
+	Player *p = map->getPlayer((getCurrentPlayerName()));
+	//delete strategy each time then create new instance;
+	if(currentMode==ATTACK && !p->isHuman() ){
+		if(rand()%3==0){
+			strategy = new Defensive();
+			debug("defensive ");
+		}
+		else if(rand()%3 ==1){
+			strategy = new Aggressive();
+			debug("aggressive");
+		}
+		else if (rand()%3 ==2){
+			strategy = new Random();
+			debug("random");
+		}
+
+		strategy = new Aggressive();
+
+		strategy->setPlayer(getCurrentPlayerName());
+		debug("before strategy attack");
+		strategy->whereToAttackFrom(map);
+		debug( "make it past where to attack");
+		if(strategy->getCountryToAttack() != " "){
+			debug(strategy->getCurrentCountry() + "  " + strategy->getCountryToAttack());
+			attackCountry(map->getCountry(strategy->getCurrentCountry()),map->getCountry(strategy->getCountryToAttack()));
+		}
+		//need to delete the strategy each round to set dynamically
+		if(strategy!=nullptr){
+			strategy = nullptr;
+			delete strategy;
+		}
+
+	}
+
+
 }
 
 /**
- * @brief Perform an attack move on a country
- */
+				 * @brief Perform an attack move on a country
+				 */
 bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountry) {
 	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "Starting attack on " + defenderCountry->getName() + "[owned by " + defenderCountry->getPlayer() + "] from " + attackerCountry->getName());
 	int attackerArmy = attackerCountry->getArmies();
@@ -135,8 +175,8 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 }
 
 /**
- * @brief Perform an fortify move on a country
- */
+				 * @brief Perform an fortify move on a country
+				 */
 bool GameDriver::fortifyCountry(Country* originCountry, Country* destinationCountry, int armies) {
 	if (originCountry->getArmies() - armies <= 0) {
 		return false;
@@ -147,8 +187,8 @@ bool GameDriver::fortifyCountry(Country* originCountry, Country* destinationCoun
 }
 
 /**
- * @brief Adjusts each player's reinforcement count
- */
+				 * @brief Adjusts each player's reinforcement count
+				 */
 void GameDriver::recalculateReinforcements() {
 	for (auto const &ent1: this->map->getPlayers()) {
 		Player* player = this->map->getPlayer(ent1.first);
