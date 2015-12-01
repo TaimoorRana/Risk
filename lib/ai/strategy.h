@@ -13,6 +13,8 @@
 class Strategy
 {
 public:
+	virtual ~Strategy() {};
+
 	/**
 	 * @brief setPlayer
 	 * @param nameOfPlayer
