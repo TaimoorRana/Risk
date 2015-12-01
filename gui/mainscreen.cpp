@@ -3,6 +3,7 @@
 #include <time.h>
 #include <set>
 
+#include <QDialog>
 #include <QDir>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -169,11 +170,11 @@ void MainScreen::allocateArmiesByNumberOfPlayers(const std::string p){
 			iter = x.begin();
 		}
 	}
-	
+
 	for(auto &ent1: map->getPlayers()){
 		map->getPlayer(ent1.first)->notifyObservers();
 	}
-	
+
 }
 
 void MainScreen::on_endPhasePushButton_clicked() {
@@ -243,6 +244,17 @@ void MainScreen::on_mapEditorAction_triggered() {
 
 void MainScreen::observedUpdated() {
 	RiskMap* map = this->driver->getRiskMap();
+	std::string currentPlayerName = this->driver->getCurrentPlayerName();
+
+	// Verify victory conditions
+	if (this->driver->hasWon(currentPlayerName)) {
+		QMessageBox winnerDialog(this);
+		winnerDialog.setWindowTitle("Game has concluded");
+		winnerDialog.setText(QString("%1 has won the game!").arg(QString::fromStdString(currentPlayerName)));
+		winnerDialog.exec();
+		this->close();
+	}
+
 	this->scene->repopulate(this->mapPath);
 
 	// Handle observe notify event from map: clear existing player info widgets

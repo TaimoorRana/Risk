@@ -95,15 +95,13 @@ void GameDriver::setCurrentMode(const Mode& mode) {
 			strategy = nullptr;
 			delete strategy;
 		}
-
 	}
-
-
 }
 
 /**
-				 * @brief Perform an attack move on a country
-				 */
+ * @brief Perform an attack move on a country
+ * @return boolean indicating if the user has won the game with this attack.
+ */
 bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountry) {
 	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "Starting attack on " + defenderCountry->getName() + "[owned by " + defenderCountry->getPlayer() + "] from " + attackerCountry->getName());
 	int attackerArmy = attackerCountry->getArmies();
@@ -175,8 +173,8 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 }
 
 /**
-				 * @brief Perform an fortify move on a country
-				 */
+ * @brief Perform an fortify move on a country
+ */
 bool GameDriver::fortifyCountry(Country* originCountry, Country* destinationCountry, int armies) {
 	if (originCountry->getArmies() - armies <= 0) {
 		return false;
@@ -187,8 +185,8 @@ bool GameDriver::fortifyCountry(Country* originCountry, Country* destinationCoun
 }
 
 /**
-				 * @brief Adjusts each player's reinforcement count
-				 */
+ * @brief Adjusts each player's reinforcement count
+ */
 void GameDriver::recalculateReinforcements() {
 	for (auto const &ent1: this->map->getPlayers()) {
 		Player* player = this->map->getPlayer(ent1.first);
@@ -204,4 +202,11 @@ void GameDriver::recalculateReinforcements() {
 		}
 		player->setReinforcements(reinforcements);
 	}
+}
+
+/**
+ * @brief Verify if a player has won the game
+ */
+bool GameDriver::hasWon(std::string playerName) {
+	return this->map->getContinentsOwnedByPlayer(playerName).size() == this->map->getContinents().size();
 }

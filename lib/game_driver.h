@@ -31,6 +31,7 @@ public:
 	bool fortifyCountry(Country* originCountry, Country* destinationCountry, int armies);
 
 	void recalculateReinforcements();
+	bool hasWon(std::string playerName);
 
 	template<class Archive>
 	void serialize(Archive& archive) {
