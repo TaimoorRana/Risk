@@ -7,6 +7,8 @@
 #include "ai/aggressive.h"
 #include "ai/defensive.h"
 #include <random>
+#include <string>
+#include <time.h>
 
 
 GameDriver* GameDriver::getInstance() {
@@ -66,27 +68,39 @@ void GameDriver::setCurrentMode(const Mode& mode) {
 	this->notifyObservers();
 	Player *p = map->getPlayer(this->getCurrentPlayerName());
 	//delete strategy each time then create new instance;
+	std::string currentStrategy = "ai player ";
 	if(currentMode==ATTACK && !p->isHuman() ){
-		if(rand()%3==0){
+		srand(time(NULL));
+		debug(std::to_string(rand()));
+		int randomNumber = rand() %3;
+		debug(std::to_string(randomNumber));
+		if(randomNumber==0){
 			strategy = new Defensive();
 			debug("defensive ");
+			currentStrategy += "defensive";
+
 		}
-		else if(rand()%3 ==1){
+		else if(randomNumber == 1){
 			strategy = new Aggressive();
 			debug("aggressive");
+			currentStrategy += "aggressive";
+
 		}
-		else if (rand()%3 ==2){
+		else if (randomNumber==2){
 			strategy = new Random();
 			debug("random");
+			currentStrategy += "random";
+
 		}
 
-		strategy = new Aggressive();
+		Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), currentStrategy);
+		this->notifyObservers();
 
 		strategy->setPlayer(this->getCurrentPlayerName());
 		debug("before strategy attack");
 		strategy->whereToAttackFrom(map);
 		debug( "make it past where to attack");
-		if(strategy->getCountryToAttack() != " "){
+		if(strategy->getCountryToAttack() != " " && strategy->getCountryAttackFrom() != " "){
 			debug(strategy->getCurrentCountry() + "  " + strategy->getCountryToAttack());
 			attackCountry(map->getCountry(strategy->getCurrentCountry()),map->getCountry(strategy->getCountryToAttack()));
 		}
