@@ -21,6 +21,7 @@
 #include "map_scene.h"
 #include "player.h"
 #include "playernamedialog.h"
+#include "cards_trade_dialog.h"
 
 MainScreen::MainScreen(GameDriver* driver, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainScreen)
 {
@@ -187,6 +188,22 @@ void MainScreen::on_logButton_clicked()
 		this->logScreen->show();
 	}
 	delete logSelector;
+}
+
+void MainScreen::on_useCardsButton_clicked()
+{
+    if (this->driver->getRiskMap()->getPlayer(driver->getCurrentPlayerName())->getCards() >=2)
+    {
+        CardsTradeDialog* cardsTradeDialog = new CardsTradeDialog(this->driver, this);
+        cardsTradeDialog->exec();
+    } else
+    {
+        QMessageBox errorDialog(this);
+        errorDialog.setWindowTitle("Insufficient Number of Cards");
+        errorDialog.setText("You need at least 2 cards to be able to trade!");
+        errorDialog.exec();
+    }
+
 }
 
 void MainScreen::on_loadAction_triggered() {

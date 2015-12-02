@@ -35,6 +35,8 @@ public:
 
 	void repopulate(std::string mapPath);
 
+    void launchCardsTradeDialog();
+
 private:
 	GameDriver* driver = nullptr; ///< Pointer to the observed map the scene is rendering.
 	Country* firstCountryClicked = nullptr; ///< Auxiliary variable when picking a Country in the Map with the mouse

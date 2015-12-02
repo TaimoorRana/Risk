@@ -13,6 +13,8 @@ protected:
 	int battleWon = 0; ///< Number of battles the user has won (either attacking or defending)
 	int battleLost = 0; ///< Number of battles the user has lost (either attacking or defending)
 	std::string name = "";
+	int cards = 0;
+	bool didWinCountry = false;
 	bool human = true;
 
 public:
@@ -24,6 +26,28 @@ public:
 	 * @return name of the player
 	 */
 	std::string getName() const;
+
+	/**
+	 * @brief getCards
+	 * @return The number of cards a player has
+	 */
+	int getCards();
+
+	/**
+	 * @brief Updates the number of cards the user has
+	 */
+	int updateCards(int numberOfCards);
+
+	/**
+	 * @brief didWinCountry
+	 * @return If the user has won a country in the current turn if they're attacking
+	 */
+	bool getDidWinCountry();
+
+	/**
+	 * @brief setDidWinCountry
+	 */
+	void setDidWinCountry(bool value);
 
 	/**
 	 * @brief setBattlesWon sets battleWon value

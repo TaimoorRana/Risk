@@ -35,9 +35,15 @@ public:
 	bool reinforceCountry(Player* player, Country* country, int amount);
 	bool attackCountry(Country* attackerCountry, Country* defenderCountry);
 	bool fortifyCountry(Country* originCountry, Country* destinationCountry, int armies);
+	void handACardToWinner();
 
 	void recalculateReinforcements();
 	bool hasWon(std::string playerName);
+
+	void addCardsTradeReinforcements(int numArmies);
+
+	// ads the number of cards to those of the current player
+	void updatePlayerCards(int numCards);
 
 	template<class Archive>
 	void serialize(Archive& archive) {

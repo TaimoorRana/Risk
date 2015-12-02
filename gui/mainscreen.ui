@@ -25,9 +25,9 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QPushButton" name="logButton">
+           <widget class="QPushButton" name="useCardsButton">
             <property name="text">
-             <string>View Log</string>
+             <string>Use Cards</string>
             </property>
            </widget>
           </item>
@@ -93,6 +93,13 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="logButton">
+            <property name="text">
+             <string>View Log</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -168,6 +175,6 @@
  <resources/>
  <connections/>
  <slots>
-  <slot>on_pushButton_clicked()</slot>
+  <slot>on_useCardsButton_clicked()</slot>
  </slots>
 </ui>

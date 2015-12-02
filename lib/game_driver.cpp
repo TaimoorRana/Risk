@@ -54,6 +54,11 @@ void GameDriver::endPhase() {
 		this->signalAI();
 	}
 	else if (currentMode == ATTACK) {
+		// Hand a card to the attacker at the end of Attack mode
+		if (mode == FORTIFICATION) {
+			this->handACardToWinner();
+		}
+
 		this->setCurrentMode(FORTIFICATION);
 		Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "phase started");
 		this->signalAI();
@@ -137,6 +142,30 @@ bool GameDriver::reinforceCountry(Player* player, Country* country, int amount) 
 }
 
 /**
+ * @brief GameDriver::handACardToWinner
+ * @param mode
+ */
+void GameDriver::handACardToWinner()
+{
+	Player* player = map->getPlayer(currentPlayerName);
+	if (player->getDidWinCountry() == true) // player must have won a country in their turn
+	{
+		Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "gave player a card");
+
+		if (map->getCards() > 0)
+		{
+				map->updateCards(-1);
+				player->updateCards(+1);
+		}
+		else
+		{
+			Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "could not give player a card: there are no more cards left in the deck");
+		}
+		player->setDidWinCountry(false); // reset the value for upcoming turn
+	}
+}
+
+/**
  * @brief Perform an attack move on a country
  * @return boolean indicating if the user has won the game with this attack.
  */
@@ -185,7 +214,7 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 		Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "attacker won!");
 		Player* winner = this->map->getPlayer(attackerCountry->getPlayer());
 		winner->adjustBattlesWon(1);
-
+				winner->setDidWinCountry(true); // Temp value that indicates that the player has won a country
 		Player* loser = this->map->getPlayer(defenderCountry->getPlayer());
 		loser->adjustBattlesLost(1);
 
@@ -193,6 +222,15 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 		defenderCountry->setArmies(1);
 		defenderCountry->setPlayer(attackerCountry->getPlayer());
 		this->recalculateReinforcements();
+
+				// check if defender lost all territories
+				if (map->getCountriesOwnedByPlayer(loser->getName()).size() == 0)
+				{
+						// Winner takes all the loser's cards
+						int loserCards = loser->getCards();
+						winner->updateCards(loserCards);
+						loser->updateCards(-loserCards);
+				}
 	}
 	else {
 		// Defender victorious: reconfigure armies
@@ -221,6 +259,19 @@ bool GameDriver::fortifyCountry(Country* originCountry, Country* destinationCoun
 	destinationCountry->addArmies(armies);
 	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "Fortifying country " + originCountry->getName() + " with " + std::to_string(armies) + " armies from " + destinationCountry->getName());
 	return true;
+}
+
+void GameDriver::addCardsTradeReinforcements(int numArmies)
+{
+	Player* player = this->map->getPlayer(currentPlayerName);
+	player->setReinforcements(player->getReinforcements()+numArmies);
+}
+
+void GameDriver::updatePlayerCards(int numCards)
+{
+	Player* player = this->map->getPlayer(currentPlayerName);
+	player->updateCards(numCards);
+	player->notifyObservers();
 }
 
 /**
