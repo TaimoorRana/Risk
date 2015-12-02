@@ -94,7 +94,6 @@ bool MainScreen::setupPlayers() {
 	for (int x = 1; x <= humanPlayers; x++) {
 		Player *player = map->addPlayer(Player("Player " + std::to_string(x)));
 		player->notifyObservers();
-		player->updateCards(10);
 	}
 
 	// Future improvement: make this selectable from the UI
