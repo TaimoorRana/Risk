@@ -1,4 +1,5 @@
 #include "strategy.h"
+#include "librisk.h"
 
 Strategy::Strategy() {
 	this->driver = GameDriver::getInstance();
@@ -38,12 +39,21 @@ void Strategy::takeAction(Mode mode) {
 
 std::string Strategy::reinforcePhase() {
 	RiskMap* map = this->driver->getRiskMap();
+	std::string playerName = this->driver->getCurrentPlayerName();
 
 	int minArmies = 10000;
 	Country* minArmiesCountry = nullptr;
 
+	// add the reinforcements to the player
+	int numCardsSelected = map->getPlayer(playerName)->getCards();
+	int armiesEarned = convertCardsToReinforcements(numCardsSelected);
+	if (armiesEarned > 0) {
+		this->driver->addCardsTradeReinforcements(armiesEarned);
+		this->driver->updatePlayerCards(-numCardsSelected);
+	}
+
 	// Reinforce the weakest country
-	for (const std::string countryName : map->getCountriesOwnedByPlayer(driver->getCurrentPlayerName())) {
+	for (const std::string countryName : map->getCountriesOwnedByPlayer(playerName)) {
 		Country* country = map->getCountry(countryName);
 		int armies = country->getArmies();
 		if (armies < minArmies) {

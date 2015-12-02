@@ -1,15 +1,14 @@
 #include <algorithm>
-#include "librisk.h"
-#include "logging/logger.h"
-#include "game_driver.h"
+#include <random>
+#include <string>
+#include <time.h>
 #include "ai/strategy.h"
 #include "ai/random.h"
 #include "ai/aggressive.h"
 #include "ai/defensive.h"
-#include <random>
-#include <string>
-#include <time.h>
-
+#include "librisk.h"
+#include "logging/logger.h"
+#include "game_driver.h"
 
 GameDriver* GameDriver::getInstance() {
 	static GameDriver* instance = nullptr;
@@ -55,9 +54,7 @@ void GameDriver::endPhase() {
 	}
 	else if (currentMode == ATTACK) {
 		// Hand a card to the attacker at the end of Attack mode
-		if (currentMode == FORTIFICATION) {
-			this->handACardToWinner();
-		}
+		this->handACardToWinner();
 
 		this->setCurrentMode(FORTIFICATION);
 		Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "phase started");
@@ -214,7 +211,7 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 		Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "attacker won!");
 		Player* winner = this->map->getPlayer(attackerCountry->getPlayer());
 		winner->adjustBattlesWon(1);
-				winner->setDidWinCountry(true); // Temp value that indicates that the player has won a country
+		winner->setDidWinCountry(true); // Temp value that indicates that the player has won a country
 		Player* loser = this->map->getPlayer(defenderCountry->getPlayer());
 		loser->adjustBattlesLost(1);
 
@@ -223,14 +220,14 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 		defenderCountry->setPlayer(attackerCountry->getPlayer());
 		this->recalculateReinforcements();
 
-				// check if defender lost all territories
-				if (map->getCountriesOwnedByPlayer(loser->getName()).size() == 0)
-				{
-						// Winner takes all the loser's cards
-						int loserCards = loser->getCards();
-						winner->updateCards(loserCards);
-						loser->updateCards(-loserCards);
-				}
+		// check if defender lost all territories
+		if (map->getCountriesOwnedByPlayer(loser->getName()).size() == 0)
+		{
+			// Winner takes all the loser's cards
+			int loserCards = loser->getCards();
+			winner->updateCards(loserCards);
+			loser->updateCards(-loserCards);
+		}
 	}
 	else {
 		// Defender victorious: reconfigure armies

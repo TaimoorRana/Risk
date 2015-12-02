@@ -6,6 +6,7 @@
 
 void libriskInit();
 std::vector<int> rollDice(int);
+int convertCardsToReinforcements(int numCards);
 
 
 #endif // LIBRISK_H
