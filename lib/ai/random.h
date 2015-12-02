@@ -1,7 +1,5 @@
 #ifndef AI_RANDOM_H
 #define AI_RANDOM_H
-#include <string>
-
 #include "strategy.h"
 
 /**
@@ -12,14 +10,8 @@
 class Random : public Strategy
 {
 public:
-	/**
-	 * @brief decideAttackingCountry
-	 * @param map - the current game map
-	 * Ovewrites parent method and decides using the defensive strategy which country to attack
-	 * @return
-	 */
-	std::string decideAttackingCountry(RiskMap* map);
-	virtual void whereToAttackFrom(RiskMap *map);
+	~Random() {}
+	std::pair<std::string, std::string> attackPhase();
 };
 
 #endif // AI_RANDOM_H

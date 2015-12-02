@@ -2,13 +2,14 @@
 #define GAMEDRIVER_H
 #include <string>
 #include <cereal/types/string.hpp>
-
 #include "country.h"
 #include "game_modes.h"
 #include "observable.h"
 #include "player.h"
 #include "risk_map.h"
-#include "ai/strategy.h"
+
+class Strategy;
+
 /**
  * @brief The GameDriver class
  * Handles the ordering of the game  the players turn the number of reinforcements
@@ -27,18 +28,22 @@ public:
 	Mode getCurrentMode() const;
 	void setCurrentMode(const Mode& mode);
 
-    void handACardToWinner();
+	void nextTurn();
+	void endPhase();
+	void signalAI();
 
+	bool reinforceCountry(Player* player, Country* country, int amount);
 	bool attackCountry(Country* attackerCountry, Country* defenderCountry);
 	bool fortifyCountry(Country* originCountry, Country* destinationCountry, int armies);
+	void handACardToWinner();
 
 	void recalculateReinforcements();
 	bool hasWon(std::string playerName);
 
-    void addCardsTradeReinforcements(int numArmies);
+	void addCardsTradeReinforcements(int numArmies);
 
-    // ads the number of cards to those of the current player
-    void updatePlayerCards(int numCards);
+	// ads the number of cards to those of the current player
+	void updatePlayerCards(int numCards);
 
 	template<class Archive>
 	void serialize(Archive& archive) {
@@ -48,10 +53,9 @@ public:
 private:
 	RiskMap* map = nullptr;
 	std::string currentPlayerName = "";
-
-	Strategy *strategy;
 	Mode currentMode = REINFORCEMENT;
 
+	Strategy* getRandomStrategy();
 };
 
 #endif // GAMEDRIVER_H

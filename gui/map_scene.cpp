@@ -141,10 +141,12 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 		switch (this->driver->getCurrentMode()) {
 			case REINFORCEMENT:
 				if (currentPlayer == item->getCountry()->getPlayer()) {
-					map->getPlayer(item->getCountry()->getPlayer())->adjustReinforcements(-1);
-					item->getCountry()->addArmies(1);
-					if (map->getPlayer(item->getCountry()->getPlayer())->getReinforcements() <= 0) {
-						parent->endPhase();
+					Player* player = map->getPlayer(item->getCountry()->getPlayer());
+					Country* country = item->getCountry();
+					this->driver->reinforceCountry(player, country, 1);
+
+					if (player->getReinforcements() <= 0) {
+						this->driver->endPhase();
 					}
 				}
 				else {
@@ -206,7 +208,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					if (map->areCountriesNeighbours(firstCountryClicked->getName(), secondCountryClicked->getName())) {
 						FortifyDialog* fortificationDialog = new FortifyDialog(this->driver, firstCountryClicked, secondCountryClicked, parent);
 						if (fortificationDialog->exec() == QDialog::Accepted) {
-							parent->endPhase();
+							driver->endPhase();
 						}
 						delete fortificationDialog;
 					}

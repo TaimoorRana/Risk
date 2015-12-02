@@ -1,46 +1,26 @@
-#include <string>
-
 #include "aggressive.h"
+#include <set>
 
-std::string Aggressive::decideAttackingCountry(RiskMap *map)
-{	countryToAttack = " ";
-	attack = false;
-	int differenceInArmies=0;
-	listOfAttackCountries = map->getNeighbours(getCountryAttackFrom());
-	auto c_iter = listOfAttackCountries.begin();
-	while (c_iter != listOfAttackCountries.end()) {
-		if (map->getCountry(*c_iter)->getArmies() < getNumberOfArmies() && !isSameOwner(map->getCountry(*c_iter)->getPlayer(),nameOfPlayer)) {
+std::pair<std::string, std::string> Aggressive::attackPhase() {
+	RiskMap* map = this->driver->getRiskMap();
+	std::string playerName = this->driver->getCurrentPlayerName();
+	std::set<std::string> countriesOwnedByPlayer = map->getCountriesOwnedByPlayer(playerName);
 
-			if (getNumberOfArmies() - map->getCountry(*c_iter)->getArmies()>differenceInArmies) {
-				differenceInArmies = map->getCountry(*c_iter)->getArmies()-getNumberOfArmies();
-				countryToAttack = *c_iter;
-				attack =true;
+	std::pair<std::string, std::string> maxDifferencePair("", "");
+	int maxDifference = 0;
+
+	for (const std::string &countryName : countriesOwnedByPlayer) {
+		Country* country = map->getCountry(countryName);
+		for (const std::string &neighbourName : map->getNeighbours(country->getName())) {
+			Country* neighbour = map->getCountry(neighbourName);
+			if (neighbour->getPlayer() != playerName) {
+				int difference = country->getArmies() - neighbour->getArmies();
+				if (difference >= maxDifference) {
+					maxDifference = difference;
+					maxDifferencePair = std::pair<std::string, std::string>(country->getName(), neighbour->getName());
+				}
 			}
-			//do nothing
-			else {
-
-			}
 		}
-		c_iter++;
 	}
-	return countryToAttack;
+	return maxDifferencePair;
 }
-
-void Aggressive::whereToAttackFrom(RiskMap *map)
-{
-	listOfPlayerCountries= map->getCountriesOwnedByPlayer(getPlayer());
-	auto l_iter = listOfPlayerCountries.begin();
-	while (l_iter != listOfPlayerCountries.end()) {
-		setAttackFrom(*l_iter,map->getCountry(*l_iter)->getArmies());
-		if (decideAttackingCountry(map) == " " ) {
-			l_iter++;
-		}
-		else{
-			currentCountry = map->getCountry(*l_iter)->getName();
-			countryToAttack = decideAttackingCountry(map);
-			break;
-		}
-
-	}
-}
-

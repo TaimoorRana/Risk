@@ -2,10 +2,10 @@
 #include <QSplashScreen>
 #include <QThread>
 
+#include "librisk.h"
 #include "game_driver.h"
 #include "mainscreen.h"
 #include "map_scene.h"
-
 #include "risk_map.h"
 
 
@@ -27,6 +27,8 @@ void showSplashScreen() {
  * @return
  */
 int main(int argc, char *argv[]) {
+	libriskInit();
+
 	QApplication application(argc, argv);
 	showSplashScreen();
 
