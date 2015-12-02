@@ -106,7 +106,7 @@ public:
 
 	template<class Archive>
 	void serialize(Archive& archive) {
-		archive(cereal::make_nvp("name", this->name), cereal::make_nvp("reinforcements", this->reinforcements), cereal::make_nvp("battleWon", this->battleWon), cereal::make_nvp("battleLost", this->battleLost), cereal::make_nvp("human", this->human));
+		archive(cereal::make_nvp("name", this->name), cereal::make_nvp("reinforcements", this->reinforcements), cereal::make_nvp("battleWon", this->battleWon), cereal::make_nvp("battleLost", this->battleLost), cereal::make_nvp("human", this->human), cereal::make_nvp("cards", this->cards), cereal::make_nvp("didWinCountry", this->didWinCountry));
 	}
 };
 #endif // PLAYER_H

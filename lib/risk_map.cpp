@@ -78,8 +78,6 @@ void RiskMap::removeCountry(const Country& country){
 	if (mapGraph.removeNode(country.getName())){
 		continents.erase(continent);
 	}
-	// FIXME we need to account for the fact that the country may have been owned
-	// by a player
 	this->notifyObservers();
 }
 

@@ -54,6 +54,7 @@ private:
 	RiskMap* map = nullptr;
 	std::string currentPlayerName = "";
 	Mode currentMode = REINFORCEMENT;
+
 	Strategy* getRandomStrategy();
 };
 

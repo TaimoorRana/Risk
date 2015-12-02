@@ -58,6 +58,6 @@ std::string Strategy::reinforcePhase() {
 }
 
 std::pair<std::string, std::string> Strategy::fortifyPhase() {
-	// TODO: Not implemented
+	// Not implemented in the current AI.
 	return std::pair<std::string, std::string>("", "");
 }
