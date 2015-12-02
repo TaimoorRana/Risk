@@ -26,8 +26,11 @@
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QPushButton" name="useCardsButton">
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
             <property name="text">
-             <string>Use Cards</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -97,7 +100,7 @@
           <item>
            <widget class="QPushButton" name="logButton">
             <property name="text">
-             <string>View Log</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -108,7 +111,11 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QGraphicsView" name="graphicsView"/>
+         <widget class="QGraphicsView" name="graphicsView">
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>

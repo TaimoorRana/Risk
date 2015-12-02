@@ -1,5 +1,7 @@
 <RCC>
-  <qresource>
-    <file>splash.png</file>
-  </qresource>
+    <qresource prefix="/">
+        <file>splash.png</file>
+        <file>cards.png</file>
+        <file>log.png</file>
+    </qresource>
 </RCC>

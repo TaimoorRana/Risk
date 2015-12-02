@@ -65,6 +65,7 @@ void CardsTradeDialog::accept()
 
     // deduct the amount of traded cards from the players deck
     this->driver->updatePlayerCards(-numCardsSelected);
+
 	this->close();
 	// TODO: error validation
 }

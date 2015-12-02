@@ -33,6 +33,20 @@ MainScreen::MainScreen(GameDriver* driver, QWidget *parent) : QMainWindow(parent
 	this->scene = new MapScene(this->driver, this);
 	ui->graphicsView->setScene(scene);
 	ui->reinforcementLabel->setEnabled(true);
+
+    ui->useCardsButton->setFlat(true);
+    ui->useCardsButton->setAutoFillBackground(true);
+    ui->useCardsButton->setIcon(QIcon(":cards.png"));
+    ui->useCardsButton->setIconSize(QSize(50,50));
+    ui->useCardsButton->setToolTip("Trade your cards");
+    ui->useCardsButton->setMaximumHeight(40);
+
+    ui->logButton->setFlat(true);
+    ui->logButton->setAutoFillBackground(true);
+    ui->logButton->setIcon(QIcon(":log.png"));
+    ui->logButton->setIconSize(QSize(40,40));
+    ui->logButton->setToolTip("Display game log");
+    ui->logButton->setMaximumHeight(40);
 }
 
 MainScreen::~MainScreen() {
