@@ -37,7 +37,7 @@ private slots:
 	 */
 	void on_mapEditorAction_triggered();
 	void on_logButton_clicked();
-    void on_useCardsButton_clicked();
+	void on_useCardsButton_clicked();
 
 	/**
 	 * @brief Callback to end the current phase, or advance to the next turn.

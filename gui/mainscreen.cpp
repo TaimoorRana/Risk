@@ -94,6 +94,7 @@ bool MainScreen::setupPlayers() {
 	for (int x = 1; x <= humanPlayers; x++) {
 		Player *player = map->addPlayer(Player("Player " + std::to_string(x)));
 		player->notifyObservers();
+		player->updateCards(10);
 	}
 
 	// Future improvement: make this selectable from the UI
@@ -177,10 +178,12 @@ void MainScreen::allocateArmiesByNumberOfPlayers(const std::string playerName){
 	for (auto &ent1: map->getPlayers()){
 		map->getPlayer(ent1.first)->notifyObservers();
 	}
-
 }
 
 void MainScreen::on_endPhasePushButton_clicked() {
+	if (this->driver->getCurrentMode() == FORTIFICATION) {
+		ui->useCardsButton->setEnabled(true);
+	}
 	this->driver->endPhase();
 }
 
@@ -206,18 +209,19 @@ void MainScreen::on_logButton_clicked()
 
 void MainScreen::on_useCardsButton_clicked()
 {
-    if (this->driver->getRiskMap()->getPlayer(driver->getCurrentPlayerName())->getCards() >=2)
-    {
-        CardsTradeDialog* cardsTradeDialog = new CardsTradeDialog(this->driver, this);
-        cardsTradeDialog->exec();
-    } else
-    {
-        QMessageBox errorDialog(this);
-        errorDialog.setWindowTitle("Insufficient Number of Cards");
-        errorDialog.setText("You need at least 2 cards to be able to trade!");
-        errorDialog.exec();
-    }
-
+	if (this->driver->getRiskMap()->getPlayer(driver->getCurrentPlayerName())->getCards() >= 2)
+	{
+		CardsTradeDialog* cardsTradeDialog = new CardsTradeDialog(this->driver, this);
+		if (cardsTradeDialog->exec() == QDialog::Accepted) {
+			ui->useCardsButton->setEnabled(false);
+		}
+	} else
+	{
+		QMessageBox errorDialog(this);
+		errorDialog.setWindowTitle("Insufficient Number of Cards");
+		errorDialog.setText("You need at least 2 cards to be able to trade!");
+		errorDialog.exec();
+	}
 }
 
 void MainScreen::on_loadAction_triggered() {

@@ -18,7 +18,7 @@ public:
 		~CardsTradeDialog();
 	void accept();
 private slots:
-		void on_cardsSlider_sliderMoved(int value);
+		void on_cardsSlider_valueChanged(int value);
 private:
 		Ui::CardsTradeDialog *ui;
 		GameDriver* driver = nullptr;
