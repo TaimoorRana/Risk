@@ -3,9 +3,8 @@
 #include "strategy.h"
 
 /**
- * @brief The Aggressive class extends Strategy
- * Implements the Aggressive strategy pattern which attacks
- * as long as one bordering territory has less armies.
+ * @brief Aggressive AI pattern which attacks as long as one bordering territory
+ * has fewer armies
  */
 class Aggressive : public Strategy
 {

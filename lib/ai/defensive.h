@@ -3,9 +3,8 @@
 #include "strategy.h"
 
 /**
- * @brief The Defensive class extends the strategy class
- * implements the defensive strategy pattern of only attack when all
- * bordering territories have less armies
+ * @brief The Defensive AI pattern which attacks only attack when all bordering
+ * territories have fewer armies
  */
 class Defensive : public Strategy
 {

@@ -8,9 +8,9 @@
 #include "risk_map.h"
 
 /**
- * @brief The Strategy class
- * An abstract class which implements the stragety design pattern for allowing the player to
- * decide which enemy to attack
+ * @brief An abstract class which implements the Strategy design pattern to
+ * allow for different AIs. Each implementation overrides methods to handle
+ * phase actions.
  */
 class Strategy
 {

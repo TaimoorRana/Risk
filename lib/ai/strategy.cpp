@@ -5,6 +5,16 @@ Strategy::Strategy() {
 	this->driver = GameDriver::getInstance();
 }
 
+/**
+ * @brief A signal sent to the Strategy class from the game driver to indicate
+ * that a computer-controlled player should made their move.
+ *
+ * The AI strategy implementations override each of the fooPhase() methods
+ * which return the name(s) of the country or countries to act upon.
+ *
+ * Empty string indicates the AI wishes to make no move, or there are none
+ * possible.
+ */
 void Strategy::takeAction(Mode mode) {
 	RiskMap* map = this->driver->getRiskMap();
 
@@ -37,6 +47,10 @@ void Strategy::takeAction(Mode mode) {
 	}
 }
 
+/**
+ * @brief Reinforcement phase decision making. Places all reinforcements on the
+ * country with the fewest armies.
+ */
 std::string Strategy::reinforcePhase() {
 	RiskMap* map = this->driver->getRiskMap();
 	std::string playerName = this->driver->getCurrentPlayerName();
@@ -67,6 +81,9 @@ std::string Strategy::reinforcePhase() {
 	return minArmiesCountry->getName();
 }
 
+/**
+ * @brief Fortification phase decision making
+ */
 std::pair<std::string, std::string> Strategy::fortifyPhase() {
 	// Not implemented in the current AI.
 	return std::pair<std::string, std::string>("", "");

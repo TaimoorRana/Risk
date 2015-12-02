@@ -1,6 +1,9 @@
 #include "defensive.h"
 #include <set>
 
+/**
+ * @brief Attack phase decision making
+ */
 std::pair<std::string, std::string> Defensive::attackPhase() {
 	RiskMap* map = this->driver->getRiskMap();
 	std::string playerName = this->driver->getCurrentPlayerName();

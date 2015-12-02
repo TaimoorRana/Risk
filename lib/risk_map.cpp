@@ -233,6 +233,9 @@ void RiskMap::load(const std::string& path) {
 	this->setNotificationsEnabled(true);
 }
 
+/**
+ * @brief Parses the Cereal XML map file in the path indicated to populate the instance
+ */
 void RiskMap::loadXML(const std::string& path) {
 	std::ifstream infile(path);
 	cereal::XMLInputArchive input(infile);
@@ -240,7 +243,7 @@ void RiskMap::loadXML(const std::string& path) {
 }
 
 /**
- * @brief Parses the map file in the path indicated to populate the instance
+ * @brief Parses the Conquest .map map file in the path indicated to populate the instance
  */
 void RiskMap::loadMap(const std::string& path) {
 	std::ifstream infile(path);
