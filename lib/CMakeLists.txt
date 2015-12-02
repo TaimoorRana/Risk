@@ -4,7 +4,6 @@ set(LIBRARY_SOURCE_FILES
 	ai/defensive.h ai/defensive.cpp
 	ai/random.h ai/random.cpp
 	continent.cpp continent.h
-	computer_player.h computer_player.cpp
 	country.cpp country.h
 	debug.cpp debug.h
 	graph_adt.cpp graph_adt.h

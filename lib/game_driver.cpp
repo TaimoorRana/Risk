@@ -55,7 +55,7 @@ void GameDriver::endPhase() {
 	}
 	else if (currentMode == ATTACK) {
 		// Hand a card to the attacker at the end of Attack mode
-		if (mode == FORTIFICATION) {
+		if (currentMode == FORTIFICATION) {
 			this->handACardToWinner();
 		}
 
