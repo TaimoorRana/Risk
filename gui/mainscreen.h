@@ -21,12 +21,6 @@ public:
 	bool setupPlayers();
 	void observedUpdated();
 
-	/**
-	 * @brief endPhase This function simulates the click of the end phase button and switches to next player's turn
-	 */
-	void endPhase();
-	void nextTurn();
-
 private slots:
 	/**
 	 * @brief Callback to handle user selecting File > Load.
@@ -60,7 +54,7 @@ private:
 	MapScene* scene = nullptr;
 
 	void initializeMode();
-	void allocateArmiesByNumberOfPlayers(const std::string p);
+	void allocateArmiesByNumberOfPlayers(const std::string playerName);
 };
 
 #endif // MAINSCREEN_H

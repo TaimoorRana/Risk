@@ -11,7 +11,6 @@ public:
     ComputerPlayer();
     ComputerPlayer(std::string name);
     void setStrategy(Strategy *strategyP);
-    void setAttackFrom(std::string countryName, int numberOfArmies);
     Strategy* getStrategy();
 private:
     Strategy* strategy;

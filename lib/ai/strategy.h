@@ -1,8 +1,10 @@
 #ifndef AI_STRATEGY_H
 #define AI_STRATEGY_H
 #include <string>
-#include <set>
+#include <utility>
 #include "country.h"
+#include "game_driver.h"
+#include "game_modes.h"
 #include "risk_map.h"
 
 /**
@@ -13,89 +15,16 @@
 class Strategy
 {
 public:
+	Strategy();
 	virtual ~Strategy() {};
 
-	/**
-	 * @brief setPlayer
-	 * @param nameOfPlayer
-	 * sets the name of the player
-	 */
-	void setPlayer(std::string nameOfPlayer);
+	void takeAction(Mode mode);
+	virtual std::string reinforcePhase();
+	virtual std::pair<std::string, std::string> attackPhase() = 0;
+	std::pair<std::string, std::string> fortifyPhase();
 
-	/**
-	 * @brief setAttackFrom
-	 * @param countryName the country name of the base country to attack from
-	 * @param numberOfArmiesOnTerritory the number of armies on the territory
-	 * sets where is the country to attack from and the number of armies.
-	 */
-	void setAttackFrom(std::string countryName, int numberOfArmiesOnTerritory);
-	std::string getCurrentCountry();
-	std::string getCountryToAttack();
-
-	virtual void whereToAttackFrom(RiskMap *map);
-	/**
-	 * @brief isAttack
-	 * is there the possibility of currently attacking
-	 * e.g are all bordering countries players own used to see where can attack
-	 * @return
-	 */
-	bool isAttack();
-
-	/**
-	 * @brief getMap
-	 * @param map
-	 * gets the map does not copy it
-	 */
-	void getMap(RiskMap *map);
-
-	/**
-	 * @brief setCountryAttackFrom
-	 * @param playerCountry - the country to attack From
-	 * sets the country To attack from
-	 */
-	void setCountryAttackFrom(std::string playerCountry);
-
-	/**
-	 * @brief getCountryAttackFrom
-	 * get the country to attack from
-	 * @return
-	 */
-	std::string getCountryAttackFrom();
-
-	/**
-	 * @brief isSameOwner
-	 * @param countryOwner1 -first country
-	 * @param countryOwner2  -second country
-	 * checks whether the 2 countries have the same owner and then returns it as
-	 * a boolean expression
-	 * @return
-	 */
-	bool isSameOwner(std::string countryOwner1, std::string countryOwner2);
-	int getNumberOfArmies();
-	std::string getPlayer();
-	void setAttack(bool attack);
-
-	//may just use map and call internally
-	/**
-	 * @brief decideAttackingCountry
-	 * @param map the current game map
-	 * Virtual method which uses the map does not copy it to get the current board state.
-	 * Then decides which territory to attack and returns it.
-	 * @return
-	 */
-	virtual std::string decideAttackingCountry(RiskMap *map);
 protected:
-	//need list of bordering countreis
-	std::string nameOfPlayer;
-	std::set<std::string> listOfAttackCountries; //should be a set
-	std::set<std::string> listOfPlayerCountries;
-	Country *attacker; //see if right or string
-	Country *defender;
-	//int numberofArmies on territory may need to specify optimal
-	int numberOfArmiesOnTerritory;
-	bool attack;
-	std::string countryToAttack;
-	std::string currentCountry;
+	GameDriver* driver = nullptr;
 };
 
 #endif // AI_STRATEGY_H

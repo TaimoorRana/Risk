@@ -14,8 +14,3 @@ void ComputerPlayer::setStrategy(Strategy* strategyP)
 {
     this->strategy = strategyP;
 }
-
-void ComputerPlayer::setAttackFrom(std::string countryName, int numberOfArmies)
-{
-    strategy->setAttackFrom(countryName,numberOfArmies);
-}

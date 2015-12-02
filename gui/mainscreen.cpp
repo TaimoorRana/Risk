@@ -83,8 +83,8 @@ bool MainScreen::setupPlayers() {
 
 	// Future improvement: make this selectable from the UI
 	int cpuPlayers = 1;
-	for (int x = 1; x <= cpuPlayers; x++) {
-		Player *player = map->addPlayer(Player("Computer " + std::to_string(x)));
+	for (int x = humanPlayers+1; x <= humanPlayers+cpuPlayers; x++) {
+		Player *player = map->addPlayer(Player("Player " + std::to_string(x) + " (AI)"));
 		player->setNotificationsEnabled(false);
 		player->setHuman(false);
 		player->setNotificationsEnabled(true);
@@ -120,7 +120,7 @@ bool MainScreen::setupPlayers() {
 			playerIter = map->getPlayers().begin();
 		}
 	}
-	
+
 	// Calculate player reinforcements now that countries are assigned
 	this->driver->recalculateReinforcements();
 
@@ -136,13 +136,13 @@ void MainScreen::allocateArmiesByNumberOfPlayers(const std::string playerName){
 	RiskMap* map = this->driver->getRiskMap();
 	const int armiesByNumPlayers[] = {40, 35, 30, 25, 20};
 	int totalArmies = armiesByNumPlayers[map->getPlayers().size()-2];
-	
+
 	// Create a vector of country pointers for countries the player owns
 	std::vector<Country*> playerCountries;
 	for (auto const &countryName : map->getCountriesOwnedByPlayer(playerName)) {
 		playerCountries.push_back(map->getCountry(countryName));
 	}
-	
+
 	// Randomize order of country pointer list
 	auto engine = std::default_random_engine{};
 	std::shuffle(std::begin(playerCountries), std::end(playerCountries), engine);
@@ -166,21 +166,7 @@ void MainScreen::allocateArmiesByNumberOfPlayers(const std::string playerName){
 }
 
 void MainScreen::on_endPhasePushButton_clicked() {
-	this->endPhase();
-}
-
-void MainScreen::endPhase()
-{
-	Mode currentMode = this->driver->getCurrentMode();
-	if (currentMode == REINFORCEMENT) {
-		driver->setCurrentMode(ATTACK);
-	}
-	else if (currentMode == ATTACK) {
-		driver->setCurrentMode(FORTIFICATION);
-	}
-	else {
-		this->nextTurn();
-	}
+	this->driver->endPhase();
 }
 
 void MainScreen::on_logButton_clicked()
@@ -268,15 +254,3 @@ void MainScreen::observedUpdated() {
 	ui->fortifyLabel->setEnabled(mode == FORTIFICATION);
 }
 
-void MainScreen::nextTurn()
-{
-	RiskMap* map = this->driver->getRiskMap();
-	auto iterator = map->getPlayers().find(this->driver->getCurrentPlayerName());
-	auto end = map->getPlayers().end();
-	std::advance(iterator, 1);
-	if (iterator == end) {
-		iterator = map->getPlayers().begin();
-	}
-	this->driver->setCurrentPlayerName((*iterator).first);
-	this->driver->setCurrentMode(REINFORCEMENT);
-}
