@@ -14,7 +14,7 @@ protected:
 	int battleLost = 0; ///< Number of battles the user has lost (either attacking or defending)
 	std::string name = "";
     int cards = 0;
-    bool didWinCountry;
+    bool didWinCountry = false;
 	bool human;
 
 public:

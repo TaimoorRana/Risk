@@ -67,7 +67,7 @@ void GameDriver::setCurrentMode(const Mode& mode) {
     // Hand a card to the attacker at the end of Attack mode
     if (mode == FORTIFICATION)
     {
-        handACardToWinner();
+        this->handACardToWinner();
     }
 
     this->currentMode = mode;
@@ -128,6 +128,8 @@ void GameDriver::handACardToWinner()
     Player* player = map->getPlayer(currentPlayerName);
     if (player->getDidWinCountry() == true) // player must have won a country in their turn
     {
+        std::cout << "Card Given" << std::endl;
+
         if (map->getCards() > 0)
         {
             map->updateCards(-1);
