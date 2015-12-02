@@ -147,12 +147,11 @@ void GameDriver::handACardToWinner()
 	Player* player = map->getPlayer(currentPlayerName);
 	if (player->getDidWinCountry() == true) // player must have won a country in their turn
 	{
-		Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "gave player a card");
-
 		if (map->getCards() > 0)
 		{
-				map->updateCards(-1);
-				player->updateCards(+1);
+			Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "gave player a card");
+			map->updateCards(-1);
+			player->updateCards(+1);
 		}
 		else
 		{

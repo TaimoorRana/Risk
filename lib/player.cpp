@@ -12,23 +12,24 @@ std::string Player::getName() const {
 
 int Player::getCards()
 {
-    return cards;
+		return cards;
 }
 
 int Player::updateCards(int numberOfCards)
 {
-    cards += numberOfCards;
-    return cards;
+	cards += numberOfCards;
+	this->notifyObservers();
+	return cards;
 }
 
 bool Player::getDidWinCountry()
 {
-    return didWinCountry;
+		return didWinCountry;
 }
 
 void Player::setDidWinCountry(bool value)
 {
-    didWinCountry = value;
+		didWinCountry = value;
 }
 
 void Player::setReinforcements(const int& amount) {

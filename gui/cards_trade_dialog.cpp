@@ -18,10 +18,10 @@ CardsTradeDialog::~CardsTradeDialog()
 	delete ui;
 }
 
-void CardsTradeDialog::on_cardsSlider_sliderMoved(int value)
+void CardsTradeDialog::on_cardsSlider_valueChanged(int value)
 {
 	numCardsSelected = value;
-	armiesEarned = convertCardsToReinforcements(value);
+	armiesEarned = convertCardsToReinforcements(numCardsSelected);
 	ui->numArmiesEarned->setText(QString::fromStdString("Armies received: " + std::to_string(armiesEarned)));
 }
 
