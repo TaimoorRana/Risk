@@ -109,6 +109,7 @@ bool MainScreen::setupPlayers() {
 		Player* player = playerRoundRobin(p++);
 		country->setPlayer(player->getName());
 		country->setArmies(1);
+
 		iter++;
 	}
 	this->driver->recalculateReinforcements();
@@ -289,6 +290,11 @@ void MainScreen::nextTurn()
 	if (iterator == end) {
 		iterator = map->getPlayers().begin();
 	}
-	this->driver->setCurrentPlayerName((*iterator).first);
-	this->driver->setCurrentMode(REINFORCEMENT);
+	if((*iterator).second.isAlive()){
+		this->driver->setCurrentPlayerName((*iterator).first);
+		this->driver->setCurrentMode(REINFORCEMENT);
+	}else{
+        driver->setCurrentPlayerName((*iterator).first);
+		nextTurn();
+	}
 }

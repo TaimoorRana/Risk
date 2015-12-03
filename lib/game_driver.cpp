@@ -151,6 +151,10 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 		Player* loser = this->map->getPlayer(defenderCountry->getPlayer());
 		loser->adjustBattlesLost(1);
 
+		if(map->getCountriesOwnedByPlayer(loser->getName()).size() <= 0 ){
+			loser->died();
+		}
+
 		attackerCountry->setArmies(attackerArmy - 1);
 		defenderCountry->setArmies(1);
 		defenderCountry->setPlayer(attackerCountry->getPlayer());

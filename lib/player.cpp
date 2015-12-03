@@ -28,6 +28,18 @@ void Player::setHuman(bool human)
 {
 	this->human = human;
 }
+
+void Player::died()
+{
+	alive = false;
+}
+
+bool Player::isAlive() const
+{
+	return alive;
+}
+
+
 bool Player::isHuman(){
 	return human;
 }

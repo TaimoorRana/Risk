@@ -14,6 +14,7 @@ protected:
 	int battleLost = 0; ///< Number of battles the user has lost (either attacking or defending)
 	std::string name = "";
 	bool human;
+	bool alive = true;
 
 public:
 	Player() {}
@@ -84,5 +85,8 @@ public:
 	void serialize(Archive& archive) {
 		archive(cereal::make_nvp("name", this->name), cereal::make_nvp("reinforcements", this->reinforcements), cereal::make_nvp("battleWon", this->battleWon), cereal::make_nvp("battleLost", this->battleLost));
 	}
+
+	void died();
+	bool isAlive() const;
 };
 #endif // PLAYER_H
