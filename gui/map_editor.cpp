@@ -66,6 +66,7 @@ void MapEditor::on_browsePushButton_clicked() {
 void MapEditor::on_loadPushButton_clicked() {
 	ui->clearMapPushButton->setEnabled(true);
 	this->mapPath = ui->filenameLineEdit->text().toStdString();
+	observedMap->clear();
 	observedMap->load(this->mapPath);
 	if (observedMap->validate()) {
 		this->resetToolbar();
