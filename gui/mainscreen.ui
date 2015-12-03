@@ -25,9 +25,12 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QPushButton" name="logButton">
+           <widget class="QPushButton" name="useCardsButton">
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
             <property name="text">
-             <string>View Log</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -94,6 +97,13 @@
             </property>
            </spacer>
           </item>
+          <item>
+           <widget class="QPushButton" name="logButton">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
        </layout>
@@ -101,7 +111,11 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QGraphicsView" name="graphicsView"/>
+         <widget class="QGraphicsView" name="graphicsView">
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -125,7 +139,7 @@
      <x>0</x>
      <y>0</y>
      <width>1034</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -168,6 +182,6 @@
  <resources/>
  <connections/>
  <slots>
-  <slot>on_pushButton_clicked()</slot>
+  <slot>on_useCardsButton_clicked()</slot>
  </slots>
 </ui>

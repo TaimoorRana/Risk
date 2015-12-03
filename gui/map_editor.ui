@@ -86,7 +86,7 @@
       <item>
        <widget class="QPushButton" name="saveMapPushButton">
         <property name="enabled">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="toolTip">
          <string>Click to save the map file into the build folder.</string>

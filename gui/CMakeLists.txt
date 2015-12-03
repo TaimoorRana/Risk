@@ -9,6 +9,7 @@ set(GUI_SOURCE_FILES
 	enum_tooltype.h
 	enum_savetype.h
 	fortify_dialog.cpp fortify_dialog.h fortify_dialog.ui
+	cards_trade_dialog.cpp cards_trade_dialog.h cards_trade_dialog.ui
 	info_widgets/army_attribute.cpp info_widgets/army_attribute.h
 	info_widgets/battles_attribute.cpp info_widgets/battles_attribute.h
 	info_widgets/card_attribute.cpp info_widgets/card_attribute.h

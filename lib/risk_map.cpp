@@ -53,6 +53,7 @@ Country* RiskMap::addCountry(const Country& country, const std::string& continen
 	}
 	if (countries.find(country.getName()) == countries.end()) {
 		countries[country.getName()] = country;
+        cards++;
 	}
 	if (!mapGraph.insertNode(country.getName(), continentName))
 		return nullptr;
@@ -77,8 +78,6 @@ void RiskMap::removeCountry(const Country& country){
 	if (mapGraph.removeNode(country.getName())){
 		continents.erase(continent);
 	}
-	// FIXME we need to account for the fact that the country may have been owned
-	// by a player
 	this->notifyObservers();
 }
 
@@ -191,6 +190,25 @@ string_set RiskMap::getContinentsOwnedByPlayer(const std::string& playerName) {
 }
 
 /**
+ * @brief RiskMap::getCards returns the total number of cards available
+ * @return
+ */
+int RiskMap::getCards()
+{
+    return cards;
+}
+
+/**
+ * @brief RiskMap::takeCards Removes a number of cards from the deck
+ * @param numberOfCards The number of cards to take from the available deck
+ */
+int RiskMap::updateCards(int numberOfCards)
+{
+    cards += numberOfCards;
+    return cards;
+}
+
+/**
  * @brief Given path to a Conquest map file, build a new RiskMap object
  */
 void RiskMap::load(const std::string& path) {
@@ -205,30 +223,29 @@ void RiskMap::load(const std::string& path) {
 	std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
 	debug("Extension: " + extension);
 
+	this->setNotificationsEnabled(false);
 	if (extension == "map") {
 		this->loadMap(path);
 	}
 	else if (extension == "xml") {
 		this->loadXML(path);
 	}
-}
-
-void RiskMap::loadXML(const std::string& path) {
-	this->setNotificationsEnabled(false);
-	std::ifstream infile(path);
-	cereal::XMLInputArchive input(infile);
-	input(cereal::make_nvp("maprisk", *this));
 	this->setNotificationsEnabled(true);
-	this->notifyObservers();
 }
 
 /**
- * @brief Parses the map file in the path indicated to populate the instance
+ * @brief Parses the Cereal XML map file in the path indicated to populate the instance
+ */
+void RiskMap::loadXML(const std::string& path) {
+	std::ifstream infile(path);
+	cereal::XMLInputArchive input(infile);
+	input(cereal::make_nvp("maprisk", *this));
+}
+
+/**
+ * @brief Parses the Conquest .map map file in the path indicated to populate the instance
  */
 void RiskMap::loadMap(const std::string& path) {
-	this->setNotificationsEnabled(false);
-	this->clear();
-
 	std::ifstream infile(path);
 	std::string line;
 	int mode = 0;
@@ -239,7 +256,7 @@ void RiskMap::loadMap(const std::string& path) {
 		debug_str.append(line);
 		debug(debug_str);
 		// Windows prefers /r/n, but getline() breaks only on \n.
-		if (line[line.size() - 1] == '\r') {
+		if (line.size() > 0 && line[line.size() - 1] == '\r') {
 			line.resize(line.size() - 1);
 		}
 
@@ -315,7 +332,7 @@ void RiskMap::loadMap(const std::string& path) {
 		debug_str.append(line);
 		debug(debug_str);
 		// Windows prefers /r/n, but getline() breaks only on \n.
-		if (line[line.size() - 1] == '\r') {
+		if (line.size() > 0 && line[line.size() - 1] == '\r') {
 			line.resize(line.size() - 1);
 		}
 
@@ -370,7 +387,6 @@ void RiskMap::loadMap(const std::string& path) {
 	}
 
 	debug("Finished parsing: " + path);
-	this->setNotificationsEnabled(true);
 }
 
 bool RiskMap::save(SaveType saveType, std::string path) {

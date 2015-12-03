@@ -10,6 +10,28 @@ std::string Player::getName() const {
 	return name;
 }
 
+int Player::getCards()
+{
+		return cards;
+}
+
+int Player::updateCards(int numberOfCards)
+{
+	cards += numberOfCards;
+	this->notifyObservers();
+	return cards;
+}
+
+bool Player::getDidWinCountry()
+{
+		return didWinCountry;
+}
+
+void Player::setDidWinCountry(bool value)
+{
+		didWinCountry = value;
+}
+
 void Player::setReinforcements(const int& amount) {
 	reinforcements = amount;
 	this->notifyObservers();

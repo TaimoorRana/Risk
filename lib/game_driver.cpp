@@ -1,13 +1,14 @@
 #include <algorithm>
-#include "debug.h"
-#include "librisk.h"
-#include "logging/logger.h"
-#include "game_driver.h"
+#include <random>
+#include <string>
+#include <time.h>
+#include "ai/strategy.h"
 #include "ai/random.h"
 #include "ai/aggressive.h"
 #include "ai/defensive.h"
-#include <random>
-
+#include "librisk.h"
+#include "logging/logger.h"
+#include "game_driver.h"
 
 GameDriver* GameDriver::getInstance() {
 	static GameDriver* instance = nullptr;
@@ -35,10 +36,56 @@ void GameDriver::setRiskMap(RiskMap* map) {
  * @brief Sets the name of the player whose turn is active
  */
 void GameDriver::setCurrentPlayerName(const std::string& name) {
-	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "turn ended");
 	this->currentPlayerName = name;
-	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "turn started");
+	this->notifyObservers();
+}
+
+/**
+ * @brief Ends the current phase, calling the next turn if it's the last phase.
+ */
+void GameDriver::endPhase() {
+	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "phase ended");
+
+	Mode currentMode = this->getCurrentMode();
+	if (currentMode == REINFORCEMENT) {
+		this->setCurrentMode(ATTACK);
+		Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "phase started");
+		this->signalAI();
+	}
+	else if (currentMode == ATTACK) {
+		// Hand a card to the attacker at the end of Attack mode
+		this->handACardToWinner();
+
+		this->setCurrentMode(FORTIFICATION);
+		Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "phase started");
+		this->signalAI();
+	}
+	else {
+		this->nextTurn();
+	}
+}
+
+/**
+ * @brief Moves to the next turn, setting the current player to the next one and resets the current mode to REINFORCEMENT
+ */
+void GameDriver::nextTurn() {
 	this->recalculateReinforcements();
+	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "turn ended");
+
+	auto iterator = this->map->getPlayers().find(this->getCurrentPlayerName());
+	auto end = this->map->getPlayers().end();
+	std::advance(iterator, 1);
+	if (iterator == end) {
+		iterator = this->map->getPlayers().begin();
+	}
+	this->setNotificationsEnabled(false);
+	this->setCurrentPlayerName((*iterator).first);
+	this->setCurrentMode(REINFORCEMENT);
+	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "turn started");
+	this->setNotificationsEnabled(true);
+
+	this->signalAI();
+
 	this->notifyObservers();
 }
 
@@ -60,41 +107,57 @@ Mode GameDriver::getCurrentMode() const {
  * @brief Sets the current game phase
  */
 void GameDriver::setCurrentMode(const Mode& mode) {
-	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "phase ended");
 	this->currentMode = mode;
-	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "phase started");
 	this->notifyObservers();
-	Player *p = map->getPlayer(this->getCurrentPlayerName());
-	//delete strategy each time then create new instance;
-	if(currentMode==ATTACK && !p->isHuman() ){
-		if(rand()%3==0){
-			strategy = new Defensive();
-			debug("defensive ");
-		}
-		else if(rand()%3 ==1){
-			strategy = new Aggressive();
-			debug("aggressive");
-		}
-		else if (rand()%3 ==2){
-			strategy = new Random();
-			debug("random");
-		}
+}
 
-		strategy = new Aggressive();
+/**
+ * @brief Signals the AI to take their phase action.
+ */
+void GameDriver::signalAI() {
+	// Our AI players will need signals now to take action.
+	Player *player = map->getPlayer(this->getCurrentPlayerName());
+	if (player->isHuman()) {
+		return;
+	}
 
-		strategy->setPlayer(this->getCurrentPlayerName());
-		debug("before strategy attack");
-		strategy->whereToAttackFrom(map);
-		debug( "make it past where to attack");
-		if(strategy->getCountryToAttack() != " "){
-			debug(strategy->getCurrentCountry() + "  " + strategy->getCountryToAttack());
-			attackCountry(map->getCountry(strategy->getCurrentCountry()),map->getCountry(strategy->getCountryToAttack()));
+	Strategy* strategy = this->getRandomStrategy();
+	strategy->takeAction(this->currentMode);
+	delete strategy;
+}
+
+bool GameDriver::reinforceCountry(Player* player, Country* country, int amount) {
+	if (amount <= 0 || player->getReinforcements() < amount) {
+		return false;
+	}
+
+	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "reinforced " + country->getName() + " with " + std::to_string(amount) + " armies");
+	player->adjustReinforcements(-amount);
+	country->addArmies(amount);
+
+	return true;
+}
+
+/**
+ * @brief GameDriver::handACardToWinner
+ * @param mode
+ */
+void GameDriver::handACardToWinner()
+{
+	Player* player = map->getPlayer(currentPlayerName);
+	if (player->getDidWinCountry() == true) // player must have won a country in their turn
+	{
+		if (map->getCards() > 0)
+		{
+			Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "gave player a card");
+			map->updateCards(-1);
+			player->updateCards(+1);
 		}
-		//need to delete the strategy each round to set dynamically
-		if(strategy!=nullptr){
-			strategy = nullptr;
-			delete strategy;
+		else
+		{
+			Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "could not give player a card: there are no more cards left in the deck");
 		}
+		player->setDidWinCountry(false); // reset the value for upcoming turn
 	}
 }
 
@@ -103,7 +166,7 @@ void GameDriver::setCurrentMode(const Mode& mode) {
  * @return boolean indicating if the user has won the game with this attack.
  */
 bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountry) {
-	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "starting attack on " + defenderCountry->getName() + "[owned by " + defenderCountry->getPlayer() + "] from " + attackerCountry->getName());
+	Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), " Attacking " + defenderCountry->getName() + " (" + defenderCountry->getPlayer() + ") from " + attackerCountry->getName());
 	int attackerArmy = attackerCountry->getArmies();
 	int defenderArmy = defenderCountry->getArmies();
 	int attackerDiceCount = 0;
@@ -147,7 +210,7 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 		Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "attacker won!");
 		Player* winner = this->map->getPlayer(attackerCountry->getPlayer());
 		winner->adjustBattlesWon(1);
-
+		winner->setDidWinCountry(true); // Temp value that indicates that the player has won a country
 		Player* loser = this->map->getPlayer(defenderCountry->getPlayer());
 		loser->adjustBattlesLost(1);
 
@@ -159,6 +222,15 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 		defenderCountry->setArmies(1);
 		defenderCountry->setPlayer(attackerCountry->getPlayer());
 		this->recalculateReinforcements();
+
+		// check if defender lost all territories
+		if (map->getCountriesOwnedByPlayer(loser->getName()).size() == 0)
+		{
+			// Winner takes all the loser's cards
+			int loserCards = loser->getCards();
+			winner->updateCards(loserCards);
+			loser->updateCards(-loserCards);
+		}
 	}
 	else {
 		// Defender victorious: reconfigure armies
@@ -189,6 +261,19 @@ bool GameDriver::fortifyCountry(Country* originCountry, Country* destinationCoun
 	return true;
 }
 
+void GameDriver::addCardsTradeReinforcements(int numArmies)
+{
+	Player* player = this->map->getPlayer(currentPlayerName);
+	player->setReinforcements(player->getReinforcements()+numArmies);
+}
+
+void GameDriver::updatePlayerCards(int numCards)
+{
+	Player* player = this->map->getPlayer(currentPlayerName);
+	player->updateCards(numCards);
+	player->notifyObservers();
+}
+
 /**
  * @brief Adjusts each player's reinforcement count
  */
@@ -205,7 +290,6 @@ void GameDriver::recalculateReinforcements() {
 			reinforcements += continent->getReinforcementBonus();
 		}
 		player->setReinforcements(reinforcements);
-		Logger::getInstance()->logMessage(this->getCurrentPlayerName(), this->getCurrentMode(), "Recalculating reinforcements " + std::to_string(reinforcements));
 	}
 }
 
@@ -214,4 +298,26 @@ void GameDriver::recalculateReinforcements() {
  */
 bool GameDriver::hasWon(std::string playerName) {
 	return this->map->getContinentsOwnedByPlayer(playerName).size() == this->map->getContinents().size();
+}
+
+/**
+ * @brief Helper method to get a random strategy
+ */
+Strategy* GameDriver::getRandomStrategy() {
+	Strategy* strategy = nullptr;
+
+	int type = rand() % 3;
+	if (type == 0) {
+		strategy = new Defensive();
+
+	}
+	else if(type == 1) {
+		strategy = new Aggressive();
+
+	}
+	else if (type == 2) {
+		strategy = new Random();
+	}
+
+	return strategy;
 }

@@ -20,14 +20,7 @@ public:
 	~MainScreen();
 	bool setupPlayers();
 	void observedUpdated();
-
-	/**
-	 * @brief endPhase This function simulates the click of the end phase button and switches to next player's turn
-	 */
-	void endPhase();
 	void nextTurn();
-	std::vector<int> getVectorOfIndicesRandomCountryAccess(int nCountries);
-	void allocateArmiesByNumberOfPlayers(const std::string p);
 
 private slots:
 	/**
@@ -45,6 +38,7 @@ private slots:
 	 */
 	void on_mapEditorAction_triggered();
 	void on_logButton_clicked();
+	void on_useCardsButton_clicked();
 
 	/**
 	 * @brief Callback to end the current phase, or advance to the next turn.
@@ -62,7 +56,7 @@ private:
 	MapScene* scene = nullptr;
 
 	void initializeMode();
-	Player* playerRoundRobin(int i);
+	void allocateArmiesByNumberOfPlayers(const std::string playerName);
 };
 
 #endif // MAINSCREEN_H

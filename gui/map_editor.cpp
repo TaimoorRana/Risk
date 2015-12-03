@@ -58,15 +58,20 @@ void MapEditor::on_filenameLineEdit_textChanged(QString text) {
 void MapEditor::on_browsePushButton_clicked() {
 	QString filename(QFileDialog::getOpenFileName(this, tr("Open map"), QDir::currentPath(), tr("Risk Map Files (*.xml *.map)")));
 	this->raise();
-	ui->filenameLineEdit->setText(filename);
+	if (filename.length() > 0) {
+		ui->filenameLineEdit->setText(filename);
+	}
 }
 
 void MapEditor::on_loadPushButton_clicked() {
 	ui->clearMapPushButton->setEnabled(true);
 	this->mapPath = ui->filenameLineEdit->text().toStdString();
+	observedMap->clear();
 	observedMap->load(this->mapPath);
-
-	if(!observedMap->validate()){
+	if (observedMap->validate()) {
+		this->resetToolbar();
+	}
+	else {
 		QMessageBox errorDialog(this);
 		errorDialog.setWindowTitle("Error!");
 		errorDialog.setText("Invalid map");
@@ -84,14 +89,11 @@ void MapEditor::on_clearMapPushButton_clicked() {
 	ui->saveMapPushButton->setEnabled(false);
 }
 
-
 void MapEditor::on_saveMapPushButton_clicked(){
-	debug("Save Button clicked\n");
-
-	//Removes fatal bug.
+	// Removes fatal bug.
 	if (this->observedMap->getCountries().size() == 0) {
 		debug("Can't save an empty map.");
-		this->ui->saveMapPushButton->setDisabled(true);
+		this->ui->saveMapPushButton->setEnabled(false);
 		return;
 	}
 
@@ -106,6 +108,15 @@ void MapEditor::on_saveMapPushButton_clicked(){
 
 	if (observedMap->validate()) {
 		QString filename(QFileDialog::getSaveFileName(this, tr("Save game"), QDir::currentPath(), tr("Risk map")));
+		if (filename.length() == 0) {
+			this->raise();
+			return;
+		}
+		QFileInfo existingMapFile(QString::fromStdString(this->mapPath));
+		QString bmp = existingMapFile.path() + "/" + existingMapFile.baseName() + ".bmp";
+		QString newBmp = filename + ".bmp";
+		QFile::copy(bmp, newBmp);
+
 		this->raise();
 		observedMap->save(saveMode, filename.toStdString());
 	}
@@ -124,8 +135,8 @@ void MapEditor::resetToolbar() {
 	ui->addNeighbourPushButton->setChecked(false);
 	ui->removeNeighbourPushButton->setChecked(false);
 	if (this->observedMap->getCountries().size() == 0) {
-		this->ui->saveMapPushButton->setDisabled(true);
-		this->ui->clearMapPushButton->setDisabled(true);
+		this->ui->saveMapPushButton->setEnabled(false);
+		this->ui->clearMapPushButton->setEnabled(false);
 	}
 	else {
 		this->ui->saveMapPushButton->setEnabled(true);

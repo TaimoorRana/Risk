@@ -49,5 +49,4 @@ void FortifyDialog::accept()
 	this->driver->fortifyCountry(this->originCountry, this->destinationCountry, armies);
 	this->close();
 	this->setResult(QDialog::Accepted);
-	// TODO: error validation
 }

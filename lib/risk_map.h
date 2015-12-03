@@ -34,6 +34,7 @@ private:
 	std::map<std::string, Country> countries;
 	std::map<std::string, Player> players;
 	SubGraphADT mapGraph;
+    int cards = 0;
 public:
 	bool disableNotify = false;
 	/**
@@ -60,6 +61,8 @@ public:
 	Player* getPlayer(const std::string& playerName);
 	string_set getCountriesOwnedByPlayer(const std::string& playerName);
 	string_set getContinentsOwnedByPlayer(const std::string& playerName);
+    int getCards();
+    int updateCards(int numberOfCards);
 
 	const std::map<std::string, Continent>& getContinents() const;
 	const std::map<std::string, Country>& getCountries() const;

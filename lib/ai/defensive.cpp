@@ -1,41 +1,41 @@
 #include "defensive.h"
+#include <set>
 
-std::string Defensive::decideAttackingCountry(RiskMap *map)
-{
+/**
+ * @brief Attack phase decision making
+ */
+std::pair<std::string, std::string> Defensive::attackPhase() {
+	RiskMap* map = this->driver->getRiskMap();
+	std::string playerName = this->driver->getCurrentPlayerName();
+	std::set<std::string> countriesOwnedByPlayer = map->getCountriesOwnedByPlayer(playerName);
 
-	attack = false;
-	listOfAttackCountries = map->getNeighbours(getCountryAttackFrom());
-	auto c_iter = listOfAttackCountries.begin();
-	while (c_iter!=listOfAttackCountries.end()) {
-		if (map->getCountry(*c_iter)->getArmies() + twoAdditionalArmies < (getNumberOfArmies())
-				&& !isSameOwner(map->getCountry(*c_iter)->getPlayer(), nameOfPlayer)){
-			countryToAttack = *c_iter;
+	std::pair<std::string, std::string> maxDifferencePair;
+	int maxDifference = 0;
+
+	for (const std::string &countryName : countriesOwnedByPlayer) {
+		Country* country = map->getCountry(countryName);
+
+		// Check if we have more armies than all of the neighbours opponents own
+		bool moreArmiesThanNeighbours = true;
+		for (const std::string &neighnourName : map->getNeighbours(country->getName())) {
+			Country* neighbour = map->getCountry(neighnourName);
+			if (neighbour->getPlayer() != playerName && neighbour->getArmies() > country->getArmies()) {
+				moreArmiesThanNeighbours = false;
+				break;
+			}
 		}
-		else {
-			countryToAttack = " ";
-			return countryToAttack;
+
+		// If we do, find the pair of countries with the greatest chance for success
+		for (const std::string &neighnourName : map->getNeighbours(country->getName())) {
+			Country* neighbour = map->getCountry(neighnourName);
+			if (neighbour->getPlayer() != playerName) {
+				int difference = neighbour->getArmies() - country->getArmies();
+				if (difference >= maxDifference) {
+					maxDifference = difference;
+					maxDifferencePair = std::pair<std::string, std::string>(country->getName(), neighbour->getName());
+				}
+			}
 		}
-		c_iter++;
 	}
-	attack = true;
-	return countryToAttack;
+	return maxDifferencePair;
 }
-
-void Defensive::whereToAttackFrom(RiskMap *map)
-{
-	listOfPlayerCountries= map->getCountriesOwnedByPlayer(getPlayer());
-	auto l_iter = listOfPlayerCountries.begin();
-	while (l_iter != listOfPlayerCountries.end()) {
-		setAttackFrom(*l_iter,map->getCountry(*l_iter)->getArmies());
-		if (decideAttackingCountry(map) == " " ) {
-			l_iter++;
-		}
-		else{
-			currentCountry = map->getCountry(*l_iter)->getName();
-			countryToAttack = decideAttackingCountry(map);
-			break;
-		}
-
-	}
-}
-

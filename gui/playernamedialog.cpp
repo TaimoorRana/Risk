@@ -24,5 +24,7 @@ int PlayerNameDialog::getPlayerCount() {
 void PlayerNameDialog::on_mapPathBrowsePushButton_clicked() {
 	QString filename(QFileDialog::getOpenFileName(this, tr("Open map"), QDir::currentPath(), tr("Risk map files (*.map *.xml)")));
 	this->raise();
-	ui->mapPathLineEdit->setText(filename);
+	if (filename.length() > 0) {
+		ui->mapPathLineEdit->setText(filename);
+	}
 }
