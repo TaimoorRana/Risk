@@ -16,7 +16,7 @@ class FortifyDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit FortifyDialog(GameDriver* driver, Country* originCountry, Country* destinationCountry, QWidget *parent = 0);
+    explicit FortifyDialog(GameDriver* driver, Country* originCountry, Country* destinationCountry, int minValue, QWidget *parent = 0);
 	~FortifyDialog();
 	void setOriginCountry(Country* country);
 	void setDestinationCountry(Country* country);

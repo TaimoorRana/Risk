@@ -178,6 +178,13 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					secondCountryClicked = item->getCountry();
 					if (firstCountryClicked->getPlayer() != secondCountryClicked->getPlayer() && map->areCountriesNeighbours(firstCountryClicked->getName(), secondCountryClicked->getName())){
 						this->driver->attackCountry(firstCountryClicked, secondCountryClicked);
+                        if (firstCountryClicked->getPlayer() == secondCountryClicked->getPlayer())
+                        {
+                            FortifyDialog* fortificationDialog = new FortifyDialog(this->driver, firstCountryClicked, secondCountryClicked, 1, parent);
+                            if (fortificationDialog->exec() == QDialog::Accepted) {
+
+                            }
+                        }
 					}
 					else if (!map->areCountriesNeighbours(firstCountryClicked->getName(), secondCountryClicked->getName())) {
 						QMessageBox errorDialog(parent);
@@ -206,7 +213,7 @@ void MapScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 					// check for adjacency
 					secondCountryClicked = item->getCountry();
 					if (map->areCountriesNeighbours(firstCountryClicked->getName(), secondCountryClicked->getName())) {
-						FortifyDialog* fortificationDialog = new FortifyDialog(this->driver, firstCountryClicked, secondCountryClicked, parent);
+                        FortifyDialog* fortificationDialog = new FortifyDialog(this->driver, firstCountryClicked, secondCountryClicked, 0, parent);
 						if (fortificationDialog->exec() == QDialog::Accepted) {
 							driver->endPhase();
 						}
