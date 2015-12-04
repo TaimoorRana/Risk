@@ -62,6 +62,15 @@ void GameDriver::endPhase() {
 	}
 	else {
 		this->nextTurn();
+//        std::cout << "***************"<< this->getCurrentPlayerName() << std::endl;
+//        if (this->getRiskMap()->getContinentsOwnedByPlayer(this->getCurrentPlayerName()).size() == 0)
+//        {
+//            std::cout << "********Player is DEAD!!!!!!" << std::endl;
+
+//            this->endPhase();
+//            this->endPhase();
+//            this->endPhase();
+//        }
 	}
 }
 
@@ -216,11 +225,17 @@ bool GameDriver::attackCountry(Country* attackerCountry, Country* defenderCountr
 
         // kick loser out of game
 		if(map->getCountriesOwnedByPlayer(loser->getName()).size() <= 0 ){
-			loser->died();
+            loser->died();
 		}
 
         // Set to zero awaiting fortifiaction
         defenderCountry->setArmies(0);
+
+        // AI doesn't go throught eh slider to fortify after attack
+        if (!winner->isHuman()) {
+            int armies = rand()%(attackerCountry->getArmies()-1)+1;
+            this->fortifyCountry(attackerCountry, defenderCountry, armies);
+        }
 
 		defenderCountry->setPlayer(attackerCountry->getPlayer());
 		this->recalculateReinforcements();
