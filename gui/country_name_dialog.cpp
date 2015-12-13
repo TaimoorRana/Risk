@@ -12,7 +12,7 @@ CountryNameDialog::~CountryNameDialog()
 {
     delete ui;
 }
-
+// this method does something cool!
 QString CountryNameDialog::getCountryName()
 {
     return ui->CountryNameLineEdit->text();
