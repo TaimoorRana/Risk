@@ -5,11 +5,12 @@ Replica of the Strategy Game called Risk (Produced by Hasbro).
 
 This game was developed for the course COMP345 Advanced C++ Programming, using Qt5.
 
-Stewart Adam
-Adrianna Diaz
-Elliot Gimple
-Elias Haroun
-Taimoor Rana
+- Stewart Adam
+- Adrianna Diaz
+- Elliot Gimple
+- Elias Haroun
+- Taimoor Rana
+
 
 FEATURES
 --------
