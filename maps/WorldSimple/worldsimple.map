@@ -1,0 +1,22 @@
+[Map]
+author=Adrianna Diaz
+image=worldsimple.bmp
+wrap=no
+scroll=horizontal
+warn=yes
+
+[Continents]
+Africa=0
+Europe=0
+North America=0
+
+[Territories]
+Canary Islands,589,359,Europe,Cuba,Morocco,Spain
+Cuba,428,437,North America,Canary Islands,Montreal,Washington
+Egypt,747,437,Africa,Germany,Morocco
+Germany,799,294,Europe,Egypt,Spain
+Montreal,444,317,North America,Cuba,Washington
+Morocco,666,406,Africa,Canary Islands,Egypt,Spain
+Spain,697,298,Europe,Canary Islands,Germany,Morocco,Spain
+Washington,403,345,North America,Cuba,Montreal
+
