@@ -14,14 +14,16 @@ Taimoor Rana
 FEATURES
 --------
 
-GUI application built with Qt5
-Interactive Map Editor with a sophisticated Graph ADT
-Real-time exportable logging of all events
-Built-in AI with simple heuristics for computer players
-Supports saving and loading of game state
+- GUI application built with Qt5
+- Interactive Map Editor with a sophisticated Graph ADT
+- Real-time exportable logging of all events
+- Built-in AI with simple heuristics for computer players
+- Supports saving and loading of game state
+
 
 SCREENSHOTS
 -----------
+
 
 ![Screenshot of Gameplay](resources/screenshots/world-map-game.png)
 
