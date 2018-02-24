@@ -17,9 +17,11 @@ Built-in AI with simple heuristics for computer players
 Supports saving and loading of game state
 
 ##SCREENSHOTS
-![Screenshot of Gameplay](resources/screenshots/world map game.png "Gameplay")
 
-![Screenshot of Map Editor](resources/screenshots/map editor.png "Map Editor")
+
+![Screenshot of Gameplay](resources/screenshots/world map game.png)
+
+![Screenshot of Map Editor](resources/screenshots/map editor.png)
 
 ##INSTALLATION:
 You will need C++, cmake, QT5, and Cereal.
